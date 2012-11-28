@@ -16,3 +16,12 @@
 [submodule "eclipse"]
 	path = eclipse
 	url = git://git.eclipse.org/gitroot/vjet/org.eclipse.vjet.eclipse.git
+[submodule "dltk"]
+	path = dltk
+	url = git://git.eclipse.org/gitroot/vjet/org.eclipse.vjet.dltk.git
+[submodule "rhino"]
+	path = rhino
+	url = git://git.eclipse.org/gitroot/vjet/org.eclipse.vjet.rhino.git
+[submodule "jsdt.parser"]
+	path = jsdt.parser
+	url = git://git.eclipse.org/gitroot/vjet/org.eclipse.vjet.jsdt.parser.git
