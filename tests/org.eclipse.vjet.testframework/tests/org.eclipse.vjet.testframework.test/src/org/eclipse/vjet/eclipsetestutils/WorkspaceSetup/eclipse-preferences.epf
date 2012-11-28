@@ -1,0 +1,9 @@
+#Wed Mar 26 07:29:17 PDT 2008
+/instance/com.ebay.kernel.EbayToolBox/com.ebay.kernel.wsad.toolbox.plugin.ViewStorageDirectory=D\:\\Views
+@com.ebay.kernel.EbayToolBox=4.1.12
+file_export_version=3.0
+/instance/com.ebay.kernel.EbayToolBox/com.ebay.kernel.wsad.toolbox.plugin.SnapshotViewName=d_sjc_wisberg_v4khan
+/instance/com.ebay.kernel.EbayToolBox/com.ebay.kernel.wsad.toolbox.plugin.TextConfigSpec=element * CHECKEDOUT\nelement -dir lost+found -none\nelement * V3_DATASOURCE\nelement /entities/... /main/LATEST\nelement * .../m_v4_khan/LATEST\nmkbranch m_v4_khan \nelement * E555_DEV_BASE\nelement * /main/0\nend mkbranch m_v4_khan\n\nload /builddeployv3\nload /v3buildconfig\nload /externalv3\nload /entities\nload /metadata\nload /v3j2ee\nload /v3jars\nload /v3resources \n\nload /v4darwin\nload /v4ebaypres\nload /v4samplecode\nload /v4contentsource\nload /nexustools\n\nload /v3core/GlobalEnvironment\nload /v3megajars
+@org.eclipse.jdt.core=3.2.3.v_686_R32x
+/instance/org.eclipse.jdt.core/org.eclipse.jdt.core.classpathVariable.V3_HOME=D\:/Views/d_sjc_wisberg_v4khan/v3j2ee
+/instance/org.eclipse.jdt.core/org.eclipse.jdt.core.classpathVariable.V3_VIEW_ROOT=D\:/Views/d_sjc_wisberg_v4khan

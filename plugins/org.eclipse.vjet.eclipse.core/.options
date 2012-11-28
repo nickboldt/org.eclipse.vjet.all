@@ -1,0 +1,5 @@
+org.eclipse.vjet.eclipse.core/typespace = false
+org.eclipse.vjet.eclipse.core/debug = false
+org.eclipse.vjet.eclipse.core/debugScriptBuilder = false
+org.eclipse.vjet.eclipse.core/traceScriptBuilder = false
+org.eclipse.vjet.eclipse.core/traceParser = false
