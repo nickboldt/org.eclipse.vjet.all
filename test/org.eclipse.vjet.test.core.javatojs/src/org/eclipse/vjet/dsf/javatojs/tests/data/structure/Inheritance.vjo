@@ -1,0 +1,22 @@
+/* @org.eclipse.vjet.dsf.resource.utils.CodeGen("VjoGenerator") */
+vjo.ctype('org.eclipse.vjet.dsf.javatojs.tests.data.structure.Inheritance') //< public
+.props({
+    TypeA:vjo.ctype() //< public
+    .protos({
+        //> public String getName()
+        getName:function(){
+            return this.getClass().getName();
+        }
+    })
+    .endType(),
+    TypeB:vjo.ctype() //< public
+    .inherits('org.eclipse.vjet.dsf.javatojs.tests.data.structure.Inheritance.TypeA')
+    .protos({
+        //> public String toString()
+        toString:function(){
+            return this.getName();
+        }
+    })
+    .endType()
+})
+.endType();

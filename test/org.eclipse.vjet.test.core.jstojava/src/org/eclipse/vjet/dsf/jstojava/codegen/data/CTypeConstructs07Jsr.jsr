@@ -1,0 +1,55 @@
+package vjo.a.b;
+
+import org.eclipse.vjet.dsf.common.binding.IValueBinding;
+import org.eclipse.vjet.vsf.jsref.JsObj;
+import org.eclipse.vjet.vsf.jsref.internals.JsCmpMeta;
+import org.eclipse.vjet.vsf.jsref.JsTypeRef;
+import org.eclipse.vjet.vsf.jsref.JsObjData;
+import org.eclipse.vjet.dsf.spec.component.IComponentSpec;
+import org.eclipse.vjet.vsf.resource.pattern.js.JsResource;
+import org.eclipse.vjet.vsf.resource.pattern.js.IJsResourceRef;
+
+@org.eclipse.vjet.dsf.resource.utils.CodeGen("JsrGenerator")
+public class CTypeConstructs07Jsr extends JsObj {
+    private static final long serialVersionUID = 1L;
+
+    private static final JsObjData S = 
+        new JsObjData("vjo.a.b.CTypeConstructs07", CTypeConstructs07Jsr.class, "CTypeConstructs07");
+
+    
+    public static class ResourceSpec {
+        public static IComponentSpec getInstance() {
+            return S.getResourceSpec(); 
+        }
+        public static final JsResource RESOURCE = S.getJsResource();
+        public static final IJsResourceRef REF = S.getJsResourceRef();
+    }
+
+    public static final IComponentSpec SPEC = S.getResourceSpec();
+
+    public CTypeConstructs07Jsr(String oarg0, String oarg1){
+        super(S.getJsCmpMeta(), true, oarg0, oarg1);
+    }
+
+    public CTypeConstructs07Jsr(IValueBinding<String> oarg0, IValueBinding<String> oarg1){
+        super(S.getJsCmpMeta(), true, oarg0, oarg1);
+    }
+
+    public CTypeConstructs07Jsr(String oarg0){
+        super(S.getJsCmpMeta(), true, oarg0);
+    }
+
+    public CTypeConstructs07Jsr(IValueBinding<String> oarg0){
+        super(S.getJsCmpMeta(), true, oarg0);
+    }
+
+    public CTypeConstructs07Jsr(){
+        super(S.getJsCmpMeta(), true);
+    }
+
+    protected CTypeConstructs07Jsr(JsCmpMeta cmpMeta, boolean isInstance, Object... args) {
+        super(cmpMeta, isInstance, args);
+    }
+    
+    public static JsTypeRef<CTypeConstructs07Jsr> prototype = new JsTypeRef<CTypeConstructs07Jsr>(S);
+}

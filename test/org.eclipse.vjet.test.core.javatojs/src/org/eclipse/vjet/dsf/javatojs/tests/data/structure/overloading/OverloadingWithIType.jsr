@@ -1,0 +1,89 @@
+package org.eclipse.vjet.dsf.javatojs.tests.data.structure.overloading;
+
+import org.eclipse.vjet.vsf.jsref.JsFunc;
+import org.eclipse.vjet.dsf.common.binding.IValueBinding;
+import org.eclipse.vjet.vsf.jsref.JsObj;
+import org.eclipse.vjet.vsf.jsref.internals.JsCmpMeta;
+import org.eclipse.vjet.vsf.jsref.JsTypeRef;
+import org.eclipse.vjet.vsf.jsref.JsObjData;
+import org.eclipse.vjet.dsf.spec.component.IComponentSpec;
+import org.eclipse.vjet.vsf.resource.pattern.js.JsResource;
+import org.eclipse.vjet.vsf.resource.pattern.js.IJsResourceRef;
+import org.eclipse.vjet.dsf.javatojs.tests.data.structure.overloading.IOverloadingWithITypeJsr;
+
+@org.eclipse.vjet.dsf.resource.utils.CodeGen("JsrGenerator")
+public class OverloadingWithITypeJsr extends JsObj {
+    private static final long serialVersionUID = 1L;
+
+    private static final JsObjData S = 
+        new JsObjData("org.eclipse.vjet.dsf.javatojs.tests.data.structure.overloading.OverloadingWithIType", OverloadingWithITypeJsr.class, "OverloadingWithIType", true);
+
+    
+    public static class ResourceSpec {
+        public static IComponentSpec getInstance() {
+            return S.getResourceSpec(); 
+        }
+        public static final JsResource RESOURCE = S.getJsResource();
+        public static final IJsResourceRef REF = S.getJsResourceRef();
+    }
+
+    public static final IComponentSpec SPEC = S.getResourceSpec()
+        .addDependentComponent(IOverloadingWithITypeJsr.ResourceSpec.getInstance());
+
+    public OverloadingWithITypeJsr(){
+        super(S.getJsCmpMeta(), true);
+    }
+
+    protected OverloadingWithITypeJsr(JsCmpMeta cmpMeta, boolean isInstance, Object... args) {
+        super(cmpMeta, isInstance, args);
+    }
+
+    public JsFunc<Void> test(IOverloadingWithITypeJsr a){
+        return call("test").with(a);
+    }
+
+    public JsFunc<Void> test(IValueBinding<? extends IOverloadingWithITypeJsr> a){
+        return call("test").with(a);
+    }
+
+    public JsFunc<Void> test(OverloadingWithITypeJsr a){
+        return call("test").with(a);
+    }
+
+    public JsFunc<Void> test(IValueBinding<? extends OverloadingWithITypeJsr> a, 
+            org.eclipse.vjet.vsf.jsref.d.D1... notUsed){
+        return call("test").with(a);
+    }
+
+    public JsFunc<Void> test(int a){
+        return call("test").with(a);
+    }
+
+    public JsFunc<Void> test(IValueBinding<Integer> a, 
+            org.eclipse.vjet.vsf.jsref.d.D2... notUsed){
+        return call("test").with(a);
+    }
+
+    public JsFunc<Void> test(Object a){
+        return call("test").with(a);
+    }
+
+    public JsFunc<Void> test(IOverloadingWithITypeJsr a, int i){
+        return call("test").with(a, i);
+    }
+
+    public JsFunc<Void> test(IValueBinding<? extends IOverloadingWithITypeJsr> a, IValueBinding<Integer> i){
+        return call("test").with(a, i);
+    }
+
+    public JsFunc<Void> test(OverloadingWithITypeJsr a, int i){
+        return call("test").with(a, i);
+    }
+
+    public JsFunc<Void> test(IValueBinding<? extends OverloadingWithITypeJsr> a, IValueBinding<Integer> i, 
+            org.eclipse.vjet.vsf.jsref.d.D1... notUsed){
+        return call("test").with(a, i);
+    }
+    
+    public static JsTypeRef<OverloadingWithITypeJsr> prototype = new JsTypeRef<OverloadingWithITypeJsr>(S);
+}

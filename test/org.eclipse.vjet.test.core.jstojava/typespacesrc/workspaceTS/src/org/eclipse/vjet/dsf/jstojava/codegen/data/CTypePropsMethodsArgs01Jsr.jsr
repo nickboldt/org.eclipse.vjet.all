@@ -1,0 +1,52 @@
+package vjo.a.b;
+
+import org.eclipse.vjet.vsf.jsref.JsFunc;
+import org.eclipse.vjet.dsf.common.binding.IValueBinding;
+import org.eclipse.vjet.vsf.jsref.JsObj;
+import org.eclipse.vjet.vsf.jsref.internals.JsCmpMeta;
+import org.eclipse.vjet.vsf.jsref.JsTypeRef;
+import org.eclipse.vjet.vsf.jsref.JsObjData;
+import org.eclipse.vjet.dsf.spec.component.IComponentSpec;
+import org.eclipse.vjet.vsf.resource.pattern.js.JsResource;
+import org.eclipse.vjet.vsf.resource.pattern.js.IJsResourceRef;
+
+@org.eclipse.vjet.dsf.resource.utils.CodeGen("JsrGenerator")
+public class CTypePropsMethodsArgs01Jsr extends JsObj {
+    private static final long serialVersionUID = 1L;
+
+    private static final JsObjData S = 
+        new JsObjData("vjo.a.b.CTypePropsMethodsArgs01", CTypePropsMethodsArgs01Jsr.class, "CTypePropsMethodsArgs01");
+
+    
+    public static class ResourceSpec {
+        public static IComponentSpec getInstance() {
+            return S.getResourceSpec(); 
+        }
+        public static final JsResource RESOURCE = S.getJsResource();
+        public static final IJsResourceRef REF = S.getJsResourceRef();
+    }
+
+    public static final IComponentSpec SPEC = S.getResourceSpec();
+
+    public CTypePropsMethodsArgs01Jsr(){
+        super(S.getJsCmpMeta(), true);
+    }
+
+    protected CTypePropsMethodsArgs01Jsr(JsCmpMeta cmpMeta, boolean isInstance, Object... args) {
+        super(cmpMeta, isInstance, args);
+    }
+
+    public static JsFunc<Void> foo1(){
+        return call(S, "foo1");
+    }
+
+    public static JsFunc<Void> foo1(String oarg){
+        return call(S, "foo1").with(oarg);
+    }
+
+    public static JsFunc<Void> foo1(IValueBinding<String> oarg){
+        return call(S, "foo1").with(oarg);
+    }
+    
+    public static JsTypeRef<CTypePropsMethodsArgs01Jsr> prototype = new JsTypeRef<CTypePropsMethodsArgs01Jsr>(S);
+}

@@ -1,0 +1,33 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Vendor: %pluginProvider
+Bundle-Name: %pluginName
+Bundle-SymbolicName: org.eclipse.vjet.core.javatojs
+Bundle-Version: 0.9.0.qualifier
+Bundle-ActivationPolicy: lazy
+Bundle-Localization: plugin
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Require-Bundle: 
+ org.eclipse.vjet.core.jsgenshared;visibility:=reexport,
+ org.eclipse.core.resources;visibility:=reexport,
+ org.eclipse.core.runtime;visibility:=reexport,
+ org.eclipse.jdt.core;visibility:=reexport
+Export-Package: 
+  org.eclipse.vjet.dsf.javatojs,
+  org.eclipse.vjet.dsf.javatojs.control,
+  org.eclipse.vjet.dsf.javatojs.parse,
+  org.eclipse.vjet.dsf.javatojs.prebuild,
+  org.eclipse.vjet.dsf.javatojs.report,
+  org.eclipse.vjet.dsf.javatojs.trace,
+  org.eclipse.vjet.dsf.javatojs.translate,
+  org.eclipse.vjet.dsf.javatojs.util,
+  org.eclipse.vjet.dsf.javatojs.control.translate,
+  org.eclipse.vjet.dsf.javatojs.translate.config,
+  org.eclipse.vjet.dsf.javatojs.translate.custom,
+  org.eclipse.vjet.dsf.javatojs.translate.policy,
+  org.eclipse.vjet.dsf.javatojs.translate.post,
+  org.eclipse.vjet.dsf.javatojs.translate.util,
+  org.eclipse.vjet.dsf.javatojs.translate.custom.anno,
+  org.eclipse.vjet.dsf.javatojs.translate.custom.jdk,
+  org.eclipse.vjet.dsf.javatojs.translate.custom.meta
+

@@ -1,0 +1,43 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Vendor: %pluginProvider
+Bundle-Name: %pluginName
+Bundle-SymbolicName: org.eclipse.vjet.rt.active
+Bundle-Version: 0.9.0.qualifier
+Bundle-ActivationPolicy: lazy
+Bundle-Localization: plugin
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Require-Bundle: 
+ org.eclipse.vjet.core.jsnative;visibility:=reexport,
+ org.eclipse.vjet.rt.liveconnect;visibility:=reexport,
+ org.eclipse.vjet.rt.jsdebugger;visibility:=reexport,
+ org.eclipse.vjet.rt.jsonserializer;visibility:=reexport,
+ org.eclipse.jetty.server;bundle-version="8.1.3",
+ org.eclipse.jetty.util;bundle-version="8.1.3",
+ org.eclipse.jetty.http;bundle-version="8.1.3",
+ org.eclipse.jetty.io;bundle-version="8.1.3",
+ org.eclipse.jetty.continuation;bundle-version="8.1.3",
+ org.eclipse.jetty.security;bundle-version="8.1.3",
+ org.eclipse.jetty.servlet;bundle-version="8.1.3",
+ org.ccil.cowan.tagsoup;bundle-version="1.2.0",
+ org.apache.xerces;bundle-version="2.9.0"
+Export-Package: 
+  org.eclipse.vjet.dsf.jsrunner,
+  org.eclipse.vjet.dsf.active.client,
+  org.eclipse.vjet.dsf.active.event,
+  org.eclipse.vjet.dsf.active.util,
+  org.eclipse.vjet.dsf.dap.cnr,
+  org.eclipse.vjet.dsf.dap.event,
+  org.eclipse.vjet.dsf.dap.proxy,
+  org.eclipse.vjet.dsf.dap.rt,
+  org.eclipse.vjet.dsf.dap.svc,
+  org.eclipse.vjet.dsf.dap.util,
+  org.eclipse.vjet.dsf.html.js,
+  org.eclipse.vjet.dsf.active.dom.html,
+  org.eclipse.vjet.dsf.dap.api.anno,
+  org.eclipse.vjet.dsf.dap.api.util,
+  org.eclipse.vjet.dsf.dap.event.listener,
+  org.eclipse.vjet.dsf.dap.rt.jsonp
+
+
+

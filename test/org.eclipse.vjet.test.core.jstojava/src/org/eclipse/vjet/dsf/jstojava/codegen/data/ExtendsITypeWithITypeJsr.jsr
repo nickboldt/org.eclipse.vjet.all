@@ -1,0 +1,38 @@
+package org.eclipse.vjet.dsf.jstojava.codegen.data;
+
+import org.eclipse.vjet.vsf.jsref.JsFunc;
+import org.eclipse.vjet.vsf.jsref.JsProp;
+import org.eclipse.vjet.vsf.jsref.JsTypeRef;
+import org.eclipse.vjet.vsf.jsref.JsObjData;
+import org.eclipse.vjet.dsf.spec.component.IComponentSpec;
+import org.eclipse.vjet.vsf.resource.pattern.js.JsResource;
+import org.eclipse.vjet.vsf.resource.pattern.js.IJsResourceRef;
+import org.eclipse.vjet.dsf.jstojava.codegen.data.parent.N_ITypeJsr;
+
+@org.eclipse.vjet.dsf.resource.utils.CodeGen("JsrGenerator")
+public interface ExtendsITypeWithITypeJsr extends N_ITypeJsr {
+    JsObjData S = 
+        new JsObjData("org.eclipse.vjet.dsf.jstojava.codegen.data.ExtendsITypeWithIType", ExtendsITypeWithITypeJsr.class, "ExtendsITypeWithIType");
+
+    
+    public static class ResourceSpec {
+        public static IComponentSpec getInstance() {
+            return S.getResourceSpec(); 
+        }
+        public static final JsResource RESOURCE = S.getJsResource();
+        public static final IJsResourceRef REF = S.getJsResourceRef();
+    }
+
+    public static final IComponentSpec SPEC = S.getResourceSpec()
+        .addDependentComponent(N_ITypeJsr.ResourceSpec.getInstance());
+
+    public static final JsProp<Integer> F_COUNT = new JsProp<Integer>(S.getStaticAnchor(), "F_COUNT");
+
+    public static final JsProp<Integer> I_COUNT_OVERRIDE = new JsProp<Integer>(S.getStaticAnchor(), "I_COUNT_OVERRIDE");
+
+    public abstract JsFunc<Void> i_foo();
+
+    public abstract JsFunc<Void> i_foo_override();
+    
+    public static JsTypeRef<ExtendsITypeWithITypeJsr> prototype = new JsTypeRef<ExtendsITypeWithITypeJsr>(S);
+}

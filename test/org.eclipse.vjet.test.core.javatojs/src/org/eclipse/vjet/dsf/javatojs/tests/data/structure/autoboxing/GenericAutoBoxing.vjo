@@ -1,0 +1,14 @@
+/* @org.eclipse.vjet.dsf.resource.utils.CodeGen("VjoGenerator") */
+vjo.ctype('org.eclipse.vjet.dsf.javatojs.tests.data.structure.autoboxing.GenericAutoBoxing') //< public
+.needs('org.eclipse.vjet.vjo.java.lang.Integer')
+.protos({
+    //> protected <T> T genericMethod(T anyType)
+    genericMethod:function(anyType){
+        return anyType;
+    },
+    //> public int testGenericMethod()
+    testGenericMethod:function(){
+        return this.genericMethod(new this.vj$.Integer(2)).intValue();
+    }
+})
+.endType();

@@ -1,0 +1,16 @@
+vjo.ctype("org.eclipse.vjet.dsf.tests.jsast.parser.data.MultLineVar")
+.protos({
+
+	//> public String foo
+	foo : 'This is wholly on a single line',
+
+	//> public String bar	
+	bar: 'This is \
+	        on multiple \
+	         lines'
+
+
+})
+.endType();
+
+

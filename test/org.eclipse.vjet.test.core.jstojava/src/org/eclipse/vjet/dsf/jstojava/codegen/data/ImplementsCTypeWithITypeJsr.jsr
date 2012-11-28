@@ -1,0 +1,96 @@
+package org.eclipse.vjet.dsf.jstojava.codegen.data;
+
+import org.eclipse.vjet.vsf.jsref.JsFunc;
+import org.eclipse.vjet.dsf.common.binding.IValueBinding;
+import org.eclipse.vjet.vsf.jsref.JsObj;
+import org.eclipse.vjet.vsf.jsref.JsProp;
+import org.eclipse.vjet.vsf.jsruntime.jsref.IJsPropSetter;
+import org.eclipse.vjet.vsf.jsref.internals.JsCmpMeta;
+import org.eclipse.vjet.vsf.jsref.JsTypeRef;
+import org.eclipse.vjet.vsf.jsref.JsObjData;
+import org.eclipse.vjet.dsf.spec.component.IComponentSpec;
+import org.eclipse.vjet.vsf.resource.pattern.js.JsResource;
+import org.eclipse.vjet.vsf.resource.pattern.js.IJsResourceRef;
+import org.eclipse.vjet.dsf.jstojava.codegen.data.parent.N_ITypeJsr;
+
+@org.eclipse.vjet.dsf.resource.utils.CodeGen("JsrGenerator")
+public class ImplementsCTypeWithITypeJsr extends JsObj implements N_ITypeJsr {
+    private static final long serialVersionUID = 1L;
+
+    private static final JsObjData S = 
+        new JsObjData("org.eclipse.vjet.dsf.jstojava.codegen.data.ImplementsCTypeWithIType", ImplementsCTypeWithITypeJsr.class, "ImplementsCTypeWithIType");
+
+    
+    public static class ResourceSpec {
+        public static IComponentSpec getInstance() {
+            return S.getResourceSpec(); 
+        }
+        public static final JsResource RESOURCE = S.getJsResource();
+        public static final IJsResourceRef REF = S.getJsResourceRef();
+    }
+
+    public static final IComponentSpec SPEC = S.getResourceSpec()
+        .addDependentComponent(N_ITypeJsr.ResourceSpec.getInstance());
+
+    public ImplementsCTypeWithITypeJsr(){
+        super(S.getJsCmpMeta(), true);
+    }
+
+    protected ImplementsCTypeWithITypeJsr(JsCmpMeta cmpMeta, boolean isInstance, Object... args) {
+        super(cmpMeta, isInstance, args);
+    }
+
+    public static final JsProp<Integer> SF_COUNT = getProp(S, Integer.class, "SF_COUNT");
+
+    public static JsProp<Integer> s_count(){
+        return getProp(S, Integer.class, "s_count");
+    }
+
+    public static IJsPropSetter s_count(int v) {
+        return setProp(S, "s_count", v);
+    }
+
+    public static IJsPropSetter s_count(IValueBinding<Integer> v) {
+        return setProp(S, "s_count", v);
+    }
+
+    public static final JsProp<Integer> I_COUNT_OVERRIDE = getProp(S, Integer.class, "I_COUNT_OVERRIDE");
+
+    public static final JsFunc<Void> sf_foo(){
+        return call(S, "sf_foo");
+    }
+
+    public static JsFunc<Void> s_foo(){
+        return call(S, "s_foo");
+    }
+
+    public final JsProp<Integer> F_COUNT(){
+        return getProp(Integer.class, "F_COUNT");
+    }
+
+    public JsProp<Integer> count(){
+        return getProp(Integer.class, "count");
+    }
+
+    public IJsPropSetter count(int v) {
+        return setProp("count", v);
+    }
+
+    public IJsPropSetter count(IValueBinding<Integer> v) {
+        return setProp("count", v);
+    }
+
+    public final JsFunc<Void> f_foo(){
+        return call("f_foo");
+    }
+
+    public JsFunc<Void> foo(){
+        return call("foo");
+    }
+
+    public JsFunc<Void> i_foo_override(){
+        return call("i_foo_override");
+    }
+    
+    public static JsTypeRef<ImplementsCTypeWithITypeJsr> prototype = new JsTypeRef<ImplementsCTypeWithITypeJsr>(S);
+}

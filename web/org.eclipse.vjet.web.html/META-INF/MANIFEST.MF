@@ -1,0 +1,40 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Vendor: %pluginProvider
+Bundle-Name: %pluginName
+Bundle-SymbolicName: org.eclipse.vjet.web.html
+Bundle-Version: 0.9.0.qualifier
+Bundle-ActivationPolicy: lazy
+Bundle-Localization: plugin
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Require-Bundle: 
+ org.eclipse.vjet.web.kernel;visibility:=reexport,
+ org.eclipse.vjet.web.cssparser;visibility:=reexport,
+ org.ccil.cowan.tagsoup;bundle-version="1.2.0",
+ org.w3c.css.sac;bundle-version="1.3.1"
+Export-Package: 
+  org.eclipse.vjet.dsf.html,
+  org.eclipse.vjet.dsf.service,
+  org.eclipse.vjet.dsf.services,
+  org.eclipse.vjet.dsf.util,
+  org.eclipse.vjet.dsf.active.event,
+  org.eclipse.vjet.dsf.common.trace,
+  org.eclipse.vjet.dsf.common.utils,
+  org.eclipse.vjet.dsf.html.ctx,
+  org.eclipse.vjet.dsf.html.dom,
+  org.eclipse.vjet.dsf.html.events,
+  org.eclipse.vjet.dsf.html.js,
+  org.eclipse.vjet.dsf.html.schemas,
+  org.eclipse.vjet.dsf.service.client,
+  org.eclipse.vjet.dsf.service.serializer,
+  org.eclipse.vjet.dsf.html.dom.deprecated,
+  org.eclipse.vjet.dsf.html.dom.tests,
+  org.eclipse.vjet.dsf.html.dom.util,
+  org.eclipse.vjet.dsf.util,
+  org.eclipse.vjet.dsf.common.trace,
+  org.eclipse.vjet.dsf.common.utils,
+  org.eclipse.vjet.dsf.html.dom.util,
+  org.eclipse.vjet.dsf.service.serializer
+
+
+

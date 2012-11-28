@@ -1,0 +1,3 @@
+/* @org.eclipse.vjet.dsf.resource.utils.CodeGen("VjoGenerator") */
+vjo.ctype('org.eclipse.vjet.dsf.javatojs.tests.data.filter.ExcludeAll') //< public
+.endType();

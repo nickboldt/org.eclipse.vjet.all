@@ -1,0 +1,95 @@
+package org.eclipse.vjet.dsf.javatojs.tests.data.structure;
+
+import org.eclipse.vjet.vsf.jsref.JsFunc;
+import org.eclipse.vjet.dsf.common.binding.IValueBinding;
+import org.eclipse.vjet.vsf.jsref.internals.JsCmpMeta;
+import org.eclipse.vjet.vsf.jsref.JsTypeRef;
+import org.eclipse.vjet.vsf.jsref.JsObjData;
+import org.eclipse.vjet.dsf.spec.component.IComponentSpec;
+import org.eclipse.vjet.vsf.resource.pattern.js.JsResource;
+import org.eclipse.vjet.vsf.resource.pattern.js.IJsResourceRef;
+import org.eclipse.vjet.vjo.java.util.ArrayListJsr;
+import org.eclipse.vjet.vjo.java.util.HashMapJsr;
+import org.eclipse.vjet.vjo.java.util.ListJsr;
+import org.eclipse.vjet.vjo.java.util.MapJsr;
+import java.util.Date;
+import org.eclipse.vjet.vjo.java.lang.IntegerJsr;
+
+@org.eclipse.vjet.dsf.resource.utils.CodeGen("JsrGenerator")
+public class GenericsJsr<Ctx,Ctx2 extends Date> extends ArrayListJsr<Ctx> {
+    private static final long serialVersionUID = 1L;
+
+    private static final JsObjData S = 
+        new JsObjData("org.eclipse.vjet.dsf.javatojs.tests.data.structure.Generics", GenericsJsr.class, "Generics", true);
+
+    
+    public static class ResourceSpec {
+        public static IComponentSpec getInstance() {
+            return S.getResourceSpec(); 
+        }
+        public static final JsResource RESOURCE = S.getJsResource();
+        public static final IJsResourceRef REF = S.getJsResourceRef();
+    }
+
+    public static final IComponentSpec SPEC = S.getResourceSpec()
+        .addDependentComponent(ArrayListJsr.ResourceSpec.getInstance())
+        .addDependentComponent(HashMapJsr.ResourceSpec.getInstance());
+
+    public GenericsJsr(){
+        super(S.getJsCmpMeta(), true);
+    }
+
+    protected GenericsJsr(JsCmpMeta cmpMeta, boolean isInstance, Object... args) {
+        super(cmpMeta, isInstance, args);
+    }
+
+    public JsFunc<? extends ListJsr<? extends Ctx>> convert(ListJsr<? extends Ctx> value){
+        return call((Class<ListJsr<? extends Ctx>>)null, "convert").with(value);
+    }
+
+    public JsFunc<? extends ListJsr<? extends Ctx>> convert(IValueBinding<? extends ListJsr<? extends Ctx>> value){
+        return call((Class<ListJsr<? extends Ctx>>)null, "convert").with(value);
+    }
+
+    public JsFunc<? extends ListJsr<? extends Ctx2>> convert2(Object value){
+        return call((Class<ListJsr<? extends Ctx2>>)null, "convert2").with(value);
+    }
+
+    public JsFunc<? extends MapJsr<Ctx,GenericsJsr<Ctx,Ctx2>>> getMap(){
+        return call((Class<MapJsr<Ctx,GenericsJsr<Ctx,Ctx2>>>)null, "getMap");
+    }
+
+    public JsFunc<Ctx[]> getArray(){
+        return call((Class<Ctx[]>)null, "getArray");
+    }
+
+    public <R,S extends List<Date>> JsFunc<? extends ListJsr<? extends R>> convertAny(Ctx ctx, ListJsr<? extends R> converter, Object value){
+        return call((Class<ListJsr<? extends R>>)null, "convertAny").with(ctx, converter, value);
+    }
+
+    public <R,S extends List<Date>> JsFunc<? extends ListJsr<? extends R>> convertAny(IValueBinding<? extends Ctx> ctx, IValueBinding<? extends ListJsr<? extends R>> converter, IValueBinding<? extends Object> value){
+        return call((Class<ListJsr<? extends R>>)null, "convertAny").with(ctx, converter, value);
+    }
+
+    public <T,S,M,K> JsFunc<? extends SetJsr<T>> testMethod9(S p1, M p2, K p3){
+        return call((Class<SetJsr<T>>)null, "testMethod9").with(p1, p2, p3);
+    }
+
+    public <T,S,M,K> JsFunc<? extends SetJsr<T>> testMethod9(IValueBinding<? extends S> p1, IValueBinding<? extends M> p2, IValueBinding<? extends K> p3){
+        return call((Class<SetJsr<T>>)null, "testMethod9").with(p1, p2, p3);
+    }
+
+    public JsFunc<? extends MapJsr<String,String>> getStringMap(){
+        return call((Class<MapJsr<String,String>>)null, "getStringMap");
+    }
+
+    public JsFunc<? extends ListJsr<IntegerJsr>> testMethod10(ListJsr<? extends Ctx> myList){
+        return call((Class<ListJsr<IntegerJsr>>)null, "testMethod10").with(myList);
+    }
+
+    public JsFunc<? extends ListJsr<IntegerJsr>> testMethod10(IValueBinding<? extends ListJsr<? extends Ctx>> myList){
+        return call((Class<ListJsr<IntegerJsr>>)null, "testMethod10").with(myList);
+    }
+    
+    public static JsTypeRef<GenericsJsr> prototype = new JsTypeRef<GenericsJsr>(S);
+}

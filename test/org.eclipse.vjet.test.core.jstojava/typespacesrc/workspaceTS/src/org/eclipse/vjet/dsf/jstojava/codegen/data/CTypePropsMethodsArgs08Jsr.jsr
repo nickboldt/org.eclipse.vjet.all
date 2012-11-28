@@ -1,0 +1,65 @@
+package vjo.a.b;
+
+import org.eclipse.vjet.vsf.jsref.JsFunc;
+import org.eclipse.vjet.dsf.common.binding.IValueBinding;
+import org.eclipse.vjet.vsf.jsref.JsObj;
+import org.eclipse.vjet.vsf.jsref.internals.JsCmpMeta;
+import org.eclipse.vjet.vsf.jsref.JsTypeRef;
+import org.eclipse.vjet.vsf.jsref.JsObjData;
+import org.eclipse.vjet.dsf.spec.component.IComponentSpec;
+import org.eclipse.vjet.vsf.resource.pattern.js.JsResource;
+import org.eclipse.vjet.vsf.resource.pattern.js.IJsResourceRef;
+import java.util.Date;
+
+@org.eclipse.vjet.dsf.resource.utils.CodeGen("JsrGenerator")
+public class CTypePropsMethodsArgs08Jsr extends JsObj {
+    private static final long serialVersionUID = 1L;
+
+    private static final JsObjData S = 
+        new JsObjData("vjo.a.b.CTypePropsMethodsArgs08", CTypePropsMethodsArgs08Jsr.class, "CTypePropsMethodsArgs08");
+
+    
+    public static class ResourceSpec {
+        public static IComponentSpec getInstance() {
+            return S.getResourceSpec(); 
+        }
+        public static final JsResource RESOURCE = S.getJsResource();
+        public static final IJsResourceRef REF = S.getJsResourceRef();
+    }
+
+    public static final IComponentSpec SPEC = S.getResourceSpec();
+
+    public CTypePropsMethodsArgs08Jsr(){
+        super(S.getJsCmpMeta(), true);
+    }
+
+    protected CTypePropsMethodsArgs08Jsr(JsCmpMeta cmpMeta, boolean isInstance, Object... args) {
+        super(cmpMeta, isInstance, args);
+    }
+
+    public static JsFunc<Void> foo8(String[] arg0){
+        return call(S, "foo8").with((Object)arg0);
+    }
+
+    public static JsFunc<Void> foo8(IValueBinding<String[]> arg0){
+        return call(S, "foo8").with(arg0);
+    }
+
+    public static JsFunc<Void> foo8p(int[] arg0){
+        return call(S, "foo8p").with((Object)arg0);
+    }
+
+    public static JsFunc<Void> foo8p(IValueBinding<Integer[]> arg0){
+        return call(S, "foo8p").with(arg0);
+    }
+
+    public static JsFunc<Void> foo8d(Date[] arg0){
+        return call(S, "foo8d").with((Object)arg0);
+    }
+
+    public static JsFunc<Void> foo8d(IValueBinding<Date[]> arg0){
+        return call(S, "foo8d").with(arg0);
+    }
+    
+    public static JsTypeRef<CTypePropsMethodsArgs08Jsr> prototype = new JsTypeRef<CTypePropsMethodsArgs08Jsr>(S);
+}

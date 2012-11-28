@@ -1,0 +1,10 @@
+vjo.ctype("org.eclipse.vjet.dsf.tests.jsast.parser.data.BadComment")
+.protos({
+
+	//> xyzzy
+	foo : 0
+
+})
+.endType();
+
+
