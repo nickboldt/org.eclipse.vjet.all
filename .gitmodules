@@ -1,0 +1,9 @@
+[submodule "extmod/rhino"]
+	path = extmod/rhino
+	url = git://git.eclipse.org/gitroot/vjet/org.eclipse.vjet.rhino.git
+[submodule "extmod/jsdt"]
+	path = extmod/jsdt
+	url = git://git.eclipse.org/gitroot/vjet/org.eclipse.vjet.jsdt.parser.git
+[submodule "extmod/dltk"]
+	path = extmod/dltk
+	url = git://git.eclipse.org/gitroot/vjet/org.eclipse.vjet.dltk.git
