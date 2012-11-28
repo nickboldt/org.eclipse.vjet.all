@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: VJET Vjo Base Java API types (Incubation)
+Bundle-SymbolicName: org.eclipse.vjet.vjo.vjojavalib
+Bundle-Version: 0.9.0.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Require-Bundle: org.eclipse.vjet.vsf.jsruntime;bundle-version="0.9.0",
+ org.eclipse.vjet.vsf.jsref;bundle-version="0.9.0",
+ org.eclipse.vjet.core.jsnative;bundle-version="0.9.0"
+Export-Package: org.eclipse.vjet.vjo.java.io,
+ org.eclipse.vjet.vjo.java.lang,
+ org.eclipse.vjet.vjo.java.lang.reflect,
+ org.eclipse.vjet.vjo.java.util
+Bundle-Vendor: eclipse.org

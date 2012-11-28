@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: VJET VSF: JS Resources (Incubation)
+Bundle-SymbolicName: org.eclipse.vjet.vsf.resource.js
+Bundle-Version: 0.9.0.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Export-Package: org.eclipse.vjet.vsf.resource.html.event.handler,
+ org.eclipse.vjet.vsf.resource.js.trace,
+ org.eclipse.vjet.vsf.resource.pattern.js
+Require-Bundle: org.eclipse.vjet.core.util;bundle-version="0.9.0",
+ org.eclipse.vjet.web.html;bundle-version="0.9.0",
+ org.eclipse.vjet.extmod.rhino;bundle-version="0.9.0",
+ org.eclipse.vjet.rt.jsonserializer;bundle-version="0.9.0",
+ org.eclipse.vjet.rt.active;bundle-version="0.9.0",
+ org.eclipse.vjet.vsf.resource;bundle-version="0.9.0";visibility:=reexport
+Bundle-Vendor: eclipse.org
