@@ -7,3 +7,12 @@
 [submodule "extmod/dltk"]
 	path = extmod/dltk
 	url = git://git.eclipse.org/gitroot/vjet/org.eclipse.vjet.dltk.git
+[submodule "core"]
+	path = core
+	url = git://git.eclipse.org/gitroot/vjet/org.eclipse.vjet.core.git
+[submodule "vsf"]
+	path = vsf
+	url = git://git.eclipse.org/gitroot/vjet/org.eclipse.vjet.vsf.git
+[submodule "eclipse"]
+	path = eclipse
+	url = git://git.eclipse.org/gitroot/vjet/org.eclipse.vjet.eclipse.git
