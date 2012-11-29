@@ -16,6 +16,16 @@
 	</properties>
 
 	<repositories>
+     <repository>
+        <id>eclipse</id>
+        <url>${eclipse-site}</url>
+        <layout>p2</layout>
+     </repository>
+     <repository>
+        <id>orbit-2012-5-26</id>
+	<layout>p2</layout>
+	<url>http://download.eclipse.org/tools/orbit/downloads/drops/R20120526062928/repository/</url>
+	</repository>
 		<repository>
 			<id>orbit</id>
 			<name>Orbit approved dependency repository</name>
@@ -26,22 +36,16 @@
 			</snapshots>
 		</repository>
 	</repositories>
-	<pluginRepositories>
-		<pluginRepository>
-			<id>central</id>
-			<name>Maven central</name>
-			<layout>maven2</layout>
-			<url>http://maven.eclipse.org/build</url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-			<releases>
-				<updatePolicy>never</updatePolicy>
-			</releases>
-		</pluginRepository>
-	</pluginRepositories>
+  <pluginRepositories>
+    <pluginRepository>
+      <id>maven.eclipse.org</id>
+      <url>http://maven.eclipse.org/nexus/content/repositories/milestone-juno/</url>
+    </pluginRepository>
+  </pluginRepositories>
 
 	<build>
+		
+
 		<sourceDirectory>${project.basedir}/src</sourceDirectory>
 		<!-- <testSourceDirectory>${project.basedir}/test</testSourceDirectory> 
 			<testOutputDirectory>${project.build.directory}/test-classes</testOutputDirectory> 
@@ -218,7 +222,7 @@
 			<modules>
 				<module>rhino/org.eclipse.vjet.extmod.rhino</module>
 				<module>jsdt.parser/org.eclipse.vjet.extmod.jsdt</module>
-				<module>dltk</module>
+				<module>dltk/core</module>
 				<module>core</module>
 				<module>eclipse</module>
 			</modules>
@@ -241,7 +245,7 @@
 			<modules>
 				<module>rhino/org.eclipse.vjet.extmod.rhino</module>
 				<module>jsdt.parser/org.eclipse.vjet.extmod.jsdt</module>
-				<module>dltk</module>
+				<module>dltk/core</module>
 				<module>core</module>
 				<module>eclipse</module>
 				<module>vsf</module>
@@ -266,7 +270,7 @@
 			<modules>
 				<module>rhino/org.eclipse.vjet.extmod.rhino</module>
 				<module>jsdt.parser/org.eclipse.vjet.extmod.jsdt</module>
-				<module>dltk</module>
+				<module>dltk/core</module>
 				<module>core</module>
 				<module>eclipse</module>
 			</modules>
@@ -281,7 +285,7 @@
 			<modules>
 				<module>rhino/org.eclipse.vjet.extmod.rhino</module>
 				<module>jsdt.parser/org.eclipse.vjet.extmod.jsdt</module>
-				<module>dltk</module>
+				<module>dltk/core</module>
 			</modules>
 		</profile>
 		<profile>
@@ -314,7 +318,7 @@
 			<modules>
 				<module>rhino/org.eclipse.vjet.extmod.rhino</module>
 				<module>jsdt.parser/org.eclipse.vjet.extmod.jsdt</module>
-				<module>dltk</module>
+				<module>dltk/core</module>
 				<module>core</module>
 				<module>eclipse</module>
 			</modules>
@@ -392,7 +396,7 @@
 			<modules>
 				<module>rhino/org.eclipse.vjet.extmod.rhino</module>
 				<module>jsdt.parser/org.eclipse.vjet.extmod.jsdt</module>
-				<module>dltk</module>
+				<module>dltk/core</module>
 				<module>core</module>
 				<module>eclipse</module>
 			</modules>
