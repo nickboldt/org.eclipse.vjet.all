@@ -15,10 +15,6 @@ package org.eclipse.vjet.eclipse.internal.ui.editor.semantic.highlighting;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.vjet.dsf.jst.IJstNode;
-import org.eclipse.vjet.dsf.jst.declaration.JstMethod;
-import org.eclipse.vjet.eclipse.core.IVjoSourceModule;
-import org.eclipse.vjet.eclipse.core.ts.GenericVisitor;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -44,6 +40,11 @@ import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchPartSite;
+import org.eclipse.vjet.dsf.jst.IJstNode;
+import org.eclipse.vjet.dsf.jst.JstSource;
+import org.eclipse.vjet.dsf.jst.declaration.JstMethod;
+import org.eclipse.vjet.eclipse.core.IVjoSourceModule;
+import org.eclipse.vjet.eclipse.core.ts.GenericVisitor;
 
 /**
  * Semantic highlighting reconciler - Background thread implementation.
@@ -139,8 +140,12 @@ public class VjoSemanticHighlightingReconciler implements
 				VjoSemanticHighlighting semanticHighlighting = (VjoSemanticHighlighting) fJobSemanticHighlightings[i];
 				if (fJobHighlightings[i].isEnabled()
 						&& semanticHighlighting.consumes(fToken)) {
-					int offset = node.getName().getSource().getStartOffSet();
-					int length = node.getName().getSource().getLength();
+					JstSource source = node.getName().getSource();
+					if(source==null){
+						continue;
+					}
+					int offset = source.getStartOffSet();
+					int length = source.getLength();
 					if (offset > -1 && length > 0)
 						addPosition(offset, length, fJobHighlightings[i]);
 					break;

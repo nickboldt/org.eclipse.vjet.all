@@ -7,9 +7,6 @@
  *
  
  *******************************************************************************/
-/**
- * 
- */
 package org.eclipse.vjet.eclipse.internal.ui.scriptdoc;
 
 import org.eclipse.core.runtime.Assert;

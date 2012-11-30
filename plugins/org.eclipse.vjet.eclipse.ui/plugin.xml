@@ -9,7 +9,6 @@
                      class="org.eclipse.vjet.eclipse.internal.ui.editor.VjoEditor"
                      contributorClass="org.eclipse.dltk.mod.internal.ui.editor.SourceModuleEditorActionContributor"
                      default="true"
-                     extensions="js"
                      icon="platform:/plugin/org.eclipse.vjet.eclipse.ui/icons/obj16/sourceEditor.gif"
                      id="org.eclipse.vjet.ui.VjetJsEditor"
                      name="%vjoEditor">

@@ -634,51 +634,6 @@ public class VjoFoldingStructureProvider extends
 	}
 	
 	
-//	private IRegion computeHeaderComment(FoldingStructureComputationContext ctx2) throws ModelException {
-//		// search at most up to the first type
-//		FoldingStructureComputationContext2 ctx=(FoldingStructureComputationContext2)ctx2;
-//		ISourceRange range= ((VjoSourceType)ctx.getFirstType()).getSourceRange();
-//		if (range == null)
-//			return null;
-//		int start= 0;
-//		int end= range.getOffset();
-//
-//
-//		/* code adapted from CommentFormattingStrategy:
-//		 * scan the header content up to the first type. Once a comment is
-//		 * found, accumulate any additional comments up to the stop condition.
-//		 * The stop condition is reaching a package declaration, import container,
-//		 * or the end of the input.
-//		 */
-//		IScanner scanner= ctx.getScanner();
-//		scanner.resetTo(start, end);
-//
-//		int headerStart= -1;
-//		int headerEnd= -1;
-//		try {
-//			boolean foundComment= false;
-//			int terminal= scanner.getNextToken();
-//			while (terminal != ITerminalSymbols.TokenNameEOF && !(terminal == ITerminalSymbols.TokenNameclass || terminal == ITerminalSymbols.TokenNameinterface || terminal == ITerminalSymbols.TokenNameenum || (foundComment && (terminal == ITerminalSymbols.TokenNameimport || terminal == ITerminalSymbols.TokenNamepackage)))) {
-//
-//				if (terminal == ITerminalSymbols.TokenNameCOMMENT_JAVADOC || terminal == ITerminalSymbols.TokenNameCOMMENT_BLOCK || terminal == ITerminalSymbols.TokenNameCOMMENT_LINE) {
-//					if (!foundComment)
-//						headerStart= scanner.getCurrentTokenStartPosition();
-//					headerEnd= scanner.getCurrentTokenEndPosition();
-//					foundComment= true;
-//				}
-//				terminal= scanner.getNextToken();
-//			}
-//
-//
-//		} catch (InvalidInputException ex) {
-//			return null;
-//		}
-//
-//		if (headerEnd != -1) {
-//			return new Region(headerStart, headerEnd - headerStart);
-//		}
-//		return null;
-//	}
 
 	/**
 	 * Creates a folding position that remembers its member from an

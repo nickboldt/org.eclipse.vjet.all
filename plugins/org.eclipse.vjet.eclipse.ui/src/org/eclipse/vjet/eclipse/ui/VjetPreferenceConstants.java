@@ -11,14 +11,15 @@
  *******************************************************************************/
 package org.eclipse.vjet.eclipse.ui;
 
-import org.eclipse.vjet.eclipse.internal.ui.text.VjetColorConstants;
 import org.eclipse.dltk.mod.ui.CodeFormatterConstants;
 import org.eclipse.dltk.mod.ui.DLTKUIPlugin;
 import org.eclipse.dltk.mod.ui.PreferenceConstants;
 import org.eclipse.dltk.mod.ui.preferences.NewScriptProjectPreferencePage;
+import org.eclipse.dltk.mod.ui.text.DLTKColorConstants;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.preference.PreferenceConverter;
 import org.eclipse.swt.graphics.RGB;
+import org.eclipse.vjet.eclipse.internal.ui.text.VjetColorConstants;
 
 public class VjetPreferenceConstants extends PreferenceConstants {
 
@@ -698,6 +699,6 @@ public class VjetPreferenceConstants extends PreferenceConstants {
 	public static final String CODEASSIST_USETHISVJ$ = "use_this.vj$";
 	public static final String CODEASSIST_APPENDCOMMENT = "append_annotion";
 	public static final String CODEASSIST_CAMEL_MATCH = "camel_match";
-	
+	public static final String EDITOR_DEFAULT_COLOR = DLTKColorConstants.DLTK_DEFAULT;
 	
 }

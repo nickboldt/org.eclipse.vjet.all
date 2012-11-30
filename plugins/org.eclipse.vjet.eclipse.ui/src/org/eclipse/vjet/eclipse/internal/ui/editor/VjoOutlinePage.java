@@ -113,10 +113,9 @@ import org.eclipse.ui.texteditor.ITextEditorActionDefinitionIds;
 
 /**
  * The content outline page of the Java editor. The viewer implements a
- * proprietary update mechanism based on Java model deltas. It does not react on
+ *  update mechanism based on Java model deltas. It does not react on
  * domain changes. It is specified to show the content of ICompilationUnits and
- * IClassFiles. Publishes its context menu under
- * <code>JavaPlugin.getDefault().getPluginId() + ".outline"</code>.
+ * IClassFiles.
  */
 // TODO cleanup this class
 public class VjoOutlinePage extends ScriptOutlinePage {

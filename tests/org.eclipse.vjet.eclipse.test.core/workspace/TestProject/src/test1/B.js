@@ -1,2 +1,3 @@
-vjo.type("test1.B")
+vjo.ctype("test1.B")
 .inherits("test1.A")
+.endType();

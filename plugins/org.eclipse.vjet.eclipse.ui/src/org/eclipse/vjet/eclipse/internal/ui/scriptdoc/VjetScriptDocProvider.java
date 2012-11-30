@@ -10,14 +10,14 @@ package org.eclipse.vjet.eclipse.internal.ui.scriptdoc;
 
 import java.io.Reader;
 import java.io.StringReader;
+import java.net.URI;
 
-import org.eclipse.core.runtime.Status;
 import org.eclipse.dltk.mod.core.IField;
 import org.eclipse.dltk.mod.core.IMember;
 import org.eclipse.dltk.mod.core.IMethod;
 import org.eclipse.dltk.mod.core.IModelElement;
-import org.eclipse.dltk.mod.core.IType;
 import org.eclipse.dltk.mod.internal.core.VjoExternalSourceModule;
+import org.eclipse.dltk.mod.internal.core.VjoSourceModule;
 import org.eclipse.dltk.mod.internal.core.VjoSourceType;
 import org.eclipse.dltk.mod.ui.documentation.IScriptDocumentationProvider;
 import org.eclipse.vjet.dsf.jst.IJstGlobalFunc;
@@ -27,18 +27,16 @@ import org.eclipse.vjet.dsf.jst.IJstMethod;
 import org.eclipse.vjet.dsf.jst.IJstNode;
 import org.eclipse.vjet.dsf.jst.IJstProperty;
 import org.eclipse.vjet.dsf.jst.IJstType;
-import org.eclipse.vjet.dsf.ts.group.IGroup;
-import org.eclipse.vjet.eclipse.ui.VjetUIPlugin;
 import org.eclipse.vjet.vjo.tool.typespace.TypeSpaceMgr;
 
 public class VjetScriptDocProvider implements IScriptDocumentationProvider {
 
-	
-	IJstNode m_node;
-	
 
-	
-	
+	IJstNode m_node;
+
+
+
+
 	public Reader getInfo(IMember element, boolean lookIntoParents,
 			boolean lookIntoExternal) {
 
@@ -47,26 +45,54 @@ public class VjetScriptDocProvider implements IScriptDocumentationProvider {
 		if (element instanceof VjoSourceType) {
 			VjoSourceType module = (VjoSourceType) element;
 			/// need to determine if this is a nested type? utility for this?
-			
-			groupName = module.getScriptProject().getElementName();
-			typeName = module.getFullyQualifiedName(".");
-			IJstType t = TypeSpaceMgr.findType(groupName, typeName);
-			if (t != null && t.getDoc() != null) {
-				return new JavaDoc2HTMLTextReader(new StringReader(t.getDoc()
-						.getComment()));
+
+
+			if(element.getResource()==null ){
+
+				if(module.getParent() instanceof VjoExternalSourceModule){
+					VjoExternalSourceModule external = (VjoExternalSourceModule)module.getParent();
+
+					IJstType t = external.getType();
+					if (t != null && t.getDoc() != null) {
+						return new JavaDoc2HTMLTextReader(new StringReader(t.getDoc()
+								.getComment()));
+					}
+				}
+
+
+			}else{
+				URI resource = element.getResource().getLocationURI();
+				System.out.println(resource);
+				if(resource.getScheme().equals("typespace")){
+					groupName = resource.getHost();
+				}else{
+					groupName = determineGroup(module);
+				}
+				typeName = module.getFullyQualifiedName(".");
+				IJstType t = TypeSpaceMgr.findType(groupName, typeName);
+				if (t != null && t.getDoc() != null) {
+					return new JavaDoc2HTMLTextReader(new StringReader(t.getDoc()
+							.getComment()));
+				}
+
 			}
+
+
+
 		}
 
-		IType declaringType = element.getDeclaringType();
-		if (declaringType == null) {
-			return new StringReader("");
-		}
-		typeName = declaringType.getFullyQualifiedName(".");
+//		IType declaringType = element.getDeclaringType();
+//		if (declaringType == null) {
+//			return new StringReader("");
+//		}
+//		typeName = declaringType.getFullyQualifiedName(".");
 		String memberName = element.getElementName();
 		if (element.getParent() != null) {
+
+
 			IModelElement secondLevelParent = element.getParent().getParent();
-			if (secondLevelParent instanceof VjoExternalSourceModule) {
-				VjoExternalSourceModule module = (VjoExternalSourceModule) secondLevelParent;
+			if (secondLevelParent instanceof VjoSourceModule) {
+				VjoSourceModule module = (VjoSourceModule) secondLevelParent;
 				IJstType t = module.getJstType();
 				if(element instanceof VjoSourceType){
 					if (t != null && t.getDoc() != null) {
@@ -74,13 +100,13 @@ public class VjetScriptDocProvider implements IScriptDocumentationProvider {
 								.getDoc().getComment()));
 					}
 				}else if(element instanceof IField){
-					
+
 					IJstProperty property = t.getProperty(element.getElementName());
-					
+
 					if (property!=null && property.getDoc()!=null ) {
 						return new JavaDoc2HTMLTextReader(new StringReader( property.getDoc().getComment()));
 					}
-					
+
 				}else if(element instanceof IMethod){
 					IJstMethod method = t.getMethod(element.getElementName());
 					if (method!=null && method.getDoc()!=null && m_node != method)  {
@@ -96,22 +122,8 @@ public class VjetScriptDocProvider implements IScriptDocumentationProvider {
 		if (element instanceof IMethod) {
 			IJstType type = TypeSpaceMgr.findType(groupName, typeName);
 			if(type==null){
-				// loop through group dependencies
-				for(IGroup<IJstType> group : TypeSpaceMgr.getInstance().getController()
-						.getJstTypeSpaceMgr().getTypeSpace().getGroup(groupName).getGroupDependency()){
-					 type = TypeSpaceMgr.findType(group.getName(), typeName);
-					 if(type!=null){
-						 break;
-					 }
-				}
-			}
-			
-			
-			if(type==null){
-				VjetUIPlugin.getDefault().log(Status.WARNING, "could not find type " + typeName + " in group " + groupName);
 				return new StringReader("");
 			}
-			
 			IJstMethod m = type.getMethod(memberName);
 			if(m==null){
 				IJstGlobalVar prop = type.getGlobalVar(memberName);
@@ -124,34 +136,13 @@ public class VjetScriptDocProvider implements IScriptDocumentationProvider {
 				}
 			}
 			if (m != null && m.getDoc() != null && m_node==null) {
-			
+
 				m_node = m;
 				return new JavaDoc2HTMLTextReader(new StringReader(m.getDoc()
 						.getComment()));
 			}
-		} else if (element instanceof IField) {
-			
-			IField field = (IField)element;
-			typeName = field.getDeclaringType().getElementName();
+		} else if (element instanceof IField  && typeName != "") {
 			IJstType type = TypeSpaceMgr.findType(groupName, typeName);
-			// TODO look into getting group from IType since group is going.
-			if(type==null){
-				// loop through group dependencies
-				for(IGroup<IJstType> group : TypeSpaceMgr.getInstance().getController()
-						.getJstTypeSpaceMgr().getTypeSpace().getGroup(groupName).getGroupDependency()){
-					 type = TypeSpaceMgr.findType(group.getName(), typeName);
-					 if(type!=null){
-						 break;
-					 }
-				}
-			}
-			
-			
-			if(type==null){
-				VjetUIPlugin.getDefault().log(Status.WARNING, "could not find type " + typeName + " in group " + groupName);
-				return new StringReader("");
-			}
-			
 			IJstProperty p = type.getProperty(memberName);
 			if(p ==null){
 				IJstGlobalVar prop = type.getGlobalVar(memberName);
@@ -173,8 +164,14 @@ public class VjetScriptDocProvider implements IScriptDocumentationProvider {
 
 	}
 
-	
-	
+
+
+	private String determineGroup(VjoSourceType module) {
+		return module.getScriptProject().getElementName();
+	}
+
+
+
 	public Reader getInfo(String content) {
 		return null;
 	}
@@ -184,7 +181,7 @@ public class VjetScriptDocProvider implements IScriptDocumentationProvider {
 	@Override
 	public void clear() {
 		m_node = null;
-		
-	}
 
+	}
 }
+

@@ -107,6 +107,7 @@ import org.eclipse.dltk.mod.internal.core.VjoLocalVariable;
 import org.eclipse.dltk.mod.internal.core.VjoSourceModule;
 import org.eclipse.dltk.mod.internal.core.VjoSourceType;
 
+
 /**
  * This class contains utilities methods for code completion and selection
  * functionality.
@@ -182,7 +183,14 @@ public class CodeassistUtils {
 	public static IType findType(ScriptProject scriptProject, IJstType jstType) {
 		IJstType outerType = CodeCompletionUtils.getOuterJstType(jstType);
 		if (outerType == jstType) {
-			return findType(scriptProject, jstType.getName());
+			IType type= findType(scriptProject, jstType.getName());
+			if(type!=null){
+				return type;
+			}else{
+				// loop through alias names
+				String alias = jstType.getAlias();
+				return findType(scriptProject, alias);
+			}
 		} else {
 			String packageName = "";
 			if(outerType.getPackage()!=null){
@@ -200,11 +208,23 @@ public class CodeassistUtils {
 				return findType(scriptProject, jstType.getName());
 			}
 		}
-		
-	
+
+
 	}
-	
-	
+
+
+//	private static String getNameFromSource(JstSource source) {
+//		if(source!=null){
+//			IBinding fileBinding = source.getBinding();
+//			if(fileBinding instanceof FileBinding){
+//				File file = ((FileBinding) fileBinding).getFile();
+//				return file.getPath().replace("/", ".");
+//			}
+//		}
+//		return null;
+//	}
+
+
 	/**
 	 * Find IType from DLTK based on the package name and simple type name
 	 * @param scriptProject
@@ -486,9 +506,9 @@ public class CodeassistUtils {
 			}
 		}
 		return type;
-	
+
 	}
-	
+
 	/**
 	 * Find types in depends projects
 	 * 
@@ -555,7 +575,7 @@ public class CodeassistUtils {
 		}
 
 		return type;
-	
+
 	}
 	/**
 	 * At first get the resolved buildpath for the main project. Looks up for
@@ -974,7 +994,7 @@ public class CodeassistUtils {
 			IModelElement child = findChild(name, element);
 			if (child != null) {
 				return new IModelElement[] { child };
-			
+
 			}
 			// special case for this
 			if (JsCoreKeywords.THIS.equals(name)) {
@@ -994,7 +1014,7 @@ public class CodeassistUtils {
 					NativeVjoSourceModule m = createNativeModule(folder, jstType.getName());
 					return m != null ? new IModelElement[] { m }
 					: new IModelElement[0];
-					
+
 					// type = jstType.getName();
 				}
 			}
@@ -1003,8 +1023,8 @@ public class CodeassistUtils {
 							.getStartOffSet(), source.getEndOffSet(), type);
 		}
 
-		
-		
+
+
 		return localVar != null ? new IModelElement[] { localVar }
 		: new IModelElement[0];
 	}
@@ -1111,7 +1131,7 @@ public class CodeassistUtils {
 				}
 				modelElement.addAll(Arrays.asList(getLocalVar(module, arg.getName(), typeName, arg
 						.getSource())));
-				
+
 			} else if (expression instanceof FieldAccessExpr) {
 				FieldAccessExpr fieldAccExpr = (FieldAccessExpr) expression;
 				IExpr qualifier = fieldAccExpr.getExpr();
@@ -1135,7 +1155,7 @@ public class CodeassistUtils {
 						(MtdInvocationExpr) expression, module)));
 			}
 		}
-	
+
 		return modelElement;
 	}
 
@@ -1937,8 +1957,8 @@ public class CodeassistUtils {
 	public static NativeVjoSourceModule createNativeModule(ISourceModule module) {
 		IVjoSourceModule sourceModule = (IVjoSourceModule) module;
 		ScriptFolder folder = (ScriptFolder) sourceModule.getParent();
-		
-		
+
+
 		return createNativeModule(folder, sourceModule.getElementName());
 	}
 
@@ -2213,7 +2233,7 @@ public class CodeassistUtils {
 		else if(true){
 			return false;
 		}
-		
+
 		// String gname = pack.getGroupName();
 		String gname = pack.getGroupName();
 		if (gname == null || gname.trim().length() == 0) {
@@ -2248,7 +2268,7 @@ public class CodeassistUtils {
 			return null;
 		}
 		NativeVjoSourceModule nModule = findNativeModule(groupName, actualName);
-		
+
 		// Modify by Oliver, 2009-12-01, fix findbugs bug.
 		if (nModule == null) {
 			return null;
@@ -2535,7 +2555,7 @@ public class CodeassistUtils {
 	public static boolean isDefaultNativeSourceFolder(IModelElement parent) {
 		return defaultNativeScriptFolderMap.containsValue(parent);
 	}
-	
+
 	//add by patrick
 	// for jst node handling
 
@@ -2594,7 +2614,7 @@ public class CodeassistUtils {
 			else
 				node = node.getParentNode();
 		}
-		
+
 		return null;
 	}
 
@@ -2642,7 +2662,7 @@ public class CodeassistUtils {
 		}
 		return "";
 	}
-	
+
 	/**
 	 * @param vjoSourceModule
 	 * @return Actual group name from VjoSourceModule
@@ -2658,7 +2678,7 @@ public class CodeassistUtils {
 		}
 		return tName;
 	}
-	
+
 	//for jst node to dltk model or reverse
 	/**
 	 * Find the corresponding dltk type by the gvien jst type.
@@ -2709,7 +2729,7 @@ public class CodeassistUtils {
 	public static boolean isVjetFileName(String fileName) {
 		return !StringUtils.isBlankOrEmpty(fileName) && fileName.endsWith(SUFFIX_VJO);
 	}
-	
+
 	/**
 	 * Answer if the element is in project's build path
 	 * @param element
@@ -2722,7 +2742,7 @@ public class CodeassistUtils {
 		}
 		return project.isOnBuildpath(element);
 	}
-	
+
 	public static String calculateRtnType(IJstMethod method) {
 		String defaultS = "void";
 		JstBlock block = method.getBlock();

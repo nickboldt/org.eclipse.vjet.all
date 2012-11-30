@@ -1,12 +1,4 @@
 /*******************************************************************************
- * Copyright (c) 2005-2012 eBay Inc.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- *******************************************************************************/
-/*******************************************************************************
  * Copyright (c) 2005, 2007 IBM Corporation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -47,7 +39,7 @@ import org.eclipse.vjet.eclipse.internal.ui.text.IJavaScriptPartitions;
 import org.eclipse.vjet.eclipse.internal.ui.text.SimpleVjoSourceViewerConfiguration;
 import org.eclipse.vjet.eclipse.ui.VjetPreferenceConstants;
 import org.eclipse.vjet.eclipse.ui.VjetUIPlugin;
-//import org.eclipse.dltk.mod.javascript.internal.ui.editor.JavaScriptDocumentSetupParticipant;
+
 
 /**
  * This class is representation of the vjet/editor/syntax coloring configuration block.
@@ -65,13 +57,14 @@ public class VjetEditorColoringConfigurationBlock extends
 			{ PreferencesMessages.DLTKEditorPreferencePage_singleLineComment,
 					VjetPreferenceConstants.EDITOR_SINGLE_LINE_COMMENT_COLOR,
 					sCommentsCategory },
+
 			{ "Multi-line comment",
 						VjetPreferenceConstants.EDITOR_MULTI_LINE_COMMENT_COLOR,
 						sCommentsCategory },
 			{ "Task Tags",
 						VjetPreferenceConstants.EDITOR_TASK_TAGS_COMMENT_COLOR,
 						sCommentsCategory },
-						
+
 			{ PreferencesMessages.DLTKEditorPreferencePage_keywords,
 					VjetPreferenceConstants.EDITOR_KEYWORD_COLOR, sCoreCategory },
 
@@ -82,8 +75,12 @@ public class VjetEditorColoringConfigurationBlock extends
 					VjetPreferenceConstants.EDITOR_REGEXP_CORE_COLOR,
 					sCoreCategory },
 
-//			{ PreferencesMessages.DLTKEditorPreferencePage_numbers,
-//					VjetPreferenceConstants.EDITOR_NUMBER_COLOR, sCoreCategory },
+			{ PreferencesMessages.DLTKEditorPreferencePage_default,
+						VjetPreferenceConstants.EDITOR_DEFAULT_COLOR, sCoreCategory },
+
+
+			{ PreferencesMessages.DLTKEditorPreferencePage_numbers,
+					VjetPreferenceConstants.EDITOR_NUMBER_COLOR, sCoreCategory },
 
 //			{ PreferencesMessages.DLTKEditorPreferencePage_function_colors,
 //					VjetPreferenceConstants.EDITOR_FUNCTION_DEFINITION_COLOR,
@@ -104,7 +101,7 @@ public class VjetEditorColoringConfigurationBlock extends
 			{ "Tags",
 					VjetPreferenceConstants.EDITOR_JAVADOC_TAGS_COLOR,
 					JS_DOC },
-					
+
 			/*
 			 * { "XML Tag Name",
 			 * VjetPreferenceConstants.EDITOR_XML_TAG_NAME_COLOR, "XML" }, {
@@ -123,9 +120,9 @@ public class VjetEditorColoringConfigurationBlock extends
 	public VjetEditorColoringConfigurationBlock(OverlayPreferenceStore store) {
 		super(store);
 	}
-	
-	
-	
+
+
+
 
 	@Override
 	protected SemanticHighlightingColorListItem createSemanticHighlightingItem(SemanticHighlighting highLighting) {
@@ -193,18 +190,18 @@ public class VjetEditorColoringConfigurationBlock extends
 		// TODO Auto-generated method stub
 		return VjetUIPlugin.getDefault().getPluginPreferences();
 	}
-	
+
 
 	@Override
 	protected ScriptTextTools getTextTools() {
 		return VjetUIPlugin.getDefault().getTextTools();
 	}
-	
+
 	/**
 	 * Semantic highlighting manager
 	 */
 	protected VjoSemanticHighlightingManager fSemanticHighlightingManager;
-	
+
 	/**
 	 * Install Semantic Highlighting on the previewer
 	 */
@@ -222,7 +219,7 @@ public class VjetEditorColoringConfigurationBlock extends
 					getPreferenceStore(),createPreviewerRanges());
 		}
 	}
-	
+
 	/**
 	 * Create a highlighted range on the previewers document with the given line, column, length and key.
 	 * 
@@ -244,20 +241,20 @@ public class VjetEditorColoringConfigurationBlock extends
 		return null;
 	}
 
-	
+
 	protected int getLine(String text) throws BadLocationException{
 		IDocument document= fPreviewViewer.getDocument();
 		int index=document.get().indexOf(text);
 		return document.getLineOfOffset(index);
 	}
-	
+
     protected int getColumn(int line, String text) throws BadLocationException{
     	IDocument document= fPreviewViewer.getDocument();	
     	int index=document.get().indexOf(text);
 		int column= index - document.getLineOffset(line);
 		return column;
 	}
-	
+
 	/**
 	 * Create the hard coded previewer ranges
 	 * 
@@ -282,13 +279,13 @@ public class VjetEditorColoringConfigurationBlock extends
 //	
 //		} catch (BadLocationException e) {
 //		}
-		
+
 		return new HighlightedRange[][] {
 				{ createHighlightedRange(18, 2, 6, VjoSemanticHighlightings.METHOD_DECLARATION) },
 				{ createHighlightedRange(25, 5, 3, VjoSemanticHighlightings.METHOD_DECLARATION) },
 				{ createHighlightedRange(35, 5, 3, VjoSemanticHighlightings.METHOD_DECLARATION) },
 				};
 	}
-	
-	
+
+
 }

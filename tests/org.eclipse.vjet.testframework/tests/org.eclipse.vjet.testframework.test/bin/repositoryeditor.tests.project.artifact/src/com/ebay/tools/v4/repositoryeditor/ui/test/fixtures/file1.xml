@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentContract xmlns="http://www.ebay.com/2006/v4/content" xmlns:its="http://www.w3.org/2005/11/its" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.0" id="DarwinCoreComponentsContent.AddressFields">
+	<ContentSpecRef id="EbayContentSpec" defaultFamily="Text"/>
+	<ContentInstance>
+		<ContentUnit id="contactname" />
+		<ContentUnit id="streetaddress1" />
+		<ContentUnit id="streetaddress2" />
+		<ContentUnit id="city" />
+		<ContentUnit id="state" />
+		<ContentUnit id="postalcode" />
+		<ContentUnit id="zipcode" />
+		<ContentUnit id="telephone" />
+		<ContentUnit id="country" />
+		<ContentUnit id="checkbox" />
+		<ContentUnit id="savechanges" />
+		<ContentUnit id="errortitle" />
+		<ContentUnit id="phoneextension" />
+		<ContentUnit id="cancel" />
+		<ContentUnit id="paypal"/>
+		<ContentUnit id="nonjssubmitbuttonname"/>
+	</ContentInstance>
+</ContentContract>

@@ -14,22 +14,6 @@ package org.eclipse.vjet.eclipse.internal.ui.view.scriptunit;
 import java.lang.reflect.Method;
 import java.util.List;
 
-import org.eclipse.vjet.dsf.jst.IJstNode;
-import org.eclipse.vjet.dsf.jst.IJstType;
-import org.eclipse.vjet.dsf.jst.IScriptUnit;
-import org.eclipse.vjet.dsf.jst.JstSource;
-import org.eclipse.vjet.dsf.jst.declaration.JstMethod;
-import org.eclipse.vjet.dsf.jst.declaration.JstProperty;
-import org.eclipse.vjet.dsf.jst.declaration.JstType;
-import org.eclipse.vjet.dsf.jst.term.JstIdentifier;
-import org.eclipse.vjet.dsf.jst.term.SimpleLiteral;
-import org.eclipse.vjet.dsf.jstojava.translator.JstUtil;
-import org.eclipse.vjet.eclipse.core.VjetPlugin;
-import org.eclipse.vjet.eclipse.core.parser.VjoParserToJstAndIType;
-import org.eclipse.vjet.eclipse.internal.ui.editor.VjoEditor;
-import org.eclipse.vjet.eclipse.internal.ui.nodeprinter.INodePrinter;
-import org.eclipse.vjet.eclipse.internal.ui.nodeprinter.NodePrinterFactory;
-import org.eclipse.vjet.vjo.tool.typespace.TypeSpaceMgr;
 import org.eclipse.dltk.mod.core.IModelElement;
 import org.eclipse.dltk.mod.internal.core.NativeVjoSourceModule;
 import org.eclipse.dltk.mod.internal.core.VjoSourceModule;
@@ -66,6 +50,24 @@ import org.eclipse.ui.IViewSite;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.part.ViewPart;
+import org.eclipse.vjet.dsf.jst.IJstNode;
+import org.eclipse.vjet.dsf.jst.IJstType;
+import org.eclipse.vjet.dsf.jst.IScriptProblem;
+import org.eclipse.vjet.dsf.jst.IScriptUnit;
+import org.eclipse.vjet.dsf.jst.JstSource;
+import org.eclipse.vjet.dsf.jst.declaration.JstBlock;
+import org.eclipse.vjet.dsf.jst.declaration.JstMethod;
+import org.eclipse.vjet.dsf.jst.declaration.JstProperty;
+import org.eclipse.vjet.dsf.jst.declaration.JstType;
+import org.eclipse.vjet.dsf.jst.term.JstIdentifier;
+import org.eclipse.vjet.dsf.jst.term.SimpleLiteral;
+import org.eclipse.vjet.dsf.jstojava.translator.JstUtil;
+import org.eclipse.vjet.eclipse.core.VjetPlugin;
+import org.eclipse.vjet.eclipse.core.parser.VjoParserToJstAndIType;
+import org.eclipse.vjet.eclipse.internal.ui.editor.VjoEditor;
+import org.eclipse.vjet.eclipse.internal.ui.nodeprinter.INodePrinter;
+import org.eclipse.vjet.eclipse.internal.ui.nodeprinter.NodePrinterFactory;
+import org.eclipse.vjet.vjo.tool.typespace.TypeSpaceMgr;
 
 /**
  * Script Unit View
@@ -80,30 +82,30 @@ public class ScriptUnitView extends ViewPart implements ISelectionListener{
 	private VjoEditor vjoEditor;  //the editor  that provide the content
 	private IPartListener partListener = new PartListener();
 	private IDocumentListener documentListener = new DocumentListener();
-	
+
 	private IJstType jstType;     //last jst type input
-	
+
 	@Override
 	public void init(IViewSite site) throws PartInitException {
 		super.init(site);
-		
+
 		this.getSite().getPage().getWorkbenchWindow().getSelectionService().addPostSelectionListener(this);
 		this.getSite().getPage().getWorkbenchWindow().getPartService().addPartListener(partListener);
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see org.eclipse.ui.part.WorkbenchPart#createPartControl(org.eclipse.swt.widgets.Composite)
 	 */
 	@Override
 	public void createPartControl(Composite parent) {
 		parent.setLayout(new GridLayout(1, false));
-				
+
 		//create tree viewer
 		this.viewer = new TreeViewer(parent);
 		this.viewer.getTree().setLayoutData(new GridData(GridData.FILL_BOTH));
 		this.viewer.setContentProvider(new ScriptUnitTreeContentProvider());
 		this.viewer.setLabelProvider(new ScriptUnitTreeLabelProvider());
-		
+
 		this.viewer.addDoubleClickListener(new IDoubleClickListener() {
 			/* 
 			 * select source code range in editor
@@ -114,32 +116,32 @@ public class ScriptUnitView extends ViewPart implements ISelectionListener{
 				IStructuredSelection structuredSelection = (IStructuredSelection)event.getSelection();
 				if (!(structuredSelection.getFirstElement() instanceof IJstNode))
 					return;
-				
+
 				IJstNode jstNode = (IJstNode)structuredSelection.getFirstElement();
-				
+
 				JstSource jstSource = jstNode.getSource();
 				if (jstSource == null)
 					return;
-				
+
 				vjoEditor.getScriptSourceViewer().revealRange(jstSource.getStartOffSet(), jstSource.getLength());
 				vjoEditor.getScriptSourceViewer().setSelectedRange(jstSource.getStartOffSet(), jstSource.getLength());
 			}
 		});
-		
+
 		//offset label
 		this.offsetLabel = new Label(parent, SWT.SHADOW_IN);
 		this.offsetLabel.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		
+
 		//set selection provider
 		this.getSite().setSelectionProvider(this.viewer);
-		
+
 		//fill action bar
 		this.fillActionBar();
-		
+
 		//context menu
         this.initContextMenu();
 	}
-	
+
 	private void fillActionBar() {
 		IActionBars actionBars = this.getViewSite().getActionBars();
 		actionBars.getToolBarManager().add(new CheckNodeAction(this.viewer));
@@ -147,7 +149,7 @@ public class ScriptUnitView extends ViewPart implements ISelectionListener{
 
 	private void initContextMenu() {
 		MenuManager popupMenuManager = new MenuManager("#PopupMenu");
-		
+
 		popupMenuManager.add(new Action("Copy Structure") {
 			/* (non-Javadoc)
 			 * @see org.eclipse.jface.action.Action#run()
@@ -160,7 +162,7 @@ public class ScriptUnitView extends ViewPart implements ISelectionListener{
 				clipboard.dispose();
 			}
 		});
-		
+
 		popupMenuManager.add(new Action("Copy Properties") {
 			/* (non-Javadoc)
 			 * @see org.eclipse.jface.action.Action#run()
@@ -173,7 +175,7 @@ public class ScriptUnitView extends ViewPart implements ISelectionListener{
 				clipboard.dispose();
 			}
 		});
-		
+
 		popupMenuManager.add(new Action("Copy XPath") {
 			/* (non-Javadoc)
 			 * @see org.eclipse.jface.action.Action#run()
@@ -192,12 +194,12 @@ public class ScriptUnitView extends ViewPart implements ISelectionListener{
 				clipboard.dispose();
 			}
 		});
-		
+
 		Menu popupMenu = popupMenuManager.createContextMenu(this.viewer.getTree());
 		this.viewer.getTree().setMenu(popupMenu);
 		getSite().registerContextMenu(popupMenuManager, this.viewer); 
 	}
-	
+
 	private String getXPathTestString(IJstNode node, ITreeContentProvider contentProvider){
 		StringBuffer testString = new StringBuffer("<testcase number='1'>\n\t");
 		node.getOwnerType().getName();
@@ -234,7 +236,7 @@ public class ScriptUnitView extends ViewPart implements ISelectionListener{
 		testString.append("</testcase>");
 		return testString.toString();
 	}
-	
+
 	private String getXPath(String str, Object obj, 
 			ITreeContentProvider contentProvider){
 		String returnStr = "";
@@ -248,7 +250,7 @@ public class ScriptUnitView extends ViewPart implements ISelectionListener{
 				addIt = parent.getClass().getSimpleName() 
 					+ "[@Name='" + getNodeName(parent) + "']";
 			}
-			
+
 			if(getNodeName(obj).equals("")){
 				//Add position if more than 1
 				if (getPosition((IJstNode)obj, (IJstNode)parent) > 1){
@@ -261,7 +263,7 @@ public class ScriptUnitView extends ViewPart implements ISelectionListener{
 					}
 				}
 			}
-			
+
 			str = addIt + "/" + str;
 			if (parent.getClass().getSimpleName().equals(
 					JstType.class.getSimpleName())){
@@ -271,7 +273,7 @@ public class ScriptUnitView extends ViewPart implements ISelectionListener{
 		}	
 		return returnStr;
 	}
-	
+
 	private int getPosition(IJstNode child, IJstNode parent){
 		int position = 0;
 		for (IJstNode node : parent.getChildren()){
@@ -284,7 +286,7 @@ public class ScriptUnitView extends ViewPart implements ISelectionListener{
 		}
 		return position;
 	}
-	
+
 	private static String getNodeName(IJstNode node) {
 		String value = null;
 		try {
@@ -297,7 +299,7 @@ public class ScriptUnitView extends ViewPart implements ISelectionListener{
 		}
 		return value;
 	}
-	
+
 	private String getNodeName(Object node){
 		String str = "";
 		if (node instanceof JstMethod) {
@@ -309,10 +311,10 @@ public class ScriptUnitView extends ViewPart implements ISelectionListener{
 		} else if (node instanceof SimpleLiteral){
 			str = ((SimpleLiteral)node).getValue();
 		} 
-		
+
 		return str;
 	}
-	
+
 	private String getTypeList(IJstNode node){
 		String retStr = "";
 		try {
@@ -328,14 +330,14 @@ public class ScriptUnitView extends ViewPart implements ISelectionListener{
 					retStr = retStr + "," +s;
 			}
 		} catch (Exception e) {}
-		
+
 		return retStr;
 	}
-	
+
 	private String copyStructure(Object node, int tier) {
 		ILabelProvider labelProvider = (ILabelProvider)this.viewer.getLabelProvider();
 		StringBuilder structureBuilder = new StringBuilder(labelProvider.getText(node));
-		
+
 		ITreeContentProvider contentProvider = (ITreeContentProvider)this.viewer.getContentProvider();
 		Object[] children = contentProvider.getChildren(node);
 		++ tier;
@@ -349,16 +351,16 @@ public class ScriptUnitView extends ViewPart implements ISelectionListener{
 		}
 		return structureBuilder.toString();
 	}
-	
+
 	private String copyProperties(Object node) {
 		INodePrinter nodePrinter = NodePrinterFactory.getNodePrinter(node);
 		if (nodePrinter == null)
 			return "";
-		
+
 		String[] names = nodePrinter.getPropertyNames(node);
 		if (names.length == 0)
 			return "";
-		
+
 		StringBuilder stringBuilder = new StringBuilder();
 		Object[] values = nodePrinter.getPropertyValuies(node);
 		for (int i = 0; i < names.length; i++) {
@@ -368,7 +370,7 @@ public class ScriptUnitView extends ViewPart implements ISelectionListener{
 		}
 		return stringBuilder.toString();
 	}
-	
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -378,19 +380,19 @@ public class ScriptUnitView extends ViewPart implements ISelectionListener{
 	public void setFocus() {
 
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see org.eclipse.ui.ISelectionListener#selectionChanged(org.eclipse.ui.IWorkbenchPart, org.eclipse.jface.viewers.ISelection)
 	 */
 	public void selectionChanged(IWorkbenchPart part, ISelection selection) {
 		if (!(part instanceof IEditorPart))
 			return;
-		
+
 		if (!(part instanceof VjoEditor)) {
 			this.cleanUp();
 			return;
 		}
-		
+
 		if (this.vjoEditor != part) {
 			/**
 			 * fix bug 5832: first time open 'Array', do parsing, so the groupName of native type 'Array' will be set NULL.
@@ -404,42 +406,42 @@ public class ScriptUnitView extends ViewPart implements ISelectionListener{
 			}
 			else
 				modelElement = ((VjoEditor)part).getInputModelElement();
-			
+
 			if (!(modelElement instanceof VjoSourceModule)) {
 				this.cleanUp();
 				return;
 			}
-			
+
 			VjoSourceModule sourceModule = ((VjoSourceModule)modelElement);
 			IScriptUnit scriptUnit = this.getScriptUnit(sourceModule, (VjoEditor)part);
-			
+
 			//add to fix NPE
 			if (scriptUnit == null)
 				return;
-			
+
 			//record the latest jst type
 			this.jstType = scriptUnit.getType();
-			
+
 			this.vjoEditor = (VjoEditor)part;
 			this.vjoEditor.getScriptSourceViewer().getDocument().addDocumentListener(this.documentListener);
-			
+
 			//update script unit
 			((ScriptUnitTreeContentProvider)this.viewer.getContentProvider()).setScriptUnit(scriptUnit);
 			this.viewer.setInput(new Object[]{scriptUnit});
 		}
-		
+
 		if (selection instanceof ITextSelection && jstType != null) {
 			ITextSelection textSelection = (ITextSelection)selection;
-			
+
 			int startOffset = textSelection.getOffset();
 			int endOffset = startOffset + textSelection.getLength();
 			if (textSelection.getLength() > 0)
 				endOffset = startOffset + textSelection.getLength() - 1;
-				
+
 			//update offset status label
 			String offsetInfo = "Offset:" + textSelection.getOffset() + "  Length:" + textSelection.getLength();
 			this.offsetLabel.setText(offsetInfo);
-			
+
 			Object node = JstUtil.getLeafNode(jstType, startOffset, endOffset);
 			if (node != null) {
 				this.viewer.setSelection(new StructuredSelection(node), true);
@@ -448,15 +450,15 @@ public class ScriptUnitView extends ViewPart implements ISelectionListener{
 				this.viewer.setSelection(null);
 		}
 	}
-	
+
 	private IJstType getJstType(VjoSourceModule sourceModule) {
 		if (sourceModule instanceof NativeVjoSourceModule)
 			return TypeSpaceMgr.getInstance().findType(sourceModule.getTypeName());
 		else
 			return sourceModule.getJstType();
 	}
-	
-	
+
+
 	/**
 	 * Note: this method should not be changed, wrong parsing will interrupt jst type in TypespaceMgr
 	 * 
@@ -468,6 +470,45 @@ public class ScriptUnitView extends ViewPart implements ISelectionListener{
 		try {
 			String groupName = sourceModule.getGroupName();
 			String fileName = sourceModule.getTypeName().typeName();
+			System.out.println(groupName);
+			if(groupName.equals(".org.eclipse.dltk.mod.core.external.folders")){
+				final IJstType type = TypeSpaceMgr.getInstance().findType(sourceModule.getTypeName());
+				return new IScriptUnit() {
+
+					@Override
+					public IJstType getType() {
+						// TODO Auto-generated method stub
+						return type;
+					}
+
+					@Override
+					public JstBlock getSyntaxRoot() {
+						// TODO Auto-generated method stub
+						return null;
+					}
+
+					@Override
+					public List<IScriptProblem> getProblems() {
+						// TODO Auto-generated method stub
+						return null;
+					}
+
+					@Override
+					public IJstNode getNode(int startOffset) {
+						// TODO Auto-generated method stub
+						return null;
+					}
+
+					@Override
+					public List<JstBlock> getJstBlockList() {
+						// TODO Auto-generated method stub
+						return null;
+					}
+				};
+			}
+			// if from lib don't parse it get type from typespace
+
+
 			String source = sourceModule.getSource();
 			VjoParserToJstAndIType m_parser = new VjoParserToJstAndIType();
 			if(VjetPlugin.TRACE_PARSER){
@@ -478,14 +519,14 @@ public class ScriptUnitView extends ViewPart implements ISelectionListener{
 			return null;
 		}
 	}
-	
+
 	private boolean needUpdate(IJstType jstType) {
 		return this.jstType != jstType;
 	}
-	
+
 	private void cleanUp() {
 		this.viewer.setInput(new Object[0]);
-		
+
 		if (this.vjoEditor != null)
 			this.vjoEditor.getScriptSourceViewer().getDocument().removeDocumentListener(this.documentListener);
 		this.vjoEditor = null;
@@ -501,7 +542,7 @@ public class ScriptUnitView extends ViewPart implements ISelectionListener{
 		this.getSite().getPage().getWorkbenchWindow().getSelectionService().removePostSelectionListener(this);
 		this.getSite().getPage().getWorkbenchWindow().getPartService().removePartListener(partListener);
 	}
-	
+
 	/**
 	 * vjo editor part listener
 	 * 
@@ -511,10 +552,10 @@ public class ScriptUnitView extends ViewPart implements ISelectionListener{
 	private class PartListener implements IPartListener {
 		public void partActivated(IWorkbenchPart part) {
 		}
-		
+
 		public void partBroughtToTop(IWorkbenchPart part) {
 		}
-		
+
 		/* 
 		 * clean the content in script view
 		 * 
@@ -525,17 +566,17 @@ public class ScriptUnitView extends ViewPart implements ISelectionListener{
 				cleanUp();
 			}
 		}
-		
+
 		public void partDeactivated(IWorkbenchPart part) {
 			// TODO Auto-generated method stub
-			
+
 		}
-		
+
 		public void partOpened(IWorkbenchPart part) {
 			// TODO Auto-generated method stub
 		}
 	}
-	
+
 	/**
 	 * update script unit view, when script unit changed (document changed)
 	 * 
@@ -550,15 +591,15 @@ public class ScriptUnitView extends ViewPart implements ISelectionListener{
 			}
 			VjoSourceModule sourceModule = (VjoSourceModule)element;
 			IScriptUnit scriptUnit = getScriptUnit(sourceModule, vjoEditor);
-			
+
 			//record jst type
 			jstType = scriptUnit.getType();
-			
+
 			//reset input
 			((ScriptUnitTreeContentProvider)viewer.getContentProvider()).setScriptUnit(scriptUnit);
 			viewer.setInput(new Object[]{scriptUnit});
 		}
-		
+
 		public void documentAboutToBeChanged(DocumentEvent event) {
 			// nothing to do
 		}

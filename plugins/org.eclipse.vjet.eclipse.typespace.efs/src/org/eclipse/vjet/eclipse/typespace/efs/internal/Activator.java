@@ -16,7 +16,7 @@ import org.osgi.framework.BundleContext;
 public class Activator extends Plugin {
 
 	 // The plug-in ID
-    public static final String PLUGIN_ID = "org.ebayopensource.vjet.eclipse.typespace.efs";
+    public static final String PLUGIN_ID = "org.eclipse.vjet.eclipse.typespace.efs";
 
     // The shared instance
     private static Activator plugin;

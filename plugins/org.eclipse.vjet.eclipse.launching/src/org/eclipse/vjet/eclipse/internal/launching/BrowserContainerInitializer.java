@@ -66,48 +66,21 @@ public class BrowserContainerInitializer extends BuildpathContainerInitializer {
 		int size = containerPath.segmentCount();
 		if (size > 0) {
 			if (containerPath.segment(0).equals(VjetPlugin.BROWSERSDK_ID)) {
-				
-				
-			
-				
 				final String[] defaultLibs = TsLibLoader.getBrowserGroups();
-				
-				Job job = new Job("Add Links") {
-					public IStatus run(IProgressMonitor monitor) {
-						try {
-							IInterpreterInstall interp = resolveInterpreter(
-									getNatureFromProject(project),
-									getEnvironmentFromProject(project), containerPath);
-							BrowserSdkBuildpathContainer container = null;
-							for (String group : defaultLibs) {
-								BuildPathUtils.addLinkForGroup(group);
-							}
-							
-							container = new BrowserSdkBuildpathContainer(interp, containerPath);
-							container.setEntries(createEntries());
-							DLTKCore.setBuildpathContainer(containerPath,
-									new IScriptProject[] { project },
-									new IBuildpathContainer[] { container }, null);
-							
-							
-						} catch (CoreException e) {
-							return e.getStatus();
-						} finally {
-							monitor.done();
-						}
-						return Status.OK_STATUS;
-					}
-				};
-				job.setRule(ResourcesPlugin.getWorkspace().getRoot());
-				job.schedule();
-				
-				
-				
-				
-				
-				
-				
-				
+
+				IInterpreterInstall interp = resolveInterpreter(
+						getNatureFromProject(project),
+						getEnvironmentFromProject(project), containerPath);
+				BrowserSdkBuildpathContainer container = null;
+				for (String group : defaultLibs) {
+					BuildPathUtils.addLinkForGroup(group);
+				}
+
+				container = new BrowserSdkBuildpathContainer(interp, containerPath);
+				container.setEntries(createEntries());
+				DLTKCore.setBuildpathContainer(containerPath,
+						new IScriptProject[] { project },
+						new IBuildpathContainer[] { container }, null);
 			}
 			
 		}

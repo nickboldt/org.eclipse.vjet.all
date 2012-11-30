@@ -26,7 +26,7 @@ public class VjoSelectionRefPrjsTests extends AbstractSelectionModelTests {
 	
 	private static boolean isFirstRun = true;
 		
-	public void setUp() throws IOException {
+	public void setUp() throws IOException, CoreException {
 		setWorkspaceSufix("3");
 		IProject project1 = getWorkspaceRoot().getProject(PROJECT1_NAME);
 		IProject project2 = getWorkspaceRoot().getProject(PROJECT2_NAME);
@@ -39,11 +39,14 @@ public class VjoSelectionRefPrjsTests extends AbstractSelectionModelTests {
 			} catch (CoreException e) {
 				e.printStackTrace();
 			}
-			isFirstRun = false;
-			mgr.reload(this);
-			waitTypeSpaceLoaded();
+			buildAndWaitForEnd();
+			
 		}
 	}
+	
+	
+	
+	
 		
 	private void copyProjects(String... names) throws CoreException,
 		IOException {
@@ -61,6 +64,7 @@ public class VjoSelectionRefPrjsTests extends AbstractSelectionModelTests {
 		String[] names = new String[] { "B" };
 		IJSSourceModule module = (IJSSourceModule) getSourceModule(
 				PROJECT2_NAME, "src", new Path("fld2/D.js"));
+		System.out.println(module);
 		int position = firstPositionInFile("B", module);
 		
 		basicTest(module, position, names, ICategoryRequestor.TYPE_CATEGORY);

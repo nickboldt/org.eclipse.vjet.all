@@ -1,12 +1,4 @@
 /*******************************************************************************
- * Copyright (c) 2005-2012 eBay Inc.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- *******************************************************************************/
-/*******************************************************************************
  * Copyright (c) 2005, 2007 IBM Corporation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -49,14 +41,7 @@ import org.eclipse.vjet.eclipse.internal.ui.scriptdoc.PublicScanner;
 import org.eclipse.vjet.eclipse.ui.VjetPreferenceConstants;
 import org.eclipse.vjet.eclipse.ui.VjetUIPlugin;
 import org.eclipse.vjet.vjo.meta.VjoKeywords;
-//import org.eclipse.dltk.mod.javascript.internal.ui.text.JavascriptPartitionScanner;
-//import org.eclipse.dltk.mod.javascript.internal.ui.text.JsPreferenceInterpreter;
-//import org.eclipse.dltk.mod.javascript.internal.ui.text.Symbols;
-//import org.eclipse.dltk.mod.javascript.scriptdoc.IScanner;
-//import org.eclipse.dltk.mod.javascript.scriptdoc.JavaHeuristicScanner;
-//import org.eclipse.dltk.mod.javascript.scriptdoc.JavaIndenter;
-//import org.eclipse.dltk.mod.javascript.scriptdoc.PublicScanner;
-//import org.eclipse.dltk.mod.javascript.ui.text.IJavaScriptPartitions;
+
 
 /**
  * Auto indent strategy sensitive to brackets. Copied from
@@ -387,12 +372,14 @@ public class VjoAutoEditStrategy extends DefaultIndentLineAutoEditStrategy {
 				c.caretOffset = c.offset + buf.length();
 				c.shiftsCaret = false;
 
+				
+				buf.append('}'); // TODO more testing here
 				// copy old content of line behind insertion point to new line
 				// unless we think we are inserting an anonymous type definition
 				copyContent(d, c, buf, lineEnd, contentStart);
 
 				appendReference(d, c, indenter, buf, lineEnd, start);
-				buf.append('}');
+				
 			}
 
 			// deleted below code, use VjoDocIndentStrategy instead.

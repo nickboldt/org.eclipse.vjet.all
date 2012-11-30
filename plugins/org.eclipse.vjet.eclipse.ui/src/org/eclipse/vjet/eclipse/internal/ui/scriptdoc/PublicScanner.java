@@ -5,11 +5,7 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *
- 
  *******************************************************************************/
-/**
- * 
- */
 package org.eclipse.vjet.eclipse.internal.ui.scriptdoc;
 
 import org.eclipse.dltk.mod.compiler.CharOperation;

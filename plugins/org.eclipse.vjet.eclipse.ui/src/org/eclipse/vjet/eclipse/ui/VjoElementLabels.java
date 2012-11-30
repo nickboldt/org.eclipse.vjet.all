@@ -1,14 +1,12 @@
 /*******************************************************************************
- * Copyright (c) 2005, 2012 eBay Inc.
+ * Copyright (c) 2005, 2007 IBM Corporation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *
+ 
  *******************************************************************************/
-/**
- * 
- */
 package org.eclipse.vjet.eclipse.ui;
 
 import org.eclipse.vjet.eclipse.core.IImportContainer;
@@ -31,10 +29,7 @@ import org.eclipse.dltk.mod.internal.core.SourceField;
 import org.eclipse.dltk.mod.internal.core.VjoLocalVariable;
 import org.eclipse.dltk.mod.ui.ScriptElementLabels;
 
-/**
- * 
- * 
- */
+
 public class VjoElementLabels extends ScriptElementLabels {
 	private final static long QUALIFIER_FLAGS = P_COMPRESSED | USE_RESOLVED;
 	

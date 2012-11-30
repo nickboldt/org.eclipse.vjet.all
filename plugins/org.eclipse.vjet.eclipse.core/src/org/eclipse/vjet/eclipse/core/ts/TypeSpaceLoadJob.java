@@ -8,6 +8,7 @@
  *******************************************************************************/
 package org.eclipse.vjet.eclipse.core.ts;
 
+// DEPRECATED 
 import org.eclipse.vjet.dsf.jst.IJstType;
 import org.eclipse.vjet.dsf.ts.event.EventListenerStatus;
 import org.eclipse.vjet.dsf.ts.event.ISourceEventCallback;
@@ -38,15 +39,15 @@ public class TypeSpaceLoadJob extends WorkspaceJob {
 	@Override
 	public IStatus runInWorkspace(IProgressMonitor monitor)
 			throws CoreException {
-		TypeSpaceMgr mgr = TypeSpaceMgr.getInstance();
-		try {
-			mgr
-					.load(new EclipseTypeLoadMonitor(monitor),
-							getErrorLogCallback());
-		} catch (Exception e) {
-			e.printStackTrace();
-			DLTKCore.error(e.getMessage(), e);
-		}
+//		TypeSpaceMgr mgr = TypeSpaceMgr.getInstance();
+//		try {
+//			mgr
+//					.load(new EclipseTypeLoadMonitor(monitor),
+//							getErrorLogCallback());
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			DLTKCore.error(e.getMessage(), e);
+//		}
 		return Status.OK_STATUS;
 	}
 

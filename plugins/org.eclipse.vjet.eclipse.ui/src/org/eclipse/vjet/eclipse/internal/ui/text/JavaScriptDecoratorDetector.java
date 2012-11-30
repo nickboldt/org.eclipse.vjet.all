@@ -7,9 +7,6 @@
  *
  
  *******************************************************************************/
-/**
- * 
- */
 package org.eclipse.vjet.eclipse.internal.ui.text;
 
 import org.eclipse.jface.text.rules.IWordDetector;

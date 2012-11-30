@@ -8,16 +8,12 @@
  *******************************************************************************/
 package org.eclipse.vjet.eclipse.core.ts;
 
-import org.eclipse.vjet.vjo.tool.typespace.TypeSpaceMgr;
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IncrementalProjectBuilder;
 import org.eclipse.core.resources.WorkspaceJob;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.SubProgressMonitor;
-import org.eclipse.dltk.mod.core.DLTKCore;
 
 /**
  * Job to reloading all types to the type space
@@ -43,19 +39,19 @@ public class TypeSpaceReloadJob extends WorkspaceJob {
 	@Override
 	public IStatus runInWorkspace(IProgressMonitor monitor)
 			throws CoreException {
-		TypeSpaceMgr mgr = TypeSpaceMgr.getInstance();
-		try {
-			TypeSpaceTracer.loadReloadEvent(mgr);
-			if(m_project!=null){
-				mgr.reloadGroup(new EclipseTypeLoadMonitor(monitor), m_project.getName(), null);
-				m_project.build(IncrementalProjectBuilder.FULL_BUILD, new SubProgressMonitor(monitor,1));
-			}else{
-				mgr.reload(new EclipseTypeLoadMonitor(monitor), null);
-			}
-			
-		} catch (Exception e) {
-			DLTKCore.error(e.getMessage(), e);
-		}
+//		TypeSpaceMgr mgr = TypeSpaceMgr.getInstance();
+//		try {
+//			TypeSpaceTracer.loadReloadEvent(mgr);
+//			if(m_project!=null){
+//				mgr.reloadGroup(new EclipseTypeLoadMonitor(monitor), m_project.getName(), null);
+//				m_project.build(IncrementalProjectBuilder.FULL_BUILD, new SubProgressMonitor(monitor,1));
+//			}else{
+//				mgr.reload(new EclipseTypeLoadMonitor(monitor), null);
+//			}
+//			
+//		} catch (Exception e) {
+//			DLTKCore.error(e.getMessage(), e);
+//		}
 		return Status.OK_STATUS;
 	}
 

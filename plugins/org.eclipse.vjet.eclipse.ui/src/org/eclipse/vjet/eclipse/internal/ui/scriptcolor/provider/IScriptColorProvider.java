@@ -1,7 +1,17 @@
-/**
- * 
- */
+/*******************************************************************************
+ * Copyright (c) 2005, 2007 IBM Corporation and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ 
+ *******************************************************************************/
 package org.eclipse.vjet.eclipse.internal.ui.scriptcolor.provider;
+
+/**
+ * modified copy of org.eclipse.dltk.javascript.ui.scriptcolor.provider.IScriptColorProvider
+ */
 
 import org.eclipse.jface.text.rules.IRule;
 import org.eclipse.jface.text.rules.IToken;

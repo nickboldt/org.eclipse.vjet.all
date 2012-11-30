@@ -20,9 +20,6 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
-import org.eclipse.vjet.dsf.jst.ts.util.ISdkEnvironment;
-import org.eclipse.vjet.eclipse.codeassist.CodeassistUtils;
-import org.eclipse.vjet.eclipse.core.sdk.VJetSdkEnvironment;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
@@ -49,7 +46,12 @@ import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.launching.JavaRuntime;
+import org.eclipse.vjet.dsf.jst.ts.util.ISdkEnvironment;
+import org.eclipse.vjet.eclipse.codeassist.CodeassistUtils;
+import org.eclipse.vjet.eclipse.core.sdk.VJetSdkEnvironment;
+import org.eclipse.vjet.vjo.tool.typespace.SourcePathInfo;
 import org.osgi.service.prefs.BackingStoreException;
+
 
 public class PiggyBackClassPathUtil {
 	public static final String PREFERENCE_SCRIPTPROJECT_INITIALIZED = "initialized_project_from_v4classpath";
@@ -217,17 +219,23 @@ public class PiggyBackClassPathUtil {
 
 	}
 
-	public static List<String> getProjectSrcPath_DLTK(IScriptProject vProject) {
-		List<String> srcPaths = new ArrayList<String>();
+	public static SourcePathInfo getProjectSrcPath_DLTK(IScriptProject vProject) {
+		SourcePathInfo srcPaths = new SourcePathInfo();
 		String name = vProject.getProject().getName();
 		IBuildpathEntry[] entries = getResolvedBuildpath(vProject);
-
-		List<IPath> folders = new ArrayList<IPath>();
 
 		for (IBuildpathEntry entry : entries) {
 			if (entry.getEntryKind() != IBuildpathEntry.BPE_SOURCE) {
 				continue;
 			}
+
+			for(IPath inclusion : entry.getInclusionPatterns()){
+				srcPaths.addInclusionRule(inclusion.toPortableString());
+			}
+			for(IPath exclusion : entry.getExclusionPatterns()){
+				srcPaths.addExclusionRule(exclusion.toPortableString());
+			}
+
 			String portableString = entry.getPath().toPortableString();
 
 			if (portableString.lastIndexOf(name) != -1) {
@@ -240,7 +248,7 @@ public class PiggyBackClassPathUtil {
 
 				}
 			}
-			srcPaths.add(portableString);
+			srcPaths.addSourcePath(portableString);
 		}
 		return srcPaths;
 	}
@@ -252,7 +260,7 @@ public class PiggyBackClassPathUtil {
 			IBuildpathEntry entry = entries[i];
 			if (entry.getEntryKind() == IBuildpathEntry.BPE_LIBRARY) {
 				IPath path = entry.getPath();
-			
+
 				File file = getFile(path);
 				if (file!=null && file.exists() && file.isFile()) {
 					URL url = getURL(file);
@@ -264,7 +272,7 @@ public class PiggyBackClassPathUtil {
 		}
 		return urlsString;
 	}
-	
+
 	/**
 	 * @param path
 	 * @return
@@ -281,10 +289,10 @@ public class PiggyBackClassPathUtil {
 				if(member.isLinked()){
 					return null;
 				}
-						
+
 			}
-			
-			
+
+
 		}
 		return file;
 	}
@@ -598,7 +606,7 @@ public class PiggyBackClassPathUtil {
 	 */
 	public static boolean isInSourceFolder(IResource resource) {
 		List<String> list = PiggyBackClassPathUtil
-				.getProjectSrcPath_DLTK(getScriptProject(resource.getProject()));
+				.getProjectSrcPath_DLTK(getScriptProject(resource.getProject())).getSourcePaths();
 
 		boolean isInSourceFolder = false;
 

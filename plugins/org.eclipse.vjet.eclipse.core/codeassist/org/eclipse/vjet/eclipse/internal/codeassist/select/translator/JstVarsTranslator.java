@@ -23,6 +23,7 @@ import org.eclipse.dltk.mod.core.IMember;
 import org.eclipse.dltk.mod.core.IModelElement;
 import org.eclipse.dltk.mod.core.ModelException;
 
+
 /**
  * JstVars translator
  * 
@@ -46,17 +47,24 @@ public class JstVarsTranslator extends DefaultNodeTranslator {
 		if(declaringBlock==null){
 			declaringBlock = CodeassistUtils.findDeclaringBlock(jstVars);
 		}
-		
+
 		IModelElement element =null;
 		IModelElement[] elementFromAry = JstNodeDLTKElementResolver.lookupAndConvert(declaringBlock);
 		if(elementFromAry!=null && elementFromAry.length==1){
 			element = elementFromAry[0];
 		}
-		
+
 		if(declaringBlock instanceof JstMethod){
 			IJstMethod jstMethod = (JstMethod)declaringBlock;
-			if (element == null && jstMethod!=null  &&  !jstMethod.getOverloaded().isEmpty()) {//get the first signature method
-				element = JstNodeDLTKElementResolver.convert(module, jstMethod.getOverloaded().get(0))[0];
+			if ( jstMethod!=null  ) {//get the first signature method
+				if(!jstMethod.getOverloaded().isEmpty()){
+					element = JstNodeDLTKElementResolver.convert(module, jstMethod.getOverloaded().get(0))[0];
+				}else{
+					IModelElement[] convert = JstNodeDLTKElementResolver.convert(module, jstMethod);
+					if(convert!=null && convert.length>0){
+						element = convert[0];
+					}
+				}
 			}
 		}
 		if (element == null ) {
@@ -64,6 +72,7 @@ public class JstVarsTranslator extends DefaultNodeTranslator {
 		}
 		try {
 			IMember dltkMethod = (IMember) element;
+			// TODO support selection engine for var x,y,z;
 			String localVarName = CodeassistUtils.getFirstVariableName(jstVars);
 			IModelElement[] children = dltkMethod.getChildren();
 			for (int i = 0; i < children.length; i++) {
