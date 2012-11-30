@@ -221,7 +221,7 @@
 
 
 
-	
+	<profiles>
 		<profile>
 			<id>platform-helios</id>
 			<activation>
