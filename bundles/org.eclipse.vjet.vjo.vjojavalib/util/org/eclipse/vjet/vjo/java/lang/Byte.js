@@ -27,7 +27,7 @@ vjo.ctype('org.eclipse.vjet.vjo.java.lang.Byte') //< public final
 		cache : vjo.createArray(null, -(-128) + 127 + 1)
 	})
 	.protos({
-		//>public void constructs
+		//>public void constructs()
 		constructs : function () {
 		
 		}

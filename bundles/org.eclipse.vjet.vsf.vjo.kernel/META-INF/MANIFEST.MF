@@ -10,7 +10,21 @@ Require-Bundle: org.eclipse.vjet.core.util;bundle-version="0.9.0",
  org.eclipse.vjet.vsf.jsnative.jsr;bundle-version="0.9.0"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Export-Package: org.eclipse.vjet.vsf,
+Export-Package: org.eclipse.vjet.vjo.util,
+ org.eclipse.vjet.vsf,
  org.eclipse.vjet.vsf.assembly,
- org.eclipse.vjet.vsf.error
+ org.eclipse.vjet.vsf.common,
+ org.eclipse.vjet.vsf.document,
+ org.eclipse.vjet.vsf.docx,
+ org.eclipse.vjet.vsf.error,
+ org.eclipse.vjet.vsf.service,
+ org.eclipse.vjet.vsf.tools,
+ org.eclipse.vjet.vsf.typeextensions.number,
+ org.eclipse.vjet.vsf.typeextensions.string,
+ org.eclipse.vjet.vsf.utils,
+ org.eclipse.vjet.vsf.utils.jstrace,
+ org.eclipse.vjet.vsf.utils.logging,
+ org.eclipse.vjet.vsf.utils.reflection,
+ org.eclipse.vjet.vsf.utils.xml,
+ org.eclipse.vjet.vsf.window.utils
 Bundle-Vendor: eclipse.org
