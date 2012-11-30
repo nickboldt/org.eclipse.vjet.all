@@ -42,7 +42,7 @@
 								<id>sign</id>
 								<configuration>
 									<inputFile>${project.build.directory}/vjet-updatesite.zip</inputFile>
-									<signerInputDirectory>/home/data/httpd/download-staging.priv/webtools</signerInputDirectory>
+									<signerInputDirectory>${signer-input-directory}</signerInputDirectory>
 								</configuration>
 								<phase>package</phase>
 								<goals>
