@@ -19,30 +19,44 @@
    <license url="%licenseURL">
       %license
    </license>
- 
-   <plugin 
-        id="org.eclipse.vjet.web.wrapper"
+
+   <plugin
+         id="org.eclipse.vjet.web.wrapper"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-         
-   <plugin 
-        id="org.eclipse.vjet.web.kernel"
+
+   <plugin
+         id="org.eclipse.vjet.web.kernel"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-         
-   <plugin 
-        id="org.eclipse.vjet.web.cssparser"
+
+   <plugin
+         id="org.eclipse.vjet.web.cssparser"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-         
-   <plugin 
-        id="org.eclipse.vjet.web.html"
+
+   <plugin
+         id="org.eclipse.vjet.web.html"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.apache.batik.css"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.ccil.cowan.tagsoup"
          download-size="0"
          install-size="0"
          version="0.0.0"
