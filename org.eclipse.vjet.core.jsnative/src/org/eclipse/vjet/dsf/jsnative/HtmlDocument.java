@@ -352,190 +352,113 @@ public interface HtmlDocument extends Document, DocumentEvent, DocumentRange {
 	
 
 	
-	/**
-	 * Returns the onkeydown event handler code on the current element. 
-	 * @see http://www.w3schools.com/jsref/jsref_onkeydown.asp
-	 */
+	
 	@DOMSupport(DomLevel.ZERO)
 	@Property(name="onkeydown")
 	Object getOnKeyDown();
 	
-	/**
-	 * Sets the onkeydown event handler code on the current element. 
-	 * @param functionRef
-	 * @see http://www.w3schools.com/jsref/jsref_onkeydown.asp
-	 */
+	
 	@DOMSupport(DomLevel.ZERO)
 	@Property(name="onkeydown")
 	void setOnKeyDown(Object functionRef);
 	
-	/**
-	 * Returns the onkeypress event handler code on the current element. 
-	 * @see http://www.w3schools.com/jsref/jsref_onkeypress.asp
-	 */
+	
 	@DOMSupport(DomLevel.ZERO)
 	@Property(name="onkeypress")
 	Object getOnKeyPress();
 	
-	/**
-	 * Sets the onkeypress event handler code on the current element. 
-	 * @param functionRef
-	 * @see http://www.w3schools.com/jsref/jsref_onkeypress.asp
-	 */
+	
 	@DOMSupport(DomLevel.ZERO)
 	@Property(name="onkeypress")
 	void setOnKeyPress(Object functionRef);
 	
-	/**
-	 * Returns the onkeyup event handler code on the current element. 
-	 * @see http://www.w3schools.com/jsref/jsref_onkeyup.asp
-	 */
+	
 	@DOMSupport(DomLevel.ZERO)
 	@Property(name="onkeyup")
 	Object getOnKeyUp();
 	
-	/**
-	 * Sets the onkeyup event handler code on the current element. 
-	 * @param functionRef
-	 * @see http://www.w3schools.com/jsref/jsref_onkeyup.asp
-	 */
+	
 	@DOMSupport(DomLevel.ZERO)
 	@Property(name="onkeyup")
 	void setOnKeyUp(Object functionRef);
 	
-	/**
-	 * Returns the onclick event handler code on the current element. 
-	 * @see http://www.w3schools.com/jsref/jsref_onclick.asp
-	 */
+	
 	@DOMSupport(DomLevel.ZERO)
 	@Property(name="onclick")
 	Object getOnClick();
 	
-	/**
-	 * Sets the onclick event handler code on the current element. 
-	 * @param functionRef
-	 * @see http://www.w3schools.com/jsref/jsref_onclick.asp
-	 */
+	
 	@DOMSupport(DomLevel.ZERO)
 	@Property(name="onclick")
 	void setOnClick(Object functionRef);
 	
-	/**
-	 * Returns the ondblclick event handler code on the current element. 
-	 * @see http://www.w3schools.com/jsref/jsref_ondblclick.asp
-	 */
+	
 	@DOMSupport(DomLevel.ZERO)
 	@Property(name="ondblclick")
 	Object getOnDblClick();
 	
-	/**
-	 * Sets the ondblclick event handler code on the current element. 
-	 * @param functionRef
-	 * @see http://www.w3schools.com/jsref/jsref_ondblclick.asp
-	 */
+	
 	@DOMSupport(DomLevel.ZERO)
 	@Property(name="ondblclick")
 	void setOnDblClick(Object functionRef);
 	
-	/**
-	 * Returns the onmousedown event handler code on the current element. 
-	 * @see http://www.w3schools.com/jsref/jsref_onmousedown.asp
-	 */
+	
 	@DOMSupport(DomLevel.ZERO)
 	@Property(name="onmousedown")
 	Object getOnMouseDown();
 	
-	/**
-	 * Sets the onmousedown event handler code on the current element. 
-	 * @param functionRef
-	 * @see http://www.w3schools.com/jsref/jsref_onmousedown.asp
-	 */
+	
 	@DOMSupport(DomLevel.ZERO)
 	@Property(name="onmousedown")
 	void setOnMouseDown(Object functionRef);
 	
-	/**
-	 * Returns the onmousemove event handler code on the current element. 
-	 * @see http://www.w3schools.com/jsref/jsref_onmousemove.asp
-	 */
+	
 	@DOMSupport(DomLevel.ZERO)
 	@Property(name="onmousemove")
 	Object getOnMouseMove();
 	
-	/**
-	 * Sets the onmousemove event handler code on the current element. 
-	 * @param functionRef
-	 * @see http://www.w3schools.com/jsref/jsref_onmousemove.asp
-	 */
+	
 	@DOMSupport(DomLevel.ZERO)
 	@Property(name="onmousemove")
 	void setOnMouseMove(Object functionRef);
 	
-	/**
-	 * Returns the onmouseout event handler code on the current element.
-	 * @see http://www.w3schools.com/jsref/jsref_onmouseout.asp 
-	 */
+	
 	@DOMSupport(DomLevel.ZERO)
 	@Property(name="onmouseout")
 	Object getOnMouseOut();
 	
-	/**
-	 * Sets the onmouseout event handler code on the current element. 
-	 * @param functionRef
-	 * @see http://www.w3schools.com/jsref/jsref_onmouseout.asp 
-	 */
+	
 	@DOMSupport(DomLevel.ZERO)
 	@Property(name="onmouseout")
 	void setOnMouseOut(Object functionRef);
 	
-	/**
-	 * Returns the onmouseover event handler code on the current element. 
-	 * @see http://www.w3schools.com/jsref/jsref_onmouseover.asp 
-	 */
+	
 	@DOMSupport(DomLevel.ZERO)
 	@Property(name="onmouseover")
 	Object getOnMouseOver();
 	
-	/**
-	 * Sets the onmouseover event handler code on the current element. 
-	 * @param functionRef
-	 * @see http://www.w3schools.com/jsref/jsref_onmouseover.asp
-	 */
+	
 	@DOMSupport(DomLevel.ZERO)
 	@Property(name="onmouseover")
 	void setOnMouseOver(Object functionRef);
 	
-	/**
-	 * Returns the onmouseup event handler code on the current element. 
-	 * @see http://www.w3schools.com/jsref/jsref_onmouseup.asp
-	 */
+	
 	@DOMSupport(DomLevel.ZERO)
 	@Property(name="onmouseup")
 	Object getOnMouseUp();
 	
-	/**
-	 * Sets the onmouseup event handler code on the current element. 
-	 * @param functionRef
-	 * @see http://www.w3schools.com/jsref/jsref_onmouseup.asp
-	 */
+	
 	@DOMSupport(DomLevel.ZERO)
 	@Property(name="onmouseup")
 	void setOnMouseUp(Object functionRef);
 
-	/**
-	 * Returns the onclick event handler code on the current element. 
-	 * @see http://www.w3schools.com/jsref/jsref_onclick.asp
-	 */
+	
 	@DOMSupport(DomLevel.ZERO)
 	@BrowserSupport({BrowserType.IE_6P})
 	@Property(name="onreadystatechange")
 	Object getOnReadyStateChange();
 	
-	/**
-	 * Sets the onclick event handler code on the current element. 
-	 * @param functionRef
-	 * @see http://www.w3schools.com/jsref/jsref_onclick.asp
-	 */
+	
 	@DOMSupport(DomLevel.ZERO)
 	@BrowserSupport({BrowserType.IE_6P})
 	@Property(name="onreadystatechange")

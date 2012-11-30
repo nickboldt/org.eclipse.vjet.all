@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.vjet.dsf.jst.IJstType;
 import org.eclipse.vjet.dsf.jst.meta.JsTypingMeta;
@@ -25,32 +26,32 @@ import org.eclipse.vjet.dsf.jstojava.translator.IFindTypeSupport;
 import org.eclipse.vjet.dsf.jstojava.translator.TranslateHelper;
 
 /**
- * Registry of otype resolver. Take an object literal and resolve to an otype 
+ * Registry of otype resolver. Take an object literal and resolve to an otype
  * based on field name such as type.
  * 
- * This resolver will take an object literal passed into a method invocation expression
- * and resolve to an otype. 
+ * This resolver will take an object literal passed into a method invocation
+ * expression and resolve to an otype.
  * 
- * doIt({
- *  type: 'foo'
- *  
+ * doIt({ type: 'foo'
+ * 
  * })
  * 
- * The object literal will be resolved based on the literal field key (in the example above the key is type)
+ * The object literal will be resolved based on the literal field key (in the
+ * example above the key is type)
  * 
- * This will able validation and code assist for the object literal. 
- *
- *
+ * This will able validation and code assist for the object literal.
+ * 
+ * 
  */
 public class OTypeResolverRegistry {
-	
+
 	private static final OTypeResolverRegistry s_instance = new OTypeResolverRegistry();
 	private Map<String, List<IOTypeResolver>> m_resolvers = new HashMap<String, List<IOTypeResolver>>();
-	
+
 	public static OTypeResolverRegistry getInstance() {
 		return s_instance;
 	}
-	
+
 	public OTypeResolverRegistry addResolver(String key, IOTypeResolver resolver) {
 		List<IOTypeResolver> resolverList = m_resolvers.get(key);
 		if (resolverList == null) {
@@ -60,7 +61,7 @@ public class OTypeResolverRegistry {
 		resolverList.add(resolver);
 		return this;
 	}
-	
+
 	public IJstType resolve(String key, NV args) {
 		List<IOTypeResolver> resolverList = m_resolvers.get(key);
 		if (resolverList == null) {
@@ -69,79 +70,96 @@ public class OTypeResolverRegistry {
 		for (int i = 0; i < resolverList.size(); i++) {
 			IOTypeResolver resolver = resolverList.get(i);
 			String typeName = resolver.resolve(args);
-			
-			if(typeName.contains("org.mozilla.mod.javascript.Undefined")){
+
+			if (typeName == null) {
 				return null;
 			}
-			
+
+			if (typeName.contains("org.mozilla.mod.javascript.Undefined")) {
+				return null;
+			}
+
 			try {
-				final JsCommentMeta commentMeta = VjComment.parse("//> " + typeName);;
+				final JsCommentMeta commentMeta = VjComment.parse("//> "
+						+ typeName);
+				;
 				final JsTypingMeta typingMeta = commentMeta.getTyping();
 				IFindTypeSupport findSupport = new IFindTypeSupport() {
-					
+
 					@Override
 					public char[] getOriginalSource() {
 						// TODO Auto-generated method stub
 						return null;
 					}
-					
+
 					@Override
 					public ILineInfoProvider getLineInfoProvider() {
 						// TODO Auto-generated method stub
 						return null;
 					}
-					
+
 					@Override
 					public ErrorReporter getErrorReporter() {
 						// TODO Auto-generated method stub
 						return null;
 					}
-					
+
 					@Override
 					public IJstType getCurrentType() {
 						// TODO Auto-generated method stub
 						return null;
 					}
-					
+
 					@Override
 					public IJstType findTypeByName(String name) {
 						// TODO Auto-generated method stub
 						return null;
 					}
-				};;;
-				return TranslateHelper.findType(findSupport, typingMeta, commentMeta);
-				
+				};
+				;
+				;
+				return TranslateHelper.findType(findSupport, typingMeta,
+						commentMeta);
+
 			} catch (ParseException e) {
 				// do nothing will validate later
-				
-			} catch(TokenMgrError e){
+				e.printStackTrace();
+
+			} catch (TokenMgrError e) {
 				// do nothing will validate later
 			}
-			
-		
+
 		}
 		return null;
 	}
-	
+
 	public boolean hasResolver(String key) {
 		return m_resolvers.containsKey(key);
 	}
-	
+
+	public boolean hasResolvers() {
+		return !m_resolvers.isEmpty();
+	}
+
 	public void clear(String groupId) {
 		for (List<IOTypeResolver> resolverList : m_resolvers.values()) {
-			for (int i = resolverList.size() - 1; i >=0; i--) {
+			for (int i = resolverList.size() - 1; i >= 0; i--) {
 				IOTypeResolver resolver = resolverList.get(i);
-				for(String group: resolver.getGroupIds()){
+				for (String group : resolver.getGroupIds()) {
 					if (groupId.endsWith(group)) {
 						resolverList.remove(resolver);
 					}
 				}
-				
+
 			}
 		}
 	}
-	
+
 	public void clearAll() {
 		m_resolvers.clear();
+	}
+
+	public Set<String> getKeys() {
+		return m_resolvers.keySet();
 	}
 }

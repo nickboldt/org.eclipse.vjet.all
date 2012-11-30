@@ -10,8 +10,10 @@ package org.eclipse.vjet.dsf.jstojava.cml.vjetv.model.impl;
 
 import java.io.File;
 import java.util.LinkedHashSet;
+import java.util.List;
 
 import org.eclipse.vjet.dsf.jstojava.cml.vjetv.model.IHeadlessLauncherConfigure;
+
 
 /**
  * Class/Interface description
@@ -37,6 +39,10 @@ public class VjetvHeadlessConfigure extends IHeadlessLauncherConfigure {
     private boolean m_isBuild = false;
 
     private boolean m_verbose;
+
+	private List<String> m_librariesToLoad;
+
+	private List<String> m_exclusionPatterns;
 
     /**
      * @return the isBuild
@@ -74,7 +80,7 @@ public class VjetvHeadlessConfigure extends IHeadlessLauncherConfigure {
     }
 
     
-    public String getReprotType() {
+    public String getReportType() {
         return m_reportType;
     }
 
@@ -128,4 +134,22 @@ public class VjetvHeadlessConfigure extends IHeadlessLauncherConfigure {
     public void setVerbose(boolean verbose) {
         m_verbose = verbose;
     }
+
+	public void setLibrariesToLoad(List<String> findLibraries) {
+		m_librariesToLoad= findLibraries;
+
+	}
+
+	public List<String> getLibrariesToLoad(){
+		return m_librariesToLoad;
+	}
+
+	@Override
+	public List<String> getExclusionPatterns() {
+		return m_exclusionPatterns;
+	}
+
+	public void setExclusionPatterns(List<String> exclusionPatterns) {
+		m_exclusionPatterns= exclusionPatterns;
+	}
 }

@@ -18,7 +18,7 @@ function DLC_enableDLCEvents() {
 	for (var i = 0; i < inputs.length; i++) {
 		var input = inputs[i];
 		if (input.type == "checkbox" || input.type == "radio") {
-			//input.onclick = DLC_onClick;
+//			//input.onclick = DLC_onClick;
 		}
 		else if (input.type != "submit") {
 			if (input.type == "text" || input.type == "password") {
@@ -60,7 +60,7 @@ function DLC_onClick(evt) {
 	evt = evt || window.event; 
 	var elem = evt.target || evt.srcElement;
 
-	DLC.sendMessage("click:" + DLC_getElemRef(elem) + ":" + DLC_getNativeEventInfo(evt));		
+	DLC.sendMessage("click:" + DLC_getElemRef(elem) + ":" + DLC_getNativeEventInfo(evt));
 	//window.event.cancelBubble = true;
 }
 
@@ -181,7 +181,7 @@ function DLC_makeDraggable(elem) {
 	if (!elem) {
 		return;
 	}
-	elem.onmousedown = function(evt) {
+	elem.onmouseup = function(evt) {
 		evt = evt || window.event; 
 		DLC_DRAG_OBJ = this;
 		var elemPos = DLC_getPosition(this);
@@ -194,6 +194,24 @@ function DLC_makeDraggable(elem) {
 }
 
 function DLC_mouseUp(evt) {
+	evt = evt || window.event;
+	var mousePos = DLC_mousePosition(evt);
+	var elem = evt.target || evt.srcElement;
+	if (DLC_DRAG_OBJ) {
+		DLC.sendMessage("drop:" 
+			+ DLC_getElemRef(DLC_DRAG_OBJ) + ":["
+			+ (mousePos.x - DLC_MOUSE_OFFSET.x)
+			+ ","
+			+ (mousePos.y - DLC_MOUSE_OFFSET.y)
+			+ "]");
+		document.onmousemove = DLC_DND_SAVED_MOUSEMOVE;
+	}else{
+		DLC.sendMessage("mouseup:" + DLC_getElemRef(elem) + ":" + DLC_getNativeEventInfo(evt));
+	}
+	DLC_DRAG_OBJ = null;
+}
+
+function DLC_drop(evt) {
 	evt = evt || window.event;
 	var mousePos = DLC_mousePosition(evt);
 	var elem = evt.target || evt.srcElement;

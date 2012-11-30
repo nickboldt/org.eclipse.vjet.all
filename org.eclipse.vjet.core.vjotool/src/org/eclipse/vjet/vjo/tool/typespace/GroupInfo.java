@@ -11,6 +11,7 @@ package org.eclipse.vjet.vjo.tool.typespace;
 import java.util.Collections;
 import java.util.List;
 
+
 /**
  * This class contains information about group : name, source path, class path
  * and group path.
@@ -21,18 +22,18 @@ import java.util.List;
 public class GroupInfo {
 
 	private String m_groupName;
-	private List<String> m_srcPath;
+	private SourcePathInfo m_srcPath;
 	private List<String> m_classPath;
 	private String m_groupPath;
 	private List<String> m_directDependency;
 	private List<String> m_bootstrapPath;
-	
-	public GroupInfo(String grpName, String groupPath, List<String> srcPath,
+
+	public GroupInfo(String grpName, String groupPath, SourcePathInfo srcPath,
 			List<String> classPath, final List<String> directDependency) {
 		this(grpName, groupPath,  srcPath,
 			 classPath,  directDependency, null);
 	}
-	public GroupInfo(String grpName, String groupPath, List<String> srcPath,
+	public GroupInfo(String grpName, String groupPath, SourcePathInfo srcPath,
 			List<String> classPath, final List<String> directDependency, List<String> bootStrapPath) {
 		m_groupName = grpName;
 		m_srcPath = srcPath;
@@ -50,11 +51,11 @@ public class GroupInfo {
 		m_groupName = groupName;
 	}
 
-	public List<String> getSrcPath() {
+	public SourcePathInfo getSrcPath() {
 		return m_srcPath;
 	}
 
-	public void setSrcPath(List<String> srcPath) {
+	public void setSrcPath(SourcePathInfo srcPath) {
 		m_srcPath = srcPath;
 	}
 
@@ -73,14 +74,14 @@ public class GroupInfo {
 	public void setGroupPath(String groupPath) {
 		m_groupPath = groupPath;
 	}
-	
+
 	public List<String> getBootstrapPath() {
 		return m_bootstrapPath;
 	}
 	public void setBootstrapPath(List<String> bootstrapPath) {
 		m_bootstrapPath = bootstrapPath;
 	}
-	
+
 	/**
 	 * Answer an unmodifiable list of direct dependency.
 	 * @return List<String>

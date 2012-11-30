@@ -10,6 +10,7 @@ package org.eclipse.vjet.dsf.jstojava.cml.vjetv.model;
 
 import java.io.File;
 import java.util.LinkedHashSet;
+import java.util.List;
 
 /**
  * The interface used to implement launch configures, Include detail informaton.
@@ -20,74 +21,78 @@ import java.util.LinkedHashSet;
  */
 public abstract class IHeadlessLauncherConfigure {
 
-    /**
-     * Export txt type
-     */
-    public final static String TXT = "TXT";
+	/**
+	 * Export txt type
+	 */
+	public final static String TXT = "TXT";
 
-    /**
-     * Export xml type
-     */
-    public final static String XML = "XML";
+	/**
+	 * Export xml type
+	 */
+	public final static String XML = "XML";
 
-    /**
-     * Exprot HTML type
-     */
-    public final static String HTML = "HTML";
+	/**
+	 * Exprot HTML type
+	 */
+	public final static String HTML = "HTML";
 
-    /**
-     * Exprot PDF type
-     */
-    public final static String PDF = "PDF";
+	/**
+	 * Exprot PDF type
+	 */
+	public final static String PDF = "PDF";
 
-    /**
-     * The value is used for store report path
-     */
-    protected String m_reportPath;
+	/**
+	 * The value is used for store report path
+	 */
+	protected String m_reportPath;
 
-    /**
-     * The value is used for store report type
-     */
-    protected String m_reportType;
+	/**
+	 * The value is used for store report type
+	 */
+	protected String m_reportType;
 
-    /**
-     * The value is used for store source location
-     */
-    protected String[] m_sourceLocation;
+	/**
+	 * The value is used for store source location
+	 */
+	protected String[] m_sourceLocation;
 
-    /**
-     * Get genered report path
-     * 
-     * @return String
-     */
-    public abstract String getReportPath();
+	/**
+	 * Get genered report path
+	 * 
+	 * @return String
+	 */
+	public abstract String getReportPath();
 
-    /**
-     * Get report type
-     * 
-     * @return int
-     */
-    public abstract String getReprotType();
+	/**
+	 * Get report type
+	 * 
+	 * @return int
+	 */
+	public abstract String getReportType();
 
-    /**
-     * Report verbose
-     * 
-     * @return boolean
-     */
-    public abstract boolean isVerbose();
+	/**
+	 * Report verbose
+	 * 
+	 * @return boolean
+	 */
+	public abstract boolean isVerbose();
 
-    /**
-     * @return the validatedJSFiles
-     */
-    public abstract LinkedHashSet<File> getValidatedJSFiles();
+	/**
+	 * @return the validatedJSFiles
+	 */
+	public abstract LinkedHashSet<File> getValidatedJSFiles();
 
-    /**
-     * @return boolean
-     */
-    public abstract boolean isFailBuild();
+	/**
+	 * @return boolean
+	 */
+	public abstract boolean isFailBuild();
 
-    /**
-     * @return String
-     */
-    public abstract String getReportLevel();
+	/**
+	 * @return String
+	 */
+	public abstract String getReportLevel();
+
+	public abstract List<String> getLibrariesToLoad();
+
+	public abstract List<String> getExclusionPatterns();
 }

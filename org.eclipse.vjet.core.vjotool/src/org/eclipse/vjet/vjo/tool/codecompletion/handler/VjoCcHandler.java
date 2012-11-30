@@ -82,6 +82,7 @@ import org.eclipse.vjet.vjo.tool.codecompletion.advisor.VjoCcTypeProposalAdvisor
 import org.eclipse.vjet.vjo.tool.codecompletion.advisor.VjoCcVariableProposalAdvisor;
 import org.eclipse.vjet.vjo.tool.codecompletion.advisor.keyword.CompletionConstants;
 
+
 /**
  * 
  */
@@ -90,7 +91,7 @@ public class VjoCcHandler implements IVjoCcHandler {
 	public String[] handle(VjoCcCtx ctx) {
 
 		final List<String> result = new ArrayList<String>();
-		
+
 		if (ctx.isInSciptUnitArea()) {
 			return analyseFromScriptUnit(ctx);
 		}
@@ -126,8 +127,8 @@ public class VjoCcHandler implements IVjoCcHandler {
 					}
 				}
 			}
-			
-			
+
+
 			// ctx.putInfo(INFO_KEY_STATICFUNCTION, ctx.isInStatic());
 			String[] ss = new String[list.size()];
 			list.toArray(ss);
@@ -186,7 +187,7 @@ public class VjoCcHandler implements IVjoCcHandler {
 			}
 			else if (!completion.inScope(ScopeIds.METHOD)) {
 				if (completion.inScope(ScopeIds.INITS)) {
-					
+
 					return new String[] { VjoCcPackageProposalAdvisor.ID,
 							VjoCcCTypeProposalAdvisor.ID,
 							VjoCcThisProposalAdvisor.ID,
@@ -214,7 +215,7 @@ public class VjoCcHandler implements IVjoCcHandler {
 			if (ctx.isInSimpeLiteral()) {
 				return new String[0];
 			}
-			
+
 			IJstType type = ctx.getActingType();
 			if (type != null && type.isEnum()) {
 				result.add(VjoCcEnumElementAdvisor.ID);
@@ -271,36 +272,38 @@ public class VjoCcHandler implements IVjoCcHandler {
 			}
 			// xxx( <cursor> a, b)
 			if (completion.getRealParent() instanceof MtdInvocationExpr) {
-				
+
 				List<String> advisors = new ArrayList<String>();
 				MtdInvocationExpr mtd = (MtdInvocationExpr) completion
 						.getRealParent();
 				// TODO problem when this is jst arg not jstmethod
-				IJstMethod method = (IJstMethod)mtd.getMethod();
-				IJstType type = method.getOwnerType();
-				
-				if(method.isFuncArgMetaExtensionEnabled()){
-					
-					String targetFunc = method.getOwnerType().getName()
-							+ (method.isStatic() ? "::" : ":")
-							+ method.getName().getName();
-					
-					if(FunctionParamsMetaRegistry.getInstance().isFirstArgumentType(targetFunc,type.getPackage().getGroupName() )){
-						// TODO jstmethod to method key add to utility method
-						// TODO add alias advisor
-						advisors.add(VjoCcTypeProposalAdvisor.ID);
-						advisors.add(VjoCcTypeNameAliasProposalAdvisor.ID);
-						// TODO add package list here
-					//	advisors.add(VjoCcPackageProposalAdvisor.ID);
-						return advisors.toArray(new String[advisors.size()]); 
+				JstMethod method = (JstMethod)mtd.getMethod();
+				if(method!=null){
+					IJstType type = method.getOwnerType();
+
+					if(method.isFuncArgMetaExtensionEnabled()){
+
+						String targetFunc = method.getOwnerType().getName()
+								+ (method.isStatic() ? "::" : ":")
+								+ method.getName().getName();
+
+						if(FunctionParamsMetaRegistry.getInstance().isFirstArgumentType(targetFunc,type.getPackage().getGroupName() )){
+							// TODO jstmethod to method key add to utility method
+							// TODO add alias advisor
+							advisors.add(VjoCcTypeProposalAdvisor.ID);
+							advisors.add(VjoCcTypeNameAliasProposalAdvisor.ID);
+							// TODO add package list here
+						//	advisors.add(VjoCcPackageProposalAdvisor.ID);
+							return advisors.toArray(new String[advisors.size()]); 
+						}
+
 					}
-					
 				}
-				
+
 				// TODO add extension here for other libraries to add custom advisors
 				// method key as input
 				// return list of advisors
-				
+
 				// This advisor is available, Only when parameter can be found,
 				// by huzhou@ebay.com propose vjo.getType with package/type proposal
 				if(isVjoGetTypeProposal(mtd)){
@@ -669,7 +672,7 @@ public class VjoCcHandler implements IVjoCcHandler {
 				ctx.setActingPackageToken(str);
 				result.add(VjoCcPackageProposalAdvisor.ID);
 				result.add(VjoCcTypeProposalAdvisor.ID);
-				
+
 			}
 		} else if (node instanceof MtdInvocationExpr) {
 			// Scenerior: v.<cursor>method();
@@ -756,7 +759,7 @@ public class VjoCcHandler implements IVjoCcHandler {
 		}
 		return false;
 	}
-	
+
 	protected void handleCommentCompletion(VjoCcCtx ctx) {}
 
 }

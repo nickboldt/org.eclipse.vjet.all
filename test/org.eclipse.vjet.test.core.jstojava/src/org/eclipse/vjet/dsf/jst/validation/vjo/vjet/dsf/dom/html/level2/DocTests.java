@@ -35,15 +35,16 @@ public class DocTests extends VjoValidationBaseTester {
 
     @Before
     public void setUp() {
-        expectProblems.clear();
-        expectProblems.add(createNewProblem(MethodProbIds.UndefinedFunction,
-                18, 0));
+       
     }
 
     @Test
     //@Category( { P3, FAST, UNIT })
     //@Description("Test DSF project, To validate false positive ")
     public void testDocTests() {
+    	 expectProblems.clear();
+         expectProblems.add(createNewProblem(MethodProbIds.UndefinedFunction,
+                 19, 0));
         List<VjoSemanticProblem> problems = getVjoSemanticProblem(
                 "dsf.dom.html.level2.", "DocTests.js", this.getClass());
         assertProblemEquals(expectProblems, problems);

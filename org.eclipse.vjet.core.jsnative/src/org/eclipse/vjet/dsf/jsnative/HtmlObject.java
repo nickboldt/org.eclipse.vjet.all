@@ -81,138 +81,82 @@ public interface HtmlObject extends HtmlElement {
 	@DOMSupport(DomLevel.TWO) @BrowserSupport({BrowserType.FIREFOX_2P, BrowserType.OPERA_9P, BrowserType.SAFARI_3P})
 	@Property Document getContentDocument();
 	
-	/**
-	 * Returns the onblur event handler code on the current element. 
-	 * @see http://www.w3schools.com/jsref/jsref_onblur.asp
-	 */
+	
 	@DOMSupport(DomLevel.ZERO)
 	@Property(name="onblur")
 	Object getOnBlur();
 	
-	/**
-	 * Sets the onblur event handler code on the current element. 
-	 * @param functionRef
-	 * @see http://www.w3schools.com/jsref/jsref_onblur.asp
-	 */
+	
 	@DOMSupport(DomLevel.ZERO)
 	@Property(name="onblur")
 	void setOnBlur(Object functionRef);
 	
-	/**
-	 * Returns the onfocus event handler code on the current element.
-	 * @see http://www.w3schools.com/jsref/jsref_onfocus.asp 
-	 */
+	
 	@DOMSupport(DomLevel.ZERO)
 	@Property(name="onfocus")
 	Object getOnFocus();
 	
-	/**
-	 * Sets the onfocus event handler code on the current element. 
-	 * @param functionRef
-	 * @see http://www.w3schools.com/jsref/jsref_onfocus.asp 
-	 */
+	
 	@DOMSupport(DomLevel.ZERO)
 	@Property(name="onfocus")
 	void setOnFocus(Object functionRef);
 	
-	/**
-	 * Returns the onkeydown event handler code on the current element. 
-	 * @see http://www.w3schools.com/jsref/jsref_onkeydown.asp
-	 */
+	
 	@DOMSupport(DomLevel.ZERO)
 	@Property(name="onkeydown")
 	Object getOnKeyDown();
 	
-	/**
-	 * Sets the onkeydown event handler code on the current element. 
-	 * @param functionRef
-	 * @see http://www.w3schools.com/jsref/jsref_onkeydown.asp
-	 */
+	
 	@DOMSupport(DomLevel.ZERO)
 	@Property(name="onkeydown")
 	void setOnKeyDown(Object functionRef);
 	
-	/**
-	 * Returns the onkeypress event handler code on the current element. 
-	 * @see http://www.w3schools.com/jsref/jsref_onkeypress.asp
-	 */
+	
 	@DOMSupport(DomLevel.ZERO)
 	@Property(name="onkeypress")
 	Object getOnKeyPress();
 	
-	/**
-	 * Sets the onkeypress event handler code on the current element. 
-	 * @param functionRef
-	 * @see http://www.w3schools.com/jsref/jsref_onkeypress.asp
-	 */
+	
 	@DOMSupport(DomLevel.ZERO)
 	@Property(name="onkeypress")
 	void setOnKeyPress(Object functionRef);
 	
-	/**
-	 * Returns the onkeyup event handler code on the current element. 
-	 * @see http://www.w3schools.com/jsref/jsref_onkeyup.asp
-	 */
+	
 	@DOMSupport(DomLevel.ZERO)
 	@Property(name="onkeyup")
 	Object getOnKeyUp();
 	
-	/**
-	 * Sets the onkeyup event handler code on the current element. 
-	 * @param functionRef
-	 * @see http://www.w3schools.com/jsref/jsref_onkeyup.asp
-	 */
+	
 	@DOMSupport(DomLevel.ZERO)
 	@Property(name="onkeyup")
 	void setOnKeyUp(Object functionRef);
 	
-	/**
-	 * Returns the onresize event handler code on the current element.
-	 * @see http://www.w3schools.com/jsref/jsref_onresize.asp 
-	 */
+	
 	@DOMSupport(DomLevel.ZERO)
 	@Property(name="onresize")
 	Object getOnResize();
 	
-	/**
-	 * Sets the onresize event handler code on the current element. 
-	 * @param functionRef
-	 * @see http://www.w3schools.com/jsref/jsref_onresize.asp
-	 */
+	
 	@DOMSupport(DomLevel.ZERO)
 	@Property(name="onresize")
 	void setOnResize(Object functionRef);
 	
-	/**
-	 * Returns the onclick event handler code on the current element. 
-	 * @see http://www.w3schools.com/jsref/jsref_onclick.asp
-	 */
+	
 	@DOMSupport(DomLevel.ZERO)
 	@Property(name="onclick")
 	Object getOnClick();
 	
-	/**
-	 * Sets the onclick event handler code on the current element. 
-	 * @param functionRef
-	 * @see http://www.w3schools.com/jsref/jsref_onclick.asp
-	 */
+	
 	@DOMSupport(DomLevel.ZERO)
 	@Property(name="onclick")
 	void setOnClick(Object functionRef);
 	
-	/**
-	 * Returns the ondblclick event handler code on the current element. 
-	 * @see http://www.w3schools.com/jsref/jsref_ondblclick.asp
-	 */
+	
 	@DOMSupport(DomLevel.ZERO)
 	@Property(name="ondblclick")
 	Object getOnDblClick();
 	
-	/**
-	 * Sets the ondblclick event handler code on the current element. 
-	 * @param functionRef
-	 * @see http://www.w3schools.com/jsref/jsref_ondblclick.asp
-	 */
+	
 	@DOMSupport(DomLevel.ZERO)
 	@Property(name="ondblclick")
 	void setOnDblClick(Object functionRef);

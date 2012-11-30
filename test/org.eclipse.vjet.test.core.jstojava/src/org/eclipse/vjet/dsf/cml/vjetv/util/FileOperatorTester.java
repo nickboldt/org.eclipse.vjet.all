@@ -48,7 +48,7 @@ public class FileOperatorTester {
         LinkedHashSet<File> sets = new LinkedHashSet<File>();
         String testFolder1 = viewroot
                 + "/v4darwin/DSFJsToJavaTests/vjLibTestFiles/dox/ebay/vjoPro/vjoPro4javadev/samples/vjlib/windows";
-        FileOperator.getAllJSFiles(new File(testFolder1), sets);
+        FileOperator.getAllJSFiles(new File(testFolder1), sets,null);
         Assert.assertEquals(1, sets.size());
     }
 
@@ -57,7 +57,7 @@ public class FileOperatorTester {
         LinkedHashSet<File> sets = new LinkedHashSet<File>();
         String testFolder1 = viewroot
                 + "/v4darwin/DSFJsToJavaTests/vjLibTestFiles/dox/ebay/vjoPro/vjoPro4javadev/samples/vjlib";
-        FileOperator.getAllJSFiles(new File(testFolder1), sets);
+        FileOperator.getAllJSFiles(new File(testFolder1), sets,null);
         Assert.assertEquals(20, sets.size());
     }
 
@@ -66,7 +66,7 @@ public class FileOperatorTester {
         LinkedHashSet<File> sets = new LinkedHashSet<File>();
         String testFolder1 = viewroot
                 + "/v4darwin/DSFJsToJavaTests/vjLibTestFiles/dox/ebay/vjoPro/vjoPro4javadev/samples/sample1";
-        FileOperator.getAllJSFiles(new File(testFolder1), sets);
+        FileOperator.getAllJSFiles(new File(testFolder1), sets, null);
         Assert.assertEquals(3, sets.size());
     }
 
@@ -75,7 +75,7 @@ public class FileOperatorTester {
         LinkedHashSet<File> sets = new LinkedHashSet<File>();
         String testFolder1 = viewroot
                 + "/v4darwin/DSFJsToJavaTests/vjLibTestFiles/dox/ebay/vjoPro/vjoPro4javadev/samples/";
-        FileOperator.getAllJSFiles(new File(testFolder1), sets);
+        FileOperator.getAllJSFiles(new File(testFolder1), sets, null);
         Assert.assertEquals(38, sets.size());
     }
 

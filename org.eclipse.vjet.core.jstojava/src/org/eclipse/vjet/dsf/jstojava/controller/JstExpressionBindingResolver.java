@@ -34,6 +34,7 @@ import org.eclipse.vjet.dsf.jstojava.report.DefaultErrorReporter;
 import org.eclipse.vjet.dsf.jstojava.report.ErrorReporter;
 import org.eclipse.vjet.dsf.jstojava.translator.TranslateHelper.RenameableSynthJstProxyProp;
 import org.eclipse.vjet.dsf.ts.ITypeSpace;
+import org.eclipse.vjet.dsf.jst.term.JstIdentifier;
 
 public class JstExpressionBindingResolver implements IJstRefResolver {
 
@@ -108,7 +109,8 @@ public class JstExpressionBindingResolver implements IJstRefResolver {
 										}
 										else if(globalBinding instanceof IJstMethod){
 											((JstGlobalProp)globalPty)
-												.setProperty(new JstSynthesizedProperty(new JstFuncType((IJstMethod)globalBinding), globalPty.getName().getName(), null, null));
+											 .setProperty(new JstSynthesizedProperty(new JstFuncType((IJstMethod)globalBinding), globalPty.getName().getName(), (JstIdentifier)null, null));
+												
 										}
 									}
 								}

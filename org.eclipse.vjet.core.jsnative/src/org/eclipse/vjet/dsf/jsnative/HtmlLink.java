@@ -158,36 +158,22 @@ public interface HtmlLink extends HtmlElement {
 	@BrowserSupport({BrowserType.IE_6P})
 	@Property HtmlElementStyle getSheet();
 	
-	/**
-	 * Returns the onload event handler code on the current element. 
-	 * @see http://www.w3schools.com/jsref/jsref_onload.asp
-	 */
+	
 	@DOMSupport(DomLevel.ZERO)
 	@Property(name="onload")
 	Object getOnLoad();
 	
-	/**
-	 * Sets the onload event handler code on the current element. 
-	 * @param functionRef
-	 * @see http://www.w3schools.com/jsref/jsref_onload.asp
-	 */
+	
 	@DOMSupport(DomLevel.ZERO)
 	@Property(name="onload")
 	void setOnLoad(Object functionRef);
 	
-	/**
-	 * Returns the onunload event handler code on the current element. 
-	 * @see http://www.w3schools.com/jsref/jsref_onunload.asp
-	 */
+	
 	@DOMSupport(DomLevel.ZERO)
 	@Property(name="onunload")
 	Object getOnUnload();
 	
-	/**
-	 * Sets the onunload event handler code on the current element. 
-	 * @param functionRef
-	 * @see http://www.w3schools.com/jsref/jsref_onunload.asp
-	 */
+	
 	@DOMSupport(DomLevel.ZERO)
 	@Property(name="onunload")
 	void setOnUnload(Object functionRef);

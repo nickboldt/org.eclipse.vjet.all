@@ -23,6 +23,7 @@ public enum NativeEvent {
 	mousedown,
 	mouseout,
 	mouseup,
+	drop,
 	focus,
 	blur,
 	scroll,

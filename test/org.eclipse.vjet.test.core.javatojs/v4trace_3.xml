@@ -1,0 +1,46 @@
+<JavaToJst><Controller method="OnDemandTranslation"><DependencyPhase><Task type="org.eclipse.vjet.dsf.javatojs.tests.data.multipass.Dependent" mode="Dependency,Declaration" thread="1">
+ <Dependents/>
+ <Time start="11:16:58:327" end="11:16:58:330" duration="3"/>
+</Task></DependencyPhase><DeclarationPhase><Task type="org.eclipse.vjet.dsf.javatojs.tests.data.multipass.Base" mode="Dependency,Declaration" thread="26">
+ <Dependents/>
+ <Time start="11:16:58:341" end="11:16:58:347" duration="6"/>
+</Task><Task type="org.eclipse.vjet.dsf.javatojs.tests.data.A" mode="Dependency,Declaration" thread="23">
+ <Dependents/>
+ <Time start="11:16:58:341" end="11:16:58:349" duration="8"/>
+</Task><Task type="org.eclipse.vjet.dsf.javatojs.tests.data.B" mode="Dependency,Declaration" thread="22">
+ <Dependents/>
+ <Time start="11:16:58:343" end="11:16:58:344" duration="1"/>
+</Task><Task type="org.eclipse.vjet.dsf.javatojs.tests.data.C" mode="Dependency,Declaration" thread="25">
+ <Dependents/>
+ <Time start="11:16:58:343" end="11:16:58:344" duration="1"/>
+</Task><Task type="org.eclipse.vjet.dsf.javatojs.tests.data.multipass.F" mode="Dependency,Declaration" thread="24">
+ <Dependents/>
+ <Time start="11:16:58:343" end="11:16:58:345" duration="2"/>
+</Task><Task type="org.eclipse.vjet.dsf.javatojs.tests.data.multipass.D" mode="Dependency,Declaration" thread="22">
+ <Dependents/>
+ <Time start="11:16:58:344" end="11:16:58:350" duration="6"/>
+</Task><Task type="org.eclipse.vjet.dsf.javatojs.tests.data.multipass.E" mode="Dependency,Declaration" thread="25">
+ <Dependents/>
+ <Time start="11:16:58:344" end="11:16:58:349" duration="5"/>
+</Task><Errors><WARN type="SrcNotFound" msg="Source not found for 'org.eclipse.vjet.dsf.dap.rt.DapHandlerAdapter' when translating org.eclipse.vjet.dsf.javatojs.tests.data.multipass.Base"/><WARN type="SrcNotFound" msg="Source not found for 'org.eclipse.vjet.dsf.dap.rt.DapHandlerAdapter' when translating org.eclipse.vjet.dsf.javatojs.tests.data.C"/></Errors></DeclarationPhase><DeclarationPhase><Task type="org.eclipse.vjet.dsf.javatojs.tests.data.multipass.G" mode="Dependency,Declaration" thread="1">
+ <Dependents/>
+ <Time start="11:16:58:386" end="11:16:58:387" duration="1"/>
+</Task></DeclarationPhase><ImplementationPhase><Task type="org.eclipse.vjet.dsf.javatojs.tests.data.multipass.Dependent" mode="Dependency,Declaration,Impl" thread="24">
+ <Time start="11:16:58:401" end="11:16:58:631" duration="230"/>
+</Task><Task type="org.eclipse.vjet.dsf.javatojs.tests.data.multipass.Base" mode="Dependency,Declaration,Impl" thread="26">
+ <Time start="11:16:58:415" end="11:16:58:509" duration="94"/>
+</Task><Task type="org.eclipse.vjet.dsf.javatojs.tests.data.A" mode="Dependency,Declaration,Impl" thread="23">
+ <Time start="11:16:58:416" end="11:16:58:509" duration="93"/>
+</Task><Task type="org.eclipse.vjet.dsf.javatojs.tests.data.B" mode="Dependency,Declaration,Impl" thread="25">
+ <Time start="11:16:58:425" end="11:16:58:428" duration="3"/>
+</Task><Task type="org.eclipse.vjet.dsf.javatojs.tests.data.C" mode="Dependency,Declaration,Impl" thread="25">
+ <Time start="11:16:58:429" end="11:16:58:430" duration="1"/>
+</Task><Task type="org.eclipse.vjet.dsf.javatojs.tests.data.multipass.F" mode="Dependency,Declaration,Impl" thread="25">
+ <Time start="11:16:58:430" end="11:16:58:529" duration="99"/>
+</Task><Task type="org.eclipse.vjet.dsf.javatojs.tests.data.multipass.D" mode="Dependency,Declaration,Impl" thread="22">
+ <Time start="11:16:58:430" end="11:16:58:435" duration="5"/>
+</Task><Task type="org.eclipse.vjet.dsf.javatojs.tests.data.multipass.E" mode="Dependency,Declaration,Impl" thread="22">
+ <Time start="11:16:58:435" end="11:16:58:447" duration="12"/>
+</Task><Task type="org.eclipse.vjet.dsf.javatojs.tests.data.multipass.G" mode="Dependency,Declaration,Impl" thread="22">
+ <Time start="11:16:58:447" end="11:16:58:535" duration="88"/>
+</Task></ImplementationPhase><Time start="11:16:58:324" end="11:16:58:718" duration="394"/></Controller></JavaToJst>

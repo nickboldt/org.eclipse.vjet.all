@@ -484,6 +484,8 @@ public class SimpleDLCClient implements IDLCClient {
 			return DlcJsFunctionEnum.MOUSEOUT.getName();
 		case mouseup:
 			return DlcJsFunctionEnum.MOUSEUP.getName();
+		case drop:
+			return DlcJsFunctionEnum.DROP.getName();
 		case focus:
 			return DlcJsFunctionEnum.FOCUS.getName();
 		case blur:
@@ -723,6 +725,9 @@ public class SimpleDLCClient implements IDLCClient {
 
 		public static final DlcJsFunctionEnum MOUSEUP = new DlcJsFunctionEnum(
 				"DLC_mouseUp", 13);
+		
+		public static final DlcJsFunctionEnum DROP = new DlcJsFunctionEnum(
+				"DLC_drop", 13);
 
 		public static final DlcJsFunctionEnum FOCUS = new DlcJsFunctionEnum(
 				"DLC_onFocus", 14);

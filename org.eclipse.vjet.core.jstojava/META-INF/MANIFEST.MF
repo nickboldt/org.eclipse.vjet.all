@@ -24,7 +24,6 @@ Export-Package:
  org.eclipse.vjet.dsf.jstojava.cml.vjetv.util,
  org.eclipse.vjet.dsf.jstojava.controller,
  org.eclipse.vjet.dsf.jstojava.exception,
- org.eclipse.vjet.dsf.jstojava.jslint,
  org.eclipse.vjet.dsf.jstojava.loader,
  org.eclipse.vjet.dsf.jstojava.manifest,
  org.eclipse.vjet.dsf.jstojava.mixer,
@@ -38,6 +37,5 @@ Export-Package:
  org.eclipse.vjet.dsf.jstojava.translator,
  org.eclipse.vjet.dsf.jstojava.translator.robust,
  org.eclipse.vjet.dsf.jstojava.translator.robust.ast2jst,
- org.eclipse.vjet.dsf.jstojava.translator.robust.completion,
- org.eclipse.vjet.dsf.jstojava.validator
+ org.eclipse.vjet.dsf.jstojava.translator.robust.completion
 

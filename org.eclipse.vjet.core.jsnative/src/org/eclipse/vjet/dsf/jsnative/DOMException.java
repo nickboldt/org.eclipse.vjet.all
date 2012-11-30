@@ -44,7 +44,16 @@ public interface DOMException {
     public static final short INVALID_MODIFICATION_ERR  = 13;
     public static final short NAMESPACE_ERR             = 14;
     public static final short INVALID_ACCESS_ERR        = 15;
-    
+    public static final short VALIDATION_ERR = 16; // historical
+    public static final short TYPE_MISMATCH_ERR = 17;
+    public static final short SECURITY_ERR = 18;
+    public static final short NETWORK_ERR = 19;
+    public static final short ABORT_ERR = 20;
+    public static final short URL_MISMATCH_ERR = 21;
+    public static final short QUOTA_EXCEEDED_ERR = 22;
+    public static final short TIMEOUT_ERR = 23;
+    public static final short INVALID_NODE_TYPE_ERR = 24;
+    public static final short DATA_CLONE_ERR = 25;
 	
     @Constructor void DOMException();
     

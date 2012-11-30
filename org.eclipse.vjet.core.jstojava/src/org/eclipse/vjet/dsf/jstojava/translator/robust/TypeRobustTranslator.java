@@ -21,6 +21,7 @@ import org.eclipse.vjet.dsf.jst.declaration.JstVjoBaseProperty;
 import org.eclipse.vjet.dsf.jst.declaration.JstVjoProperty;
 import org.eclipse.vjet.dsf.jst.meta.IJsCommentMeta;
 import org.eclipse.vjet.dsf.jst.meta.JsType;
+import org.eclipse.vjet.dsf.jst.term.JstIdentifier;
 import org.eclipse.vjet.dsf.jstojava.translator.JsDocHelper;
 import org.eclipse.vjet.dsf.jstojava.translator.TranslateCtx;
 import org.eclipse.vjet.dsf.jstojava.translator.TranslateHelper;
@@ -235,7 +236,7 @@ public class TypeRobustTranslator extends CompletionsFilteredRobustTranslator
 		} else {
 			JstSynthesizedProperty clazzProp = 
 				new JstSynthesizedProperty( 
-					JstCache.getInstance().getType("vjo.Class"), VjoKeywords.CLASS, null, null);
+					JstCache.getInstance().getType("vjo.Class"), VjoKeywords.CLASS, (JstIdentifier)null, null);
 			clazzProp.getModifiers().setPublic().setFinal().setStatic(true);
 			clazzProp.setParent(currentType);
 			currentType.addProperty(clazzProp);

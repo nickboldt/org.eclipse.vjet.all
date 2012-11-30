@@ -12,6 +12,7 @@ import org.eclipse.vjet.dsf.jsnative.anno.Function;
 import org.eclipse.vjet.dsf.jsnative.anno.JsMetatype;
 import org.eclipse.vjet.dsf.jsnative.anno.JsSupport;
 import org.eclipse.vjet.dsf.jsnative.anno.JsVersion;
+import org.eclipse.vjet.dsf.jsnative.anno.OverLoadFunc;
 import org.eclipse.vjet.dsf.jsnative.anno.Property;
 import org.mozilla.mod.javascript.IWillBeScriptable;
 
@@ -129,7 +130,10 @@ public interface Location extends IWillBeScriptable {
 	 * @param forceGet
 	 */
 	@JsSupport( JsVersion.MOZILLA_ONE_DOT_ONE)
-	@Function void reload(boolean forceGet);
+	@OverLoadFunc void reload(boolean forceGet);
+
+	@JsSupport( JsVersion.MOZILLA_ONE_DOT_ONE)
+	@OverLoadFunc void reload();
 	
 	/**
 	 * Load the document from the provided URL

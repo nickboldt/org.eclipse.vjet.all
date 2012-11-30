@@ -48,11 +48,13 @@ import org.eclipse.vjet.dsf.jst.declaration.JstConstructor;
 import org.eclipse.vjet.dsf.jst.declaration.JstFuncType;
 import org.eclipse.vjet.dsf.jst.declaration.JstFunctionRefType;
 import org.eclipse.vjet.dsf.jst.declaration.JstMethod;
+import org.eclipse.vjet.dsf.jst.declaration.JstMixedType;
 import org.eclipse.vjet.dsf.jst.declaration.JstObjectLiteralType;
 import org.eclipse.vjet.dsf.jst.declaration.JstParamType;
 import org.eclipse.vjet.dsf.jst.declaration.JstProxyType;
 import org.eclipse.vjet.dsf.jst.declaration.JstTypeRefType;
 import org.eclipse.vjet.dsf.jst.declaration.JstTypeWithArgs;
+import org.eclipse.vjet.dsf.jst.declaration.JstVariantType;
 import org.eclipse.vjet.dsf.jst.declaration.JstVars;
 import org.eclipse.vjet.dsf.jst.expr.FieldAccessExpr;
 import org.eclipse.vjet.dsf.jst.expr.FuncExpr;
@@ -216,7 +218,10 @@ public class VjoMtdInvocationExprValidator
 							return; //OK ???
 						}
 						
-						if(!ctx.getMissingImportTypes().contains(qualifierType)){
+						// TODO support mixed and variant type method / property checking 
+						// make sure to make dynamic types not give error
+						if(!ctx.getMissingImportTypes().contains(qualifierType) && !(qualifierType instanceof JstVariantType)
+								 && !(qualifierType instanceof JstMixedType)){
 							//METHOD_SHOULD_BE_DEFINED
 							satisfyRule(ctx, ruleRepo.METHOD_SHOULD_BE_DEFINED,
 								new BaseVjoSemanticRuleCtx

@@ -1,0 +1,12 @@
+<JavaToJst><Controller method="TargetedTranslation"><DependencyPhase><Task type="org.eclipse.vjet.dsf.javatojs.tests.data.structure.NestedTypes" mode="Dependency,Declaration" thread="1">
+ <Dependents/>
+ <Time start="11:15:55:579" end="11:15:55:588" duration="9"/>
+</Task></DependencyPhase><DeclarationPhase><Task type="org.eclipse.vjet.dsf.javatojs.tests.data.Super" mode="Dependency,Declaration" thread="24">
+ <Dependents/>
+ <Time start="11:15:55:600" end="11:15:55:604" duration="4"/>
+</Task><Task type="org.eclipse.vjet.dsf.javatojs.tests.data.structure.Methods" mode="Dependency,Declaration" thread="23">
+ <Dependents/>
+ <Time start="11:15:55:600" end="11:15:55:610" duration="10"/>
+</Task></DeclarationPhase><ImplementationPhase><Task type="org.eclipse.vjet.dsf.javatojs.tests.data.structure.NestedTypes" mode="Dependency,Declaration,Impl" thread="1">
+ <Time start="11:15:55:612" end="11:15:55:702" duration="90"/>
+</Task></ImplementationPhase><Time start="11:15:55:566" end="11:15:55:716" duration="150"/></Controller></JavaToJst>

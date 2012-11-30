@@ -57,87 +57,52 @@ public interface HtmlScript extends HtmlElement {
 	@Property String getType();
 	@Property void setType(String type);
 	
-	/**
-	 * Returns the onload event handler code on the current element. 
-	 * @see http://www.w3schools.com/jsref/jsref_onload.asp
-	 */
+	
 	@DOMSupport(DomLevel.ZERO)
 	@Property(name="onload")
 	Object getOnLoad();
 	
-	/**
-	 * Sets the onload event handler code on the current element. 
-	 * @param functionRef
-	 * @see http://www.w3schools.com/jsref/jsref_onload.asp
-	 */
+	
 	@DOMSupport(DomLevel.ZERO)
 	@Property(name="onload")
 	void setOnLoad(Object functionRef);
 	
-	/**
-	 * Returns the onunload event handler code on the current element. 
-	 * @see http://www.w3schools.com/jsref/jsref_onunload.asp
-	 */
+	
 	@DOMSupport(DomLevel.ZERO)
 	@Property(name="onunload")
 	Object getOnUnload();
 	
-	/**
-	 * Sets the onunload event handler code on the current element. 
-	 * @param functionRef
-	 * @see http://www.w3schools.com/jsref/jsref_onunload.asp
-	 */
+	
 	@DOMSupport(DomLevel.ZERO)
 	@Property(name="onunload")
 	void setOnUnload(Object functionRef);
 	
-	/**
-	 * Returns the onmousemove event handler code on the current element. 
-	 * @see http://www.w3schools.com/jsref/jsref_onmousemove.asp
-	 */
+	
 	@DOMSupport(DomLevel.ZERO)
 	@Property(name="onmousemove")
 	Object getOnMouseMove();
 	
-	/**
-	 * Sets the onmousemove event handler code on the current element. 
-	 * @param functionRef
-	 * @see http://www.w3schools.com/jsref/jsref_onmousemove.asp
-	 */
+	
 	@DOMSupport(DomLevel.ZERO)
 	@Property(name="onmousemove")
 	void setOnMouseMove(Object functionRef);
 	
-	/**
-	 * Returns the onmouseout event handler code on the current element.
-	 * @see http://www.w3schools.com/jsref/jsref_onmouseout.asp 
-	 */
+	
 	@DOMSupport(DomLevel.ZERO)
 	@Property(name="onmouseout")
 	Object getOnMouseOut();
 	
-	/**
-	 * Sets the onmouseout event handler code on the current element. 
-	 * @param functionRef
-	 * @see http://www.w3schools.com/jsref/jsref_onmouseout.asp 
-	 */
+	
 	@DOMSupport(DomLevel.ZERO)
 	@Property(name="onmouseout")
 	void setOnMouseOut(Object functionRef);
 	
-	/**
-	 * Returns the onmouseover event handler code on the current element. 
-	 * @see http://www.w3schools.com/jsref/jsref_onmouseover.asp 
-	 */
+	
 	@DOMSupport(DomLevel.ZERO)
 	@Property(name="onmouseover")
 	Object getOnMouseOver();
 	
-	/**
-	 * Sets the onmouseover event handler code on the current element. 
-	 * @param functionRef
-	 * @see http://www.w3schools.com/jsref/jsref_onmouseover.asp
-	 */
+	
 	@DOMSupport(DomLevel.ZERO)
 	@Property(name="onmouseover")
 	void setOnMouseOver(Object functionRef);

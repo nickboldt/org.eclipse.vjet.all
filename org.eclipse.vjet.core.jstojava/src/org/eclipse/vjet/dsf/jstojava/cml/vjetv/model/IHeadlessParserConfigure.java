@@ -11,6 +11,8 @@ package org.eclipse.vjet.dsf.jstojava.cml.vjetv.model;
 import java.io.File;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
+import java.util.List;
+
 
 /**
  * The interface used to implement launch configures, Include detail informaton.
@@ -104,7 +106,7 @@ public abstract class IHeadlessParserConfigure {
      * 
      * @return int
      */
-    public abstract String getReprotType();
+    public abstract String getReportType();
 
     /**
      * Get genered report path
@@ -153,4 +155,8 @@ public abstract class IHeadlessParserConfigure {
      * @return String get policy file path.
      */
     public abstract String getPolicyFilePath();
+
+	public abstract List<String> getExclusionPatterns();
+
+
 }

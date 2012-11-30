@@ -16,8 +16,10 @@ package org.eclipse.vjet.dsf.jstojava.resolver;
 import java.util.List;
 
 import org.eclipse.vjet.dsf.jst.IJstType;
+import org.eclipse.vjet.dsf.jst.JstSource;
 import org.eclipse.vjet.dsf.jst.token.IExpr;
 import org.eclipse.vjet.dsf.jstojava.translator.robust.completion.IJstCompletion;
+
 
 /**
  * A type construction context that holds information about the left-hand side
@@ -70,11 +72,19 @@ public interface ITypeConstructContext {
 	 * @return
 	 */
 	public IJstCompletion getCompletion();
-	
+
 
 	public Class<? extends IExpr> getExprClass();
-	
+
 	public String getGroupName();
+
+	/**
+	 * Get the working source info where type is defined
+	 * @return
+	 */
+	public JstSource getWorkingSource();
+
+	public String getOriginalTypeName();
 
 
 

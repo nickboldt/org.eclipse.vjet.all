@@ -29,36 +29,22 @@ public interface HtmlIns extends HtmlElement {
 	@Property String getDateTime();
 	@Property void setDateTime(String dateTime);
 
-	/**
-	 * Returns the onblur event handler code on the current element. 
-	 * @see http://www.w3schools.com/jsref/jsref_onblur.asp
-	 */
+	
 	@DOMSupport(DomLevel.ZERO)
 	@Property(name="onblur")
 	Object getOnBlur();
 	
-	/**
-	 * Sets the onblur event handler code on the current element. 
-	 * @param functionRef
-	 * @see http://www.w3schools.com/jsref/jsref_onblur.asp
-	 */
+	
 	@DOMSupport(DomLevel.ZERO)
 	@Property(name="onblur")
 	void setOnBlur(Object functionRef);
 	
-	/**
-	 * Returns the onfocus event handler code on the current element.
-	 * @see http://www.w3schools.com/jsref/jsref_onfocus.asp 
-	 */
+	
 	@DOMSupport(DomLevel.ZERO)
 	@Property(name="onfocus")
 	Object getOnFocus();
 	
-	/**
-	 * Sets the onfocus event handler code on the current element. 
-	 * @param functionRef
-	 * @see http://www.w3schools.com/jsref/jsref_onfocus.asp 
-	 */
+	
 	@DOMSupport(DomLevel.ZERO)
 	@Property(name="onfocus")
 	void setOnFocus(Object functionRef);

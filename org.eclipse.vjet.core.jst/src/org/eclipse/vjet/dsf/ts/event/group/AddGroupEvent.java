@@ -18,6 +18,7 @@ import org.eclipse.vjet.dsf.ts.event.ISourceEventListener;
 import org.eclipse.vjet.dsf.ts.event.dispatch.IEventListenerHandle;
 
 
+
 /**
  * Add group event. 
  * This event is fired by IDE-plugin (JST container) as response to adding new project.
@@ -25,11 +26,13 @@ import org.eclipse.vjet.dsf.ts.event.dispatch.IEventListenerHandle;
  * 
  */
 public final class AddGroupEvent extends GroupEvent {
-	
+
 	private final List<String> m_classPathList;
 	private final List<String> m_srcPathList;
 	private final List<String> m_directDependency;
 	private List<String> m_bootstrapList;
+	private List<String> m_srcPathExclusionPatterns;
+	private List<String> m_srcPathInclusionPatterns;
 
 	//
 	// Constructors
@@ -42,7 +45,7 @@ public final class AddGroupEvent extends GroupEvent {
 	public AddGroupEvent(String groupName, String groupPath){
 		this(groupName, groupPath, null);
 	}
-	
+
 	/**
 	 * Constructor
 	 * @param groupName String - The project or library name
@@ -53,7 +56,7 @@ public final class AddGroupEvent extends GroupEvent {
 	public AddGroupEvent(String groupName, String groupPath, String srcPath, List<String> classPaths){
 		this(groupName, groupPath, srcPath, classPaths, null);
 	}
-	
+
 	/**
 	 * Constructor
 	 * @param groupName String - The project or library name
@@ -64,7 +67,7 @@ public final class AddGroupEvent extends GroupEvent {
 	public AddGroupEvent(String groupName, String groupPath, List<String> srcPathList, List<String> classPaths){
 		this(groupName, groupPath, srcPathList, classPaths, null);
 	}
-	
+
 	/**
 	 * Constructor
 	 * @param groupName String - The project or library name
@@ -77,7 +80,7 @@ public final class AddGroupEvent extends GroupEvent {
 		m_classPathList = null;
 		m_directDependency = directDependency;
 	}
-	
+
 	/**
 	 * Constructor
 	 * @param groupName String - The project or library name
@@ -94,7 +97,7 @@ public final class AddGroupEvent extends GroupEvent {
 		m_classPathList = classPaths;
 		m_directDependency = directDependency;
 	}
-	
+
 	/**
 	 * Constructor
 	 * @param groupName String - The project or library name
@@ -110,7 +113,7 @@ public final class AddGroupEvent extends GroupEvent {
 		m_classPathList = classPaths;
 		m_directDependency = directDependency;
 	}
-	
+
 	/**
 	 * Constructor
 	 * @param groupName String - The project or library name
@@ -119,16 +122,27 @@ public final class AddGroupEvent extends GroupEvent {
 	 * @param classPaths List<String> - list of classpaths used by this group
 	 * @param directDependency - the projects/libraries the group depends on
 	 * @param bootstrapList - the bootstrap source directories for adding extensions
+	 * @param inclusionList - List of patterns which should be included under source paths
+	 * @param exclusionList - List of patterns which should be excluded under source paths
+	 * @param list2 
+	 * @param list 
 	 */
 	public AddGroupEvent(final String groupName, final String groupPath, final List<String> srcPathList, 
-			final List<String> classPaths, final List<String> directDependency, List<String> bootstrapList){
+			final List<String> classPaths, final List<String> directDependency, List<String> bootstrapList, List<String> inclusionList, List<String> exclusionList){
 		super(groupName, groupPath);
 		m_srcPathList = srcPathList;
 		m_classPathList = classPaths;
 		m_directDependency = directDependency;
 		m_bootstrapList = bootstrapList;
+		m_srcPathExclusionPatterns = exclusionList;
+		m_srcPathInclusionPatterns = inclusionList;
 	}
-	
+
+	public AddGroupEvent(final String groupName, final String groupPath, final List<String> srcPathList, 
+			final List<String> classPaths, final List<String> directDependency, List<String> bootstrapList){
+		this(groupName,groupPath,srcPathList,classPaths,directDependency,bootstrapList,null,null);
+	}
+
 	/**
 	 * Add a single source folder to the list of src paths
 	 * @param srcPath
@@ -137,10 +151,17 @@ public final class AddGroupEvent extends GroupEvent {
 		if (m_srcPathList != null) {
 			return m_srcPathList.add(srcPath);
 		}
-		
+
 		return false;		
 	}
-	
+
+	public boolean addSrcPathExclusionRule(String excludePattern){
+		if(m_srcPathExclusionPatterns!=null){
+			return m_srcPathExclusionPatterns.add(excludePattern);
+		}
+		return false;
+	}
+
 	/**
 	 * Add a single class path to the list of class paths
 	 * @param srcPath
@@ -150,9 +171,9 @@ public final class AddGroupEvent extends GroupEvent {
 		if (m_classPathList != null) {
 			return m_classPathList.add(classPath);
 		}
-		
+
 		return false;
-		
+
 	}
 	//
 	// Satisfy IJstEvent
@@ -166,7 +187,7 @@ public final class AddGroupEvent extends GroupEvent {
 		}
 		((IGroupEventListener)listener).onGroupAdded(this, null, null);
 	}
-	
+
 	/**
 	 * @see ISourceEvent#dispatch(ISourceEventListener,IEventListenerHandle,ISourceEventCallback)
 	 */
@@ -176,7 +197,7 @@ public final class AddGroupEvent extends GroupEvent {
 		}
 		((IGroupEventListener)listener).onGroupAdded(this, handle, callback);
 	}
-	
+
 	/**
 	 * Answer the path of the group source folder where JS files are under
 	 * @return String
@@ -189,7 +210,7 @@ public final class AddGroupEvent extends GroupEvent {
 			return null;
 		}
 	}
-	
+
 	/**
 	 * Answer the list of paths of the group source folders where JS files are under
 	 * @return String
@@ -197,8 +218,8 @@ public final class AddGroupEvent extends GroupEvent {
 	public List<String> getSourcePathList(){
 		return m_srcPathList;
 	}
-	
-	
+
+
 	/**
 	 * Answer the list of paths of the group bootstrap folders where special bootstrap extensions exist
 	 * @return String
@@ -206,7 +227,7 @@ public final class AddGroupEvent extends GroupEvent {
 	public List<String> getBootStrapList(){
 		return m_bootstrapList;
 	}
-	
+
 	/**
 	 * Answer the class path where dependencies are defined for the group
 	 * @return String
@@ -214,7 +235,7 @@ public final class AddGroupEvent extends GroupEvent {
 	public List<String> getClassPath(){
 		return m_classPathList;
 	}
-	
+
 	/**
 	 * Answer an unmodifiable list of direct dependency
 	 * @return List<String>
@@ -225,6 +246,18 @@ public final class AddGroupEvent extends GroupEvent {
 		}
 		return Collections.unmodifiableList(m_directDependency);
 	}
-	
+
 	public boolean shouldLock() { return false; }
+
+	public List<String> getSrcPathInclusionPatterns() {
+		return m_srcPathInclusionPatterns;
+	}
+
+	public List<String> getSrcPathExclusionPatterns() {
+		return m_srcPathExclusionPatterns;
+	}
+	public void setSrcPathInclusionPatterns(
+			List<String> m_srcPathInclusionPatterns) {
+		this.m_srcPathInclusionPatterns = m_srcPathInclusionPatterns;
+	}
 }

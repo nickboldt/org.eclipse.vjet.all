@@ -1,11 +1,15 @@
-/*******************************************************************************
- * Copyright (c) 2005, 2012 eBay Inc.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+/*
+ * Copyright (c) 2004 World Wide Web Consortium,
  *
- *******************************************************************************/
+ * (Massachusetts Institute of Technology, European Research Consortium for
+ * Informatics and Mathematics, Keio University). All Rights Reserved. This
+ * work is distributed under the W3C(r) Software License [1] in the hope that
+ * it will be useful, but WITHOUT ANY WARRANTY; without even the implied
+ * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ *
+ * [1] http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231
+ */
+
 package org.eclipse.vjet.dsf.dom;
 
 import java.lang.reflect.Constructor;

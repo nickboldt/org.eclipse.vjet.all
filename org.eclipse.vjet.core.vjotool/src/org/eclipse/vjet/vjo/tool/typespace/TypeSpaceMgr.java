@@ -46,6 +46,7 @@ import org.eclipse.vjet.dsf.ts.type.TypeName;
 import org.eclipse.vjet.vjo.lib.LibManager;
 import org.eclipse.vjet.vjo.lib.TsLibLoader;
 
+
 /**
  * Facade class for all type space operations. Send type space events for manage
  * resources in {@link TypeSpace} object. Also contains utilities methods for
@@ -80,9 +81,9 @@ public class TypeSpaceMgr {
 
 	private Collection<TypeSpaceListener> m_listeners = new ArrayList<TypeSpaceListener>();
 
-	private volatile boolean m_loaded;
+	private volatile boolean m_loaded = true;
 
-	private volatile boolean m_fullyLoaded = false;
+	private volatile boolean m_fullyLoaded = true;
 
 	private Map<String, URI> m_typeToFileMap = new HashMap<String, URI>();
 
@@ -187,10 +188,17 @@ public class TypeSpaceMgr {
 	 * @param callback
 	 *            {@link ISourceEventCallback} call back object.
 	 */
-	public void processEvent(ISourceEvent<IEventListenerHandle> event,
+	public static void processEvent(ISourceEvent<IEventListenerHandle> event,
 			ISourceEventCallback<IJstType> callback) {
 		try {
-			getController().getJstTypeSpaceMgr().processEvent(event, callback);
+			// using sync call since builder will call multiple
+			TypeSpaceMgr.getInstance().getController().getJstTypeSpaceMgr().processEvent(event);
+			// TODO pass monitor/callback into processEvent Not correct but temporary - always successful
+			if(callback!=null){
+				callback.onComplete( new EventListenerStatus<IJstType>(
+						EventListenerStatus.Code.Successful));
+			}
+
 		} catch (Throwable e) {
 			e.printStackTrace();
 		}
@@ -230,7 +238,7 @@ public class TypeSpaceMgr {
 	public AddGroupEvent createGroupEvent(GroupInfo group, List<String> groups) {
 
 		if (!groups.contains(group.getGroupName())
-				&& !group.getSrcPath().isEmpty()) {
+				&& group.getSrcPath()!=null) {
 			groups.add(group.getGroupName());
 			return createGroupEvent(group);
 		}
@@ -247,7 +255,8 @@ public class TypeSpaceMgr {
 	 */
 	private AddGroupEvent createGroupEvent(GroupInfo group) {
 		return new AddGroupEvent(group.getGroupName(), group.getGroupPath(),
-				group.getSrcPath(), group.getClassPath(), group.getDirectDependency(), group.getBootstrapPath());
+				group.getSrcPath().getSourcePaths(), group.getClassPath(), group.getDirectDependency(), group.getBootstrapPath(),
+				group.getSrcPath().getInclusionRules(), group.getSrcPath().getExclusionRules());
 	}
 
 	/**
@@ -339,7 +348,7 @@ public class TypeSpaceMgr {
 
 	}
 
-	private void cleanGroup(String group) {
+	public void cleanGroup(String group) {
 		if (!TsLibLoader.isDefaultLibName(group)) {
 			setLoaded(false);
 			processEvent(new RemoveGroupEvent(group, group));
@@ -429,7 +438,7 @@ public class TypeSpaceMgr {
 			}
 		}
 
-		m_fullyLoaded = false;
+//		m_fullyLoaded = false;
 
 		processEvent(batch, new ISourceEventCallback<IJstType>() {
 			public void onComplete(EventListenerStatus<IJstType> status) {
@@ -556,22 +565,22 @@ public class TypeSpaceMgr {
 		clean();
 		load(monitor, callback);
 	}
-	
+
 	public synchronized void reloadGroup(TypeLoadMonitor monitor, String group,
 			ISourceEventCallback<IJstType> callback) {
 		cleanGroup(group);
-		
+
 		loadGroup(monitor, group, callback);
 	}
 
 	private void loadGroup(TypeLoadMonitor monitor, String group,
 			ISourceEventCallback<IJstType> callback) {
-		
+
 		if (m_typeLoader != null) {
 			monitor.preparationTypeListStarted();
 			List<GroupInfo> list = m_typeLoader.getGroupInfo(group);
 			monitor.preparationTypeListFinished();
-			
+
 			loadTypes(monitor, list, callback);
 		}
 	}
@@ -596,7 +605,7 @@ public class TypeSpaceMgr {
 	public List<IJstNode> getMethodDependents(MethodName mtdName) {
 		List<IJstNode> dependents = getController().getJstTypeSpaceMgr().getTypeSpace()
 				.getMethodDependents(mtdName);
-		
+
 		return getVisibleDependents(dependents, mtdName.getGroupName());
 	}
 
@@ -611,7 +620,7 @@ public class TypeSpaceMgr {
 	public List<IJstNode> getPropertyDependents(PropertyName ptyName) {
 		List<IJstNode> dependents = getController().getJstTypeSpaceMgr().getTypeSpace()
 				.getPropertyDependents(ptyName);
-		
+
 		return getVisibleDependents(dependents, ptyName.getGroupName());
 	}
 
@@ -625,7 +634,7 @@ public class TypeSpaceMgr {
 	public List<IJstType> getDirectDependents(TypeName typeName) {
 		List<IJstType> dependents =  getController().getJstTypeSpaceMgr().getTypeSpace()
 				.getDirectDependents(typeName);
-		
+
 		return getVisibleDependents(dependents, typeName.groupName());
 	}
 
@@ -668,8 +677,8 @@ public class TypeSpaceMgr {
 	 *            {@link TypeName} object.
 	 * @return true if exist type in type space with specified type name object.
 	 */
-	public boolean existType(TypeName typeName) {
-		return findType(typeName) != null;
+	public static boolean existType(TypeName typeName) {
+		return TypeSpaceMgr.getInstance().findType(typeName) != null;
 	}
 
 	/**
@@ -802,7 +811,7 @@ public class TypeSpaceMgr {
 	}
 
 	public void setAllowChanges(boolean isAllowChanges) {
-		this.isAllowChanges = isAllowChanges;
+	//	this.isAllowChanges = isAllowChanges;
 	}
 
 	/**
@@ -906,7 +915,7 @@ public class TypeSpaceMgr {
 	 * @param callback
 	 *            {@link ISourceEventCallback} object.
 	 */
-	private void doProcessType(SourceTypeName name,
+	public static void doProcessType(SourceTypeName name,
 			ISourceEventCallback<IJstType> callback) {
 
 		TypeName typeName = new TypeName(name.groupName(), name.typeName());
@@ -919,7 +928,9 @@ public class TypeSpaceMgr {
 
 		switch (action) {
 		case SourceTypeName.ADDED:
-			IJstType type = findType(name);
+//			IJstType type = findType(name);
+			IJstType type =  TypeSpaceMgr.getInstance().getController().getJstTypeSpaceMgr().getQueryExecutor()
+					.findType(typeName);
 			AddTypeEvent addEvent = null;
 			if (type == null) {
 				 addEvent = new AddTypeEvent(name.groupName(), name
@@ -953,7 +964,7 @@ public class TypeSpaceMgr {
 	 *            {@link SourceTypeName} object.
 	 * @return true if changed type not exist in type space.
 	 */
-	private boolean isChangedTypeNotExist(SourceTypeName name) {
+	private static boolean isChangedTypeNotExist(SourceTypeName name) {
 		return name.getAction() == SourceTypeName.CHANGED && !existType(name);
 	}
 
@@ -999,11 +1010,11 @@ public class TypeSpaceMgr {
 		if (dependents == null || dependents.size() == 0){
 			return Collections.emptyList();
 		}
-		
+
 		if (groupName == null){
 			return Collections.unmodifiableList(dependents);
 		}
-		
+
 		ITypeSpace<IJstType,IJstNode> ts = getTypeSpace();
 		IGroup<IJstType> group = ts.getGroup(groupName);
 		if (group == null){
