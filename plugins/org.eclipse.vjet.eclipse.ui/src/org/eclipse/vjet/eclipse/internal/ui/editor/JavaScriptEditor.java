@@ -292,7 +292,7 @@ public class JavaScriptEditor extends ScriptEditor {
 	 * @see org.eclipse.ui.texteditor.AbstractDecoratedTextEditor#initializeKeyBindingScopes()
 	 */
 	protected void initializeKeyBindingScopes() {
-		setKeyBindingScopes(new String[] { "org.eclipse.dltk.mod.ui.javascriptEditorScope" }); //$NON-NLS-1$
+		setKeyBindingScopes(new String[] { "org.eclipse.dltk.mod.ui.scriptEditorScope" }); //$NON-NLS-1$
 	}
 
 	protected void createActions() {
