@@ -13,6 +13,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
@@ -115,7 +117,8 @@ public class DefaultJstTypeLoader implements IJstTypeLoader {
 		System.out.println("groupPath:" + groupPath + ", srcPath:" + srcPath);
 		if (groupPath != null) {
 			File groupFile = new File(groupPath);
-			
+			// handle spaces or other utf-8 chars
+			groupPath = decodePath(groupPath);
 			if (groupFile.exists()) {
 				if (!groupFile.isDirectory() || srcPath == null) {
 					return groupFile;
@@ -127,6 +130,7 @@ public class DefaultJstTypeLoader implements IJstTypeLoader {
 			}
 		}
 		else if (srcPath != null) {
+			srcPath = decodePath(srcPath);
 			File srcFolder = new File(srcPath);
 			
 			if (srcFolder.exists() && srcFolder.isDirectory()) {
@@ -136,6 +140,15 @@ public class DefaultJstTypeLoader implements IJstTypeLoader {
 		
 		return null;
 		
+	}
+	
+	private String decodePath(String groupPath) {
+		try {
+			groupPath = URLDecoder.decode(groupPath, "utf-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		return groupPath;
 	}
 	
 	protected List<SourceType> loadJstTypesFromProject(String groupName, File srcFolder) {

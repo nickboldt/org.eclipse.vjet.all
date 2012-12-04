@@ -10,7 +10,9 @@ package org.eclipse.vjet.dsf.jstojava.codegen;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
@@ -109,6 +111,13 @@ public class CodeGenTestJstTypeLoader extends DefaultJstTypeLoader {
 
 	private File getGroupSrcFolder(String groupPath, String srcPath) {
 		if (groupPath != null) {
+			try {
+				groupPath = URLDecoder.decode(groupPath, "utf-8");
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 			m_grpPath = groupPath;
 			URL url = this.getClass().getResource(groupPath+srcPath);
 			if(groupPath.endsWith("!/")){
