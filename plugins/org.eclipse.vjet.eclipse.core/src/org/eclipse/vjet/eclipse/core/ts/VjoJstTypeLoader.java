@@ -12,14 +12,17 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
+import org.eclipse.dltk.mod.core.DLTKCore;
 import org.eclipse.vjet.dsf.jsgroup.bootstrap.JsLibBootstrapLoader;
 import org.eclipse.vjet.dsf.jst.IJstType;
 import org.eclipse.vjet.dsf.jst.declaration.JstCache;
@@ -33,7 +36,6 @@ import org.eclipse.vjet.dsf.ts.event.group.AddGroupEvent;
 import org.eclipse.vjet.eclipse.codeassist.CodeassistUtils;
 import org.eclipse.vjet.eclipse.core.VjetPlugin;
 import org.eclipse.vjet.vjo.tool.typespace.TypeSpaceMgr;
-import org.eclipse.dltk.mod.core.DLTKCore;
 
 
 public class VjoJstTypeLoader implements IJstTypeLoader {
@@ -128,6 +130,11 @@ public class VjoJstTypeLoader implements IJstTypeLoader {
 	private File getGroupSrcFolder(String groupPath, String srcPath) {
 
 		if (groupPath != null) {
+			
+			// handle spaces or other utf-8 chars
+			groupPath = decodePath(groupPath);
+			
+			
 			File groupFile = new File(groupPath);
 
 			if (groupFile.exists()) {
@@ -139,6 +146,7 @@ public class VjoJstTypeLoader implements IJstTypeLoader {
 				}
 			}
 		} else if (srcPath != null) {
+			srcPath = decodePath(srcPath);
 			File srcFolder = new File(srcPath);
 
 			if (srcFolder.exists() && srcFolder.isDirectory()) {
@@ -148,6 +156,15 @@ public class VjoJstTypeLoader implements IJstTypeLoader {
 
 		return null;
 
+	}
+
+	private String decodePath(String groupPath) {
+		try {
+			groupPath = URLDecoder.decode(groupPath, "utf-8");
+		} catch (UnsupportedEncodingException e) {
+			VjetPlugin.getDefault().error("could not decode " + groupPath, e);
+		}
+		return groupPath;
 	}
 
 	private List<SourceType> loadJstTypesFromGroup(String groupName,
