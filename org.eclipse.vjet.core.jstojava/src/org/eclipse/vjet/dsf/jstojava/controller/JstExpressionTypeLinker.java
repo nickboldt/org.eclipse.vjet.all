@@ -1456,6 +1456,10 @@ class JstExpressionTypeLinker implements IJstVisitor {
 	private void constructType(MtdInvocationExpr mie, IExpr lhs, String mtdKey,
 			Class<? extends IExpr> class1) {
 		// TODO use only with double caret
+		if(m_currentType==null){
+			return;
+		}
+		
 		TypeConstructorRegistry tcr = TypeConstructorRegistry.getInstance();
 
 		if (tcr.hasResolver(mtdKey)) {
