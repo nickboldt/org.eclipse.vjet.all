@@ -57,7 +57,7 @@ public class DLTKCore extends Plugin {
 
 	// Debug/Verbose constants
 	public static final boolean VERBOSE = false;
-	public static final boolean VERBOSE_MODEL_MANAGER = true;
+	public static final boolean VERBOSE_MODEL_MANAGER = false;
 
 	public static final boolean VERBOSE_BP_RESOLVE = false;
 	public static final boolean VERBOSE_ZIP_ACCESS = false;
