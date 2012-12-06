@@ -46,6 +46,7 @@ import org.eclipse.vjet.dsf.jst.declaration.JstPackage;
 import org.eclipse.vjet.dsf.jst.declaration.JstType;
 import org.eclipse.vjet.dsf.jstojava.report.DefaultErrorReporter;
 import org.eclipse.vjet.dsf.jstojava.report.ErrorReporter;
+import org.eclipse.vjet.dsf.jstojava.resolver.TypeConstructorRegistry;
 import org.eclipse.vjet.dsf.jstojava.translator.BlockTranslator;
 import org.eclipse.vjet.dsf.jstojava.translator.TranslateConfig;
 import org.eclipse.vjet.dsf.jstojava.translator.TranslateCtx;
@@ -266,6 +267,7 @@ public class VjoParser implements IJstParser {
 	}
 	
 	private static boolean isTypeDelaration(IProgramElement pElement) {
+		
 		IProgramElement receiver = pElement;
 		IProgramElement pre = null;
 		while (receiver != null) {
@@ -276,14 +278,31 @@ public class VjoParser implements IJstParser {
 				pre = receiver;
 				receiver = ((FieldReference) receiver).receiver;
 			} else if (receiver instanceof SingleNameReference) {
-				if (VjoKeywords.VJO.equals(((SingleNameReference)receiver).toString())) {
-					String name = null;
-					if (pre instanceof MessageSend) {
-						name = new String(((MessageSend)pre).getSelector());
-					}
-					else if (pre instanceof FieldReference) {
-						name = new String(((FieldReference)pre).getToken());
-					}
+				String name = null;
+				if (pre instanceof MessageSend) {
+					name = new String(((MessageSend)pre).getSelector());
+				}
+				else if (pre instanceof FieldReference) {
+					name = new String(((FieldReference)pre).getToken());
+				}
+				String receiverStr = ((SingleNameReference)receiver).toString();
+				String key = receiverStr +":" + name;
+				
+				boolean hasContructorResolver = false;
+				
+				hasContructorResolver = TypeConstructorRegistry.getInstance().hasResolver(key);
+				if(!hasContructorResolver){
+					String key2 = receiverStr +"::" + name;
+					hasContructorResolver = TypeConstructorRegistry.getInstance().hasResolver(key);
+					
+				}
+				
+				if(hasContructorResolver){
+					return true;
+				}
+				
+				// older way check
+				if (VjoKeywords.VJO.equals(receiverStr)) {
 					if (name != null && isValidTypeDef(name)) {
 						return true;
 					}
