@@ -120,7 +120,7 @@ public class VjoValidationAction implements IExecutableExtension,
 	 */
 	private SourceTypeName getFileQulifieName(IResource resource) {
 		if (resource instanceof IFile
-				&& resource.getLocation().toOSString().endsWith(VJOSUBFIX)) {
+				&& resource.getLocationURI().getPath().endsWith(VJOSUBFIX)) {
 			return CodeassistUtils.getTypeName(resource);
 		}
 		return null;
@@ -186,7 +186,7 @@ public class VjoValidationAction implements IExecutableExtension,
 				for (IModelElement file : files) {
 					if (file.getElementType() == IProjectFragment.SOURCE_MODULE) {
 						resource = file.getResource();
-						if (resource != null && resource.getLocation().toOSString().endsWith(
+						if (resource != null && resource.getLocationURI().getPath().endsWith(
 								VJOSUBFIX)) {
 							addSourceModules(resourceList, resource, sProject);
 						}
