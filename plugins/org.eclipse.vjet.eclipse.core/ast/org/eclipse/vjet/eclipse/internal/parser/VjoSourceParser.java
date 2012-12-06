@@ -132,8 +132,6 @@ public class VjoSourceParser extends AbstractSourceParser {
 			if(scriptUnit!=null && scriptUnit.getType()!=null && 
 					!scriptUnit.getType().getName().equals(typeName)){
 				typeName = scriptUnit.getType().getName();
-			}else{
-				VjetPlugin.error("could not find type " + typeName );
 			}
 			
 			if (scriptUnit != null) {
