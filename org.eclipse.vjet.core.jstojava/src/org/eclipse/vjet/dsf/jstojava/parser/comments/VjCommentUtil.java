@@ -34,9 +34,12 @@ public class VjCommentUtil {
 		if(secondLessThan!=-1 && secondLessThan<semiColon){
 			return false;
 		}
+		if(startLessThan==-1 && endGreaterThan ==-1){
+			return false;
+		}
 		
 		if(startLessThan>-1 && endGreaterThan>-1 && startLessThan<endGreaterThan){
-			if((endGreaterThan - startLessThan) < 10){ // delta has to be less than 10 chars for html tag
+			if((endGreaterThan - startLessThan) < 100){ // delta has to be less than 10 chars for html tag
 				return true;
 			}
 			
