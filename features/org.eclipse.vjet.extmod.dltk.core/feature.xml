@@ -10,12 +10,15 @@ Contributors:
     IBM Corporation - initial API and implementation
     eBay Inc - Modified
  -->
-
 <feature
       id="org.eclipse.vjet.extmod.dltk.core"
       label="%featureName"
       version="0.9.0.qualifier"
       provider-name="%providerName">
+
+   <description url="http://www.eclipse.org/dltk">
+      %description
+   </description>
 
    <copyright>
       %copyright
@@ -24,11 +27,6 @@ Contributors:
    <license url="%licenseURL">
       %license
    </license>
-  
-   <description url="http://www.eclipse.org/dltk">
-      %description
-   </description>
-
 
    <plugin
          id="org.eclipse.dltk.mod.core"
@@ -91,6 +89,13 @@ Contributors:
          download-size="0"
          install-size="0"
          version="0.9.0.qualifier"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.dltk.mod.validators.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
          unpack="false"/>
 
 </feature>
