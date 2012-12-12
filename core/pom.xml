@@ -25,6 +25,7 @@
       <module>org.eclipse.dltk.mod.launching</module>
       <module>org.eclipse.dltk.mod.ui</module>
       <module>org.eclipse.dltk.mod.validators.core</module>
+      <module>org.eclipse.dltk.mod.validators.ui</module>
       <module>tests/org.eclipse.dltk.mod.core.tests</module>
       
    </modules>
