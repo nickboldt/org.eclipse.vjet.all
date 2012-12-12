@@ -13,20 +13,19 @@ import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.resources.WorkspaceJob;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.ui.console.MessageConsoleStream;
-import org.eclipse.vjet.core.codegen.bootstrap.IJava2JsCodeGenInput;
-import org.eclipse.vjet.core.codegen.bootstrap.IJava2JsCodeGenOutput;
-import org.eclipse.vjet.core.codegen.bootstrap.IJava2JsCodeGenTool;
-import org.eclipse.vjet.eclipse.javatojs.core.JavaToJsCodeGenTool;
+import org.eclipse.vjet.core.codegen.bootstrap.IJs2JavaCodeGenInput;
+import org.eclipse.vjet.core.codegen.bootstrap.IJs2JavaCodeGenOutput;
+import org.eclipse.vjet.core.codegen.bootstrap.IJs2JavaCodeGenTool;
 import org.eclipse.vjet.eclipse.javatojs.ui.Java2JsPlugin;
+import org.eclipse.vjet.eclipse.javatojs.ui.adapters.Js2JavaInput;
 import org.eclipse.vjet.eclipse.javatojs.ui.adapters.ToolMonitor;
-import org.eclipse.vjet.eclipse.javatojs.ui.markers.Java2JsMarker;
+import org.eclipse.vjet.eclipse.javatojs.ui.commands.ClassloaderUtils.ClassLoaderKey;
 
 //import com.ebay.darwin.tools.eclipse.classloader.ClassloaderClassNameConstants;
 //import com.ebay.darwin.tools.eclipse.classloader.ClassloaderUtils;
@@ -48,10 +47,10 @@ import org.eclipse.vjet.eclipse.javatojs.ui.markers.Java2JsMarker;
  */
 public class Js2JavaGenerateJob extends WorkspaceJob {
 
-	private List<IJava2JsCodeGenInput> input;
-	private List<IJava2JsCodeGenOutput> output;
+	private List<IJs2JavaCodeGenInput> input;
+	private List<IJs2JavaCodeGenOutput> output;
 
-	public Js2JavaGenerateJob(List<IJava2JsCodeGenInput> input) {
+	public Js2JavaGenerateJob(List<IJs2JavaCodeGenInput> input) {
 		super("Java2Js Generate Job");
 		this.input = input;
 	}
@@ -80,14 +79,15 @@ public class Js2JavaGenerateJob extends WorkspaceJob {
 					/*
 					 * Call generator
 					 */
-					IJava2JsCodeGenTool generator = getGenerator();
+					IJs2JavaCodeGenTool generator = getGenerator();
 					output = generator.generate(input, new ToolMonitor(
 							new SubProgressMonitor(monitor, 30), stream));
+					
 					/*
 					 * report output
 					 */
 					stream.println("Generator output:");
-					for (IJava2JsCodeGenOutput item : output) {
+					for (IJs2JavaCodeGenOutput item : output) {
 						stream.println(item.getUrl().toString());
 					}
 					/*
@@ -99,9 +99,23 @@ public class Js2JavaGenerateJob extends WorkspaceJob {
 					 */
 					refresh(new SubProgressMonitor(monitor, 10));
 					stream.println("Generator complete.");
+				
+				}catch(Exception e){
+					Java2JsPlugin.logException(e);
 				} finally {
 					monitor.done();
 				}
+			}
+
+			private IJs2JavaCodeGenTool getGenerator() {
+				Object obj = ClassloaderUtils
+						.getWorkspaceObject(
+								"org.eclipse.vjet.eclipse.javatojs.core.JsCodeGenTool",
+								ClassLoaderKey.DEFAULT);
+				if (obj instanceof IJs2JavaCodeGenTool) {
+					return (IJs2JavaCodeGenTool) obj;
+				}
+				return null;
 			}
 		};
 		/*
@@ -113,25 +127,25 @@ public class Js2JavaGenerateJob extends WorkspaceJob {
 	}
 
 	protected void mark(IProgressMonitor monitor) {
-		try {
-			monitor.beginTask("Create markers", input.size() + output.size());
-			/*
-			 * clear markers on input
-			 */
-			for (IJava2JsCodeGenInput in : input) {
-				Java2JsMarker.clearMarkers(in);
-				monitor.worked(1);
-			}
-			/*
-			 * create markers from output
-			 */
-			for (IJava2JsCodeGenOutput out : output) {
-				Java2JsMarker.mark(out);
-				monitor.worked(1);
-			}
-		} finally {
-			monitor.done();
-		}
+//		try {
+//			monitor.beginTask("Create markers", input.size() + output.size());
+//			/*
+//			 * clear markers on input
+//			 */
+//			for (IJava2JsCodeGenInput in : input) {
+//				Java2JsMarker.clearMarkers(in);
+//				monitor.worked(1);
+//			}
+//			/*
+//			 * create markers from output
+//			 */
+//			for (IJava2JsCodeGenOutput out : output) {
+//				Java2JsMarker.mark(out);
+//				monitor.worked(1);
+//			}
+//		} finally {
+//			monitor.done();
+//		}
 	}
 
 	/**
@@ -144,15 +158,16 @@ public class Js2JavaGenerateJob extends WorkspaceJob {
 			 * figure out projects
 			 */
 			List<IProject> projects = new ArrayList<IProject>();
-			for (IJava2JsCodeGenInput item : input) {
-				if (item instanceof IAdaptable) {
-					IResource resource = (IResource) ((IAdaptable) item)
-							.getAdapter(IResource.class);
+			for(IJs2JavaCodeGenInput item : input){
+				if (item instanceof Js2JavaInput) {
+					IResource resource =((Js2JavaInput)item).getResource();
+					
 					if (resource != null) {
 						projects.add(resource.getProject());
 					}
 				}
 			}
+			
 			monitor.beginTask("Refresh workspace", projects.size());
 			/*
 			 * refresh each project
@@ -175,33 +190,10 @@ public class Js2JavaGenerateJob extends WorkspaceJob {
 	 * 
 	 * @return output from code generation
 	 */
-	public List<IJava2JsCodeGenOutput> getOutput() {
-		return output;
-	}
+//	public List<IJava2JsCodeGenOutput> getOutput() {
+//		return output;
+//	}
 
-	/**
-	 * Calls the class loader utilities to create the generator.
-	 * 
-	 * @return code generator
-	 * @throws CoreException
-	 *             if generator not found
-	 */
-	protected IJava2JsCodeGenTool getGenerator()  {
-		return new JavaToJsCodeGenTool();
-		
-//		Object obj = ClassloaderUtils
-//				.getWorkspaceObject(
-//						ClassloaderClassNameConstants.JAVA2JAVASCRIPT_TOOL_CLASS_PACKAGE_NAME,
-//						ClassLoaderKey.DEFAULT);
-//		if (obj instanceof IJava2JsCodeGenTool) {
-//			return (IJava2JsCodeGenTool) obj;
-//		}
-//		throw new CoreException(
-//				new Status(
-//						Status.ERROR,
-//						Java2JsPlugin.PLUGIN_ID,
-//						"Could not load code generator "
-//								+ ClassloaderClassNameConstants.JAVA2JAVASCRIPT_TOOL_CLASS_PACKAGE_NAME));
-	}
+
 
 }

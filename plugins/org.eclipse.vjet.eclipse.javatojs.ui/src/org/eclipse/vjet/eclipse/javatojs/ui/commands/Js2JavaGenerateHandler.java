@@ -17,7 +17,9 @@ import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.handlers.HandlerUtil;
+import org.eclipse.vjet.core.codegen.bootstrap.CodeGenInputEntity;
 import org.eclipse.vjet.core.codegen.bootstrap.IJava2JsCodeGenInput;
+import org.eclipse.vjet.core.codegen.bootstrap.IJs2JavaCodeGenInput;
 
 /**
  * Handler for the Java2Js code generator command. The command is declared and
@@ -34,7 +36,7 @@ public class Js2JavaGenerateHandler extends AbstractHandler {
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		ISelection base = HandlerUtil.getActiveMenuSelection(event);
-		List<IJava2JsCodeGenInput> inputList = new ArrayList<IJava2JsCodeGenInput>();
+		List<IJs2JavaCodeGenInput> inputList = new ArrayList<IJs2JavaCodeGenInput>();
 		/*
 		 * from a view
 		 */
@@ -46,8 +48,8 @@ public class Js2JavaGenerateHandler extends AbstractHandler {
 			if (selection != null) {
 				for (Object obj : selection.toList()) {
 					if (obj instanceof IAdaptable) {
-						IJava2JsCodeGenInput input = (IJava2JsCodeGenInput) ((IAdaptable) obj)
-								.getAdapter(IJava2JsCodeGenInput.class);
+						IJs2JavaCodeGenInput input = (IJs2JavaCodeGenInput) ((IAdaptable) obj)
+								.getAdapter(IJs2JavaCodeGenInput.class);
 						if (input != null) {
 							inputList.add(input);
 						}
@@ -68,8 +70,8 @@ public class Js2JavaGenerateHandler extends AbstractHandler {
 							.getAdapter(IResource.class);
 					if (resource != null) {
 						
-						IJava2JsCodeGenInput js = (IJava2JsCodeGenInput) resource
-								.getAdapter(IJava2JsCodeGenInput.class);
+						IJs2JavaCodeGenInput js = (IJs2JavaCodeGenInput) resource
+								.getAdapter(IJs2JavaCodeGenInput.class);
 						if (js != null) {
 							inputList.add(js);
 						}

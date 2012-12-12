@@ -26,6 +26,22 @@
                type="org.eclipse.core.resources.IResource">
          </adapter>
       </factory>
+      
+      <!-- js to java adapters -->
+         <factory
+            adaptableType="org.eclipse.core.resources.IResource"
+            class="org.eclipse.vjet.eclipse.javatojs.ui.adapters.Js2JavaAdapterFactory">
+         <adapter
+               type="org.eclipse.vjet.core.codegen.bootstrap.IJs2JavaCodeGenInput">
+         </adapter>
+      </factory>
+      <factory
+            adaptableType="org.eclipse.vjet.eclipse.javatojs.ui.adapters.Js2JavaInput"
+            class="org.eclipse.vjet.eclipse.javatojs.ui.adapters.Js2JavaAdapterFactory">
+         <adapter
+               type="org.eclipse.core.resources.IResource">
+         </adapter>
+      </factory>
    </extension>
    
    <extension
@@ -43,6 +59,7 @@
             name="Java2Js Code Generation">
       </command>
    </extension>
+   
       <extension
          point="org.eclipse.ui.commands">
       <category
@@ -58,6 +75,26 @@
             name="Js 2 Java Code Generation">
       </command>
    </extension>
+   
+   <extension point="org.eclipse.core.expressions.definitions">
+   <definition id="org.eclipse.vjet.jsfile">
+      <adapt type="org.eclipse.core.resources.IResource">
+             <test property="org.eclipse.core.resources.extension"
+                   value="js">
+             </test>
+      </adapt>
+   </definition>
+      <definition id="org.eclipse.vjet.javafile">
+      <adapt type="org.eclipse.core.resources.IResource">
+             <test property="org.eclipse.core.resources.extension"
+                   value="java">
+             </test>
+      </adapt>
+   </definition>
+</extension>
+
+
+   
    <extension
          point="org.eclipse.ui.menus">
       
@@ -88,19 +125,39 @@
                label="Java2Js Code Generation">
 
 			<visibleWhen>
-               <with variable="activeMenuSelection">
-                  <iterate ifEmpty="false">
-								<and>
-                     		<adapt type="org.eclipse.vjet.core.codegen.bootstrap.IJava2JsCodeGenInput"/>
-							<not>
-								<instanceof value="org.eclipse.jdt.core.IJavaProject" />
-							</not>
-                     	</and>
+			   <or>
+			      <with variable="selection">
+			         <iterate ifEmtpy="false">
+			           <reference definitionId="org.eclipse.vjet.javafile"/>
+			         </iterate>
+			      </with>
+			      <with variable="activeEditorInput">
+			        <reference definitionId="org.eclipse.vjet.javafile"/>
+			      </with>
+			   </or>
+			</visibleWhen>
+         </command>
+		</menuContribution>
+		
+		     <menuContribution
+            locationURI="popup:org.eclipse.vjet.shortcuts.menu">
+            <command
+               commandId="org.eclipse.vjet.eclipse.javatojs.ui.commands.Js2JavaGenerate"
+               icon="icons/etool16/generate.gif"
+               label="Js2Java Code Generation">
 
-                  </iterate>
-                
-               </with>
-        	</visibleWhen>
+			<visibleWhen>
+			   <or>
+			      <with variable="selection">
+			         <iterate ifEmtpy="false">
+			           <reference definitionId="org.eclipse.vjet.jsfile"/>
+			         </iterate>
+			      </with>
+			      <with variable="activeEditorInput">
+			        <reference definitionId="org.eclipse.vjet.jsfile"/>
+			      </with>
+			   </or>
+			</visibleWhen>
          </command>
 		</menuContribution>
 		

@@ -23,9 +23,9 @@ import org.eclipse.ui.console.MessageConsoleStream;
 import org.eclipse.vjet.core.codegen.bootstrap.IJava2JsCodeGenInput;
 import org.eclipse.vjet.core.codegen.bootstrap.IJava2JsCodeGenOutput;
 import org.eclipse.vjet.core.codegen.bootstrap.IJava2JsCodeGenTool;
-import org.eclipse.vjet.eclipse.javatojs.core.JavaToJsCodeGenTool;
 import org.eclipse.vjet.eclipse.javatojs.ui.Java2JsPlugin;
 import org.eclipse.vjet.eclipse.javatojs.ui.adapters.ToolMonitor;
+import org.eclipse.vjet.eclipse.javatojs.ui.commands.ClassloaderUtils.ClassLoaderKey;
 import org.eclipse.vjet.eclipse.javatojs.ui.markers.Java2JsMarker;
 
 //import com.ebay.darwin.tools.eclipse.classloader.ClassloaderClassNameConstants;
@@ -81,6 +81,7 @@ public class Java2JsGenerateJob extends WorkspaceJob {
 					 * Call generator
 					 */
 					IJava2JsCodeGenTool generator = getGenerator();
+					
 					output = generator.generate(input, new ToolMonitor(
 							new SubProgressMonitor(monitor, 30), stream));
 					/*
@@ -187,15 +188,16 @@ public class Java2JsGenerateJob extends WorkspaceJob {
 	 *             if generator not found
 	 */
 	protected IJava2JsCodeGenTool getGenerator()  {
-		return new JavaToJsCodeGenTool();
+		//return new JavaToJsCodeGenTool();
 		
-//		Object obj = ClassloaderUtils
-//				.getWorkspaceObject(
-//						ClassloaderClassNameConstants.JAVA2JAVASCRIPT_TOOL_CLASS_PACKAGE_NAME,
-//						ClassLoaderKey.DEFAULT);
-//		if (obj instanceof IJava2JsCodeGenTool) {
-//			return (IJava2JsCodeGenTool) obj;
-//		}
+		Object obj = ClassloaderUtils
+				.getWorkspaceObject(
+						"org.eclipse.vjet.eclipse.javatojs.core.JavaToJsCodeGenTool",
+						ClassLoaderKey.DEFAULT);
+		if (obj instanceof IJava2JsCodeGenTool) {
+			return (IJava2JsCodeGenTool) obj;
+		}
+		return null;
 //		throw new CoreException(
 //				new Status(
 //						Status.ERROR,

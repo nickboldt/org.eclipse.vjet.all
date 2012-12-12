@@ -27,7 +27,7 @@ import org.eclipse.vjet.eclipse.javatojs.ui.Java2JsPlugin;
  * @author Ricker
  * 
  */
-public class Java2JsInput implements IJava2JsCodeGenInput, IAdaptable {
+public class Js2JavaInput implements IJs2JavaCodeGenInput, IAdaptable {
 
 	/**
 	 * The name of the configuration file that the tool expects.
@@ -36,7 +36,7 @@ public class Java2JsInput implements IJava2JsCodeGenInput, IAdaptable {
 
 	private IResource resource;
 
-	public Java2JsInput(IResource resource) {
+	public Js2JavaInput(IResource resource) {
 		this.resource = resource;
 	}
 
