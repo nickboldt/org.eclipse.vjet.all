@@ -76,7 +76,7 @@ public interface IClassR {
     String EventDispatcherJsr = "vjo.dsf.EventDispatcherJsr";
     String ServiceEngineJsr = "vjo.dsf.ServiceEngineJsr";
     String IComponentSpecs = "org.eclipse.vjet.dsf.spec.component.IComponentSpecs";
-    String JsHandlerObjectEnum = "org.eclipse.vjet.dsf.resource.html.event.handler.JsHandlerObjectEnum";
+    String JsHandlerObjectEnum = "org.eclipse.vjet.vsf.resource.html.event.handler.JsHandlerObjectEnum";
     String DapEventPkg = "org.eclipse.vjet.dsf.dap.event.*";
     String DsfEvent = "org.eclipse.vjet.dsf.common.event.DsfEvent";
     String Event = "org.eclipse.vjet.dsf.jsnative.events.Event";

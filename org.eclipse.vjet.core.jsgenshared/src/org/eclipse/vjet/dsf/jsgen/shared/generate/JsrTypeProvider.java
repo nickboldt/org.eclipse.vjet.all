@@ -32,7 +32,7 @@ import org.eclipse.vjet.dsf.jst.util.DataTypeHelper;
 
 public class JsrTypeProvider implements IJsrTypeProvider {
 
-	private static final String JS_HANDLER_OBJECT_ENUM = "org.eclipse.vjet.dsf.resource.html.event.handler.JsHandlerObjectEnum";
+	private static final String JS_HANDLER_OBJECT_ENUM = IClassR.JsHandlerObjectEnum;
 	private static final String JSR = "Jsr";
 	private static final String IDAPSVCCALLBACK = "org.eclipse.vjet.dsf.dap.svc.IDapSvcCallback";
 //	private static final boolean DEBUG = false;
@@ -129,7 +129,7 @@ public class JsrTypeProvider implements IJsrTypeProvider {
 	
 	private void initPackageMapping() {
 		jsToJsrPackageMap.put("org.eclipse.vjet.dsf.jsnative.global",
-				"org.eclipse.vjet.dsf.jsnative.jsr");
+				"org.eclipse.vjet.vsf.jsnative.jsr");
 		jsToJsrPackageMap.put("org.eclipse.vjet.dsf.jsnative.events",
 				"org.eclipse.vjet.vsf.jsbrowser.jsr");
 		jsToJsrPackageMap.put("org.eclipse.vjet.dsf.jsnative.file",

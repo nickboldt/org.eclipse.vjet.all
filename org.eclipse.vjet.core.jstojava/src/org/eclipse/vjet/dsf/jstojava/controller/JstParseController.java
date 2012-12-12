@@ -182,7 +182,7 @@ public class JstParseController implements IJstParseController {
 		
 		boolean isMatch(String group, String fileName, String source) {
 			return m_group.equals(group) &&
-				m_fileName.equals(fileName) &&
+				m_fileName!=null && m_fileName.equals(fileName) &&
 				m_source.equals(source);
 		}
 		

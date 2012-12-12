@@ -51,6 +51,7 @@ import org.eclipse.vjet.dsf.javatojs.translate.TranslateCtx;
 import org.eclipse.vjet.dsf.javatojs.translate.TranslateHelper;
 import org.eclipse.vjet.dsf.javatojs.translate.custom.CustomAttr;
 import org.eclipse.vjet.dsf.javatojs.translate.custom.meta.BaseCustomMetaProvider;
+import org.eclipse.vjet.dsf.javatojs.translate.custom.meta.CustomField;
 import org.eclipse.vjet.dsf.javatojs.translate.custom.meta.CustomMethod;
 import org.eclipse.vjet.dsf.javatojs.translate.custom.meta.CustomType;
 import org.eclipse.vjet.dsf.javatojs.translate.custom.meta.ICustomMetaProvider;
@@ -186,13 +187,15 @@ public class DapMeta extends BaseCustomMetaProvider implements ICustomMetaProvid
 		
 		// VJ
 		Class<?> type = VJ.class;
+		CustomType customType = new CustomType(type);
 		addCustomType(type.getName(), 
-			new CustomType(type)
+			customType
 				.setAttr(CustomAttr.JAVA_ONLY)
 				.addCustomMethod(
 					new CustomMethod("win", "window").setIsProperty(true)
 						.setJstReturnTypeName(Window.class.getName())
 						.removeQualifier(true))
+				
 				.addCustomMethod(
 					new CustomMethod("doc", "document").setIsProperty(true)
 						.setJstReturnTypeName(HtmlDocument.class.getName())
@@ -200,7 +203,8 @@ public class DapMeta extends BaseCustomMetaProvider implements ICustomMetaProvid
 				.addCustomMethod(
 					new CustomMethod("this_", "this").setIsProperty(true)
 						.setJstReturnTypeName(Object.class.getName())
-						.removeQualifier(true)));		
+						.removeQualifier(true)));	
+			
 		
 		// DapDocumentHelper
 		type = DapDocumentHelper.class;
@@ -1242,7 +1246,7 @@ public class DapMeta extends BaseCustomMetaProvider implements ICustomMetaProvid
 		});
 	}
 	
-	private static final String JqName = "vjo.dsf.jqueryx.Jq";
+	private static final String JqName = "org.jquery.jQuery";
 	private void addJqMeta(){
 		CustomType jqType = new CustomType(JqName, JqName);
 		addCustomType(JqName, jqType);

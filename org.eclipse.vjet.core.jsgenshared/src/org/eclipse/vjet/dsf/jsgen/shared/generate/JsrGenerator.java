@@ -1411,7 +1411,7 @@ public class JsrGenerator extends SourceGenerator {
 					SimpleParam param = paramList.get(i);
 					
 					if(i==0 && firstArgEvent && method.getArgs().get(0) != param.getArg()){
-						writer.append("org.eclipse.vjet.dsf.resource.html.event.handler.JsHandlerObjectEnum.nativeEvent ");
+						writer.append(IClassR.JsHandlerObjectEnum + ".nativeEvent ");
 						if(paramList.size()>=1){
 							writer.append(",");
 						}
