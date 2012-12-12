@@ -28,5 +28,6 @@
     <module>org.eclipse.vjet.vsf.spec</module>
     <module>org.eclipse.vjet.vsf.vjo.kernel</module>
     <module>org.eclipse.vjet.vjo.vjojavalib</module>
+    <module>org.eclipse.vjet.vsf.dervlet</module>
   </modules>
 </project>

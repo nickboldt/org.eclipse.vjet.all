@@ -1,0 +1,25 @@
+package [PackageName];
+
+import org.junit.Test;
+import com.ebay.dsf.test.fwk.dapunit.BaseDapUnit;
+[CategoryImport]
+[ModuleInfoImport]
+[UserAgentImport]
+[FilterImport]
+
+/**
+ * @see BaseDapUnit for customization supports
+ */
+@com.ebay.dsf.resource.utils.CodeGen("DAP Unit")
+public class [TestClzName]DapUnit extends BaseDapUnit {
+
+	@Test
+	[Category4Mtd]
+	public void test[TestClzName]() throws Exception {	
+		[Filter]
+		[MockAjax]		
+		runTest([NodeToTest]);
+	}
+	
+	[UserAgent]
+}
