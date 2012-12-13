@@ -107,6 +107,9 @@ public class JstParseController implements IJstParseController {
 				JstType type = (JstType)su.getType();
 				if(type != resolve.getType()){
 					JstTypeCopier.replace(type, (JstType)resolve.getType());
+					// TODO look into faster resolution here...
+					// added this to handle references to old copy of jsttype
+					resolve(type);
 				}
 				// copy resolve.getType into type
 				
