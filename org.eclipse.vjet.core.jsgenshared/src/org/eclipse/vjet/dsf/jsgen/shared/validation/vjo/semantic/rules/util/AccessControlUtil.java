@@ -14,6 +14,7 @@ import org.eclipse.vjet.dsf.jst.IJstType;
 import org.eclipse.vjet.dsf.jst.declaration.JstGlobalFunc;
 import org.eclipse.vjet.dsf.jst.declaration.JstGlobalProp;
 import org.eclipse.vjet.dsf.jst.declaration.JstInferredType;
+import org.eclipse.vjet.dsf.jst.declaration.JstMixedType;
 import org.eclipse.vjet.dsf.jst.declaration.JstModifiers;
 import org.eclipse.vjet.dsf.jst.declaration.JstPackage;
 import org.eclipse.vjet.dsf.jst.util.JstTypeHelper;
@@ -61,6 +62,16 @@ public class AccessControlUtil {
 			}
 			if (fieldOwnerType instanceof JstInferredType) {
 				fieldOwnerType = ((JstInferredType)fieldOwnerType).getType();
+
+			}
+			
+			if(fieldOwnerType instanceof JstMixedType){
+				JstMixedType mixedTypes = (JstMixedType)fieldOwnerType;
+				for(IJstType mixed : mixedTypes.getMixedTypes()){
+					if(isVisible(modifiers, mixed, callerType)){
+						return true;
+					}
+				}
 			}
 			
 			boolean isVisible = false;
