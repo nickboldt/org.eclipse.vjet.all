@@ -411,7 +411,15 @@ public class VjoValidationDriver {
 				throw new IllegalArgumentException("{current type, dependency type, or type space} none should be null!");
 			}
 			
-			final IGroup<IJstType> currGroup = tsMgr.getTypeSpace().getGroup(curr);
+			JstPackage package1 = curr.getPackage();
+			if(package1==null){
+				return false;
+			}
+			String groupName = package1.getGroupName();
+			if(groupName==null){
+				return false;
+			}
+			final IGroup<IJstType> currGroup = tsMgr.getTypeSpace().getGroup(groupName);
 			final IGroup<IJstType> depGroup = tsMgr.getTypeSpace().getGroup(dep);
 			if(currGroup == null || depGroup == null){
 				return false;
