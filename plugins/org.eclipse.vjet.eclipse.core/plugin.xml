@@ -6,6 +6,11 @@
    <extension-point id="thisresolver" name="This scope resolver" schema="schema/thisresolver.exsd"/>
    <extension-point id="functionreturntype" name="Function Return Type Resolver" schema="schema/functionreturntype.exsd"/>
    <extension-point id="otypedef" name="OType definition resolver" schema="schema/otypedef.exsd"/>
+   
+   <extension point="org.eclipse.team.core.fileTypes">
+	<fileTypes extension="js" type="text"/>
+	</extension>
+   
 	<extension
 	         point="org.eclipse.core.contenttype.contentTypes">
 	      <content-type
@@ -19,7 +24,6 @@
    <extension
          id="org.eclipse.vjet.core.nature"
          name="%vjetNature"
-         content-type="org.eclipse.dltk.mod.vjoContentType"
          point="org.eclipse.core.resources.natures">
       <runtime>
          <run

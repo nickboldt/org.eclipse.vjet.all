@@ -11,6 +11,7 @@
                      default="true"
                      icon="platform:/plugin/org.eclipse.vjet.eclipse.ui/icons/obj16/sourceEditor.gif"
                      id="org.eclipse.vjet.ui.VjetJsEditor"
+                     filenames="*.js"
                      name="%vjoEditor">
          <contentTypeBinding contentTypeId="org.eclipse.dltk.mod.vjoContentType">
          </contentTypeBinding>
