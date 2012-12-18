@@ -860,17 +860,17 @@ public class ScriptExplorerContentProvider extends
 			if (element instanceof IScriptFolder) {
 				// a package fragment might become non empty refresh from the
 				// parent
-				IModelElement parent = (IModelElement) internalGetParent(element);
+				// IModelElement parent = (IModelElement)
+				// internalGetParent(element);
 				// 1GE8SI6: ITPJUI:WIN98 - Rename is not shown in Packages View
 				// avoid posting a refresh to an invisible parent
-				if (element.equals(fInput)) {
-					postRefresh(element,
-							ScriptExplorerContentProvider.ORIGINAL, element,
-							runnables);
-				} else {
-					postRefresh(parent, ScriptExplorerContentProvider.PARENT,
-							element, runnables);
-				}
+				// if (element.equals(fInput)) {
+				postRefresh(element, ScriptExplorerContentProvider.ORIGINAL,
+						element, runnables);
+				// } else {
+				// postRefresh(parent, ScriptExplorerContentProvider.PARENT,
+				// element, runnables);
+				// }
 			} else if (element instanceof IProjectFragment) {
 				Object toRefresh = internalGetParent(element);
 				postRefresh(toRefresh, ScriptExplorerContentProvider.ORIGINAL,
