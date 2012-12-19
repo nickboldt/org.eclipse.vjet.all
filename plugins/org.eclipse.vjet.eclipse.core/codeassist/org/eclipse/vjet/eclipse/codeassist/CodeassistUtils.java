@@ -1912,7 +1912,6 @@ public class CodeassistUtils {
 
 	public static IJstType findJstType(String groupName, String name) {
 		TypeSpaceMgr mgr = TypeSpaceMgr.getInstance();
-		mgr.waitUntilLoaded();
 		return mgr.findType(new TypeName(groupName, name));
 	}
 
@@ -1936,7 +1935,6 @@ public class CodeassistUtils {
 
 	public static NativeVjoSourceModule createNativeModule(ScriptFolder folder,
 			String name) {
-		TypeSpaceMgr.getInstance().waitUntilLoaded();
 		return new NativeVjoSourceModule(folder, JstTypeSpaceMgr.JS_NATIVE_GRP,
 				name);
 	}

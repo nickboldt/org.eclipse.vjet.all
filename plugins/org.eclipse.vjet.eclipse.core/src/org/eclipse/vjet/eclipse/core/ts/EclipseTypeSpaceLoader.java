@@ -596,9 +596,9 @@ public class EclipseTypeSpaceLoader implements ITypeSpaceLoader {
 
 			// process delta if project exist and type space loading is
 			// finished else create add group event.
-			if (m_tsmgr.existGroup(project.getName()) && m_tsmgr.isLoaded()) {
+			if (m_tsmgr.existGroup(project.getName())) {
 				processDelta(resourceDelta);
-			} else if (m_tsmgr.isLoaded()) {
+			} else {
 				// for (Object o :
 				// m_tsmgr.getController().getJstTypeSpaceMgr().getTypeSpace().getGroups().keySet().toArray())
 				// {
@@ -618,7 +618,6 @@ public class EclipseTypeSpaceLoader implements ITypeSpaceLoader {
 		if (!info.isEmpty()) {
 
 			TypeSpaceGroupLoadJob groupLoadJob = new TypeSpaceGroupLoadJob(info);
-			m_tsmgr.setLoaded(false);
 			groupLoadJob.schedule();
 
 		} else if (!m_changedTypes.isEmpty()) {
