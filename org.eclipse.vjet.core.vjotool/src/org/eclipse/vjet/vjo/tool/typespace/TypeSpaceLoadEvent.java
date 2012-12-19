@@ -37,11 +37,6 @@ public class TypeSpaceLoadEvent implements ISourceEventCallback<IJstType> {
 	public void onComplete(EventListenerStatus status) {
 		// TODO Auto-generated method stub
 		TypeSpaceMgr instance = TypeSpaceMgr.getInstance();
-		boolean loaded = false;
-		int size = instance.getTypeSpace().getGroups().size();
-		if (size == m_totalGroupsInTs) {
-			loaded = true;
-		}
 
 		instance.fireLoadTypesFinished();
 		/*if (status.getCode() == EventListenerStatus.Code.Successful) {
@@ -55,7 +50,6 @@ public class TypeSpaceLoadEvent implements ISourceEventCallback<IJstType> {
 		//DLTKCore.errors(errors) was commented out which caused if/else branch
 		//does same thing.  Commenting out the above else if and adding line
 		//below.
-		instance.setLoaded(true);
 
 		if (m_callback != null) {
 			m_callback.onComplete(status);

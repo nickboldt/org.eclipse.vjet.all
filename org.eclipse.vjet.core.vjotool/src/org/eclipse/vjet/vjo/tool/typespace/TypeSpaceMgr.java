@@ -81,10 +81,6 @@ public class TypeSpaceMgr {
 
 	private Collection<TypeSpaceListener> m_listeners = new ArrayList<TypeSpaceListener>();
 
-	private volatile boolean m_loaded = true;
-
-	private volatile boolean m_fullyLoaded = true;
-
 	private Map<String, URI> m_typeToFileMap = new HashMap<String, URI>();
 
 	private ModifyTypeCallback modifyTypeCallback = new ModifyTypeCallback();
@@ -267,15 +263,8 @@ public class TypeSpaceMgr {
 	 * @return {@link IJstType} object.
 	 */
 	public IJstType findType(TypeName typeName) {
-		IJstType jstType = null;
-		if (m_loaded) {
-			jstType = getController().getJstTypeSpaceMgr().getQueryExecutor()
+			return getController().getJstTypeSpaceMgr().getQueryExecutor()
 					.findType(typeName);
-//		} else {
-//			// if type spaces not loaded then find type in cache
-//			jstType = JstCache.getInstance().getType(typeName.typeName());
-		}
-		return jstType;
 	}
 
 	/**
@@ -350,7 +339,6 @@ public class TypeSpaceMgr {
 
 	public void cleanGroup(String group) {
 		if (!TsLibLoader.isDefaultLibName(group)) {
-			setLoaded(false);
 			processEvent(new RemoveGroupEvent(group, group));
 		}
 	}
@@ -384,7 +372,6 @@ public class TypeSpaceMgr {
 
 			// stop loading if list of the group info is empty
 			if (list.size() == 0) {
-				m_loaded = true;
 				return;
 			}
 
@@ -393,7 +380,6 @@ public class TypeSpaceMgr {
 			int initGroupSize = m_controller.getJstTypeSpaceMgr()
 					.getTypeSpace().getGroups().size();
 
-			m_loaded = false;
 
 			// callback that will call all VjoSourceModules that will be
 			// reconciled DLTK to JST models
@@ -440,27 +426,8 @@ public class TypeSpaceMgr {
 
 //		m_fullyLoaded = false;
 
-		processEvent(batch, new ISourceEventCallback<IJstType>() {
-			public void onComplete(EventListenerStatus<IJstType> status) {
-				synchronized (this) {
-					callback.onComplete(status);
-					m_fullyLoaded = true;
-					notify();
-				}
-			}
-
-			public void onProgress(float percentage) {
-				callback.onProgress(percentage);
-			}
-		});
-		synchronized (this) {
-			while (!m_fullyLoaded) {
-				try {
-					wait(1000);
-				} catch (InterruptedException e) {
-				}
-			}
-		}
+		processEvent(batch, null);
+		
 	}
 
 	public ITypeSpaceLoader getTypeLoader() {
@@ -881,16 +848,6 @@ public class TypeSpaceMgr {
 		return NATIVE_GLOBAL_OBJECTS.contains(token);
 	}
 
-	/**
-	 * Sets the new value for the loaded field.
-	 * 
-	 * @param b
-	 *            new value for the loaded field.
-	 */
-	public void setLoaded(boolean b) {
-		m_loaded = b;
-
-	}
 
 	public void waitUntilLoaded() {
 		// while (!m_loaded){
@@ -985,14 +942,6 @@ public class TypeSpaceMgr {
 		}
 	}
 
-	/**
-	 * Returns true if loading type space finished.
-	 * 
-	 * @return true if loading type space finished.
-	 */
-	public boolean isLoaded() {
-		return m_loaded;
-	}
 
 	public Map<String, URI> getTypeToFileMap() {
 		if(m_typeToFileMapSync == null){
