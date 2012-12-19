@@ -203,11 +203,11 @@ public class TypespaceView extends ViewPart {
 		createStateLabel(composite);
 		
 		//if type space loading finished, set input
-		if (TypeSpaceMgr.getInstance().isLoaded()) {
-			m_filter.clearCount();
-			this.m_viewer.setInput(TypeSpaceMgr.getInstance());
-			updateStateLabel();
-		}
+//		if (TypeSpaceMgr.getInstance().isLoaded()) {
+		m_filter.clearCount();
+		this.m_viewer.setInput(TypeSpaceMgr.getInstance());
+		updateStateLabel();
+//		}
 		
 		//context menu
 	    this.initContextMenu();

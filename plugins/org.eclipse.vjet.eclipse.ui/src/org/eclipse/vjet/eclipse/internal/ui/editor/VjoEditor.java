@@ -981,8 +981,6 @@ public class VjoEditor extends JavaScriptEditor {
      */
     private void enableVjoNature() {
 
-        if (!TypeSpaceMgr.getInstance().isLoaded())
-            return;
 
         Preferences pluginPreferences = VjetUIPlugin.getDefault().getPluginPreferences();
         boolean notShowDialog = pluginPreferences.getBoolean(VjoEditorMessages.VjoEditor_10);
@@ -1234,10 +1232,6 @@ public class VjoEditor extends JavaScriptEditor {
             IModelElement astRoot) {
         try {
             // bug fix 2709
-
-            if (!TypeSpaceMgr.getInstance().isLoaded()) {
-                return;
-            }
             doUpdateOccurrenceAnnotations(selection, astRoot);
         } catch (Exception e) {
             logError(e);

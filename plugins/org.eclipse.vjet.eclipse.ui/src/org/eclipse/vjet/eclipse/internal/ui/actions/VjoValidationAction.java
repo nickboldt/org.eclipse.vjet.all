@@ -77,9 +77,6 @@ public class VjoValidationAction implements IExecutableExtension,
 		if (!(selection instanceof IStructuredSelection))
 			return;
 
-		if (!TypeSpaceMgr.getInstance().isLoaded())
-			return;
-
 		ScriptProject sProject = null;
 
 		for (IProject project : this.m_project) {
