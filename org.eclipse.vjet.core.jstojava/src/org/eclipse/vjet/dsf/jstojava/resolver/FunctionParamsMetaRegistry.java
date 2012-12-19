@@ -86,9 +86,17 @@ public class FunctionParamsMetaRegistry {
 	}
 
 	public boolean isFirstArgumentType(String targetFunc, String groupId) {
-		IFunctionMetaMapping mapping = m_funcMetaMappings.get(groupId);
-		if(mapping!=null){
-			return mapping.isFirstArgumentType(targetFunc);
+		for(String key: m_funcMetaMappings.keySet()){
+			
+			if(groupId.startsWith(key)){
+				IFunctionMetaMapping mapping = m_funcMetaMappings.get(key);
+				
+				if(mapping!=null){
+					return mapping.isFirstArgumentType(targetFunc);
+				}
+			}
+			
+			
 		}
 		return false;
 	}
