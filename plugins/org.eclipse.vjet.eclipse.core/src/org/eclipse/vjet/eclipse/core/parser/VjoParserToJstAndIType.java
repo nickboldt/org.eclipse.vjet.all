@@ -61,23 +61,27 @@ public class VjoParserToJstAndIType {
 		this.completionPos = completionPos;
 		// parse
 		IScriptUnit unit = innerParse(groupName, typeName, source);
+		
 
 		if (unit != null) {
-			//if disable all the validations (syntax and semantic)
-			if  (!ValidationEntry.isEnableVjetValidation()) {
-				return unit;
-			}
-			// deal with problems
-			List<DefaultProblem> dproblems = null;
-			List<IScriptProblem> problems = unit.getProblems();
-			if (problems.isEmpty() && validatable && TypeSpaceMgr.getInstance().isLoaded()) {
-				dproblems = ValidationEntry.validator(unit);
-			} else {
-				dproblems = ProblemUtility.reportProblems(problems);
-			}
-			if (dproblems != null && reporter != null) {
-				reportProblems(dproblems, reporter);
-			}
+//			//if disable all the validations (syntax and semantic)
+//			if  (!ValidationEntry.isEnableVjetValidation()) {
+//				return unit;
+//			}
+//			// deal with problems
+//			List<DefaultProblem> dproblems = null;
+//			List<IScriptProblem> problems = unit.getProblems();
+//			// if there are no syntax errors in script unit
+//			if (!problems.isEmpty() && validatable ) {
+//				dproblems = ProblemUtility.reportProblems(problems);
+//			}else if(validatable){
+//				dproblems = ValidationEntry.validator(unit);
+//			}
+//			
+//			if (dproblems != null) {
+//				reportProblems(dproblems, reporter);
+//			}
+//			
 			return unit;
 		}
 		return VjoParser.UNKNOWNUNIT;
@@ -122,7 +126,7 @@ public class VjoParserToJstAndIType {
 
 	}
 
-	private void reportProblems(List<DefaultProblem> problems,
+	public void reportProblems(List<DefaultProblem> problems,
 			IProblemReporter reporter) {
 		if (problems == null) {
 			return;

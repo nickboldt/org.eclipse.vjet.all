@@ -12,11 +12,30 @@ import java.io.File;
 import java.util.Collection;
 import java.util.List;
 
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IWorkspaceRoot;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.dltk.mod.ast.declarations.Argument;
+import org.eclipse.dltk.mod.ast.declarations.MethodDeclaration;
+import org.eclipse.dltk.mod.ast.declarations.ModuleDeclaration;
+import org.eclipse.dltk.mod.ast.declarations.TypeDeclaration;
+import org.eclipse.dltk.mod.ast.parser.AbstractSourceParser;
+import org.eclipse.dltk.mod.ast.references.SimpleReference;
+import org.eclipse.dltk.mod.ast.references.TypeReference;
+import org.eclipse.dltk.mod.ast.references.VariableKind;
+import org.eclipse.dltk.mod.ast.references.VariableReference;
+import org.eclipse.dltk.mod.ast.references.VjoTypeReference;
+import org.eclipse.dltk.mod.compiler.problem.DefaultProblem;
+import org.eclipse.dltk.mod.compiler.problem.IProblemReporter;
+import org.eclipse.dltk.mod.compiler.problem.ProblemSeverities;
+import org.eclipse.dltk.mod.core.DLTKCore;
 import org.eclipse.vjet.dsf.jsgen.shared.ids.VjoSyntaxProbIds;
 import org.eclipse.vjet.dsf.jsgen.shared.jstvalidator.DefaultJstProblem;
 import org.eclipse.vjet.dsf.jst.IJstMethod;
 import org.eclipse.vjet.dsf.jst.IJstProperty;
 import org.eclipse.vjet.dsf.jst.IJstType;
+import org.eclipse.vjet.dsf.jst.IScriptProblem;
 import org.eclipse.vjet.dsf.jst.IScriptUnit;
 import org.eclipse.vjet.dsf.jst.JstSource;
 import org.eclipse.vjet.dsf.jst.ProblemSeverity;
@@ -59,35 +78,20 @@ import org.eclipse.vjet.eclipse.ast.declarations.VjoTypeDeclaration;
 import org.eclipse.vjet.eclipse.ast.references.VjoQualifiedNameReference;
 import org.eclipse.vjet.eclipse.codeassist.CodeassistUtils;
 import org.eclipse.vjet.eclipse.core.VjetPlugin;
+import org.eclipse.vjet.eclipse.core.builder.VjetSourceModuleBuildCtx;
 import org.eclipse.vjet.eclipse.core.parser.VjoParserToJstAndIType;
+import org.eclipse.vjet.eclipse.core.validation.ValidationEntry;
 import org.eclipse.vjet.eclipse.core.validation.utils.ProblemUtility;
 import org.eclipse.vjet.eclipse.internal.core.util.Util;
 import org.eclipse.vjet.vjo.tool.codecompletion.CodeCompletionUtils;
 import org.eclipse.vjet.vjo.tool.typespace.SourceTypeName;
 import org.eclipse.vjet.vjo.tool.typespace.TypeSpaceMgr;
-import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IWorkspaceRoot;
-import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.IPath;
-import org.eclipse.dltk.mod.ast.declarations.Argument;
-import org.eclipse.dltk.mod.ast.declarations.MethodDeclaration;
-import org.eclipse.dltk.mod.ast.declarations.ModuleDeclaration;
-import org.eclipse.dltk.mod.ast.declarations.TypeDeclaration;
-import org.eclipse.dltk.mod.ast.parser.AbstractSourceParser;
-import org.eclipse.dltk.mod.ast.references.SimpleReference;
-import org.eclipse.dltk.mod.ast.references.TypeReference;
-import org.eclipse.dltk.mod.ast.references.VariableKind;
-import org.eclipse.dltk.mod.ast.references.VariableReference;
-import org.eclipse.dltk.mod.ast.references.VjoTypeReference;
-import org.eclipse.dltk.mod.compiler.problem.IProblemReporter;
-import org.eclipse.dltk.mod.compiler.problem.ProblemSeverities;
-import org.eclipse.dltk.mod.core.DLTKCore;
 
 /**
  * @author MPeleshchyshyn
  * 
  */
-public class VjoSourceParser extends AbstractSourceParser {
+public class VjoSourceParser extends AbstractSourceParser{
 
 	IScriptUnit scriptUnit;
 
@@ -100,7 +104,7 @@ public class VjoSourceParser extends AbstractSourceParser {
 	 *      org.eclipse.dltk.mod.compiler.problem.IProblemReporter)
 	 */
 	public ModuleDeclaration parse(char[] fileName, char[] source,
-			IProblemReporter reporter) {
+			IProblemReporter reporter, VjetSourceModuleBuildCtx context) {
 		ModuleDeclaration moduleDeclaration = new ModuleDeclaration(
 				source.length);
 		IWorkspaceRoot workspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
@@ -124,8 +128,30 @@ public class VjoSourceParser extends AbstractSourceParser {
 			if(VjetPlugin.TRACE_PARSER){
 				System.out.println("parsing for " + getClass().getName());
 			}
+			// TODO disable full build (parse,resolve,validate)
 			scriptUnit = parser.parse(groupName, typeName,
 					new String(source));
+			
+			if(context==null){
+				//if disable all the validations (syntax and semantic)
+				if ( ValidationEntry.isEnableVjetValidation()) {
+					
+				// deal with problems
+				List<DefaultProblem> dproblems = null;
+				List<IScriptProblem> problems = scriptUnit.getProblems();
+				// if there are no syntax errors in script unit
+				if (!problems.isEmpty()  ) {
+					dproblems = ProblemUtility.reportProblems(problems);
+				}else{
+					dproblems = ValidationEntry.validator(scriptUnit);
+				}
+				
+				if (dproblems != null) {
+					parser.reportProblems(dproblems, reporter);
+				}
+				}
+			}
+			
 			// Register type to typeSpace when type is not exist in type space
 			// and package path is same with OS path
 			
@@ -138,12 +164,22 @@ public class VjoSourceParser extends AbstractSourceParser {
 				reRegestierType(source, file, groupName, typeName, scriptUnit);
 				processType(scriptUnit.getType(), moduleDeclaration);
 			}
+			if(context!=null)
+				context.setUnit(scriptUnit);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			DLTKCore.error(e.getMessage(), e);
 		}
 
 		return moduleDeclaration;
+	}
+	
+	@Override
+	public ModuleDeclaration parse(char[] fileName, char[] source,
+			IProblemReporter reporter) {
+		// TODO Auto-generated method stub
+		return parse(fileName, source, reporter, null);
 	}
 
 	/**
@@ -631,4 +667,6 @@ public class VjoSourceParser extends AbstractSourceParser {
 					methodDelcaration);
 		}
 	}
+
+
 }

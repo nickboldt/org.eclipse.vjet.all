@@ -41,7 +41,12 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.QualifiedName;
 import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.dltk.mod.ast.declarations.ModuleDeclaration;
+import org.eclipse.dltk.mod.ast.parser.ISourceParserConstants;
 import org.eclipse.dltk.mod.compiler.problem.DefaultProblem;
+import org.eclipse.dltk.mod.compiler.problem.IProblem;
+import org.eclipse.dltk.mod.compiler.problem.IProblemReporter;
+import org.eclipse.dltk.mod.compiler.problem.ProblemCollector;
 import org.eclipse.dltk.mod.core.DLTKContentTypeManager;
 import org.eclipse.dltk.mod.core.DLTKCore;
 import org.eclipse.dltk.mod.core.DLTKLanguageManager;
@@ -52,10 +57,15 @@ import org.eclipse.dltk.mod.core.IModelElementVisitor;
 import org.eclipse.dltk.mod.core.IModelMarker;
 import org.eclipse.dltk.mod.core.IProjectFragment;
 import org.eclipse.dltk.mod.core.IScriptFolder;
+import org.eclipse.dltk.mod.core.ISourceModule;
+import org.eclipse.dltk.mod.core.ISourceModuleInfoCache.ISourceModuleInfo;
 import org.eclipse.dltk.mod.core.ModelException;
+import org.eclipse.dltk.mod.core.SourceParserUtil;
+import org.eclipse.dltk.mod.core.builder.IBuildContext;
 import org.eclipse.dltk.mod.core.builder.IScriptBuilder;
 import org.eclipse.dltk.mod.core.builder.IScriptBuilderExtension;
 import org.eclipse.dltk.mod.core.environment.EnvironmentPathUtils;
+import org.eclipse.dltk.mod.internal.core.AccumulatingProblemReporter;
 import org.eclipse.dltk.mod.internal.core.BuildpathEntry;
 import org.eclipse.dltk.mod.internal.core.BuiltinProjectFragment;
 import org.eclipse.dltk.mod.internal.core.BuiltinSourceModule;
@@ -63,14 +73,23 @@ import org.eclipse.dltk.mod.internal.core.ExternalProjectFragment;
 import org.eclipse.dltk.mod.internal.core.ExternalSourceModule;
 import org.eclipse.dltk.mod.internal.core.ModelManager;
 import org.eclipse.dltk.mod.internal.core.ScriptProject;
+import org.eclipse.dltk.mod.internal.core.VjoSourceModule;
+import org.eclipse.dltk.mod.internal.core.builder.BuildProblemReporter;
 import org.eclipse.dltk.mod.internal.core.builder.ScriptBuilder;
+import org.eclipse.dltk.mod.internal.core.builder.SourceModuleBuildContext;
 import org.eclipse.dltk.mod.internal.core.builder.State;
 import org.eclipse.osgi.util.NLS;
+import org.eclipse.vjet.dsf.jst.IScriptProblem;
+import org.eclipse.vjet.dsf.jst.IScriptUnit;
+import org.eclipse.vjet.dsf.jst.IWritableScriptUnit;
 import org.eclipse.vjet.eclipse.codeassist.CodeassistUtils;
 import org.eclipse.vjet.eclipse.core.VjetPlugin;
 import org.eclipse.vjet.eclipse.core.VjoLanguageToolkit;
 import org.eclipse.vjet.eclipse.core.parser.VjoParserToJstAndIType;
 import org.eclipse.vjet.eclipse.core.ts.EclipseTypeSpaceLoader;
+import org.eclipse.vjet.eclipse.core.validation.ValidationEntry;
+import org.eclipse.vjet.eclipse.core.validation.utils.ProblemUtility;
+import org.eclipse.vjet.eclipse.internal.parser.VjoSourceParser;
 import org.eclipse.vjet.vjo.tool.typespace.SourceTypeName;
 import org.eclipse.vjet.vjo.tool.typespace.TypeSpaceMgr;
 
@@ -152,7 +171,7 @@ public class VjetScriptBuilder extends ScriptBuilder {
 					break;
 
 				}
-				return false;
+			//	return false;
 			}
 			return true;
 		}
@@ -999,8 +1018,66 @@ public class VjetScriptBuilder extends ScriptBuilder {
 				monitor.subTask(NLS.bind(
 						Messages.ScriptBuilder_building_N_localModules,
 						Integer.toString(buildElementsList.size())));
-				builder.buildModelElements(scriptProject, buildElementsList,
-						new SubProgressMonitor(monitor, step), buildTypes[k]);
+				
+				// load into type space
+				
+			
+				List<VjetSourceModuleBuildCtx> postBuildCtx = new ArrayList<VjetSourceModuleBuildCtx>(buildElementsList.size());
+				for (Iterator j = buildElementsList.iterator(); j.hasNext();) {
+					final ISourceModule module = (ISourceModule) j.next();
+					// create context
+					final VjetSourceModuleBuildCtx context = new VjetSourceModuleBuildCtx(
+							module);
+					
+					
+					 
+					// build it/ parse it
+					build(context);
+//					((BuildProblemReporter)context.getProblemReporter()).flush();
+					postBuildCtx.add(context);
+					
+					
+				}
+				
+				
+				// resolve and validate - later can optimize for only types with dependencies
+				for (VjetSourceModuleBuildCtx module : postBuildCtx) {
+					// resolve it now and validate
+					
+					IProblemReporter reporter = module.getProblemReporter();
+					boolean validatable = reporter!=null;
+					IWritableScriptUnit unit = (IWritableScriptUnit)module.getUnit();
+					TypeSpaceMgr.getInstance().getController().resolve(module.getVjoSourceModule().getGroupName(), unit);
+					if (unit != null) {
+						//if disable all the validations (syntax and semantic)
+						if  (!ValidationEntry.isEnableVjetValidation()) {
+							continue;
+						}
+						// deal with problems
+						List<DefaultProblem> dproblems = null;
+						List<IScriptProblem> problems = unit.getProblems();
+						if (!problems.isEmpty() && validatable) {
+							dproblems = ProblemUtility.reportProblems(problems);	
+						}else if(validatable){
+							dproblems = ValidationEntry.validator(unit);
+						}
+						
+						// TODO determine why build is not reporting markers to script unit view
+						if (dproblems != null && reporter != null) {
+							
+							reportProblems(dproblems, reporter);
+							
+							
+						}
+						
+						((BuildProblemReporter)reporter).flush();
+						
+					}
+					
+				}
+
+//				builder.buildModelElements(scriptProject, buildElementsList,
+//						new SubProgressMonitor(monitor, step), buildTypes[k]);
 			}
 			if (builderWork > 0) {
 				monitor.worked(builderWork);
@@ -1008,6 +1085,56 @@ public class VjetScriptBuilder extends ScriptBuilder {
 		}
 		// TODO: Do something with status.
 	}
+	
+	private void reportProblems(List<DefaultProblem> problems,
+			IProblemReporter reporter) {
+		if (problems == null) {
+			return;
+		}
+		for (IProblem problem : problems) {
+			reporter.reportProblem(problem);
+		}
+
+	}
+	
+
+	public void build(VjetSourceModuleBuildCtx context) throws CoreException {
+		VjoSourceParser parser = new VjoSourceParser();
+		
+		ModuleDeclaration moduleDeclaration = (ModuleDeclaration) context
+				.get(IBuildContext.ATTR_MODULE_DECLARATION);
+		if (moduleDeclaration != null) {
+			// do nothing if already have AST - optimization for reconcile
+			return;
+		}
+		// get cache entry
+		final ISourceModuleInfo cacheEntry = ModelManager.getModelManager()
+				.getSourceModuleInfoCache().get(context.getSourceModule());
+		// check if there is cached AST
+		moduleDeclaration = SourceParserUtil.getModuleFromCache(cacheEntry,
+				ISourceParserConstants.DEFAULT,
+				context.getProblemReporter());
+		if (moduleDeclaration != null) {
+			// use AST from cache
+			context.set(IBuildContext.ATTR_MODULE_DECLARATION,
+					moduleDeclaration);
+			// eBay mod start
+			// return;
+			// eBay mod end
+		}
+		// create problem collector
+		final ProblemCollector problemCollector = new ProblemCollector();
+		// parse
+		moduleDeclaration = parser.parse(context.getSourceModule()
+				.getPath().toString().toCharArray(), context.getContents(),
+				context.getProblemReporter(), context);
+		// put result to the cache
+		SourceParserUtil.putModuleToCache(cacheEntry, moduleDeclaration,
+				ISourceParserConstants.DEFAULT, problemCollector);
+		// report errors to the build context
+		problemCollector.copyTo(context.getProblemReporter());
+	
+}
 
 	/**
 	 * Processes input data and fills the <code>workEstimations</code>,
@@ -1149,5 +1276,6 @@ public class VjetScriptBuilder extends ScriptBuilder {
 		State state = State.read(project, in);
 		return state;
 	}
+
 
 }
