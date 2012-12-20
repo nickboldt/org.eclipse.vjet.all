@@ -14,7 +14,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.Stack;
 
@@ -43,6 +45,7 @@ import org.eclipse.vjet.dsf.jst.declaration.JstFunctionRefType;
 import org.eclipse.vjet.dsf.jst.declaration.JstInferredRefType;
 import org.eclipse.vjet.dsf.jst.declaration.JstInferredType;
 import org.eclipse.vjet.dsf.jst.declaration.JstMethod;
+import org.eclipse.vjet.dsf.jst.declaration.JstMixedType;
 import org.eclipse.vjet.dsf.jst.declaration.JstObjectLiteralType;
 import org.eclipse.vjet.dsf.jst.declaration.JstPotentialAttributedMethod;
 import org.eclipse.vjet.dsf.jst.declaration.JstPotentialOtypeMethod;
@@ -125,7 +128,8 @@ class JstExpressionTypeLinker implements IJstVisitor {
 	private final boolean m_hasObjectLiteralResolvers;
 
 	JstExpressionTypeLinker(JstExpressionBindingResolver resolver) {
-		m_hasObjectLiteralResolvers = OTypeResolverRegistry.getInstance().hasResolvers();
+		m_hasObjectLiteralResolvers = OTypeResolverRegistry.getInstance()
+				.hasResolvers();
 		m_resolver = resolver;
 		m_provider = new JstExpressionTypeLinkerHelper.GlobalNativeTypeInfoProvider() {
 			@Override
@@ -282,8 +286,8 @@ class JstExpressionTypeLinker implements IJstVisitor {
 			visitForInStmt((ForInStmt) node);
 		} else if (node instanceof JstBlock) {
 			visitJstBlock((JstBlock) node);
-		} else if(node instanceof ObjLiteral){
-			visitObjLiteral((ObjLiteral)node);
+		} else if (node instanceof ObjLiteral) {
+			visitObjLiteral((ObjLiteral) node);
 		} else if (node instanceof NV) {
 			visitNV((NV) node);
 		} else if (node instanceof SimpleLiteral) {
@@ -298,22 +302,19 @@ class JstExpressionTypeLinker implements IJstVisitor {
 	private void visitObjLiteral(ObjLiteral node) {
 
 		// are there any otype field resolvers?
-		// only check one time for speed in 
-		if(!m_hasObjectLiteralResolvers){
+		// only check one time for speed in
+		if (!m_hasObjectLiteralResolvers) {
 			return;
 		}
 		// bind object literal since there are resolvers
-		// we can be faster here... 
+		// we can be faster here...
 		// get list of type keys from registered resolvers
 		// then do the following if object literal contains literal name
 
-
-
-		if(node.getResultType() instanceof SynthOlType){
+		if (node.getResultType() instanceof SynthOlType) {
 			JstExpressionTypeLinkerHelper.doObjLiteralAndOTypeBindings(node,
-					(SynthOlType)node.getResultType(), null, this, null);	
+					(SynthOlType) node.getResultType(), null, this, null);
 		}
-
 
 	}
 
@@ -366,8 +367,8 @@ class JstExpressionTypeLinker implements IJstVisitor {
 	}
 
 	private void visitJstProperty(JstProperty property) {
-		JstExpressionTypeLinkerHelper.fixPropertyTypeRef(m_resolver, this,property,
-				m_groupInfo);
+		JstExpressionTypeLinkerHelper.fixPropertyTypeRef(m_resolver, this,
+				property, m_groupInfo);
 	}
 
 	private void visitJstType(JstType node) {
@@ -383,7 +384,7 @@ class JstExpressionTypeLinker implements IJstVisitor {
 						(JstMethod) instanceMtd, getType(), m_groupInfo);
 			}
 		}
-		if(node.getConstructor()!=null){
+		if (node.getConstructor() != null) {
 			JstExpressionTypeLinkerHelper.fixMethodTypeRef(m_resolver,
 					node.getConstructor(), getType(), m_groupInfo);
 		}
@@ -440,7 +441,6 @@ class JstExpressionTypeLinker implements IJstVisitor {
 			JstExpressionTypeLinkerHelper.doExprTypeUpdate(m_resolver, this,
 					identifier, resolvedType, m_groupInfo);
 		}
-
 
 		// TODO do we need to do this now? possible revisit
 		if (type instanceof JstObjectLiteralType) {// otype, infer rhs
@@ -677,25 +677,25 @@ class JstExpressionTypeLinker implements IJstVisitor {
 	private IJstType resolveThisIdentifier(JstIdentifier identifier) {
 		IJstType currentType = getCurrentScopeFrame().getCurrentType();
 
-		if(getCurrentScopeFrame().getNode() != null && getCurrentScopeFrame().getNode() instanceof IJstMethod){
-			IJstMethod mtd = (IJstMethod)getCurrentScopeFrame().getNode();
+		if (getCurrentScopeFrame().getNode() != null
+				&& getCurrentScopeFrame().getNode() instanceof IJstMethod) {
+			IJstMethod mtd = (IJstMethod) getCurrentScopeFrame().getNode();
 			String mtdKey = createMtdKey(mtd);
 
-
-			ThisObjScopeResolverRegistry registry = ThisObjScopeResolverRegistry.getInstance();
-			// TODO built with type constructor check because group dependency check would be too slow 
-//			if(registry.hasResolver(mtdKey)) {
-				IThisScopeContext context = new ThisScopeContext(currentType, mtd);
-				registry.resolve(mtdKey, context);
-				IJstType newType = context.getThisType();
-				if(newType != null) {
-					currentType = newType;
-				}
-//			}
-
+			ThisObjScopeResolverRegistry registry = ThisObjScopeResolverRegistry
+					.getInstance();
+			// TODO built with type constructor check because group dependency
+			// check would be too slow
+			// if(registry.hasResolver(mtdKey)) {
+			IThisScopeContext context = new ThisScopeContext(currentType, mtd);
+			registry.resolve(mtdKey, context);
+			IJstType newType = context.getThisType();
+			if (newType != null) {
+				currentType = newType;
+			}
+			// }
 
 		}
-
 
 		identifier.setJstBinding(currentType);
 		identifier.setType(currentType);
@@ -835,10 +835,9 @@ class JstExpressionTypeLinker implements IJstVisitor {
 		IJstType outerType = m_currentType.getOuterType();
 		if (outerType != null && outerType != m_currentType) {
 			setCurrentType(outerType);
-		}else if( m_currentType.getParentNode() instanceof IJstType){
-			setCurrentType((IJstType)m_currentType.getParentNode());
+		} else if (m_currentType.getParentNode() instanceof IJstType) {
+			setCurrentType((IJstType) m_currentType.getParentNode());
 		}
-
 
 	}
 
@@ -913,6 +912,52 @@ class JstExpressionTypeLinker implements IJstVisitor {
 		}
 		JstExpressionTypeLinkerHelper.tryDerivingAnonymousFunctionsFromReturn(
 				rtnStmt, enclosingMtd, this);
+		
+		
+		inferRtnType(rtnExpr, enclosingMtd);
+
+	}
+
+	private void inferRtnType(final IExpr rtnExpr, final IJstMethod enclosingMtd) {
+		if(rtnExpr==null){
+			return;
+		}
+		IJstType inferType = rtnExpr.getResultType();
+		JstMethod jstMethod = (JstMethod) enclosingMtd;
+		if (enclosingMtd.getRtnType() == null) {
+			
+			if (inferType != null && !(inferType instanceof JstInferredType)) {
+				jstMethod.setReturnOptional(true);
+				jstMethod.setRtnType(new JstInferredType(
+						inferType));
+			} else if (inferType != null) {
+				jstMethod.setReturnOptional(true);
+				jstMethod.setRtnType(new JstInferredType(
+						inferType));
+			}
+		} else if (enclosingMtd.getRtnType() instanceof JstInferredType) {
+			// get existing inferred type
+
+			JstInferredType inferredType = (JstInferredType) enclosingMtd
+					.getRtnType();
+			IJstType originalType = inferredType.getType();
+
+			if (inferType !=null && originalType instanceof JstMixedType) {
+				jstMethod.setReturnOptional(true);
+				JstMixedType mixedTypes = (JstMixedType) originalType;
+				mixedTypes.getMixedTypes().add(inferType);
+
+			}else if(inferType !=null && inferType!=originalType){
+				jstMethod.setReturnOptional(true);
+				Map<IJstType,String> types = new LinkedHashMap<IJstType,String>();
+				types.put(originalType,null);
+				types.put(inferType,null);
+				List<IJstType> list = new ArrayList<IJstType>();
+				list.addAll(types.keySet());
+				JstMixedType mixed = new JstMixedType(list);
+				jstMethod.setRtnType(new JstInferredType(mixed));
+			}
+		}
 	}
 
 	/**
@@ -1403,7 +1448,7 @@ class JstExpressionTypeLinker implements IJstVisitor {
 							.tryDerivingAnonymousFunctionsFromParam(mie,
 									mtdBinding, this, m_groupInfo);
 					JstExpressionTypeLinkerHelper.bindMtdInvocations(
-							m_resolver, this, mie, mtdBinding,m_groupInfo);
+							m_resolver, this, mie, mtdBinding, m_groupInfo);
 					return;
 				}
 			}
@@ -1439,7 +1484,7 @@ class JstExpressionTypeLinker implements IJstVisitor {
 	 * @return
 	 */
 	private String createMtdKey(IJstMethod mtd) {
-		if(mtd==null){
+		if (mtd == null) {
 			return "";
 		}
 		String mtdKey = mtd.getOwnerType().getName();
@@ -1456,10 +1501,10 @@ class JstExpressionTypeLinker implements IJstVisitor {
 	private void constructType(MtdInvocationExpr mie, IExpr lhs, String mtdKey,
 			Class<? extends IExpr> class1) {
 		// TODO use only with double caret
-		if(m_currentType==null){
+		if (m_currentType == null) {
 			return;
 		}
-		
+
 		TypeConstructorRegistry tcr = TypeConstructorRegistry.getInstance();
 
 		if (tcr.hasResolver(mtdKey)) {
@@ -1467,7 +1512,8 @@ class JstExpressionTypeLinker implements IJstVisitor {
 
 			// TODO pass the reference to JSTCompletion
 			ITypeConstructContext constrCtx = new TypeConstructContext(mie,
-					lhs, exprs, null, class1,m_groupInfo.getGroupName(), m_currentType.getSource(),m_currentType.getName());
+					lhs, exprs, null, class1, m_groupInfo.getGroupName(),
+					m_currentType.getSource(), m_currentType.getName());
 			// resolve
 			tcr.resolve(mtdKey, constrCtx);
 
@@ -1860,10 +1906,10 @@ class JstExpressionTypeLinker implements IJstVisitor {
 		} else if (lhsType == null && lhs instanceof FieldAccessExpr
 				&& rhsExpr != null) {
 
-			if(rhsExpr instanceof MtdInvocationExpr){
-				MtdInvocationExpr mtdInv = (MtdInvocationExpr)rhsExpr;
-				if(mtdInv.getMethod() instanceof JstMethod){
-					if(((JstMethod)mtdInv.getMethod()).isTypeFactoryEnabled()){
+			if (rhsExpr instanceof MtdInvocationExpr) {
+				MtdInvocationExpr mtdInv = (MtdInvocationExpr) rhsExpr;
+				if (mtdInv.getMethod() instanceof JstMethod) {
+					if (((JstMethod) mtdInv.getMethod()).isTypeFactoryEnabled()) {
 						constructForAssigment(lhs, rhsExpr);
 					}
 				}
@@ -1892,20 +1938,22 @@ class JstExpressionTypeLinker implements IJstVisitor {
 
 				}
 				// TODO possible revisit here need to remove and test
-				if(rhsResolveNeeded && rhsExpr instanceof ObjLiteral){
+				if (rhsResolveNeeded && rhsExpr instanceof ObjLiteral) {
 					IJstType rhsType = rhsExpr.getResultType();
 					if (rhsType == null) {
-						rhsType = new JstInferredType(JstCache.getInstance().getType(
-								"Object"));
-					} 
-					JstExpressionTypeLinkerHelper.doObjLiteralAndOTypeBindings((ObjLiteral) rhsExpr,
-							(SynthOlType) rhsExpr.getResultType(), rhsType, this, null);
+						rhsType = new JstInferredType(JstCache.getInstance()
+								.getType("Object"));
+					}
+					JstExpressionTypeLinkerHelper.doObjLiteralAndOTypeBindings(
+							(ObjLiteral) rhsExpr,
+							(SynthOlType) rhsExpr.getResultType(), rhsType,
+							this, null);
 				}
 
 			}
 
-		}  else if ((lhs instanceof JstIdentifier || lhs instanceof FieldAccessExpr) && (rhsExpr != null)
-				&& (rhsExpr instanceof MtdInvocationExpr)) {
+		} else if ((lhs instanceof JstIdentifier || lhs instanceof FieldAccessExpr)
+				&& (rhsExpr != null) && (rhsExpr instanceof MtdInvocationExpr)) {
 
 			constructForAssigment(lhs, rhsExpr);
 
@@ -2181,38 +2229,40 @@ class JstExpressionTypeLinker implements IJstVisitor {
 		IJstType type = JstExpressionTypeLinkerHelper.findFullQualifiedType(
 				m_resolver, fullName, m_groupInfo);
 		if (type != null) {
-			if(type.isSingleton()){
+			if (type.isSingleton()) {
 				JstInferredType infferedType = new JstInferredType(type);
 				fieldAccessExpr.getName().setJstBinding(infferedType);
-				JstExpressionTypeLinkerHelper.doExprTypeUpdate(m_resolver, this,
-						fieldAccessExpr, infferedType, m_groupInfo);
+				JstExpressionTypeLinkerHelper.doExprTypeUpdate(m_resolver,
+						this, fieldAccessExpr, infferedType, m_groupInfo);
 				JstExpressionTypeLinkerHelper
-				.setPackageBindingForQualifier(fieldAccessExpr.getExpr()); // set
-																			// the
-																			// package
-																			// binding
-																			// for
-																			// each
-																			// qualifier,
-																			// e.g.
-																			// a.b.c
+						.setPackageBindingForQualifier(fieldAccessExpr
+								.getExpr()); // set
+												// the
+												// package
+												// binding
+												// for
+												// each
+												// qualifier,
+												// e.g.
+												// a.b.c
 				return infferedType;
-			}else{
-			final JstTypeRefType typeRef = new JstTypeRefType(type);
-			fieldAccessExpr.getName().setJstBinding(typeRef);
-			JstExpressionTypeLinkerHelper.doExprTypeUpdate(m_resolver, this,
-					fieldAccessExpr, typeRef, m_groupInfo);
-			JstExpressionTypeLinkerHelper
-					.setPackageBindingForQualifier(fieldAccessExpr.getExpr()); // set
-																				// the
-																				// package
-																				// binding
-																				// for
-																				// each
-																				// qualifier,
-																				// e.g.
-																				// a.b.c
-			return typeRef;
+			} else {
+				final JstTypeRefType typeRef = new JstTypeRefType(type);
+				fieldAccessExpr.getName().setJstBinding(typeRef);
+				JstExpressionTypeLinkerHelper.doExprTypeUpdate(m_resolver,
+						this, fieldAccessExpr, typeRef, m_groupInfo);
+				JstExpressionTypeLinkerHelper
+						.setPackageBindingForQualifier(fieldAccessExpr
+								.getExpr()); // set
+												// the
+												// package
+												// binding
+												// for
+												// each
+												// qualifier,
+												// e.g.
+												// a.b.c
+				return typeRef;
 			}
 		}
 		return null;
@@ -2228,7 +2278,7 @@ class JstExpressionTypeLinker implements IJstVisitor {
 				m_resolver, fullName, m_groupInfo);
 		if (type != null) {
 			JstExpressionTypeLinkerHelper.bindMtdInvocations(m_resolver, this,
-					mtdInvocationExpr, type.getConstructor(),m_groupInfo);
+					mtdInvocationExpr, type.getConstructor(), m_groupInfo);
 			JstExpressionTypeLinkerHelper.doExprTypeUpdate(m_resolver, this,
 					mtdInvocationExpr, type, m_groupInfo);
 			JstExpressionTypeLinkerHelper
@@ -2360,7 +2410,6 @@ class JstExpressionTypeLinker implements IJstVisitor {
 			m_name = (type == null) ? null : type.getName();
 			m_node = currentNode;
 		}
-
 
 		public IJstNode getNode() {
 			return m_node;

@@ -666,8 +666,14 @@ public class VjoCcHandler implements IVjoCcHandler {
 						result.add(VjoCcGlobalExtensionAdvisor.ID);
 					}
 				}
+			}else if(qualifier instanceof MtdInvocationExpr){
+				MtdInvocationExpr mtdInvo = ((MtdInvocationExpr)qualifier);
+				type = ((IJstMethod)mtdInvo.getMethod()).getRtnType();
 			}
-			type = fae.getExpr().getResultType();
+			
+			if(type==null){
+				type = fae.getExpr().getResultType();
+			}
 			if (!StringUtils.isBlankOrEmpty(str) && !StringUtils.isVj$Expr(str)) {
 				ctx.setActingPackageToken(str);
 				result.add(VjoCcPackageProposalAdvisor.ID);
@@ -704,6 +710,12 @@ public class VjoCcHandler implements IVjoCcHandler {
 						ctx.setActingPackageToken(idStr + "." + completion.getToken());
 						result.add(VjoCcPackageProposalAdvisor.ID);
 						result.add(VjoCcTypeProposalAdvisor.ID);
+					}
+				}else if(jid instanceof MtdInvocationExpr){
+					MtdInvocationExpr mtdInvo = ((MtdInvocationExpr)jid);
+					IJstMethod iJstMethod = (IJstMethod)mtdInvo.getMethod();
+					if(iJstMethod!=null){
+						type = iJstMethod.getRtnType();
 					}
 				}
 			}

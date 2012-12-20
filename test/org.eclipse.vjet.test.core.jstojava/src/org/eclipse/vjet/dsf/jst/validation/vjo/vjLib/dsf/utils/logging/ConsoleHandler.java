@@ -15,6 +15,7 @@ package org.eclipse.vjet.dsf.jst.validation.vjo.vjLib.dsf.utils.logging;
 import java.util.List;
 
 import org.eclipse.vjet.dsf.jsgen.shared.ids.FieldProbIds;
+import org.eclipse.vjet.dsf.jsgen.shared.ids.MethodProbIds;
 import org.eclipse.vjet.dsf.jsgen.shared.ids.TypeProbIds;
 import org.eclipse.vjet.dsf.jsgen.shared.ids.VarProbIds;
 import org.eclipse.vjet.dsf.jsgen.shared.ids.VjoSyntaxProbIds;
@@ -60,6 +61,8 @@ public class ConsoleHandler extends VjoValidationBaseTester {
                 .add(createNewProblem(FieldProbIds.UndefinedField, 88, 0));
         expectProblems
                 .add(createNewProblem(FieldProbIds.UndefinedField, 104, 0));
+        expectProblems
+        		.add(createNewProblem(MethodProbIds.VoidMethodReturnsValue, 44, 0));
     }
 
     @Test

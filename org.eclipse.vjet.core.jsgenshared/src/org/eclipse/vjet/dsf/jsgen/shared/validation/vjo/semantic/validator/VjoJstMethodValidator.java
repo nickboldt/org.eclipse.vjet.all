@@ -22,6 +22,7 @@ import org.eclipse.vjet.dsf.jsgen.shared.validation.vjo.semantic.rules.util.Type
 import org.eclipse.vjet.dsf.jsgen.shared.validation.vjo.visitor.IVjoValidationPostAllChildrenListener;
 import org.eclipse.vjet.dsf.jsgen.shared.validation.vjo.visitor.IVjoValidationPreAllChildrenListener;
 import org.eclipse.vjet.dsf.jsgen.shared.validation.vjo.visitor.IVjoValidationVisitorEvent;
+import org.eclipse.vjet.dsf.jst.IInferred;
 import org.eclipse.vjet.dsf.jst.IJstMethod;
 import org.eclipse.vjet.dsf.jst.IJstNode;
 import org.eclipse.vjet.dsf.jst.IJstType;
@@ -313,7 +314,7 @@ public class VjoJstMethodValidator
 	}
 	
 	private void validateReturnType(final VjoValidationCtx ctx, final IJstMethod jstMethod, IJstType rtnType) {
-		if(rtnType != null){
+		if(rtnType != null && !(rtnType instanceof IInferred)){
 			if(getKnownType(ctx, jstMethod.getOwnerType(), rtnType) == null){
 				//report problem, type unknown
 				if(rtnType.getPackage().getName() == "" && !"void".equals(rtnType.getName())){
