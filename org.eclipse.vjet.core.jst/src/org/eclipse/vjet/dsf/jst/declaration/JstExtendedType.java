@@ -64,7 +64,13 @@ public class JstExtendedType implements IJstType {
 	}
 
 	public List<IJstProperty> getAllPossibleProperties(boolean isStatic, boolean recursive) {
-		return m_targetType.getAllPossibleProperties(isStatic, recursive);
+	
+		List<IJstProperty> props = m_targetType.getAllPossibleProperties(isStatic, recursive);
+		Set<String> names = getAllEntries();
+		for (IJstType type: m_extendedTypes) {
+			combineProps(props, type.getAllPossibleProperties(isStatic, recursive), names);
+		}
+		return props;
 	}
 
 	public IJstAnnotation getAnnotation(String name) {
