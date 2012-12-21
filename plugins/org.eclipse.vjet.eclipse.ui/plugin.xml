@@ -230,6 +230,8 @@
       <image icon="icons/vjet_ovr.gif" id="org.eclipse.vjet.eclipse.ui.natureImage" natureId="org.eclipse.vjet.core.nature">
       </image>
    </extension>
+   
+   
     
  <extension point="org.eclipse.ui.propertyPages">
     <page category="org.eclipse.vjet.eclipse.propertyPage" class="org.eclipse.vjet.eclipse.internal.ui.preferences.VjetBuildPathPropertyPage" id="org.eclipse.vjet.eclipse.ui.BuildpathProperties" name="%VjetBuildPathPropertyPage.name">
@@ -350,6 +352,11 @@
       	<command name="%toggleMarkOccurrence.name" description="%toggleMarkOccurrence.description" categoryId="org.eclipse.dltk.mod.ui.category.source" id="org.eclipse.dltk.mod.ui.edit.text.script.toggleMarkOccurrences">
       	</command>
       <command name="%ActionDefinition.removeOccurrenceAnnotations.name" description="%ActionDefinition.removeOccurrenceAnnotations.description" categoryId="org.eclipse.dltk.mod.ui.category.source" id="org.eclipse.dltk.mod.ui.edit.text.script.remove.occurrence.annotations">
+      </command>
+      <command
+            defaultHandler="org.eclipse.vjet.eclipse.ui.handlers.AddBootstrapEntryToVJETProject"
+            id="org.eclipse.vjet.eclipse.ui.command.AddBootstrapEntryToVJETProject"
+            name="AddBootstrapEntryToVJETProject">
       </command>
    </extension>
    <extension point="org.eclipse.dltk.mod.ui.scriptElementLabelProviders">
@@ -528,6 +535,30 @@
             name="Vjo Support Library"
             nature="org.eclipse.vjet.core.nature">
       </buildpathContainerPath>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+       <menuContribution
+            locationURI="popup:org.eclipse.vjet.shortcuts.menu">
+            <command
+               commandId="org.eclipse.vjet.eclipse.ui.command.AddBootstrapEntryToVJETProject"
+               icon="icons/obj16/sourceEditor.gif"
+               label="Add Bootstrap">
+
+			<visibleWhen>
+			   <or>
+			      <with variable="selection">
+			         <iterate ifEmtpy="false">
+			           <reference definitionId="org.eclipse.vjet.jsfile"/>
+			         </iterate>
+			      </with>
+			      <with variable="activeEditorInput">
+			        <reference definitionId="org.eclipse.vjet.jsfile"/>
+			      </with>
+			   </or>
+			</visibleWhen>
+         </command>
+		</menuContribution>
    </extension> 
    
 </plugin>
