@@ -311,6 +311,10 @@ public class CommentCollector  {
 	}
 	public String getCommentNonMeta2(int methodStartOffset) {
 		
+		if((methodStartOffset-m_unstructuredCommentLastOffset)>100 && methodStartOffset>100){
+			m_unstructuredCommentLastOffset = methodStartOffset - 100;
+		}
+		
 		for(int i = methodStartOffset; i>m_unstructuredCommentLastOffset ; i--){
 			
 			CommentMetaWrapper wrapper = m_commentMetaMap.get(i);
