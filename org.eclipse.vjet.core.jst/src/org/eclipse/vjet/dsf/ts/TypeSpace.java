@@ -822,6 +822,7 @@ public class TypeSpace<T,D> implements ITypeSpace<T,D> {
 			for (GroupDependencyNode<T> d: node.getDependencies().values()){
 				d.removeDependent(node);
 			}
+			group = null;
 
 			return this;
 		}

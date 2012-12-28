@@ -9,13 +9,12 @@
 package org.eclipse.vjet.dsf.jst.ts;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
-
 
 import org.eclipse.vjet.dsf.jst.IJstParseController;
 import org.eclipse.vjet.dsf.jst.IJstType;
 import org.eclipse.vjet.dsf.jst.declaration.JstType;
-//import org.eclipse.vjet.dsf.jstojava.resolver.TypeResolverRegistry;
 import org.eclipse.vjet.dsf.ts.event.EventListenerStatus;
 import org.eclipse.vjet.dsf.ts.event.ISourceEvent;
 import org.eclipse.vjet.dsf.ts.event.ISourceEventCallback;
@@ -45,6 +44,7 @@ import org.eclipse.vjet.dsf.ts.event.type.RenameTypeEvent;
 import org.eclipse.vjet.dsf.ts.group.Group;
 import org.eclipse.vjet.dsf.ts.group.Project;
 import org.eclipse.vjet.dsf.ts.type.TypeName;
+//import org.eclipse.vjet.dsf.jstojava.resolver.TypeResolverRegistry;
 
 /**
  * Listener to JST events.
@@ -272,8 +272,31 @@ public class JstEventListener implements
 		if (event == null){
 			return;
 		}
+		
+		// remove types then remove group
+		
+		Group<IJstType> group = m_mgr.getTypeSpaceImpl().getGroup(event.getGroupName());
+		if(group==null){
+			return;
+		}
+		Collection<IJstType> entities = group.getEntities().values();
+		List<String> entries = new ArrayList<String>();
+		for(IJstType type:entities){
+			entries.add(type.getName());
+		}
+		if(group!=null && entries!=null && entries.size()>0){
+			for(String key: entries){
+				try{
+				m_mgr.getTypeDependencyMgr().removeType(new TypeName(group.getName(),key));
+				}catch(Exception e){
+					// TODO 
+				}
+			}
+		}
+		
 	//	TypeResolverRegistry.getInstance().clear(event.getGroupName());
 		m_mgr.getTypeSpaceImpl().removeGroup(event.getGroupName());
+		
 	};
 	
 	//
