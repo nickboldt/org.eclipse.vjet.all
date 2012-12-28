@@ -2279,6 +2279,7 @@ public class JstType extends BaseJstNode implements IJstType {
 	public void clearMethods() {
 		for (IJstMethod mtd: getMethods()){
 			removeChild(mtd);
+			mtd = null;
 		}
 		synchronized(this){
 			m_mtds = new ArrayList<IJstMethod>();
@@ -2288,6 +2289,7 @@ public class JstType extends BaseJstNode implements IJstType {
 		}
 	}
 	
+	
 	/**
 	 * Removes all properties from the type
 	 */
@@ -2295,6 +2297,7 @@ public class JstType extends BaseJstNode implements IJstType {
 		for (IJstProperty pty: getProperties()){
 			if (pty instanceof BaseJstNode){
 				removeChild((BaseJstNode)pty);
+				pty = null;
 			}
 		}
 		synchronized(this){
