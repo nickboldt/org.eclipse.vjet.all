@@ -40,13 +40,13 @@ public class ExpressionTypeLinkerTests extends AbstractVjoModelTests {
 	 @Before
 	public void setUp() {
 		setWorkspaceSufix("1");
-//		IProject project = getWorkspaceRoot().getProject(getTestProjectName());
+		IProject project = getWorkspaceRoot().getProject(getTestProjectName());
 
-//			try {
-//				super.deleteResource(project);
-//			} catch (CoreException e) {
-//				e.printStackTrace();
-//			}
+			try {
+				super.deleteResource(project);
+			} catch (CoreException e) {
+				e.printStackTrace();
+			}
 			super.setUpSuite();			
 
 		TypeName tn = new TypeName(getTestProjectName(), "ETLinkerB.LinkerB");

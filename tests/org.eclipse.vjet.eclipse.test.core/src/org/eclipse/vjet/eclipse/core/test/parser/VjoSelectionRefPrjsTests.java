@@ -33,6 +33,7 @@ public class VjoSelectionRefPrjsTests extends AbstractSelectionModelTests {
 		
 		if (isFirstRun) {
 			try {
+				isFirstRun = false;
 				super.deleteResource(project1);
 				super.deleteResource(project2);
 				copyProjects(PROJECT1_NAME, PROJECT2_NAME);

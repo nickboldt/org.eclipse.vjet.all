@@ -59,13 +59,13 @@ public class VjoSourceModule extends JSSourceModule implements
 
 	private boolean isConsistent = false;
 
-	private boolean m_typeProcessed;
+//	private boolean m_typeProcessed;
 
-	private List<IScriptProblem> m_probs;
+//	private List<IScriptProblem> m_probs;
 
-	private List<JstBlock> m_blockList;
+//	private List<JstBlock> m_blockList;
 
-	private JstBlock m_block;
+//	private JstBlock m_block;
 //	private IUnitSource m_unitSource = new VjoUnitSource();
 
 	private final class SourceStructureBuilder implements ITypeSpaceRunnable {
@@ -286,8 +286,6 @@ public class VjoSourceModule extends JSSourceModule implements
 			return;
 		}
 
-		m_typeProcessed = true;
-
 		// String group = getGroupName();
 		SourceTypeName typeName = getTypeName();
 		String source = new String(contents);
@@ -470,10 +468,10 @@ public class VjoSourceModule extends JSSourceModule implements
 	public void updateScriptUnit(final JstBlock block,
 			final List<JstBlock> blockList, final IJstType type,
 			final List<IScriptProblem> probs) {
-		this.m_block = block;
-		this.m_blockList = blockList;
+//		this.m_block = block;
+//		this.m_blockList = blockList;
 		this.jstType = type;
-		this.m_probs = probs;
+//		this.m_probs = probs;
 	}
 	
 
@@ -481,21 +479,21 @@ public class VjoSourceModule extends JSSourceModule implements
 		return JstUtil.getLeafNode(jstType, startOffset, startOffset);
 	}
 
-	public JstBlock getSyntaxRoot() {
-		return m_block;
-	}
+//	public JstBlock getSyntaxRoot() {
+//		return m_block;
+//	}
+//
+//	public List<JstBlock> getJstBlockList() {
+//		return m_blockList;
+//	}
 
-	public List<JstBlock> getJstBlockList() {
-		return m_blockList;
-	}
+//	public IJstType getType() {
+//		return jstType;
+//	}
 
-	public IJstType getType() {
-		return jstType;
-	}
-
-	public List<IScriptProblem> getProblems() {
-		return m_probs;
-	}
+//	public List<IScriptProblem> getProblems() {
+//		return m_probs;
+//	}
 
 //	@Override
 //	public IUnitSource getUnitSource() {

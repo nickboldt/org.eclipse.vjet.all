@@ -161,7 +161,11 @@ public class VjoSourceParser extends AbstractSourceParser{
 			}
 			
 			if (scriptUnit != null) {
+				// TODO this appears to be done too many times
+				// it should only be done during incremental build
+				// or onsave events
 				reRegestierType(source, file, groupName, typeName, scriptUnit);
+				// create DLTK ui model from jst
 				processType(scriptUnit.getType(), moduleDeclaration);
 			}
 			if(context!=null)
@@ -220,6 +224,25 @@ public class VjoSourceParser extends AbstractSourceParser{
 				}
 			}
 		}
+	}
+	
+	private void reRegestierType2(char[] source, IFile file, String groupName,
+			String typeName, IScriptUnit unit) {
+		SourceTypeName name = new SourceTypeName(groupName, typeName,
+				new String(source));
+		if(tsm.existType(name)){
+			name.setAction(SourceTypeName.CHANGED);
+		}else{
+			name.setAction(SourceTypeName.ADDED);
+		}
+		
+			IJstType actualType = unit.getType();
+			
+			doProcessType(name, null, actualType);
+					
+				
+			
+		
 	}
 
 	/**

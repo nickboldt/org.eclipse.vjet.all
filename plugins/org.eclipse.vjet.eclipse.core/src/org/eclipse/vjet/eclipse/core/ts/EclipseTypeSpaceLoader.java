@@ -28,6 +28,7 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectNature;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceChangeEvent;
+import org.eclipse.core.resources.IResourceChangeListener;
 import org.eclipse.core.resources.IResourceDelta;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -72,7 +73,7 @@ import org.eclipse.vjet.vjo.tool.typespace.TypeSpaceMgr;
  * 
  * 
  */
-public class EclipseTypeSpaceLoader implements ITypeSpaceLoader {
+public class EclipseTypeSpaceLoader implements ITypeSpaceLoader,IResourceChangeListener {
 
 	private List<SourceTypeName> m_types = new ArrayList<SourceTypeName>();
 
@@ -98,12 +99,11 @@ public class EclipseTypeSpaceLoader implements ITypeSpaceLoader {
 	 */
 	public EclipseTypeSpaceLoader() {
 		super();
-//		final IWorkspace workspace = ResourcesPlugin.getWorkspace();
-//		workspace.removeResourceChangeListener(this);
-//		workspace.addResourceChangeListener(this,
-//				IResourceChangeEvent.POST_CHANGE
-//						| IResourceChangeEvent.PRE_DELETE
-//						| IResourceChangeEvent.PRE_CLOSE);
+		final IWorkspace workspace = ResourcesPlugin.getWorkspace();
+		workspace.removeResourceChangeListener(this);
+		workspace.addResourceChangeListener(this,
+				 IResourceChangeEvent.PRE_DELETE
+				| IResourceChangeEvent.PRE_CLOSE);
 	}
 
 	public List<SourceTypeName> getTypes() {
@@ -526,24 +526,24 @@ public class EclipseTypeSpaceLoader implements ITypeSpaceLoader {
 //	 * Process workspace resources changes.
 //	 * 
 //	 */
-//	public void resourceChanged(IResourceChangeEvent event) {
-//
-//		int type = event.getType();
-//
-//		IProject project = getProject(event);
+	public void resourceChanged(IResourceChangeEvent event) {
+
+		int type = event.getType();
+
+		IProject project = getProject(event);
 //		if (!isStarted() || !m_tsmgr.isAllowChanges() || project==null) {
 //			return;
 //		}
-//
-//		// process close project event.
-//		if (type == IResourceChangeEvent.PRE_CLOSE
-//				|| type == IResourceChangeEvent.PRE_DELETE) {
-//
+
+		// process close project event.
+		if (type == IResourceChangeEvent.PRE_CLOSE
+				|| type == IResourceChangeEvent.PRE_DELETE) {
+
 //			updateGroupDepends(project);
-//			processCloseProject(event);
-//			// TODO after close build dependent projects
-//		}
-//
+			processCloseProject(project);
+			// TODO after close build dependent projects
+		}
+
 //		// process add/modify/delete resources events.
 //		if (type == IResourceChangeEvent.POST_CHANGE) {
 //
@@ -557,8 +557,8 @@ public class EclipseTypeSpaceLoader implements ITypeSpaceLoader {
 //				processChanges(event);
 //			}
 //		}
-//
-//	}
+
+	}
 
 	private IProject getProject(IResourceChangeEvent event) {
 		if (event.getDelta() != null
@@ -652,8 +652,7 @@ public class EclipseTypeSpaceLoader implements ITypeSpaceLoader {
 	 * @param event
 	 *            {@link IResourceChangeEvent} object.
 	 */
-	private void processCloseProject(IResourceChangeEvent event) {
-		IProject project = (IProject) event.getResource();
+	private void processCloseProject(IProject project) {
 		String name = project.getName();
 		RemoveGroupEvent removeGroupEvent = new RemoveGroupEvent(name, name);
 		m_tsmgr.processEvent(removeGroupEvent);

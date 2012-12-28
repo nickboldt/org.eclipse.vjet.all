@@ -1069,12 +1069,14 @@ public class VjetScriptBuilder extends ScriptBuilder {
 							
 							
 						}
-						
+						module.setUnit(null);
 						((BuildProblemReporter)reporter).flush();
 						
 					}
 					
 				}
+				
+				postBuildCtx = null;
 
 //				builder.buildModelElements(scriptProject, buildElementsList,
 //						new SubProgressMonitor(monitor, step), buildTypes[k]);
