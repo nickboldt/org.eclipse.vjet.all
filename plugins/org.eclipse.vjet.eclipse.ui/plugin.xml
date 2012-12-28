@@ -549,7 +549,7 @@
 			   <or>
 			      <with variable="selection">
 			         <iterate ifEmtpy="false">
-			           <reference definitionId="org.eclipse.vjet.jsfile"/>
+			            <instanceof value=" org.eclipse.dltk.mod.internal.core.ScriptProject"/>
 			         </iterate>
 			      </with>
 			      <with variable="activeEditorInput">
