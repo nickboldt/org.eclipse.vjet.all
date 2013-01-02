@@ -26,6 +26,7 @@ import org.eclipse.vjet.dsf.jst.IJstProperty;
 import org.eclipse.vjet.dsf.jst.IJstRefType;
 import org.eclipse.vjet.dsf.jst.IJstType;
 import org.eclipse.vjet.dsf.jst.IJstTypeReference;
+import org.eclipse.vjet.dsf.jst.JstCommentLocation;
 import org.eclipse.vjet.dsf.jst.JstSource;
 import org.eclipse.vjet.dsf.jst.declaration.JstAnnotation;
 import org.eclipse.vjet.dsf.jst.declaration.JstArg;
@@ -406,11 +407,12 @@ public class TranslateHelper {
 		IJstType jstType = null;
 		// handling simple jsType and generics
 		if (jsTypingMeta instanceof JsType) {
-			if(((JsType) jsTypingMeta).isAliasRef()){
-				jstType = JstCache.getInstance().getAliasType(jsTypingMeta.getType(), true);
-			}else{
-			
-			jstType = findType(findSupport, (JsType)jsTypingMeta);
+			if (((JsType) jsTypingMeta).isAliasRef()) {
+				jstType = JstCache.getInstance().getAliasType(
+						jsTypingMeta.getType(), true);
+			} else {
+
+				jstType = findType(findSupport, (JsType) jsTypingMeta);
 			}
 		}
 		// handling floating function types
@@ -459,18 +461,16 @@ public class TranslateHelper {
 				jstType = new JstAttributedType(attributorType, attributeName,
 						isStatic);
 			}
-		}
-		else if (jsTypingMeta instanceof JsVariantType) {
-			jstType = findType(findSupport, (JsVariantType)jsTypingMeta);
-		}
-		else if (jsTypingMeta instanceof JsMixinType) {
-			jstType = findType(findSupport, (JsMixinType)jsTypingMeta);
-		}
-		else if (jsTypingMeta instanceof JsFuncScopeAttributedType) {
-			jstType = findType(findSupport, (JsFuncScopeAttributedType)jsTypingMeta);
-		}
-		else if (jsTypingMeta instanceof JsFuncArgAttributedType) {
-			jstType = findType(findSupport, (JsFuncArgAttributedType)jsTypingMeta);
+		} else if (jsTypingMeta instanceof JsVariantType) {
+			jstType = findType(findSupport, (JsVariantType) jsTypingMeta);
+		} else if (jsTypingMeta instanceof JsMixinType) {
+			jstType = findType(findSupport, (JsMixinType) jsTypingMeta);
+		} else if (jsTypingMeta instanceof JsFuncScopeAttributedType) {
+			jstType = findType(findSupport,
+					(JsFuncScopeAttributedType) jsTypingMeta);
+		} else if (jsTypingMeta instanceof JsFuncArgAttributedType) {
+			jstType = findType(findSupport,
+					(JsFuncArgAttributedType) jsTypingMeta);
 		}
 
 		// handling error case
@@ -514,7 +514,7 @@ public class TranslateHelper {
 		}
 		return new JstVariantType(types);
 	}
-	
+
 	private static IJstType findType(final IFindTypeSupport findSupport,
 			final JsMixinType typing) {
 		List<IJstType> types = new ArrayList<IJstType>(3);
@@ -523,14 +523,14 @@ public class TranslateHelper {
 		}
 		return new JstMixedType(types);
 	}
-	
+
 	private static IJstType findType(final IFindTypeSupport findSupport,
-		final JsFuncScopeAttributedType typing) {
+			final JsFuncScopeAttributedType typing) {
 		return new JstFuncScopeAttributedType();
 	}
-	
+
 	private static IJstType findType(final IFindTypeSupport findSupport,
-		final JsFuncArgAttributedType typing) {
+			final JsFuncArgAttributedType typing) {
 		return new JstFuncArgAttributedType(typing.getArgIndex());
 	}
 
@@ -954,11 +954,11 @@ public class TranslateHelper {
 		boolean optionalReturn = false;
 		IJstType rtnType = null;
 		for (IJstMethod mtd : jstMethod.getOverloaded()) {
-			
-			if(mtd.isReturnTypeOptional()){
+
+			if (mtd.isReturnTypeOptional()) {
 				optionalReturn = true;
 			}
-			
+
 			IJstType currType = mtd.getRtnType();
 			if (rtnType != null && currType != null) {
 				if (!rtnType.getName().equals(currType.getName())) {
@@ -968,7 +968,7 @@ public class TranslateHelper {
 			}
 			rtnType = currType;
 		}
-		
+
 		jstMethod.setReturnOptional(optionalReturn);
 		// If all overloaded methods have the same return type, set the
 		// dispatcher method return
@@ -1219,14 +1219,17 @@ public class TranslateHelper {
 			}
 			return super.getName();
 		}
-		
+
 		@Override
-		//bugfix by huzhou@ebay.com, renamed methods must be applied to its overloading methods names as well
-		public List<IJstMethod> getOverloaded(){
+		// bugfix by huzhou@ebay.com, renamed methods must be applied to its
+		// overloading methods names as well
+		public List<IJstMethod> getOverloaded() {
 			final List<IJstMethod> overloadedMtds = super.getOverloaded();
-			final List<IJstMethod> renamedMtds = new ArrayList<IJstMethod>(overloadedMtds.size());
-			for(IJstMethod overloaded : overloadedMtds){
-				renamedMtds.add(new RenameableSynthJstProxyMethod(overloaded, jstRename != null ? jstRename.getName() : null));
+			final List<IJstMethod> renamedMtds = new ArrayList<IJstMethod>(
+					overloadedMtds.size());
+			for (IJstMethod overloaded : overloadedMtds) {
+				renamedMtds.add(new RenameableSynthJstProxyMethod(overloaded,
+						jstRename != null ? jstRename.getName() : null));
 			}
 			return renamedMtds;
 		}
@@ -1798,7 +1801,7 @@ public class TranslateHelper {
 		JstSource source = null;
 
 		// TODO meta should be retrievable
-		if (meta != null && ctx!=null) {
+		if (meta != null && ctx != null) {
 			int commentOffset = meta.getBeginOffset() + 1;// added 1
 			final int startOffset = commentOffset + param.getBeginColumn();
 			final int endOffset = commentOffset + param.getEndColumn();
@@ -2337,20 +2340,27 @@ public class TranslateHelper {
 				final IASTNode ast, final JstMethod method) {
 			final JstSource methodSource = TranslateHelper.getSource(ast,
 					ctx.getSourceUtil());
-			String methodComments = getComments(ast, ctx);
+			JstCommentLocation methodComments = ctx.getCommentCollector()
+					.getCommentLocationNonMeta2(ast.sourceStart());
 			if (!method.isDispatcher()) {
 				method.setSource(methodSource);
-				JsDocHelper.addJsDoc(methodComments, method);
+				if (methodComments != null) {
+					method.addCommentLocation(methodComments);
+				}
+				// JsDocHelper.addJsDoc(methodComments, method);
 				// method.setComments(methodComments);
 			} else {
 				method.setSource(methodSource);
 				// method.setComments(methodComments);
-				JsDocHelper.addJsDoc(methodComments, method);
+				if (methodComments != null) {
+					method.addCommentLocation(methodComments);
+				}
+				// JsDocHelper.addJsDoc(methodComments, method);
 				for (IJstMethod overload : method.getOverloaded()) {
 					if (overload instanceof JstMethod) {
 						((JstMethod) overload).setSource(methodSource);
 						// method.setComments(methodComments);
-						JsDocHelper.addJsDoc(methodComments, method);
+						// JsDocHelper.addJsDoc(methodComments, method);
 					}
 				}
 			}
@@ -2358,13 +2368,22 @@ public class TranslateHelper {
 
 		private static List<String> getComments2(final IASTNode ast,
 				final TranslateCtx ctx) {
-			if(ast==null){
+			if (ast == null) {
 				return Collections.EMPTY_LIST;
 			}
 			return ctx.getCommentCollector().getCommentNonMeta(
 					ast.sourceStart(), ctx.getPreviousNodeSourceEnd());
 		}
-		
+
+		private static List<JstCommentLocation> getCommentLocations2(
+				final IASTNode ast, final TranslateCtx ctx) {
+			if (ast == null) {
+				return null;
+			}
+			return ctx.getCommentCollector().getCommentLocationNonMeta(
+					ast.sourceStart(), ctx.getPreviousNodeSourceEnd());
+		}
+
 		private static String getComments(final IASTNode ast,
 				final TranslateCtx ctx) {
 			return ctx.getCommentCollector().getCommentNonMeta2(
@@ -2724,8 +2743,8 @@ public class TranslateHelper {
 				final List<JsTypingMeta> originalParamTypes = originalParam
 						.getTypes();
 				newParams.add(buildJsParam(originalParam.getName(),
-						originalParam.isFinal(), originalParam.isOptional(), originalParam
-								.isVariable(), originalParamTypes
+						originalParam.isFinal(), originalParam.isOptional(),
+						originalParam.isVariable(), originalParamTypes
 								.toArray(new JsTypingMeta[originalParamTypes
 										.size()])));
 			}
@@ -2953,14 +2972,13 @@ public class TranslateHelper {
 		 * @param methName
 		 * @return
 		 */
-		public static JstMethod createJstMethodNoMeta(
-				IJsCommentMeta meta, final TranslateCtx ctx,
-				boolean useJsAnnotForArgs, final String methName) {
-			return createJstMethod((MethodDeclaration)null, null,
-					meta, ctx,
-					 useJsAnnotForArgs,  methName);
+		public static JstMethod createJstMethodNoMeta(IJsCommentMeta meta,
+				final TranslateCtx ctx, boolean useJsAnnotForArgs,
+				final String methName) {
+			return createJstMethod((MethodDeclaration) null, null, meta, ctx,
+					useJsAnnotForArgs, methName);
 		}
-		
+
 		public static JstMethod createJstMethod(
 				final MethodDeclaration astMtdDecl, final IArgument[] astArgs,
 				IJsCommentMeta meta, final TranslateCtx ctx,
@@ -2978,9 +2996,9 @@ public class TranslateHelper {
 
 				// astMtdDecl.get
 			}
-			// jstMethod.setSource(TranslateHelper.getSource(astMtdDecl,
-			// ctx.getSourceUtil()));
-			 jstMethod.setComments(getComments2(astMtdDecl, ctx));
+
+			jstMethod
+					.setCommentLocations(getCommentLocations2(astMtdDecl, ctx));
 
 			if (meta != null) {
 				jstMethod.setHasJsAnnotation(true);
@@ -2988,8 +3006,10 @@ public class TranslateHelper {
 				jstMethod.setName(methodName);
 				TranslateHelper.setModifiersFromMeta(meta,
 						jstMethod.getModifiers());
-
-				JsDocHelper.addJsDoc(meta, jstMethod);
+				
+				jstMethod.addCommentLocation(meta.getBeginOffset(), meta.getEndOffset(), true);
+				
+//				JsDocHelper.addJsDoc(meta, jstMethod);
 
 				// type params not arguments... meta.getArgs is a little
 				// confusing
@@ -3000,7 +3020,7 @@ public class TranslateHelper {
 				final JsTypingMeta typing = meta.getTyping();
 				if (typing != null) {
 					final JsTypingMeta returnType = getReturnTyping(meta);
- 					jstMethod.setReturnOptional(typing.isOptional());
+					jstMethod.setReturnOptional(typing.isOptional());
 					final IJstType retType = findType(ctx, returnType, meta);
 					jstMethod.setRtnType(retType);
 					if (typing instanceof JsFuncType) {
@@ -3091,7 +3111,7 @@ public class TranslateHelper {
 					}
 				}
 			}
-			if(astMtdDecl!=null && jstMethod!=null){
+			if (astMtdDecl != null && jstMethod != null) {
 				jstMethod.getName().setSource(
 						TranslateHelper.getSourceFunc(astMtdDecl,
 								ctx.getSourceUtil()));
@@ -3191,7 +3211,7 @@ public class TranslateHelper {
 				setVariable(originalJsFunc.isVariable());
 			}
 		}
-		
+
 		@Override
 		public boolean isOptional() {
 			return m_originalJsFunc.isOptional();
@@ -3307,8 +3327,6 @@ public class TranslateHelper {
 			this.m_jsFuncType = func;
 		}
 
-		
-		
 		@Override
 		public boolean isMethod() {
 			return m_originalMeta.isMethod();

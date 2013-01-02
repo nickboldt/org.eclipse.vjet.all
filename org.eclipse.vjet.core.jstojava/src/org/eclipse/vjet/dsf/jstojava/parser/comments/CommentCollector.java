@@ -16,6 +16,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Set;
 
+import org.eclipse.vjet.dsf.jst.JstCommentLocation;
 import org.eclipse.vjet.dsf.jst.meta.IJsCommentMeta;
 import org.eclipse.vjet.dsf.jst.meta.IJsCommentMeta.DIRECTION;
 import org.eclipse.vjet.dsf.jstojava.report.ErrorReporter;
@@ -174,6 +175,21 @@ public class CommentCollector  {
 		return comments;
 	}
 	
+	public List<JstCommentLocation> getCommentLocations(int previousEnd, int nextStart) {
+		Set<Integer> keySet = m_commentMap.keySet();
+		ArrayList<JstCommentLocation> comments = new ArrayList<JstCommentLocation>(3);
+		if (nextStart < previousEnd) {
+			return comments;
+		}
+		for (Integer key : keySet) {
+			String current = m_commentMap.get(key);
+			if (previousEnd<key && nextStart>=key) {
+				comments.add(new JstCommentLocation(key, key + current.length()));
+			}
+		}
+		return comments;
+	}
+	
 	/**
 	 * @return List<String>
 	 * 
@@ -294,6 +310,13 @@ public class CommentCollector  {
 		return comments;
 	}
 	
+	/** 
+	 * @deprecated
+	 * 
+	 * @param methodStartOffset
+	 * @param previousOffset
+	 * @return
+	 */
 	public List<String> getCommentNonMeta(int methodStartOffset, int previousOffset) {
 		
 		int lastCommentOffset = previousOffset;
@@ -302,6 +325,22 @@ public class CommentCollector  {
 			String com = m_commentMap.get(lastCommentOffset);
 			if(com!=null){
 				Collections.addAll(comments,com.split("\n"));
+			}
+			lastCommentOffset++;
+		}
+		return comments;
+		
+		
+	}
+	
+	public List<JstCommentLocation> getCommentLocationNonMeta(int methodStartOffset, int previousOffset) {
+		
+		int lastCommentOffset = previousOffset;
+		List<JstCommentLocation> comments = new ArrayList<JstCommentLocation>();
+		while(lastCommentOffset<=methodStartOffset ){
+			String com = m_commentMap.get(lastCommentOffset);
+			if(com!=null){
+				comments.add(new JstCommentLocation(lastCommentOffset, lastCommentOffset + com.length()));
 			}
 			lastCommentOffset++;
 		}
@@ -323,6 +362,25 @@ public class CommentCollector  {
 			if(wrapper==null && com!=null){
 				m_unstructuredCommentLastOffset = methodStartOffset;
 				return com;
+			}
+		}
+		return null;		
+	}	
+	
+	public JstCommentLocation getCommentLocationNonMeta2(int methodStartOffset) {
+		
+		if((methodStartOffset-m_unstructuredCommentLastOffset)>100 && methodStartOffset>100){
+			m_unstructuredCommentLastOffset = methodStartOffset - 100;
+		}
+		
+		for(int i = methodStartOffset; i>m_unstructuredCommentLastOffset ; i--){
+			
+			CommentMetaWrapper wrapper = m_commentMetaMap.get(i);
+			
+			String com = m_commentMap.get(i);
+			if(wrapper==null && com!=null){
+				m_unstructuredCommentLastOffset = methodStartOffset;
+				return new JstCommentLocation(i, i + com.length());
 			}
 		}
 		return null;		

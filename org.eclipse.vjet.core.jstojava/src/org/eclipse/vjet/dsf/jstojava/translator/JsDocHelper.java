@@ -20,7 +20,10 @@ public class JsDocHelper {
 		if (meta !=null && meta.getCommentSrc() != null) {
 			String jsdoc = getJsDocFromStructuredComment(meta);
 			if (jsdoc != "" ) {
-				jstMethod.setDoc(createJsDocNode(jsdoc));
+				JstDoc jsDocNode = createJsDocNode(jsdoc);
+				if(jsDocNode!=null){
+					jstMethod.setDoc(jsDocNode);
+				}
 			}
 		}
 	}
@@ -45,13 +48,15 @@ public class JsDocHelper {
 
 	private static String getJsDocFromStructuredComment(IJsCommentMeta meta) {
 		String[] split = meta.getCommentSrc().split(";");
-		String jsdoc = "";
+		StringBuilder jsdoc = new StringBuilder();
 		if (split.length >= 2) {
 			for (int i = 1; i < split.length; i++) {
-				jsdoc = jsdoc + split[i];
+				jsdoc.append( split[i]);
 			}
+		}else{
+			return null;
 		}
-		return jsdoc.trim();
+		return jsdoc.toString().trim();
 	}
 
 	public static void addJsDoc(String jsdoc, JstType property) {
@@ -77,6 +82,9 @@ public class JsDocHelper {
 	}
 
 	private static JstDoc createJsDocNode(String jsdoc) {
+		if(jsdoc==null){
+			return null;
+		}
 		jsdoc = jsdoc.trim();
 		jsdoc = jsdoc.replaceAll("^/\\*\\*", "");
 		jsdoc = jsdoc.replaceAll("^\\*", "");

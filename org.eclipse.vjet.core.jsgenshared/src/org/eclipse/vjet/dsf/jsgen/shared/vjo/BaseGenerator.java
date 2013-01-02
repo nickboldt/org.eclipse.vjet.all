@@ -12,6 +12,8 @@ import java.util.List;
 
 import org.eclipse.vjet.dsf.jsgen.shared.generate.SourceGenerator;
 import org.eclipse.vjet.dsf.jst.IJstNode;
+import org.eclipse.vjet.dsf.jst.JstCommentLocation;
+import org.eclipse.vjet.dsf.jst.util.JstCommentHelper;
 
 
 public abstract class BaseGenerator extends SourceGenerator {
@@ -70,8 +72,9 @@ public abstract class BaseGenerator extends SourceGenerator {
 	}
 	
 	protected void writeComments(IJstNode node) {
-		if (node!=null && node.getComments()!=null) {
-			List<String> comments = node.getComments();
+		if (node!=null && node.getCommentLocations()!=null) {
+			List<JstCommentLocation> commentLocations = node.getCommentLocations();
+			List<String> comments = JstCommentHelper.getCommentsAsString(node.getOwnerType(), commentLocations);
 			for (String comment : comments) {
 				writeNewline();
 				getWriter().append(comment);

@@ -53,5 +53,7 @@ public interface IJstNode extends Serializable {
 	
 	List<String> getComments();
 	
+	List<JstCommentLocation> getCommentLocations();
+	
 	void accept(IJstNodeVisitor visitor);
 }

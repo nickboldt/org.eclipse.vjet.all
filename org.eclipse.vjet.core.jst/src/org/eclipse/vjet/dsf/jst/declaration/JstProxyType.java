@@ -20,6 +20,7 @@ import org.eclipse.vjet.dsf.jst.IJstOType;
 import org.eclipse.vjet.dsf.jst.IJstProperty;
 import org.eclipse.vjet.dsf.jst.IJstType;
 import org.eclipse.vjet.dsf.jst.IJstTypeReference;
+import org.eclipse.vjet.dsf.jst.JstCommentLocation;
 import org.eclipse.vjet.dsf.jst.JstSource;
 import org.eclipse.vjet.dsf.jst.token.IStmt;
 
@@ -676,6 +677,10 @@ public abstract class JstProxyType implements IJstType {
 	
 	public List<String> getComments() {
 		return m_targetType.getComments();
+	}
+	
+	public List<JstCommentLocation> getCommentLocations() {
+		return m_targetType.getCommentLocations();
 	}
 	/**
 	 * @see IJstType#isParamName(String)

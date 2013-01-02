@@ -48,6 +48,8 @@ public class VjoSelectionTests {
 		URL file = ResourceUtil.getResource(getClass(),"simplevjocommented.js.txt");
 		type = new VjoParser().addLib(LibManager.getInstance().getJsNativeGlobalLib())
 			.parse(null, file).getType();
+		
+		
 	}
 
 	@Test
@@ -60,6 +62,7 @@ public class VjoSelectionTests {
 		IJstType importedType = ((JstTypeReference) node).getReferencedType();
 		assertEquals("Wrong imported type seleced", "a.b.c.Z", importedType
 				.getName());
+		
 	}
 	
 	@Test

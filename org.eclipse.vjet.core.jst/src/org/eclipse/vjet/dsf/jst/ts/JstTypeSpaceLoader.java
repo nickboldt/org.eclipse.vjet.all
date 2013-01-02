@@ -166,6 +166,8 @@ public class JstTypeSpaceLoader implements ITypeSpaceLoader {
 					isSerialized = false;
 					// TODO show better progress message here not percentage
 					type = controller.parse(srcType.getGroupName(), srcType.getFileName(), srcType.getSource()).getType();
+					
+					srcType.setSource(null);
 				}
 				
 				if (type != null) {
@@ -241,6 +243,8 @@ public class JstTypeSpaceLoader implements ITypeSpaceLoader {
 //				System.out.println("RESOLVING =" + type.getName());
 				
 				controller.resolve(type);
+				
+				
 			}
 			catch (Throwable e) {
 				hasError = true;
@@ -284,6 +288,7 @@ public class JstTypeSpaceLoader implements ITypeSpaceLoader {
 				notifyProgress(callback, progressPercent);
 			}
 		}
+		jstTypeSrcList = null;
 		
 		if (hasError) {
 			return failedStatus;

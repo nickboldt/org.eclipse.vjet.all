@@ -14,6 +14,7 @@ import java.util.List;
 import org.eclipse.vjet.dsf.jsgen.shared.ids.ScopeIds;
 import org.eclipse.vjet.dsf.jst.IJstMethod;
 import org.eclipse.vjet.dsf.jst.IJstType;
+import org.eclipse.vjet.dsf.jst.JstCommentLocation;
 import org.eclipse.vjet.dsf.jst.JstSource;
 import org.eclipse.vjet.dsf.jst.declaration.JstFuncType;
 import org.eclipse.vjet.dsf.jst.declaration.JstMethod;
@@ -60,13 +61,14 @@ public class ObjectLiteralFieldTranslator extends
 			nv.setValue(value);
 			nv.addChild(value);
 
-			List<String> comments = new ArrayList<String>();
-			String comment =  m_ctx.getCommentCollector().getCommentNonMeta2(astObjectliteralField.sourceStart);
-			if(comment!=null){
-				comments.add(comment);
-			}
+//			List<String> comments = new ArrayList<String>();
+//			String comment =  m_ctx.getCommentCollector().getCommentNonMeta2(astObjectliteralField.sourceStart);
+			JstCommentLocation comment =  m_ctx.getCommentCollector().getCommentLocationNonMeta2(astObjectliteralField.sourceStart);
+//			if(comment!=null){
+//				comments.add(comment);
+//			}
 //			nv.setComments(comments)
-			nv.setComments(comments);
+			nv.addCommentLocation(comment);
 			
 //			nv.setComments(m_ctx.getCommentCollector().getCommentNonMeta(
 //					astObjectliteralField.sourceStart()));

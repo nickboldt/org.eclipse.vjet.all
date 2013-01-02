@@ -16,6 +16,7 @@ import org.eclipse.vjet.dsf.jst.IJstNode;
 import org.eclipse.vjet.dsf.jst.IJstProperty;
 import org.eclipse.vjet.dsf.jst.IJstType;
 import org.eclipse.vjet.dsf.jst.IJstTypeReference;
+import org.eclipse.vjet.dsf.jst.JstCommentLocation;
 import org.eclipse.vjet.dsf.jst.JstSource;
 import org.eclipse.vjet.dsf.jst.token.IExpr;
 import org.eclipse.vjet.dsf.jst.token.ISimpleTerm;
@@ -108,6 +109,10 @@ public class JstProxyProperty implements IJstProperty {
 
 	public List<String> getComments() {
 		return m_targetProp.getComments();
+	}
+	
+	public List<JstCommentLocation> getCommentLocations() {
+		return m_targetProp.getCommentLocations();
 	}
 
 	public IJstType getOwnerType() {

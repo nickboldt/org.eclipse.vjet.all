@@ -11,6 +11,28 @@
 import java.util.List;
 import java.util.Stack;
 
+import org.eclipse.mod.wst.jsdt.core.ast.IASTNode;
+import org.eclipse.mod.wst.jsdt.core.ast.IBinaryExpression;
+import org.eclipse.mod.wst.jsdt.core.ast.IExpression;
+import org.eclipse.mod.wst.jsdt.core.ast.ILiteral;
+import org.eclipse.mod.wst.jsdt.core.ast.IPostfixExpression;
+import org.eclipse.mod.wst.jsdt.core.ast.IProgramElement;
+import org.eclipse.mod.wst.jsdt.core.compiler.CategorizedProblem;
+import org.eclipse.mod.wst.jsdt.internal.compiler.ast.AND_AND_Expression;
+import org.eclipse.mod.wst.jsdt.internal.compiler.ast.AllocationExpression;
+import org.eclipse.mod.wst.jsdt.internal.compiler.ast.ArrayInitializer;
+import org.eclipse.mod.wst.jsdt.internal.compiler.ast.ConditionalExpression;
+import org.eclipse.mod.wst.jsdt.internal.compiler.ast.EqualExpression;
+import org.eclipse.mod.wst.jsdt.internal.compiler.ast.Expression;
+import org.eclipse.mod.wst.jsdt.internal.compiler.ast.FieldReference;
+import org.eclipse.mod.wst.jsdt.internal.compiler.ast.FunctionExpression;
+import org.eclipse.mod.wst.jsdt.internal.compiler.ast.MessageSend;
+import org.eclipse.mod.wst.jsdt.internal.compiler.ast.OR_OR_Expression;
+import org.eclipse.mod.wst.jsdt.internal.compiler.ast.ObjectLiteral;
+import org.eclipse.mod.wst.jsdt.internal.compiler.ast.ObjectLiteralField;
+import org.eclipse.mod.wst.jsdt.internal.compiler.ast.SingleNameReference;
+import org.eclipse.mod.wst.jsdt.internal.compiler.ast.TrueLiteral;
+import org.eclipse.mod.wst.jsdt.internal.compiler.ast.UnaryExpression;
 import org.eclipse.vjet.dsf.common.exceptions.DsfRuntimeException;
 import org.eclipse.vjet.dsf.jsgen.shared.ids.ScopeIds;
 import org.eclipse.vjet.dsf.jst.BaseJstNode;
@@ -21,6 +43,7 @@ import org.eclipse.vjet.dsf.jst.IJstRefType;
 import org.eclipse.vjet.dsf.jst.IJstType;
 import org.eclipse.vjet.dsf.jst.IJstTypeReference;
 import org.eclipse.vjet.dsf.jst.ISynthesized;
+import org.eclipse.vjet.dsf.jst.JstCommentLocation;
 import org.eclipse.vjet.dsf.jst.JstSource;
 import org.eclipse.vjet.dsf.jst.declaration.JstArg;
 import org.eclipse.vjet.dsf.jst.declaration.JstBlock;
@@ -70,28 +93,6 @@ import org.eclipse.vjet.dsf.jstojava.translator.robust.VjoRobustTranslator;
 import org.eclipse.vjet.dsf.jstojava.translator.robust.completion.JstCompletion;
 import org.eclipse.vjet.dsf.jstojava.translator.robust.completion.JstCompletionOnSingleNameReference;
 import org.eclipse.vjet.dsf.jstojava.translator.robust.completion.JstFieldOrMethodCompletion;
-import org.eclipse.mod.wst.jsdt.core.ast.IASTNode;
-import org.eclipse.mod.wst.jsdt.core.ast.IBinaryExpression;
-import org.eclipse.mod.wst.jsdt.core.ast.IExpression;
-import org.eclipse.mod.wst.jsdt.core.ast.ILiteral;
-import org.eclipse.mod.wst.jsdt.core.ast.IPostfixExpression;
-import org.eclipse.mod.wst.jsdt.core.ast.IProgramElement;
-import org.eclipse.mod.wst.jsdt.core.compiler.CategorizedProblem;
-import org.eclipse.mod.wst.jsdt.internal.compiler.ast.AND_AND_Expression;
-import org.eclipse.mod.wst.jsdt.internal.compiler.ast.AllocationExpression;
-import org.eclipse.mod.wst.jsdt.internal.compiler.ast.ArrayInitializer;
-import org.eclipse.mod.wst.jsdt.internal.compiler.ast.ConditionalExpression;
-import org.eclipse.mod.wst.jsdt.internal.compiler.ast.EqualExpression;
-import org.eclipse.mod.wst.jsdt.internal.compiler.ast.Expression;
-import org.eclipse.mod.wst.jsdt.internal.compiler.ast.FieldReference;
-import org.eclipse.mod.wst.jsdt.internal.compiler.ast.FunctionExpression;
-import org.eclipse.mod.wst.jsdt.internal.compiler.ast.MessageSend;
-import org.eclipse.mod.wst.jsdt.internal.compiler.ast.OR_OR_Expression;
-import org.eclipse.mod.wst.jsdt.internal.compiler.ast.ObjectLiteral;
-import org.eclipse.mod.wst.jsdt.internal.compiler.ast.ObjectLiteralField;
-import org.eclipse.mod.wst.jsdt.internal.compiler.ast.SingleNameReference;
-import org.eclipse.mod.wst.jsdt.internal.compiler.ast.TrueLiteral;
-import org.eclipse.mod.wst.jsdt.internal.compiler.ast.UnaryExpression;
 import org.eclipse.vjet.vjo.meta.VjoKeywords;
 
 public class VjoOLFieldTranslator extends
@@ -927,8 +928,9 @@ public class VjoOLFieldTranslator extends
 		if(meta!=null){
 			JsDocHelper.addJsDoc(meta, global);
 		}
-		String comment =  m_ctx.getCommentCollector().getCommentNonMeta2(astObjectLiteralField.sourceStart);
-		JsDocHelper.addJsDoc(comment, global);
+		JstCommentLocation comment =  m_ctx.getCommentCollector().getCommentLocationNonMeta2(astObjectLiteralField.sourceStart);
+//		JsDocHelper.addJsDoc(comment, global);
+		global.addCommentLocation(comment);
 		
 		value = TranslateHelper
 				.getCastable(value, metaArr, m_ctx);
@@ -1083,13 +1085,19 @@ public class VjoOLFieldTranslator extends
 			TranslateHelper.setModifiersFromMeta(meta, property.getModifiers());
 			TranslateHelper.setTypeRefSource((JstTypeReference) property
 					.getTypeRef(), meta);
-			JsDocHelper.addJsDoc(meta, property);
+			property.addCommentLocation(meta.getBeginOffset(),meta.getEndOffset(),true);
+//			JsDocHelper.addJsDoc(meta, property);
 			
 		}
-		String comments = getComments(astObjectLiteralField, m_ctx);
-		if(comments!=null){
-			JsDocHelper.addJsDoc(comments, property);
+		
+		JstCommentLocation location = m_ctx.getCommentCollector().getCommentLocationNonMeta2(astObjectLiteralField.sourceStart());
+		if(location!=null){
+			property.addCommentLocation(location);
 		}
+//		String comments = getComments(astObjectLiteralField, m_ctx);
+//		if(comments!=null){
+//			JsDocHelper.addJsDoc(comments, property);
+//		}
 
 		if (m_ctx.getCurrentScope() == ScopeIds.PROPS) {
 			property.getModifiers().setStatic(true);

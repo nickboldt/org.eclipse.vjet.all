@@ -39,10 +39,10 @@ public class JstSource implements Serializable {
 	//
 	// Constructor
 	//
-	public JstSource(final String name){
-		this((IBinding)null);
-		m_name = name;
-	}
+//	public JstSource(final String name){
+//		this((IBinding)null);
+////		m_name = name;
+//	}
 	
 	public JstSource(final IBinding binding){
 		this(JAVA, binding, -1, -1);
@@ -74,9 +74,9 @@ public class JstSource implements Serializable {
 		m_length = length;
 		m_startOffset = startOffset;
 		m_endOffset = endOffset;
-		if (binding != null){
-			m_name = binding.getName();
-		}
+//		if (binding != null){
+//			m_name = binding.getName();
+//		}
 	}
 	
 	//
@@ -90,10 +90,10 @@ public class JstSource implements Serializable {
 		return m_type;
 	}
 	
-	public String getName(){
-		return m_name;
-	}
-	
+//	public String getName(){
+//		return m_name;
+//	}
+//	
 	/**
 	 * Returns the number of characters of the source code for this element,
 	 * relative to the source buffer in which this element is contained.

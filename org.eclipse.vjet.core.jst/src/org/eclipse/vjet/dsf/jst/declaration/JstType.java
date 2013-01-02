@@ -62,20 +62,20 @@ public class JstType extends BaseJstNode implements IJstType {
 	List<IJstOType> m_otypes = new ArrayList<IJstOType>();
 
 	// using JstTypeReference not JstType to prevent owneriship (getParent() === this) of the imported type
-	private Map<String, IJstTypeReference> m_imports = new LinkedHashMap<String, IJstTypeReference>();
-	private Map<String, IJstTypeReference> m_inactiveImports = new LinkedHashMap<String, IJstTypeReference>(); 
-	private Map<String, IJstTypeReference> m_fullyQualifiedImports = new LinkedHashMap<String, IJstTypeReference>();
+	private Map<String, IJstTypeReference> m_imports = null; // new LinkedHashMap<String, IJstTypeReference>();
+	private Map<String, IJstTypeReference> m_inactiveImports = null; // new LinkedHashMap<String, IJstTypeReference>(); 
+	private Map<String, IJstTypeReference> m_fullyQualifiedImports = null; //  new LinkedHashMap<String, IJstTypeReference>();
 	private List<IJstTypeReference> m_extends;
 	private List<IJstTypeReference> m_satisfies;	
 	private List<IJstTypeReference> m_expects;
 	private List<IJstTypeReference> m_mixins;
-	private Map<String, Object> m_options = new LinkedHashMap<String, Object>();
+	private Map<String, Object> m_options = null; // new LinkedHashMap<String, Object>();
 	
 	private JstModifiers m_modifiers = new JstModifiers();
 
-	private List<IJstProperty> m_ptys = new ArrayList<IJstProperty>();
-	private List<IJstGlobalVar> m_gvars = new ArrayList<IJstGlobalVar>();
-	private List<IJstMethod> m_mtds = new ArrayList<IJstMethod>();
+	private List<IJstProperty> m_ptys = null; // new ArrayList<IJstProperty>();
+	private List<IJstGlobalVar> m_gvars = null; // new ArrayList<IJstGlobalVar>();
+	private List<IJstMethod> m_mtds = null; // new ArrayList<IJstMethod>();
 	private JstMethod m_constructor;
 	
 	private List<IStmt> m_staticInits;
@@ -309,7 +309,7 @@ public class JstType extends BaseJstNode implements IJstType {
 	
 	
 	public IJstTypeReference getImportRef(final String typeName) {
-		if (typeName == null || m_imports.isEmpty()) {
+		if (typeName == null || m_imports == null || m_imports.isEmpty()) {
 			return null;
 		}
 		synchronized (this){
@@ -348,7 +348,7 @@ public class JstType extends BaseJstNode implements IJstType {
 	}
 
 	public IJstType getInactiveImport(String typeName) {
-		if (typeName == null || m_inactiveImports.isEmpty()) {
+		if (typeName == null || m_inactiveImports==null || m_inactiveImports.isEmpty()) {
 			return null;
 		}
 		synchronized (this){
@@ -359,7 +359,7 @@ public class JstType extends BaseJstNode implements IJstType {
 
 	
 	public IJstTypeReference getInactiveImportRef(final String typeName) {
-		if (typeName == null || m_inactiveImports.isEmpty()) {
+		if (typeName == null ||  m_inactiveImports==null || m_inactiveImports.isEmpty()) {
 			return null;
 		}
 		synchronized (this){
@@ -371,7 +371,7 @@ public class JstType extends BaseJstNode implements IJstType {
 	public List<? extends IJstType> getInactiveImports() {
 		List<IJstType> list = new ArrayList<IJstType>();
 		synchronized(this){			
-			if (m_inactiveImports.isEmpty()) {
+			if ( m_inactiveImports==null || m_inactiveImports.isEmpty()) {
 				return Collections.emptyList();
 			}
 			
@@ -420,7 +420,7 @@ public class JstType extends BaseJstNode implements IJstType {
 	public List<IJstTypeReference> getImportsRef() {
 		List<IJstTypeReference> list = new ArrayList<IJstTypeReference>();
 		synchronized(this){			
-			if (m_imports.isEmpty()) {
+			if (m_imports == null || m_imports.isEmpty()) {
 				return Collections.emptyList();
 			}
 			
@@ -605,6 +605,9 @@ public class JstType extends BaseJstNode implements IJstType {
 	 * @see IJstType#getProperties()
 	 */
 	public List<IJstProperty> getProperties(){
+		if(m_ptys==null){
+			return Collections.EMPTY_LIST;
+		}
 		if (m_mixins != null &&  this.getMixinsRef().size() > 0) {
 			return getMixinMergedProperties();
 		}
@@ -612,6 +615,9 @@ public class JstType extends BaseJstNode implements IJstType {
 	}
 
 	public List<IJstProperty> getMixinMergedProperties() {
+		if(m_ptys==null){
+			m_ptys = new ArrayList<IJstProperty>();
+		}
 		List<IJstProperty> list = new ArrayList<IJstProperty>(m_ptys);
 		
 		
@@ -961,6 +967,9 @@ public class JstType extends BaseJstNode implements IJstType {
 	 * @see IJstType#getMethods()
 	 */
 	public List<IJstMethod> getMethods(){
+		if(m_mtds==null){
+			m_mtds = new ArrayList<IJstMethod>();
+		}
 		if (m_mixins != null && this.getMixinsRef().size() > 0) {
 			return getMixinMergedMethods();
 		}
@@ -968,6 +977,9 @@ public class JstType extends BaseJstNode implements IJstType {
 	}
 
 	private List<IJstMethod> getMixinMergedMethods() {
+		if(m_mtds==null){
+			m_mtds = new ArrayList<IJstMethod>();
+		}
 		List<IJstMethod> list = new ArrayList<IJstMethod>(m_mtds);
 		
 		for (IJstTypeReference module : this.getMixinsRef()) {
@@ -1573,6 +1585,7 @@ public class JstType extends BaseJstNode implements IJstType {
 				|| importType.getReferencedType() == this) {
 				return;
 			}
+		
 		IJstType type = importType.getReferencedType();
 		//If the alias is blank string then use full name
 		if (key.length() == 0) {
@@ -1584,6 +1597,9 @@ public class JstType extends BaseJstNode implements IJstType {
 			return;
 		}
 		synchronized (this){
+			if(m_imports==null){
+				m_imports = new LinkedHashMap<String, IJstTypeReference>();
+			}
 			if (!m_imports.containsKey(key)){
 				m_imports.put(key, importType);
 				addChild(importType);
@@ -1651,6 +1667,9 @@ public class JstType extends BaseJstNode implements IJstType {
 			return;
 		}
 		synchronized (this){
+			if(m_inactiveImports==null){
+				m_inactiveImports = new LinkedHashMap<String, IJstTypeReference>();
+			}
 			if (!m_inactiveImports.containsKey(key)){
 				m_inactiveImports.put(key, importType);
 				addChild(importType);
@@ -1719,6 +1738,9 @@ public class JstType extends BaseJstNode implements IJstType {
 			return;
 		}
 		synchronized (this){
+			if(m_fullyQualifiedImports==null){
+				m_fullyQualifiedImports = new LinkedHashMap<String, IJstTypeReference>();
+			}
 			if (!m_fullyQualifiedImports.containsKey(key)){
 				m_fullyQualifiedImports.put(key, importType);
 				addChild(importType);
@@ -1742,7 +1764,7 @@ public class JstType extends BaseJstNode implements IJstType {
 	}
 	
 	public void removeImport(final IJstType type){
-		if (m_imports.isEmpty()){
+		if (m_imports == null || m_imports.isEmpty()){
 			return;
 		}		
 		synchronized (this){
@@ -1762,7 +1784,7 @@ public class JstType extends BaseJstNode implements IJstType {
 	 * @param type IJstTypeReference
 	 */
 	public void removeImport(final IJstTypeReference type){
-		if (m_imports.isEmpty()){
+		if (m_imports == null || m_imports.isEmpty()){
 			return;
 		}		
 		synchronized (this){
@@ -1779,7 +1801,7 @@ public class JstType extends BaseJstNode implements IJstType {
 	
 	
 	public void removeInactiveImport(final IJstType type){
-		if (m_inactiveImports.isEmpty()){
+		if (m_inactiveImports==null && m_inactiveImports.isEmpty()){
 			return;
 		}		
 		synchronized (this){
@@ -1799,7 +1821,7 @@ public class JstType extends BaseJstNode implements IJstType {
 	 * @param type IJstTypeReference
 	 */
 	public void removeInactiveImport(final IJstTypeReference type){
-		if (m_inactiveImports.isEmpty()){
+		if (m_inactiveImports == null || m_inactiveImports.isEmpty()){
 			return;
 		}		
 		synchronized (this){
@@ -1818,7 +1840,7 @@ public class JstType extends BaseJstNode implements IJstType {
 	 * @param type
 	 */
 	public void removeFullyQualifiedImport(final IJstType type){
-		if (m_fullyQualifiedImports.isEmpty()){
+		if (m_fullyQualifiedImports==null || m_fullyQualifiedImports.isEmpty()){
 			return;
 		}		
 		synchronized (this){
@@ -1837,7 +1859,7 @@ public class JstType extends BaseJstNode implements IJstType {
 	 * @param type IJstTypeReference
 	 */
 	public void removeFullyQualifiedImport(final IJstTypeReference type){
-		if (m_fullyQualifiedImports.isEmpty()){
+		if (m_fullyQualifiedImports == null || m_fullyQualifiedImports.isEmpty()){
 			return;
 		}		
 		synchronized (this){
@@ -2047,7 +2069,7 @@ public class JstType extends BaseJstNode implements IJstType {
 		synchronized(this){
 			if(m_imports!=null){
 				removeChildren(m_imports.values());
-				m_imports = new LinkedHashMap<String, IJstTypeReference>();	
+				m_imports = null;
 			}
 		}
 	}
@@ -2059,7 +2081,7 @@ public class JstType extends BaseJstNode implements IJstType {
 		synchronized(this){
 			if(m_inactiveImports!=null){
 				removeChildren(m_inactiveImports.values());
-				m_inactiveImports = new LinkedHashMap<String, IJstTypeReference>();	
+				m_inactiveImports = null; // new LinkedHashMap<String, IJstTypeReference>();	
 			}
 		}
 	}
@@ -2101,7 +2123,7 @@ public class JstType extends BaseJstNode implements IJstType {
 	
 	public void clearOptions() {
 		synchronized(this){
-			m_options =  new LinkedHashMap<String, Object>();
+			m_options =  null;
 			m_isMetaType = false;
 		}
 	}
@@ -2202,6 +2224,9 @@ public class JstType extends BaseJstNode implements IJstType {
 			return;
 		}
 		synchronized(this){
+			if(m_ptys==null){
+				m_ptys = new ArrayList<IJstProperty>();
+			}
 			m_ptys.add(pty);
 			addChild(pty);
 		}
@@ -2214,7 +2239,7 @@ public class JstType extends BaseJstNode implements IJstType {
 	 * @return IJstProperty the removed property
 	 */
 	public IJstProperty removeProperty(final String ptyName, boolean isStatic) {
-		if (ptyName == null) {
+		if (ptyName == null || m_ptys==null) {
 			return null;
 		}
 		synchronized(this){
@@ -2247,6 +2272,9 @@ public class JstType extends BaseJstNode implements IJstType {
 			return this;
 		}
 		synchronized(this){
+			if(m_mtds==null){
+				m_mtds = new ArrayList<IJstMethod>();
+			}
 			m_mtds.add(mtd);
 			addChild(mtd);
 		}
@@ -2260,7 +2288,7 @@ public class JstType extends BaseJstNode implements IJstType {
 	 * @return JstMethod the removed method
 	 */
 	public IJstMethod removeMethod(final String mtdName, boolean isStatic) {
-		if (mtdName == null) {
+		if (mtdName == null || m_mtds==null) {
 			return null;
 		}
 		synchronized(this){
@@ -2282,7 +2310,7 @@ public class JstType extends BaseJstNode implements IJstType {
 			mtd = null;
 		}
 		synchronized(this){
-			m_mtds = new ArrayList<IJstMethod>();
+			m_mtds = null; // new ArrayList<IJstMethod>();
 			
 			// clear constructor
 			setConstructor(null);
@@ -2301,7 +2329,7 @@ public class JstType extends BaseJstNode implements IJstType {
 			}
 		}
 		synchronized(this){
-			m_ptys = new ArrayList<IJstProperty>();
+			m_ptys = null; // new ArrayList<IJstProperty>();
 		}
 	}
 
@@ -2689,7 +2717,7 @@ public class JstType extends BaseJstNode implements IJstType {
 		z.format("m_pkg", getPackage());
 		
 		synchronized(this){
-			if (!m_imports.isEmpty()) {
+			if (m_imports!=null && !m_imports.isEmpty()) {
 				//for (JstTypeReference n : m_imports.values()) {
 				//	z.format("import", n.getReferencedType().getName());
 				//}
@@ -2732,8 +2760,10 @@ public class JstType extends BaseJstNode implements IJstType {
 	public Map<String, ? extends IJstType> getImportsMap() {
 		Map<String, IJstType> map = new LinkedHashMap<String, IJstType>();
 		synchronized (this) {
-			for (Map.Entry<String, IJstTypeReference> me: m_imports.entrySet()) {
-				map.put(me.getKey(), me.getValue().getReferencedType());
+			if(m_imports!=null){
+				for (Map.Entry<String, IJstTypeReference> me: m_imports.entrySet()) {
+					map.put(me.getKey(), me.getValue().getReferencedType());
+				}
 			}
 		}
 		return Collections.unmodifiableMap(map);
@@ -2742,8 +2772,10 @@ public class JstType extends BaseJstNode implements IJstType {
 	public Map<String, ? extends IJstType> getInactiveImportsMap() {
 		Map<String, IJstType> map = new LinkedHashMap<String, IJstType>();
 		synchronized (this) {
-			for (Map.Entry<String, IJstTypeReference> me: m_inactiveImports.entrySet()) {
-				map.put(me.getKey(), me.getValue().getReferencedType());
+			if(m_inactiveImports!=null){
+				for (Map.Entry<String, IJstTypeReference> me: m_inactiveImports.entrySet()) {
+					map.put(me.getKey(), me.getValue().getReferencedType());
+				}
 			}
 		}
 		return Collections.unmodifiableMap(map);
@@ -2906,7 +2938,7 @@ public class JstType extends BaseJstNode implements IJstType {
 	public List<IJstTypeReference> getInactiveImportsRef() {
 		List<IJstTypeReference> list = new ArrayList<IJstTypeReference>();
 		synchronized(this){			
-			if (m_inactiveImports.isEmpty()) {
+			if (m_inactiveImports == null || m_inactiveImports.isEmpty()) {
 				return Collections.emptyList();
 			}
 			for (IJstTypeReference tr: m_inactiveImports.values()){
@@ -2925,7 +2957,7 @@ public class JstType extends BaseJstNode implements IJstType {
 	 * added by huzhou@ebay.com to support fully qualified types' linkages
 	 */
 	public IJstType getFullyQualifiedImport(String typeName) {
-		if (typeName == null || m_fullyQualifiedImports.isEmpty()) {
+		if (typeName == null || m_fullyQualifiedImports==null || m_fullyQualifiedImports.isEmpty()) {
 			return null;
 		}
 		synchronized (this){
@@ -3029,12 +3061,12 @@ public class JstType extends BaseJstNode implements IJstType {
 			}
 		}
 		synchronized(this){
-			m_gvars = new ArrayList<IJstGlobalVar>();
+			m_gvars = null; // new ArrayList<IJstGlobalVar>();
 		}
 	}
 	
 	public boolean hasGlobalVars(){
-		return !m_gvars.isEmpty();
+		return m_gvars!=null && !m_gvars.isEmpty();
 	}
 
 	@Override
@@ -3083,6 +3115,9 @@ public class JstType extends BaseJstNode implements IJstType {
 			return;
 		}
 		synchronized(this){
+			if(m_gvars==null){
+				m_gvars = new ArrayList<IJstGlobalVar>();
+			}
 			m_gvars.add(global);
 			addChild(global);
 		}
@@ -3094,7 +3129,7 @@ public class JstType extends BaseJstNode implements IJstType {
 	 * @return IJstGlobalVar the removed global
 	 */
 	public IJstGlobalVar removeGlobalVar(final String global) {
-		if (global == null) {
+		if (global == null || m_gvars==null) {
 			return null;
 		}
 		synchronized(this){
@@ -3119,10 +3154,16 @@ public class JstType extends BaseJstNode implements IJstType {
 	
 	@Override
 	public Map<String, Object> getOptions() {
+		if(m_options==null){
+			return Collections.EMPTY_MAP;
+		}
 		return m_options;
 	}
 	
 	public void addOption(String name, Object value){
+		if(m_options==null){
+			m_options = new LinkedHashMap<String, Object>();
+		}
 		m_options.put(name, value);
 	}
 

@@ -16,6 +16,7 @@ import org.eclipse.vjet.dsf.jst.IJstMethod;
 import org.eclipse.vjet.dsf.jst.IJstNode;
 import org.eclipse.vjet.dsf.jst.IJstType;
 import org.eclipse.vjet.dsf.jst.IJstTypeReference;
+import org.eclipse.vjet.dsf.jst.JstCommentLocation;
 import org.eclipse.vjet.dsf.jst.JstSource;
 import org.eclipse.vjet.dsf.jst.traversal.IJstNodeVisitor;
 
@@ -160,6 +161,10 @@ public class JstProxyMethod implements IJstMethod {
 
 	public List<String> getComments() {
 		return m_targetMethod.getComments();
+	}
+	
+	public List<JstCommentLocation> getCommentLocations() {
+		return m_targetMethod.getCommentLocations();
 	}
 
 	public IJstType getOwnerType() {

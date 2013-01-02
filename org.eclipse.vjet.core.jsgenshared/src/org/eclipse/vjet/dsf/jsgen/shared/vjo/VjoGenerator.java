@@ -22,6 +22,7 @@ import org.eclipse.vjet.dsf.jst.IJstProperty;
 import org.eclipse.vjet.dsf.jst.IJstType;
 import org.eclipse.vjet.dsf.jst.IJstTypeReference;
 import org.eclipse.vjet.dsf.jst.ISynthesized;
+import org.eclipse.vjet.dsf.jst.JstCommentLocation;
 import org.eclipse.vjet.dsf.jst.declaration.JstArg;
 import org.eclipse.vjet.dsf.jst.declaration.JstBlock;
 import org.eclipse.vjet.dsf.jst.declaration.JstConstructor;
@@ -37,6 +38,7 @@ import org.eclipse.vjet.dsf.jst.term.ArrayLiteral;
 import org.eclipse.vjet.dsf.jst.token.IExpr;
 import org.eclipse.vjet.dsf.jst.token.IStmt;
 import org.eclipse.vjet.dsf.jst.util.DataTypeHelper;
+import org.eclipse.vjet.dsf.jst.util.JstCommentHelper;
 import org.eclipse.vjet.dsf.jst.util.JstTypeHelper;
 import org.eclipse.vjet.vjo.meta.VjoConvention;
 import org.eclipse.vjet.vjo.meta.VjoKeywords;
@@ -709,14 +711,24 @@ public class VjoGenerator extends BaseGenerator {
 	}
 
 	private void writeJsComment(IJstType currentType) {
-		if (currentType.getComments() == null) {
+		
+		if (currentType.getCommentLocations() == null) {
 			return;
 		}
-		List<String> comments = currentType.getComments();
-		for (String comment : comments) {
-			getWriter().append(comment);
+		List<String> comments = null;
+		List<JstCommentLocation> commentLocations = currentType.getCommentLocations();
+		if(currentType.getComments() !=null && !currentType.getComments().isEmpty()){
+			comments = currentType.getComments();
+		}else if(!commentLocations.isEmpty()){
+		  comments = JstCommentHelper.getCommentsAsString(currentType, commentLocations);
 		}
-		writeNewline();
+		if(comments!=null){
+			for (String comment : comments) {
+				getWriter().append(comment);
+			}
+			writeNewline();
+		}
+		
 	}
 
 	public VjoGenerator writeInherits(final IJstType type) {

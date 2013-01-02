@@ -26,6 +26,8 @@ public class BaseJstNode implements IJstNode {
 	private JstSource m_source;
 	private List<IJstAnnotation> m_annotations;
 	private List<String> m_comments;
+
+	private List<JstCommentLocation> m_commentLocations;
 	
 	//
 	// Constructor
@@ -242,11 +244,42 @@ public class BaseJstNode implements IJstNode {
 		return m_comments;
 	}
 	
+	public List<JstCommentLocation> getCommentLocations(){
+		if(m_commentLocations==null){
+			return Collections.EMPTY_LIST;
+		}
+		return m_commentLocations;
+	}
+	
 	/**
 	 * setComments
 	 */
 	public void setComments(List<String> comments) {
 		m_comments = comments;
+	}
+	
+	public void addCommentLocation(int startOffset, int endOffset){
+		addCommentLocation(new JstCommentLocation(startOffset,endOffset));
+	}
+	
+	public void addCommentLocation(int startOffset, int endOffset, boolean isVjetComment){
+		addCommentLocation(new JstCommentLocation(startOffset,endOffset,isVjetComment));
+	}
+	
+	public void addCommentLocation(JstCommentLocation location){
+		if(location==null){
+			return;
+		}
+		synchronized (this) {
+			if(m_commentLocations==null){
+				m_commentLocations = new ArrayList<JstCommentLocation>();
+			}
+			m_commentLocations.add(location);
+		}
+	}
+	
+	public void setCommentLocations(List<JstCommentLocation> commentLocations){
+		m_commentLocations = commentLocations;
 	}
 	
 	//

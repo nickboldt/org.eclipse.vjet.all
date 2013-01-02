@@ -29,7 +29,7 @@ public class JstTypeCopier  {
 		replace.setAliasTypeName(copy.getAliasTypeName());
 		replace.setAnnotations(copy.getAnnotations());
 		replace.setCategory(copy.getCategory());
-		replace.setComments(copy.getComments());
+		replace.setCommentLocations(copy.getCommentLocations());
 		replace.setConstructor(copy.getConstructor());
 		replace.setDoc(copy.getDoc());
 		replace.setEmbeddedTypes(copy.getEmbededTypes());

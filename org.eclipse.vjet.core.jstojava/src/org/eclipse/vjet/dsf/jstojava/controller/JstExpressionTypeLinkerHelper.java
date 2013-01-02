@@ -3023,7 +3023,10 @@ public class JstExpressionTypeLinkerHelper {
 		anonymousFunction.setRtnType(paramFunctionRtnType);
 		anonymousFunction.setReturnOptional(paramFunction
 				.isReturnTypeOptional());
-		((JstMethod) paramFunction).setDoc(doc);
+
+		if(paramFunction instanceof JstMethod){
+			((JstMethod) paramFunction).setDoc(doc);
+		}
 		if (!paramFunction.isDispatcher()) {
 			final List<JstArg> params = paramFunction.getArgs();
 			final List<JstArg> inferParams = anonymousFunction.getArgs();

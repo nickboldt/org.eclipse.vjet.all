@@ -154,8 +154,10 @@ public class LocalDeclarationTranslator extends
 		
 		if (origStatement!=null) {
 			vars.setSource(getStatementSource(origStatement, m_ctx.getSourceUtil()));
-			vars.setComments(commentCollector.getComments(
-					m_ctx.getPreviousNodeSourceEnd(),
+//			vars.setComments(commentCollector.getComments(
+//					m_ctx.getPreviousNodeSourceEnd(),
+//					findSourceEnd(origStatement)));
+			vars.setCommentLocations(commentCollector.getCommentLocations(m_ctx.getPreviousNodeSourceEnd(),
 					findSourceEnd(origStatement)));
 		}
 		for (AssignExpr assignExpr: list){

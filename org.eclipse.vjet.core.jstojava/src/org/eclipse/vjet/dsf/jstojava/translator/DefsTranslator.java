@@ -33,6 +33,7 @@ import org.eclipse.vjet.dsf.jst.term.NV;
 import org.eclipse.vjet.dsf.jst.term.ObjLiteral;
 import org.eclipse.vjet.dsf.jst.token.IExpr;
 import org.eclipse.vjet.dsf.jst.traversal.JstDepthFirstTraversal;
+import org.eclipse.vjet.dsf.jst.util.JstCommentHelper;
 import org.eclipse.vjet.dsf.jstojava.parser.comments.JsParam;
 import org.eclipse.vjet.dsf.jstojava.translator.robust.ast2jst.BaseAst2JstTranslator;
 import org.eclipse.vjet.dsf.jstojava.translator.robust.ast2jst.TranslatorFactory;
@@ -278,11 +279,14 @@ public class DefsTranslator extends BasePropsProtosTranslator {
 
 		
 
-			 StringBuilder sb = new StringBuilder();
-			 for(String comment: nv.getComments()){
-				 sb.append(comment);
-			 }
-			 JsDocHelper.addJsDoc(sb.toString(), jstProperty);
+//			 StringBuilder sb = new StringBuilder();
+//			 sb.append(JstCommentHelper.getCommentsAsString(jstType,nv.getCommentLocations()));
+//			 for(String comment: nv.getComments()){
+//				 sb.append(comment);
+//			 }
+			 jstProperty.setCommentLocations(nv.getCommentLocations());
+			 
+//			 JsDocHelper.addJsDoc(sb.toString(), jstProperty);
 
 			
 			return jstProperty;

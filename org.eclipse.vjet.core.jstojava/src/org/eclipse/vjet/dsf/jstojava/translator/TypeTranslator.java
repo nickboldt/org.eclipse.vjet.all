@@ -13,6 +13,7 @@ import java.util.List;
 import org.eclipse.vjet.dsf.jst.FileBinding;
 import org.eclipse.vjet.dsf.jst.IJstType;
 import org.eclipse.vjet.dsf.jst.IJstTypeReference;
+import org.eclipse.vjet.dsf.jst.JstCommentLocation;
 import org.eclipse.vjet.dsf.jst.JstSource;
 import org.eclipse.vjet.dsf.jst.JstSource.IBinding;
 import org.eclipse.vjet.dsf.jst.declaration.JstModifiers;
@@ -87,8 +88,11 @@ public class TypeTranslator extends BaseTranslator {
 					String fullName = getName(message);
 					
 					
-					String comment = getCtx().getCommentCollector().getCommentNonMeta2(message.sourceStart);
-					JsDocHelper.addJsDoc(comment, jstType);
+					JstCommentLocation comment = getCtx().getCommentCollector().getCommentLocationNonMeta2(message.sourceStart);
+//					JsDocHelper.addJsDoc(comment, jstType);
+					if(comment!=null){
+						jstType.addCommentLocation(comment);
+					}
 										
 					int idx = 0;
 					if (!jstType.isEmbededType()) {
