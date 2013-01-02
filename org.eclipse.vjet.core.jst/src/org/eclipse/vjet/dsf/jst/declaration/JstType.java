@@ -605,11 +605,11 @@ public class JstType extends BaseJstNode implements IJstType {
 	 * @see IJstType#getProperties()
 	 */
 	public List<IJstProperty> getProperties(){
-		if(m_ptys==null){
-			return Collections.EMPTY_LIST;
-		}
 		if (m_mixins != null &&  this.getMixinsRef().size() > 0) {
 			return getMixinMergedProperties();
+		}
+		if(m_ptys==null ){
+			return Collections.EMPTY_LIST;
 		}
 		return Collections.unmodifiableList(m_ptys);
 	}
@@ -967,11 +967,12 @@ public class JstType extends BaseJstNode implements IJstType {
 	 * @see IJstType#getMethods()
 	 */
 	public List<IJstMethod> getMethods(){
-		if(m_mtds==null){
-			m_mtds = new ArrayList<IJstMethod>();
-		}
+	
 		if (m_mixins != null && this.getMixinsRef().size() > 0) {
 			return getMixinMergedMethods();
+		}
+		if(m_mtds==null){
+			m_mtds = new ArrayList<IJstMethod>();
 		}
 		return Collections.unmodifiableList(m_mtds);
 	}
