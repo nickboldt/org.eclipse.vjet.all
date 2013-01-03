@@ -72,7 +72,7 @@ public class VjoProposalAditionalInfoGenerator {
 			method = (IJstMethod) node;
 		}
 		String briefInfo = "";
-		if (property != null && property.getCommentLocations() != null) {
+		if (property != null && property.getCommentLocations() != null && !node.getCommentLocations().isEmpty()) {
 			List<String> strings = JstCommentHelper.getCommentsAsString(node.getOwnerType(), node.getCommentLocations());
 			StringBuilder sb = new StringBuilder();
 			for(String str:strings){
