@@ -18,13 +18,13 @@ Syntax and Semantic Checking
 Type Declarations using VJETDoc
 Execution/Debugging
 
-Learn more about VJET Js IDE here - https://www.ebayopensource.org/index.php/VJET/HomePage
+Learn more about VJET Js IDE here - http://eclipse.org/vjet/
 
 VJET repository consists of the following components:
   
   1. VJET core - 
 		a. Jst Typespace provides indexing and queryies for all JavaScript types.
-		b. JST a higher level AST that understands VJET VJO, Free form JavaScript and VJET Doc
+		b. JST a metadata model that works with VJET VJO, Free form JavaScript and VJET Doc
 		c. Browser SDK - Java interfaces and annotations for describing the multiple browser JavaScript apis 
 		d. Browser Dom syncing.
 		e. JSDT forked AST parser minus Eclipse resource dependencies or JSDT inference engine.
