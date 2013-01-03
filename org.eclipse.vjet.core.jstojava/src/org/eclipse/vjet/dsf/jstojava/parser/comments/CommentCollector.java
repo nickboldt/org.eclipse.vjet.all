@@ -369,9 +369,10 @@ public class CommentCollector  {
 	
 	public JstCommentLocation getCommentLocationNonMeta2(int methodStartOffset) {
 		
-		if((methodStartOffset-m_unstructuredCommentLastOffset)>100 && methodStartOffset>100){
-			m_unstructuredCommentLastOffset = methodStartOffset - 100;
-		}
+		// TODO this doesn't scale for larger files
+//		if((methodStartOffset-m_unstructuredCommentLastOffset)>100 && methodStartOffset>100){
+//			m_unstructuredCommentLastOffset = methodStartOffset - 100;
+//		}
 		
 		for(int i = methodStartOffset; i>m_unstructuredCommentLastOffset ; i--){
 			

@@ -70,7 +70,6 @@ public class JstParseController implements IJstParseController {
 		if (holder.isLoaded()) {
 			//System.out.println("Using Cache Result");
 			unit = holder.getResult();
-			holder.setResult(null);
 		}
 		else {
 			unit = m_parser.parse(groupName, fileName, source);

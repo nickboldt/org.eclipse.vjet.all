@@ -1,5 +1,6 @@
 package org.eclipse.vjet.dsf.jst.util;
 
+import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
@@ -10,29 +11,38 @@ import java.util.List;
 import org.eclipse.vjet.dsf.jst.FileBinding;
 import org.eclipse.vjet.dsf.jst.IJstType;
 import org.eclipse.vjet.dsf.jst.JstCommentLocation;
-import org.eclipse.vjet.dsf.jst.SimpleBinding;
 import org.eclipse.vjet.dsf.jst.JstSource.IBinding;
+import org.eclipse.vjet.dsf.jst.SimpleBinding;
 
 public class JstCommentHelper {
 
+	public static String getCommentAsString(IJstType type, JstCommentLocation location, boolean includeVjetDocs){
+		List<JstCommentLocation> locs = new ArrayList<JstCommentLocation>();
+		locs.add(location);
+		return getCommentsAsString(type, locs, includeVjetDocs).get(0);
+	}
+	
 	public static List<String> getCommentsAsString(IJstType jstType,
 			List<JstCommentLocation> commentLocations) {
 		return getCommentsAsString(jstType, commentLocations, false);
 	}
-	
+
 	public static List<String> getCommentsAsString(IJstType jstType,
-			List<JstCommentLocation> commentLocations, boolean includeVjetDocs){	// locate file
+			List<JstCommentLocation> commentLocations, boolean includeVjetDocs) { // locate
+																					// file
 		List<String> comments = new ArrayList<String>();
-		if(jstType.getSource()==null){
+		if (jstType ==null || jstType.getSource() == null) {
 			return Collections.EMPTY_LIST;
 		}
 		IBinding binding = jstType.getSource().getBinding();
 		if (binding instanceof SimpleBinding) {
-			handleSimpleBinding(commentLocations, comments, (SimpleBinding)binding, includeVjetDocs);
+			handleSimpleBinding(commentLocations, comments,
+					(SimpleBinding) binding, includeVjetDocs);
 		}
 
 		if (binding instanceof FileBinding) {
-			handleFileBinding(commentLocations, comments, binding, includeVjetDocs);
+			handleFileBinding(commentLocations, comments, binding,
+					includeVjetDocs);
 
 		}
 		return comments;
@@ -43,8 +53,10 @@ public class JstCommentHelper {
 			SimpleBinding binding, boolean includeVjetDocs) {
 		String source = binding.toText();
 		for (JstCommentLocation jstCommentLocation : commentLocations) {
-			if(!jstCommentLocation.isVjetDoc() || (includeVjetDocs && jstCommentLocation.isVjetDoc())){
-				comments.add(source.substring(jstCommentLocation.getStartOffset(),
+			if (!jstCommentLocation.isVjetDoc()
+					|| (includeVjetDocs && jstCommentLocation.isVjetDoc())) {
+				comments.add(source.substring(
+						jstCommentLocation.getStartOffset(),
 						jstCommentLocation.getEndOffset()));
 			}
 
@@ -59,13 +71,17 @@ public class JstCommentHelper {
 		RandomAccessFile random = null;
 		try {
 			random = new RandomAccessFile(fileBinding.getFile(), "r");
+
 			for (JstCommentLocation jstCommentLocation : commentLocations) {
-				random.seek(jstCommentLocation.getStartOffset());
-				String line = null;
-				while ((line = random.readLine()) != null) {
-					// process each line in some way
-					comments.add(line);
-				}
+				ByteArrayOutputStream sb = new ByteArrayOutputStream();
+				int startOffset = jstCommentLocation.getStartOffset();
+				int max = jstCommentLocation.getEndOffset() - startOffset;
+				random.seek(startOffset);
+				
+				byte[] buffer = new byte[max];
+				int comment = random.read(buffer);
+				sb.write(buffer, 0, comment);
+				comments.add(sb.toString("utf-8"));
 			}
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block

@@ -1,7 +1,10 @@
 package org.eclipse.vjet.dsf.jst;
 
-public class JstCommentLocation {
+import java.io.Serializable;
 
+public class JstCommentLocation implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 	private final int m_startOffset;
 	private final int m_endOffset;
 	private final boolean m_vjetdoc;

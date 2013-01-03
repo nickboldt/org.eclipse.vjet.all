@@ -8,12 +8,15 @@
  *******************************************************************************/
 package org.eclipse.vjet.dsf.jst.declaration;
 
+import java.util.List;
+
 import org.eclipse.vjet.dsf.jst.BaseJstNode;
 import org.eclipse.vjet.dsf.jst.IJstDoc;
 import org.eclipse.vjet.dsf.jst.IJstGlobalProp;
 import org.eclipse.vjet.dsf.jst.IJstProperty;
 import org.eclipse.vjet.dsf.jst.IJstType;
 import org.eclipse.vjet.dsf.jst.IJstTypeReference;
+import org.eclipse.vjet.dsf.jst.JstCommentLocation;
 import org.eclipse.vjet.dsf.jst.JstSource;
 import org.eclipse.vjet.dsf.jst.token.IExpr;
 import org.eclipse.vjet.dsf.jst.token.ISimpleTerm;
@@ -39,6 +42,12 @@ public class JstGlobalProp extends BaseJstNode implements IJstGlobalProp {
 		return m_prop.getDoc();
 	}
 
+	@Override
+	public List<JstCommentLocation> getCommentLocations() {
+		return m_prop.getCommentLocations();
+	}
+	
+	
 	@Override
 	public IExpr getInitializer() {
 		return m_prop.getInitializer();

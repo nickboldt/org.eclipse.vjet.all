@@ -948,6 +948,7 @@ public class VjoGenerator extends BaseGenerator {
 		if (mtd == null) {
 			constructor = new JstConstructor();
 			constructor.getModifiers().setPublic();
+			((JstConstructor)constructor).setParent(m_currentType);
 		}
 
 		// TODO generator should NOT be adding statements
@@ -990,6 +991,8 @@ public class VjoGenerator extends BaseGenerator {
 
 		return this;
 	}
+	
+
 
 	private boolean isMetaMtd(final IJstMethod mtd) {
 		if( mtd.getAnnotation("metaMethod")!=null){

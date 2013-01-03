@@ -215,6 +215,9 @@ public class VjoParser implements IJstParser {
 		}
 		final List<IScriptProblem> probs = createProblems(ctx);
 
+		// TODO use SimpleBinding when working on file/not saved
+		// when using source this could be an issue with memory.
+		
 		if (type.getSource() != null && type.getSource().getBinding() == null) {
 			if (file == null) { // binding simple source
 				type.getSource()

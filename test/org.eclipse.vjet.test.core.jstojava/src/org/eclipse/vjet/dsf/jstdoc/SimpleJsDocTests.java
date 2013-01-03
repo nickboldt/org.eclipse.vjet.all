@@ -14,8 +14,11 @@ package org.eclipse.vjet.dsf.jstdoc;
 import static junit.framework.Assert.assertTrue;
 
 import java.net.URL;
+import java.util.List;
 
 import org.eclipse.vjet.dsf.jst.IJstType;
+import org.eclipse.vjet.dsf.jst.JstCommentLocation;
+import org.eclipse.vjet.dsf.jst.util.JstCommentHelper;
 import org.eclipse.vjet.dsf.jstojava.parser.VjoParser;
 import org.eclipse.vjet.dsf.jstojava.translator.TranslateCtx;
 import org.junit.Test;
@@ -43,9 +46,18 @@ public class SimpleJsDocTests {
 	
 		
 		IJstType posJST = new VjoParser().parse("TEST", goodCaseFile.getFile(), goodCase, false).getType();
-	
-		assertTrue(posJST.getMethod("doIt").getDoc().getComment().trim().contains("doIt Js doc"));
-		assertTrue(posJST.getMethod("foobar").getDoc().getComment().trim().contains("doIt2 Js doc"));
+		
+		List<JstCommentLocation> commentLocations =posJST.getMethod("doIt").getCommentLocations();
+		String comment = JstCommentHelper.getCommentsAsString(posJST, commentLocations).get(0);
+		
+		
+		assertTrue(comment.trim().contains("doIt Js doc"));
+		
+		commentLocations =posJST.getMethod("foobar").getCommentLocations();
+		comment = JstCommentHelper.getCommentsAsString(posJST, commentLocations, true).get(0);
+		
+		
+		assertTrue(comment.trim().contains("doIt2 Js doc"));
 		
 		
 		
@@ -73,11 +85,15 @@ public class SimpleJsDocTests {
 		
 		IJstType posJST = new VjoParser().parse("TEST", goodCaseFile.getFile(), goodCase, false).getType();
 
+		List<JstCommentLocation> commentLocations = posJST.getEmbededType("A").getCommentLocations();
+		String comment = JstCommentHelper.getCommentsAsString(posJST, commentLocations).get(0);
 		
+		assertTrue(comment.trim().contains("A nested type"));
 		
+		commentLocations = posJST.getEmbededType("A").getEmbededType("AA").getCommentLocations();
+		comment = JstCommentHelper.getCommentsAsString(posJST, commentLocations).get(0);
 		
-		assertTrue(posJST.getEmbededType("A").getDoc().getComment().trim().contains("A nested type"));
-		assertTrue(posJST.getEmbededType("A").getEmbededType("AA").getDoc().getComment().trim().contains("AA nested type"));
+		assertTrue(comment.trim().contains("AA nested type"));
 	
 		
 		
@@ -108,13 +124,22 @@ public class SimpleJsDocTests {
 		
 		
 		
-		assertTrue(posJST.getGlobalVar("$").getProperty().getDoc().getComment().trim().contains("$ entry point doc"));
-		assertTrue(posJST.getGlobalVar("jQuery").getProperty().getDoc().getComment().trim().contains("jquery property"));
+		List<JstCommentLocation> commentLocations = posJST.getGlobalVar("$").getProperty().getCommentLocations();
+		String comment = JstCommentHelper.getCommentsAsString(posJST, commentLocations).get(0);
+		assertTrue(comment.contains("$ entry point doc"));
+		commentLocations = posJST.getGlobalVar("jQuery").getProperty().getCommentLocations();
+		comment = JstCommentHelper.getCommentsAsString(posJST, commentLocations).get(0);
+		assertTrue(comment.trim().contains("jquery property"));
 		
+		commentLocations = posJST.getGlobalVar("myJQueryGlobalProp").getProperty().getCommentLocations();
+		comment = JstCommentHelper.getCommentsAsString(posJST, commentLocations).get(0);
 		
+		assertTrue(comment.trim().contains("JQuery property for testing"));
 		
-		assertTrue(posJST.getGlobalVar("myJQueryGlobalProp").getProperty().getDoc().getComment().trim().contains("JQuery property for testing"));
-		assertTrue(posJST.getGlobalVar("myJQueryGlobalFunc").getFunction().getDoc().getComment().trim().contains("JQuery function for testing"));
+		commentLocations = posJST.getGlobalVar("myJQueryGlobalFunc").getFunction().getCommentLocations();
+		comment = JstCommentHelper.getCommentsAsString(posJST, commentLocations).get(0);
+		
+		assertTrue(comment.trim().contains("JQuery function for testing"));
 		
 		
 		

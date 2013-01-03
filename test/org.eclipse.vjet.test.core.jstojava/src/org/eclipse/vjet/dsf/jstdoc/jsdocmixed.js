@@ -8,33 +8,24 @@
  * Contributors:
  *     eBay Inc. - initial API and implementation
  *******************************************************************************/
-//> public;
 /** 
  *  type comment
  */
-vjo.ctype("jsdocmixed")
+vjo.ctype("jsdocmixed") //< public; 
 .props({
 	/**
 	 * static method
 	 */
 	//> public void doIt()
 	doIt:function(){},
-	//> Number ;
-	 /** 
-	 * static property
-	 */
+	//> Number ; static property
 	myprop:10
 })
 .protos({
-	//> public void doIt(); 
-	 /** 
-	 * instance method
-	 */
+	//> public void doIt(); instance method
 	doIt:function(){},
-	//> Number ;
-	 /** 
-	 * instance property
-	 */
+	//> Number ; instance property
+	 
 	myprop:10
 })
 .endType();

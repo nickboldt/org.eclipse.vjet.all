@@ -151,7 +151,9 @@ public class TypeRobustTranslator extends CompletionsFilteredRobustTranslator
 						ctx.getPreviousNodeSourceEnd(), next);
 		if (metaArr!=null) {
 			if(metaArr.size()>0){
-				JsDocHelper.addJsDoc(metaArr.get(0), ctx.getCurrentType());
+				IJsCommentMeta iJsCommentMeta = metaArr.get(0);
+				ctx.getCurrentType().addCommentLocation(iJsCommentMeta.getBeginOffset(), iJsCommentMeta.getEndOffset(), true);
+			 //	JsDocHelper.addJsDoc(iJsCommentMeta, ctx.getCurrentType());
 			}
 			JstModifiers modifiers = ctx.getCurrentType().getModifiers();
 			for(IJsCommentMeta meta :  metaArr){

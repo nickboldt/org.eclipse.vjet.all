@@ -82,6 +82,24 @@ public class JsDocHelper {
 	}
 
 	private static JstDoc createJsDocNode(String jsdoc) {
+		jsdoc = cleanJsDocComment(jsdoc);
+		return new JstDoc(jsdoc);
+	}
+	
+	public static String getJsDocFromVjetComment(String vjetDoc){
+		if(vjetDoc==null){
+			return null;
+		}
+		if(vjetDoc.indexOf(";")!=-1){
+			String[] vjetDoc2 = vjetDoc.split(";");
+			if(vjetDoc2.length>1){
+				return cleanJsDocComment(vjetDoc2[1]);
+			}
+		}
+		return "";
+	}
+
+	public static String cleanJsDocComment(String jsdoc) {
 		if(jsdoc==null){
 			return null;
 		}
@@ -91,7 +109,7 @@ public class JsDocHelper {
 		jsdoc = jsdoc.replaceAll("\\*/$", "");
 		// commentSrc = commentSrc.replaceAll("^(\t)*(\\*)*", "");
 		jsdoc = jsdoc.replaceAll("\\s+\\*", "\n");
-		return new JstDoc(jsdoc);
+		return jsdoc;
 	}
 	
 	

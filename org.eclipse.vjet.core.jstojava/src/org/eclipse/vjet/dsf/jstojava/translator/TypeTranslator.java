@@ -87,7 +87,8 @@ public class TypeTranslator extends BaseTranslator {
 				} else if (JstUtil.isType(method)) {
 					String fullName = getName(message);
 					
-					
+//					getCtx().getCommentCollector().getCommentLocationNonMeta(m_ctx.getPreviousNodeSourceEnd(), message.sourceStart);
+//					
 					JstCommentLocation comment = getCtx().getCommentCollector().getCommentLocationNonMeta2(message.sourceStart);
 //					JsDocHelper.addJsDoc(comment, jstType);
 					if(comment!=null){

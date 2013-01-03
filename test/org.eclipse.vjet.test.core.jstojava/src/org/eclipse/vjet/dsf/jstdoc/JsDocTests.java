@@ -23,7 +23,10 @@ import org.eclipse.vjet.dsf.jst.IJstMethod;
 import org.eclipse.vjet.dsf.jst.IJstProperty;
 import org.eclipse.vjet.dsf.jst.IJstType;
 import org.eclipse.vjet.dsf.jst.ISynthesized;
+import org.eclipse.vjet.dsf.jst.JstCommentLocation;
+import org.eclipse.vjet.dsf.jst.util.JstCommentHelper;
 import org.eclipse.vjet.dsf.jstojava.parser.VjoParser;
+import org.eclipse.vjet.dsf.jstojava.translator.JsDocHelper;
 import org.eclipse.vjet.dsf.jstojava.translator.TranslateCtx;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -42,24 +45,26 @@ public class JsDocTests {
 	public static Collection<Object[]> data() {
 
 		return Arrays.asList( new Object[][] {
-				{"nojsdoc"}, 
-				{"jsdocmethod"}, 
-				{"jsdocmethod2"}, 
-				{"jsdocmixed"}, 
-				{"nojsdocmixed2"}, 
+				{"nojsdoc",1}, 
+				{"jsdocmethod",1}, 
+				{"jsdocmethod2",0}, 
+				{"jsdocmixed",0}, 
+				{"nojsdocmixed2",1}, 
 		});
 
 	}
 
 
 	private String m_inputName;
+	private int m_typeCommentLoc;
 	
 	
 	/**
 	 * foo
 	 */
-	public JsDocTests(String inputFileName) {
+	public JsDocTests(String inputFileName, int typeComment) {
 		m_inputName = inputFileName;
+		m_typeCommentLoc = typeComment;
 	}
 	
 	
@@ -90,16 +95,35 @@ public class JsDocTests {
 			return;
 		}
 		
-		assertNotNull(posJST.getDoc());
-		assertEquals("type comment", posJST.getDoc().getComment().trim());
+	//	assertNotNull(posJST.getDoc());
+		//assertEquals(m_typeCommentLoc+1, posJST.getCommentLocations().size());
+		JstCommentLocation loc =  posJST.getCommentLocations().get(m_typeCommentLoc);
+		String jsdoc =""; 
+		String comment = JstCommentHelper.getCommentAsString(posJST, loc,true);
+		if(loc.isVjetDoc()){
+			 jsdoc = JsDocHelper.getJsDocFromVjetComment(comment).trim();
+		}else{
+			 jsdoc = JsDocHelper.cleanJsDocComment(comment).trim();
+		}
+		assertEquals("type comment",jsdoc.trim());
 		
+		
+
 		
 		for(IJstMethod m: methods){
-			String comment = m.getDoc().getComment().trim();
-			if(m.getModifiers().isStatic()){
-				assertEquals("static method",comment);
+			JstCommentLocation location = m.getCommentLocations().get(0);
+			comment = JstCommentHelper.getCommentsAsString(posJST, m.getCommentLocations(),true).get(0);
+			if(location.isVjetDoc()){
+				 jsdoc = JsDocHelper.getJsDocFromVjetComment(comment).trim();
 			}else{
-				assertEquals("instance method",comment);
+				 jsdoc = JsDocHelper.cleanJsDocComment(comment).trim();
+			}
+		
+//			String comment = m.getDoc().getComment().trim(); 
+			if(m.getModifiers().isStatic()){
+				assertEquals("static method",jsdoc);
+			}else{
+				assertEquals("instance method",jsdoc);
 			}
 		}
 	
@@ -109,13 +133,20 @@ public class JsDocTests {
 			if(p instanceof ISynthesized){
 				continue;
 			}
-			String comment = p.getDoc().getComment().trim();
-			if(p.getModifiers().isStatic()){
-				assertTrue(comment.contains("static property"));
+			JstCommentLocation location = p.getCommentLocations().get(0);
+			comment = JstCommentHelper.getCommentsAsString(posJST, p.getCommentLocations(),true).get(0);
+			if(location.isVjetDoc()){
+				 jsdoc = JsDocHelper.getJsDocFromVjetComment(comment).trim();
 			}else{
-				assertTrue(comment.contains("instance property"));
+				 jsdoc = JsDocHelper.cleanJsDocComment(comment).trim();
 			}
-			assertNotNull(p.getDoc());
+			if(p.getModifiers().isStatic()){
+			
+				assertEquals("static property",jsdoc);
+			}else{
+				assertEquals("instance property",jsdoc);
+			}
+			//assertNotNull(p.getDoc());
 		}
 
 	
