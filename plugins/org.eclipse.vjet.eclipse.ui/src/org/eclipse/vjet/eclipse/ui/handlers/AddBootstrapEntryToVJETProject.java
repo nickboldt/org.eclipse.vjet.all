@@ -54,7 +54,7 @@ public class AddBootstrapEntryToVJETProject extends AbstractHandler {
 						bootstrapFolder.create(true,true,null);
 						IFile bootstrapjsfile = bootstrapFolder.getFile("bootstrap.js");
 						if(!bootstrapjsfile.exists()){
-							bootstrapjsfile.create(new StringInputStream("typeExtensions = {} // \"typetoextend\" : \"typewhichdefinesextension\")"), true, null);
+							bootstrapjsfile.create(new StringInputStream("var typeExtensions = {} // \"typetoextend\" : \"typewhichdefinesextension\")"), true, null);
 						}
 					} catch (CoreException e) {
 						// TODO Auto-generated catch block
