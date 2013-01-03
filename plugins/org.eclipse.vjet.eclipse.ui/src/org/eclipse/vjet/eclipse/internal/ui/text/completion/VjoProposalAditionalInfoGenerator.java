@@ -42,6 +42,8 @@ import org.eclipse.vjet.dsf.jst.expr.AssignExpr;
 import org.eclipse.vjet.dsf.jst.expr.JstArrayInitializer;
 import org.eclipse.vjet.dsf.jst.term.JstIdentifier;
 import org.eclipse.vjet.dsf.jst.token.IExpr;
+import org.eclipse.vjet.dsf.jst.util.JstCommentHelper;
+import org.eclipse.vjet.dsf.jstojava.translator.JsDocHelper;
 import org.eclipse.vjet.eclipse.internal.ui.scriptdoc.JavaDoc2HTMLTextReader;
 import org.eclipse.vjet.eclipse.ui.VjetUIPlugin;
 import org.osgi.framework.Bundle;
@@ -70,8 +72,16 @@ public class VjoProposalAditionalInfoGenerator {
 			method = (IJstMethod) node;
 		}
 		String briefInfo = "";
-		if (property != null && property.getDoc() != null) {
-			info = property.getDoc().getComment();
+		if (property != null && property.getCommentLocations() != null) {
+			List<String> strings = JstCommentHelper.getCommentsAsString(node.getOwnerType(), node.getCommentLocations());
+			StringBuilder sb = new StringBuilder();
+			for(String str:strings){
+				if(str!=null)
+					sb.append(JsDocHelper.cleanJsDocComment(str));
+					sb.append("<br>");
+			}
+			info = sb.toString();
+			
 			briefInfo = getElementBriefDesc(property);
 			fillAllSupportedExplorer(property, allSupportedExplorers);
 		} else {
@@ -117,6 +127,9 @@ public class VjoProposalAditionalInfoGenerator {
 										+ getSupportedTypesStirng(
 												allSupportedExplorers,
 												"DomLevel.") + "<br>");
+					}else{
+						wholeInfo = wholeInfo.replace("<%=DOMLevel%>",
+								"");
 					}
 					wholeInfo = wholeInfo.replace("<%=MinJSVersion%>",
 							translateCharacterToNumber(getSupportedTypesStirng(
