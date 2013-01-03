@@ -668,7 +668,8 @@ public class VjoCcHandler implements IVjoCcHandler {
 				}
 			}else if(qualifier instanceof MtdInvocationExpr){
 				MtdInvocationExpr mtdInvo = ((MtdInvocationExpr)qualifier);
-				type = ((IJstMethod)mtdInvo.getMethod()).getRtnType();
+				type = mtdInvo.getResultType();
+				
 			}
 			
 			if(type==null){
