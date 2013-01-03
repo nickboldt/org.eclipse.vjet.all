@@ -55,9 +55,13 @@ public class JstCommentHelper {
 		for (JstCommentLocation jstCommentLocation : commentLocations) {
 			if (!jstCommentLocation.isVjetDoc()
 					|| (includeVjetDocs && jstCommentLocation.isVjetDoc())) {
-				comments.add(source.substring(
-						jstCommentLocation.getStartOffset(),
-						jstCommentLocation.getEndOffset()));
+				
+				if(jstCommentLocation.getEndOffset()<source.length() &&
+						jstCommentLocation.getStartOffset()<source.length()){
+					comments.add(source.substring(
+							jstCommentLocation.getStartOffset(),
+							jstCommentLocation.getEndOffset()));
+				}
 			}
 
 		}
