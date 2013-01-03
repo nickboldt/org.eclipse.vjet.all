@@ -407,6 +407,10 @@ public class VjetScriptBuilder extends ScriptBuilder {
 					if (DEBUG)
 						log("Performing full build since build path changed"); //$NON-NLS-1$
 					fullBuild(monitor);
+				}else if (EclipseTypeSpaceLoader.isBootstrapChangedEvent(delta)) {
+					if (DEBUG)
+						log("Performing full build since bootstrap.js changed"); //$NON-NLS-1$
+					fullBuild(monitor);
 				} else {
 					if (DEBUG)
 						log("Performing incremental build"); //$NON-NLS-1$

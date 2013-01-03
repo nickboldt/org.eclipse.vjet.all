@@ -694,6 +694,33 @@ public class EclipseTypeSpaceLoader implements ITypeSpaceLoader,IResourceChangeL
 
 		return isBuildPathCnahgedEvent;
 	}
+	
+	public static boolean isBootstrapChangedEvent(IResourceDelta delta) {
+
+		boolean bootstrapPathChange = false;
+		IResource resource = delta.getResource();
+
+		// if changed .buildpath file
+		if (resource.getName().equals("bootstrap.js")) {
+			bootstrapPathChange = delta.getKind() == IResourceDelta.CHANGED;
+		}
+
+
+		// check that no changes of the other recourses
+		if (!bootstrapPathChange) {
+
+			IResourceDelta[] deltas = delta.getAffectedChildren();
+			for (IResourceDelta resourceDelta : deltas) {
+				bootstrapPathChange = isBootstrapChangedEvent(resourceDelta);
+				if (bootstrapPathChange) {
+					break;
+				}
+			}
+
+		}
+
+		return bootstrapPathChange;
+	}
 
 	/**
 	 * Process resource delta and add {@link SourceTypeName} to the inner
