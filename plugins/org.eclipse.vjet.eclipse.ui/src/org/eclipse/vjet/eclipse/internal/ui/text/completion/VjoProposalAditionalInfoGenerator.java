@@ -85,10 +85,15 @@ public class VjoProposalAditionalInfoGenerator {
 			briefInfo = getElementBriefDesc(property);
 			fillAllSupportedExplorer(property, allSupportedExplorers);
 		} else {
-			if ((method != null) && (method.getDoc() != null)) {
+			
+			if (((method != null) && (method.getDoc() != null))) {
 				info = method.getDoc().getComment();
 				briefInfo = getElementBriefDesc(method);
 				fillAllSupportedExplorer(method, allSupportedExplorers);
+			}else if(property != null && property.getDoc() != null) {
+				info = property.getDoc().getComment();
+				briefInfo = getElementBriefDesc(property);
+				fillAllSupportedExplorer(property, allSupportedExplorers);
 			}
 		}
 
