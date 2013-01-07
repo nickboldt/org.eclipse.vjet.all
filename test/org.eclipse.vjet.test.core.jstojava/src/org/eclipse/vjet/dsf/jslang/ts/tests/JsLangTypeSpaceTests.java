@@ -8,6 +8,7 @@
  *******************************************************************************/
 package org.eclipse.vjet.dsf.jslang.ts.tests;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
@@ -71,7 +72,7 @@ public class JsLangTypeSpaceTests {
 		IJstParseController controller = new JstParseController(new VjoParser());
 	
 		JstTypeSpaceMgr ts = new JstTypeSpaceMgr(controller, new DefaultJstTypeLoader());
-//		addTraceEvents(ts);
+		//addTraceEvents(ts);
 		ts.initialize();
 		
 		IResourceResolver jstLibResolver = org.eclipse.vjet.dsf.jstojava.test.utils.JstLibResolver
@@ -109,10 +110,14 @@ public class JsLangTypeSpaceTests {
 		
 		TypeName typeName = new TypeName("org.eclipse.vjet.test.core.jstojava", "dsf.jslang.feature.tests.EcmaArrayTests");
 		IJstType type = ts.getQueryExecutor().findType(typeName);
+		int groupSize = ts.getTypeSpace().getGroup("org.eclipse.vjet.test.core.jstojava").getEntities().keySet().size();
+		System.out.println("number of types in typespace: " + groupSize);
+		assertEquals(1831, groupSize);
 		printTypes(ts);
 		assertNotNull(type);
 		}
 		catch(Exception e){
+			e.printStackTrace();
 			fail();
 		}
 		

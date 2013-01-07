@@ -2274,6 +2274,10 @@ public class TranslateHelper {
 			// or more than one meta, which forces the overloading already
 			final JstMethod dispatcher = createJstMethod(astMtdDecl, astParams,
 					null, ctx, false, methodName);
+			// add non vjetdoc comments locations to dispatcher
+//			dispatcher
+//			   .setCommentLocations(getCommentLocations2(astMtdDecl, ctx));
+			
 			for (IJsCommentMeta meta : funcMetaList) {
 				final JstMethod overloaded = createJstMethod(astMtdDecl,
 						astParams, meta, ctx, true, methodName);
@@ -2997,8 +3001,7 @@ public class TranslateHelper {
 				// astMtdDecl.get
 			}
 
-			jstMethod
-					.setCommentLocations(getCommentLocations2(astMtdDecl, ctx));
+			
 
 			if (meta != null) {
 				jstMethod.setHasJsAnnotation(true);

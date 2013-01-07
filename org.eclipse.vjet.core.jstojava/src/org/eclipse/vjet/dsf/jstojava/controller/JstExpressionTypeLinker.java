@@ -74,6 +74,7 @@ import org.eclipse.vjet.dsf.jst.expr.MtdInvocationExpr;
 import org.eclipse.vjet.dsf.jst.expr.ObjCreationExpr;
 import org.eclipse.vjet.dsf.jst.expr.PostfixExpr;
 import org.eclipse.vjet.dsf.jst.expr.PrefixExpr;
+import org.eclipse.vjet.dsf.jst.meta.BaseJsCommentMetaNode;
 import org.eclipse.vjet.dsf.jst.meta.IJsCommentMeta;
 import org.eclipse.vjet.dsf.jst.meta.JsCommentMetaNode;
 import org.eclipse.vjet.dsf.jst.meta.JsType;
@@ -828,6 +829,9 @@ class JstExpressionTypeLinker implements IJstVisitor {
 			postVisitExprStmt((ExprStmt) node);
 		} else if (node instanceof ConditionalExpr) {
 			postVisitConditionalExpr((ConditionalExpr) node);
+		}else if(node instanceof BaseJsCommentMetaNode){
+			((BaseJsCommentMetaNode) node).getParentNode().removeChild(node);
+			node = null;
 		}
 	}
 
@@ -1255,7 +1259,9 @@ class JstExpressionTypeLinker implements IJstVisitor {
 				id.setJstBinding(funcExpr.getFunc());
 			} else if (actualExpr instanceof ObjCreationExpr) {
 				final ObjCreationExpr objCreateExpr = (ObjCreationExpr) actualExpr;
-				if ("Function".equals(objCreateExpr.getResultType()
+				IJstType resultType = objCreateExpr.getResultType();
+				// TODO look into why result type for new Function() is not binding before reaching this test
+				if (resultType!=null && "Function".equals(resultType
 						.getSimpleName())) {
 					final JstSynthesizedMethod flexMtd = JstExpressionTypeLinkerHelper
 							.createFlexMethod(m_resolver, null);

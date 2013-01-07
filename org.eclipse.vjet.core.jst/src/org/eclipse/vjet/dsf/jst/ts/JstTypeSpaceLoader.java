@@ -8,6 +8,8 @@
  *******************************************************************************/
 package org.eclipse.vjet.dsf.jst.ts;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -162,12 +164,34 @@ public class JstTypeSpaceLoader implements ITypeSpaceLoader {
 				if (type != null) {
 					isSerialized = true;
 				}				
-				else if (type == null && srcType.getSource() != null) {	
+				else if (type == null && srcType.getFile() != null) {	
 					isSerialized = false;
 					// TODO show better progress message here not percentage
-					type = controller.parse(srcType.getGroupName(), srcType.getFileName(), srcType.getSource()).getType();
+					String source = srcType.getSource();
+					if(source==null){
+					StringBuilder builder = new StringBuilder();		
 					
-					srcType.setSource(null);
+					BufferedReader reader = new BufferedReader(new FileReader(srcType.getFile()));
+					try{
+						char[] cbuf = new char[10000];
+						int len = 0;
+					
+						while ((len = reader.read(cbuf)) != -1) {
+							builder.append(cbuf, 0, len);
+						}
+						
+						source = builder.toString();
+					}catch(Exception e){
+						
+					}finally{
+						reader.close();
+					}
+					
+					
+					}
+						
+					type = controller.parse(srcType.getGroupName(), srcType.getFileName(), source).getType();
+					
 				}
 				
 				if (type != null) {
@@ -221,7 +245,7 @@ public class JstTypeSpaceLoader implements ITypeSpaceLoader {
 			catch (Throwable e) {
 				hasError = true;
 				failedStatus.addErrorSource(new EventListenerStatus.ErrorSource(srcType.getGroupName() + ": " + srcType.getFileName(), "VJO parse error", e));				
-			}
+			}finally{
 			
 			if (isSerialized) {
 				progressPercent += 0.05 / (float)total;
@@ -230,23 +254,48 @@ public class JstTypeSpaceLoader implements ITypeSpaceLoader {
 				progressPercent += 0.40 / (float)total;
 			}
 			
+		
 			notifyProgress(callback, progressPercent);
+			srcType = null;
+			
+			}
+			
 		}
+		
+//		jstTypeSrcList = null;
 		
 		float remainingPercent = (float)1.0 - progressPercent;
 		
 		total = typeList.size(); // recalculate total
 		
 		// resolve all type bindings
+		int count = 0;
 		for (IJstType type: typeList) {
 			try {
 //				System.out.println("RESOLVING =" + type.getName());
 				
-				controller.resolve(type);
+				System.out.println("#" + count);
+				
+				long startTime = System.nanoTime();
+				System.out.println("resolving " + type.getName());
+
+				 long used1 = memTaken();
+				  controller.resolve(type);
+				  long used2 = memTaken();
+				  
+				long endTime = System.nanoTime();
+				long duration = endTime - startTime;
+				
+				// size of jsttype
+				
+				System.out.println(type.getName()+ "\t" + duration  + "\t" + (used2 - used1));
+				
+				
 				
 				
 			}
 			catch (Throwable e) {
+				e.printStackTrace();
 				hasError = true;
 				String groupName="";
 				if (type.getPackage() != null) {
@@ -256,8 +305,9 @@ public class JstTypeSpaceLoader implements ITypeSpaceLoader {
 			}
 			
 			progressPercent += ((float)0.4 * remainingPercent) / (float)total;
-			
+			System.out.println(progressPercent + "%");
 			notifyProgress(callback, progressPercent);
+			count++;
 		}
 		
 		// load all types into type space
@@ -297,6 +347,12 @@ public class JstTypeSpaceLoader implements ITypeSpaceLoader {
 			return successStatus;
 		}
 		
+	}
+	
+	
+	static long memTaken() {
+	    final Runtime rt = Runtime.getRuntime();
+	    return rt.totalMemory() - rt.freeMemory();
 	}
 	
 	public void setJstTypeLoader(IJstTypeLoader loader) {

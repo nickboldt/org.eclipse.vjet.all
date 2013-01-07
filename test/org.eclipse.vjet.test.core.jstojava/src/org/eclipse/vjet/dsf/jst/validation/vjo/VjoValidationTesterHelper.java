@@ -247,7 +247,7 @@ public class VjoValidationTesterHelper {
                 VjoParser.getContent(testFile));
 
         if(printTree)
-        ParseUtils.printTree2(unit.getType());
+        	ParseUtils.printTree2(unit.getType());
 
         
         TestCase.assertNotNull(mgr.getTypeSpace().getGroup(grpName));

@@ -285,20 +285,20 @@ public class DefaultJstTypeLoader implements IJstTypeLoader {
 		
 		String typeName = fileName.substring(start, end);
 		
-		StringBuilder builder = new StringBuilder();		
-	
-		BufferedReader reader = new BufferedReader(new FileReader(file));
-	
-		char[] cbuf = new char[10000];
-		int len = 0;
-	
-		while ((len = reader.read(cbuf)) != -1) {
-			builder.append(cbuf, 0, len);
-		}
-			
-		reader.close();
+//		StringBuilder builder = new StringBuilder();		
+//	
+//		BufferedReader reader = new BufferedReader(new FileReader(file));
+//	
+//		char[] cbuf = new char[10000];
+//		int len = 0;
+//	
+//		while ((len = reader.read(cbuf)) != -1) {
+//			builder.append(cbuf, 0, len);
+//		}
+//			
+//		reader.close();
 		
-		SourceType srcType = new SourceType(groupName, typeName, builder.toString(), file);
+		SourceType srcType = new SourceType(groupName, typeName, null, file);
 		
 		return srcType;		
 	}

@@ -14,7 +14,7 @@ vjo.ctype('org.eclipse.vjet.dsf.jst.validation.vjo.BugFixes.Bug3981') //< public
     //> public int serviceHandler(String pName)
 	serviceHandler:function(pName){
 	        alert("your name is " + pName);
-	        return "";"
+	        return "";
 	}
 
 })

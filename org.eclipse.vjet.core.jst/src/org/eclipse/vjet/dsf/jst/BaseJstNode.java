@@ -232,6 +232,25 @@ public class BaseJstNode implements IJstNode {
 			m_annotations = null;
 		}
 	}
+	
+	public void clearCommentLocations() {
+		synchronized (this) {
+			if(m_commentLocations==null){
+				return;
+			}
+			m_commentLocations = null;
+		}
+	}
+	
+	public void clearComments() {
+		synchronized (this) {
+			if(m_comments==null){
+				return;
+			}
+			m_comments = null;
+		}
+	}
+
 
 	public void setSource(JstSource source) {
 		m_source = source;

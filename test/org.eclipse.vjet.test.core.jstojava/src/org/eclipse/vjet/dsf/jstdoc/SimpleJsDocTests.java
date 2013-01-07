@@ -12,19 +12,20 @@ package org.eclipse.vjet.dsf.jstdoc;
 
 
 import static junit.framework.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 
 import java.net.URL;
 import java.util.List;
 
+import org.eclipse.vjet.dsf.common.resource.ResourceUtil;
+import org.eclipse.vjet.dsf.jst.IJstMethod;
+import org.eclipse.vjet.dsf.jst.IJstNode;
 import org.eclipse.vjet.dsf.jst.IJstType;
 import org.eclipse.vjet.dsf.jst.JstCommentLocation;
 import org.eclipse.vjet.dsf.jst.util.JstCommentHelper;
 import org.eclipse.vjet.dsf.jstojava.parser.VjoParser;
 import org.eclipse.vjet.dsf.jstojava.translator.TranslateCtx;
 import org.junit.Test;
-
-
-import org.eclipse.vjet.dsf.common.resource.ResourceUtil;
 
 public class SimpleJsDocTests {
 
@@ -39,21 +40,37 @@ public class SimpleJsDocTests {
 		
 		String goodCase = VjoParser.getContent(goodCaseFile);
 		
-	
 		TranslateCtx positiveCtx = new TranslateCtx();
 		assertTrue(positiveCtx.getErrorReporter().getErrors().size()==0);
 		assertTrue(positiveCtx.getErrorReporter().getWarnings().size()==0);
 	
 		
 		IJstType posJST = new VjoParser().parse("TEST", goodCaseFile.getFile(), goodCase, false).getType();
+		assertEquals(2,posJST.getCommentLocations().size());
+		IJstType posJST2 = new VjoParser().parse("TEST", goodCaseFile.getFile(), goodCase, false).getType();
+		assertEquals(2,posJST2.getCommentLocations().size());
+		assertEquals(2,posJST.getCommentLocations().size());
+		assertEquals(posJST, posJST2);
+		IJstMethod doItMethodDispatcher = posJST.getMethod("doIt");
+		List<JstCommentLocation> commentLocations =doItMethodDispatcher.getCommentLocations();
+		assertTrue(doItMethodDispatcher.isDispatcher());
+		printLocations(doItMethodDispatcher);
+		for(IJstMethod overload: doItMethodDispatcher.getOverloaded()){
+			assertEquals(1, overload.getCommentLocations().size());
+		}
 		
-		List<JstCommentLocation> commentLocations =posJST.getMethod("doIt").getCommentLocations();
+		assertEquals(1,commentLocations.size());
+		
+		
+		
+		
 		String comment = JstCommentHelper.getCommentsAsString(posJST, commentLocations).get(0);
 		
 		
 		assertTrue(comment.trim().contains("doIt Js doc"));
 		
 		commentLocations =posJST.getMethod("foobar").getCommentLocations();
+		assertEquals(1,commentLocations.size());
 		comment = JstCommentHelper.getCommentsAsString(posJST, commentLocations, true).get(0);
 		
 		
@@ -65,6 +82,14 @@ public class SimpleJsDocTests {
 
 	
 	
+	}
+	private void printLocations(IJstNode node) {
+		System.out.println(node.toString());
+		for(JstCommentLocation loc : node.getCommentLocations()){
+			System.out.println(loc.toString());
+		}
+	
+		
 	}
 	@Test
 	//@Category({P1, UNIT, FAST})

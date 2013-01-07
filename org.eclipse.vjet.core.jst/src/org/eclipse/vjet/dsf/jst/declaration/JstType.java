@@ -2323,12 +2323,6 @@ public class JstType extends BaseJstNode implements IJstType {
 	 * Removes all properties from the type
 	 */
 	public void clearProperties() {
-		for (IJstProperty pty: getProperties()){
-			if (pty instanceof BaseJstNode){
-				removeChild((BaseJstNode)pty);
-				pty = null;
-			}
-		}
 		synchronized(this){
 			m_ptys = null; // new ArrayList<IJstProperty>();
 		}
@@ -3031,6 +3025,8 @@ public class JstType extends BaseJstNode implements IJstType {
 	public void clearAll() {
 		clearChildren(); // from base
 		clearAnnotations(); // from base
+		clearCommentLocations(); // from base
+		clearComments(); // from base
 		clearModifiers();
 		clearParams();
 		clearName();

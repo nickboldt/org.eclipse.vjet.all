@@ -28,6 +28,7 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
+	 AllJsDocTests.class,
 	AllTranslatorsTests.class,
 	AllJs2JstTests.class,
 	CodeGenJsrDiff.class,
@@ -39,8 +40,8 @@ import org.junit.runners.Suite;
     AllVjoValidationTests.class,
     BootstrapCommentTest.class,
     VjCommentParserTest.class,
-    AllHeadLessTests.class,
-    AllJsDocTests.class
+    AllHeadLessTests.class
+   
 //    JsResourceOptimizationTests.class
 })
 public class AllJsToJavaTests {

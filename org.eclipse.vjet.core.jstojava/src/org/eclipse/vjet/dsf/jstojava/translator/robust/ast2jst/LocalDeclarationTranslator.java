@@ -157,8 +157,8 @@ public class LocalDeclarationTranslator extends
 //			vars.setComments(commentCollector.getComments(
 //					m_ctx.getPreviousNodeSourceEnd(),
 //					findSourceEnd(origStatement)));
-			vars.setCommentLocations(commentCollector.getCommentLocations(m_ctx.getPreviousNodeSourceEnd(),
-					findSourceEnd(origStatement)));
+//			vars.setCommentLocations(commentCollector.getCommentLocations(m_ctx.getPreviousNodeSourceEnd(),
+//					findSourceEnd(origStatement)));
 		}
 		for (AssignExpr assignExpr: list){
 			vars.addAssignment(assignExpr);
@@ -166,6 +166,8 @@ public class LocalDeclarationTranslator extends
 		if (meta != null && typeFound) {
 			IJstTypeReference typeRef = vars.getTypeRef();
 			TranslateHelper.setTypeRefSource((BaseJstNode) typeRef, meta);
+//			vars.addCommentLocation(meta.getBeginOffset(),meta.getEndOffset());
+			
 		}
 		
 		return vars;

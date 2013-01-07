@@ -24,6 +24,7 @@ import org.eclipse.vjet.dsf.jst.IJstProperty;
 import org.eclipse.vjet.dsf.jst.IJstType;
 import org.eclipse.vjet.dsf.jst.ISynthesized;
 import org.eclipse.vjet.dsf.jst.JstCommentLocation;
+import org.eclipse.vjet.dsf.jst.declaration.JstMethod;
 import org.eclipse.vjet.dsf.jst.util.JstCommentHelper;
 import org.eclipse.vjet.dsf.jstojava.parser.VjoParser;
 import org.eclipse.vjet.dsf.jstojava.translator.JsDocHelper;
@@ -111,14 +112,16 @@ public class JsDocTests {
 
 		
 		for(IJstMethod m: methods){
-			JstCommentLocation location = m.getCommentLocations().get(0);
-			comment = JstCommentHelper.getCommentsAsString(posJST, m.getCommentLocations(),true).get(0);
-			if(location.isVjetDoc()){
-				 jsdoc = JsDocHelper.getJsDocFromVjetComment(comment).trim();
-			}else{
-				 jsdoc = JsDocHelper.cleanJsDocComment(comment).trim();
+			
+			if(m.getParentNode() instanceof IJstMethod){
+				m = (IJstMethod)m.getParentNode();
 			}
+			
+			jsdoc = findComment(m);
+			
+			
 		
+			
 //			String comment = m.getDoc().getComment().trim(); 
 			if(m.getModifiers().isStatic()){
 				assertEquals("static method",jsdoc);
@@ -151,6 +154,22 @@ public class JsDocTests {
 
 	
 	
+	}
+
+
+	private String findComment(IJstMethod m) {
+		StringBuilder jsdoc = new StringBuilder();
+		for(JstCommentLocation loc : m.getCommentLocations()){
+	
+			String comment = JstCommentHelper.getCommentAsString(m.getOwnerType(), loc,true);
+			if(loc.isVjetDoc()){
+				 jsdoc.append(JsDocHelper.getJsDocFromVjetComment(comment).trim());
+			}else{
+				 jsdoc.append(JsDocHelper.cleanJsDocComment(comment).trim());
+			}
+		}
+		return jsdoc.toString();
+		
 	}
 	
 		
