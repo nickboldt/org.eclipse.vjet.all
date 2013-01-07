@@ -162,7 +162,18 @@ public class TranslateCtx implements IFindTypeSupport{
 
 	public int getPreviousNodeSourceEnd() {
 		// return previousNodeSourceEnd;
-		return getCurrentSourceOffset().previousNodeSourceEnd;
+		int previousNodeSourceEnd= getCurrentSourceOffset().previousNodeSourceEnd;
+		if(previousNodeSourceEnd!=0){
+			return previousNodeSourceEnd;
+		}else{
+			int size = currentBlock.size();
+			for(int length = size-1; size>0; size--){
+				if(currentBlock.get(length).previousNodeSourceEnd!=0){
+					return currentBlock.get(length).previousNodeSourceEnd;
+				}
+			}
+		}
+		return previousNodeSourceEnd;
 	}
 
 	public void setPreviousNodeSourceEnd(int previousNodeSourceEnd) {
