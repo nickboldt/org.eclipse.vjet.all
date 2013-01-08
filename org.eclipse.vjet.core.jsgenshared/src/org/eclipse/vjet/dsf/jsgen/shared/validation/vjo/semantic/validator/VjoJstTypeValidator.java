@@ -1144,7 +1144,7 @@ public class VjoJstTypeValidator
                     + 1);
             temp = temp.substring(temp.indexOf('.') + 1);
             fileNameIndex = temp.lastIndexOf(fileName);
-            if (fileNameIndex != 0) {
+            if (fileNameIndex > -1 && temp.length()> fileNameIndex  -1) {
                 pkgPath = temp.substring(0, fileNameIndex - 1);
             } else {
                 pkgPath="";
