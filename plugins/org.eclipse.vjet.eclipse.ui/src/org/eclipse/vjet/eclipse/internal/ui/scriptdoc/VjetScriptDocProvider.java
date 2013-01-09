@@ -11,6 +11,7 @@ package org.eclipse.vjet.eclipse.internal.ui.scriptdoc;
 import java.io.Reader;
 import java.io.StringReader;
 import java.net.URI;
+import java.util.List;
 
 import org.eclipse.dltk.mod.core.IField;
 import org.eclipse.dltk.mod.core.IMember;
@@ -106,8 +107,11 @@ public class VjetScriptDocProvider implements IScriptDocumentationProvider {
 					IJstProperty property = t.getProperty(element.getElementName());
 
 					if (property!=null && !property.getCommentLocations().isEmpty() ) {
-						String jsdoc = JstCommentHelper.getCommentsAsString(property.getOwnerType(), property.getCommentLocations()).get(0);
-						return new JavaDoc2HTMLTextReader(new StringReader( JsDocHelper.cleanJsDocComment(jsdoc)));
+						List<String> commentsAsString = JstCommentHelper.getCommentsAsString(property.getOwnerType(), property.getCommentLocations());
+						if(commentsAsString.size()>0){
+							String jsdoc = commentsAsString.get(0);
+							return new JavaDoc2HTMLTextReader(new StringReader( JsDocHelper.cleanJsDocComment(jsdoc)));
+						}
 					}else if(property!=null && property.getDoc()!=null ) {
 						return new JavaDoc2HTMLTextReader(new StringReader( property.getDoc().getComment()));
 					}
@@ -116,8 +120,11 @@ public class VjetScriptDocProvider implements IScriptDocumentationProvider {
 					IJstMethod method = t.getMethod(element.getElementName());
 					if (method!=null && !method.getCommentLocations().isEmpty() && m_node != method)  {
 						m_node = method;
-						String jsdoc = JstCommentHelper.getCommentsAsString(method.getOwnerType(), method.getCommentLocations()).get(0);
-						return new JavaDoc2HTMLTextReader(new StringReader( JsDocHelper.cleanJsDocComment(jsdoc)));
+						List<String> commentsAsString = JstCommentHelper.getCommentsAsString(method.getOwnerType(), method.getCommentLocations());
+						if(commentsAsString.size()>0){
+							String jsdoc = commentsAsString.get(0);
+							return new JavaDoc2HTMLTextReader(new StringReader( JsDocHelper.cleanJsDocComment(jsdoc)));
+						}
 					}else if(method!=null && method.getDoc()!=null && m_node != method)  {
 						m_node = method;
 						return new JavaDoc2HTMLTextReader(new StringReader( method.getDoc().getComment()));
