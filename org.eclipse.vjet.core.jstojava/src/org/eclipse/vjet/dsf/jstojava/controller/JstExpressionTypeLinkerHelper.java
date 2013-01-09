@@ -2069,10 +2069,21 @@ public class JstExpressionTypeLinkerHelper {
 
 					extMtd = bindArgumentMappng(revisitor, grpInfo,
 							matchingMtd, mtdExpr.getArgs().get(0));
+					if(extMtd.isDispatcher()){
+						final List<IJstMethod> matchingJstMtds = getMatchingMtdFromOverloads(
+								extMtd, mtdExpr.getArgs());
+						if(matchingJstMtds.size()==1){
+							extMtd = matchingJstMtds.get(0);
+							
+						}
+				
+					}
+					
 					if (extMtd != null) {
 						parameters = extMtd.getArgs();
 					}
-
+					
+					
 				}
 
 				for (int i = 0, len = arguments.size(); i < len; i++) {
