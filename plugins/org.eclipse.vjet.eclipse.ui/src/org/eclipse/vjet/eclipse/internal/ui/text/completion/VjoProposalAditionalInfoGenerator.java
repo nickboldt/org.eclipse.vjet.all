@@ -30,11 +30,14 @@ import org.eclipse.dltk.mod.ui.text.completion.HTMLPrinter;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.swt.graphics.FontData;
 import org.eclipse.vjet.dsf.jst.BaseJstNode;
+import org.eclipse.vjet.dsf.jst.FileBinding;
 import org.eclipse.vjet.dsf.jst.IJstAnnotation;
 import org.eclipse.vjet.dsf.jst.IJstMethod;
 import org.eclipse.vjet.dsf.jst.IJstNode;
 import org.eclipse.vjet.dsf.jst.IJstProperty;
 import org.eclipse.vjet.dsf.jst.IJstType;
+import org.eclipse.vjet.dsf.jst.JstSource;
+import org.eclipse.vjet.dsf.jst.SimpleBinding;
 import org.eclipse.vjet.dsf.jst.declaration.JstAnnotation;
 import org.eclipse.vjet.dsf.jst.declaration.JstArg;
 import org.eclipse.vjet.dsf.jst.declaration.JstModifiers;
@@ -72,7 +75,12 @@ public class VjoProposalAditionalInfoGenerator {
 			method = (IJstMethod) node;
 		}
 		String briefInfo = "";
-		if (property != null && property.getCommentLocations() != null && !node.getCommentLocations().isEmpty()) {
+		if (property != null  && 
+				isBindingOk(property.getOwnerType().getSource()) &&
+				property.getCommentLocations() != null && 
+				!node.getCommentLocations().isEmpty()) {
+			
+			
 			List<String> strings = JstCommentHelper.getCommentsAsString(node.getOwnerType(), node.getCommentLocations());
 			StringBuilder sb = new StringBuilder();
 			for(String str:strings){
@@ -161,7 +169,30 @@ public class VjoProposalAditionalInfoGenerator {
 			}
 		}
 		return info;
-	}
+	}	private static boolean isBindingOk(JstSource source) {
+		   if (source!=null && 
+				source.getBinding()!=null){
+			   if(source.getBinding() instanceof FileBinding){
+				   if(((FileBinding)source.getBinding()).getFile()!=null){
+					   return true;
+				   }else{
+					   return false;
+				   }
+				   
+			   }
+			   else if(source.getBinding() instanceof SimpleBinding){
+				   if(((SimpleBinding)source.getBinding()).toText()!=null){
+					   return true;
+				   }else{
+					   return false;
+				   }
+				   
+			   }
+		   }
+		   return false;
+		   
+		}
+
 
 	private static String fgCSSStyles;
 
