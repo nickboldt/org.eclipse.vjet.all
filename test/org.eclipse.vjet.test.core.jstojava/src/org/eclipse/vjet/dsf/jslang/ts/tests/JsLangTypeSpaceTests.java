@@ -14,11 +14,14 @@ import static org.junit.Assert.fail;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.vjet.dsf.jst.IJstNode;
 import org.eclipse.vjet.dsf.jst.IJstParseController;
 import org.eclipse.vjet.dsf.jst.IJstType;
+import org.eclipse.vjet.dsf.jst.declaration.JstType;
 import org.eclipse.vjet.dsf.jst.ts.JstTypeSpaceMgr;
 import org.eclipse.vjet.dsf.jstojava.controller.JstParseController;
 import org.eclipse.vjet.dsf.jstojava.loader.DefaultJstTypeLoader;
@@ -110,9 +113,28 @@ public class JsLangTypeSpaceTests {
 		
 		TypeName typeName = new TypeName("org.eclipse.vjet.test.core.jstojava", "dsf.jslang.feature.tests.EcmaArrayTests");
 		IJstType type = ts.getQueryExecutor().findType(typeName);
-		int groupSize = ts.getTypeSpace().getGroup("org.eclipse.vjet.test.core.jstojava").getEntities().keySet().size();
+		Map<String, IJstType> entities = ts.getTypeSpace().getGroup("org.eclipse.vjet.test.core.jstojava").getEntities();
+		Set<String> types = entities.keySet();
+		int groupSize = types.size();
 		System.out.println("number of types in typespace: " + groupSize);
 		assertEquals(1831, groupSize);
+		
+		Set<IJstType> notResolved = new HashSet<IJstType>();
+		for(String typeN: types){
+			IJstType ijsttype = entities.get(typeN);
+			
+			if(ijsttype instanceof JstType){
+				JstType jsttype = (JstType)ijsttype;
+				if(!jsttype.getStatus().hasResolution()){
+					notResolved.add(jsttype);
+					System.out.println("not resolved: " + jsttype.getName());
+				}
+			}
+			
+			
+		}
+			assertEquals(1, notResolved.size()); // expect org.eclipse.vjet.dsf.jst.validation.vjo.rt.etype.BadEType1."a" to not be resolved
+		
 		printTypes(ts);
 		assertNotNull(type);
 		}

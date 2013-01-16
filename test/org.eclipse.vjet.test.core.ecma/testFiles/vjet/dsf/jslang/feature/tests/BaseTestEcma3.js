@@ -39,7 +39,7 @@ vjo.ctype("vjet.dsf.jslang.feature.tests.BaseTestEcma3")
 .protos({
 
 constructs:function(){
-vjo.sysout.println("base constructor called");
+	vjo.sysout.println("base constructor called");
 
 },
 

@@ -233,7 +233,7 @@ this.TestCase(SECTION, expect, expect, actual);
 
 actual = '';
 try {
-a.length = 'a'; //<@SUPRESSTYPECHECK
+a.length = 'a'; 
 } catch (ex) {
 actual = ex + '';
 }

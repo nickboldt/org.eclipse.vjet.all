@@ -92,14 +92,14 @@ public class ExpressionTranslatorTest extends BaseTest {
 		assertEquals(1, var.getAssignments().size());
 		AssignExpr varInitializer =  var.getAssignments().get(0);
 		assertNotNull(varInitializer);
-		assertEquals("re=/\\w+/", varInitializer.toExprText());
+		assertEquals("re=/\\\\w+/", varInitializer.toExprText());
 		assertEquals("re", varInitializer.getLHS().toLHSText());
-		assertEquals("/\\w+/", varInitializer.getExpr().toExprText());
+		assertEquals("/\\\\w+/", varInitializer.getExpr().toExprText());
 		assertTrue(varInitializer.getExpr() instanceof RegexpLiteral);
 		
 		// SimpleLiteral
 		RegexpLiteral smplLitrlExpr = (RegexpLiteral) varInitializer.getExpr();
-		assertEquals("/\\w+/", smplLitrlExpr.toValueText());
+		assertEquals("/\\\\w+/", smplLitrlExpr.toValueText());
 		
 	}	
 	

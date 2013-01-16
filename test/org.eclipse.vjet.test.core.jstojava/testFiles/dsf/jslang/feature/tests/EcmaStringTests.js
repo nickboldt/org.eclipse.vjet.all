@@ -8,12 +8,12 @@
  * Contributors:
  *     eBay Inc. - initial API and implementation
  *******************************************************************************/
-vjo.ctype("dsf.jslang.feature.tests.EcmaStringTests")
-.inherits("dsf.jslang.feature.tests.BaseTest")
+vjo.ctype("vjet.dsf.jslang.feature.tests.EcmaStringTests")
+.inherits("vjet.dsf.jslang.feature.tests.BaseTest")
 .protos({
 
-assertTrue : function(o){
-},
+//assertTrue : function(o){
+//},
 
 //>public void fail()
 fail : function(){
@@ -11218,7 +11218,8 @@ var SECTION = "15.5.4.5-1";
 var VERSION = "ECMA_1";
 //startTest();
 var TITLE   = "String.prototype.charCodeAt";
-
+var i=0;
+var j=0;
 //writeHeaderToLog( SECTION + " "+ TITLE);
 
 var TEST_STRING = new String( " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~" );
@@ -11574,6 +11575,8 @@ var TEST_STRING = new String( " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNO
 //writeHeaderToLog( SECTION + " "+ TITLE);
 
 var j = 0;
+var i =0;
+var k =0;
 
 for ( k = 0, i = 0x0020; i < 0x007e; i++, j++, k++ ) {
 this.TestCase( SECTION,
@@ -11694,7 +11697,7 @@ var TITLE   = "String.protoype.indexOf";
 var BUGNUMBER="105721";
 
 //startTest();
-
+var i =0;
 //writeHeaderToLog( SECTION + " "+ TITLE);
 
 // the following test regresses http://scopus/bugsplat/show_bug.cgi?id=105721
@@ -11910,6 +11913,8 @@ var TEST_STRING = new String( " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNO
 //writeHeaderToLog( SECTION + " "+ TITLE);
 
 var j = 0;
+var k =0;
+var i =0;
 
 for ( k = 0, i = 0x0021; i < 0x007e; i++, j++, k++ ) {
 this.TestCase( SECTION,
@@ -13096,11 +13101,3 @@ eval("var s = new String('hello'); delete s.length; s.length") );
 
 })
 .endType();
-
-
-
-
-
-
-
-
