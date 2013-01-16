@@ -93,9 +93,10 @@ import org.eclipse.vjet.vjo.tool.typespace.TypeSpaceMgr;
  */
 public class VjoSourceParser extends AbstractSourceParser{
 
-	IScriptUnit scriptUnit;
+//	IScriptUnit scriptUnit;
 
 	TypeSpaceMgr tsm = TypeSpaceMgr.getInstance();
+	String typeName;
 
 	/*
 	 * (non-Javadoc)
@@ -129,8 +130,9 @@ public class VjoSourceParser extends AbstractSourceParser{
 				System.out.println("parsing for " + getClass().getName());
 			}
 			// TODO disable full build (parse,resolve,validate)
-			scriptUnit = parser.parse(groupName, typeName,
+			IScriptUnit scriptUnit = parser.parse(groupName, typeName,
 					new String(source));
+			typeName = scriptUnit.getType().getName();
 			
 			if(context==null){
 				//if disable all the validations (syntax and semantic)
@@ -664,7 +666,7 @@ public class VjoSourceParser extends AbstractSourceParser{
 		} else if (expression instanceof MtdInvocationExpr
 				|| expression instanceof FieldAccessExpr) {
 			VjoQualifiedNameReference qref = new VjoQualifiedNameReference(-1,
-					-1, expression.toExprText(), scriptUnit.getType().getName(), expression);
+					-1, expression.toExprText(), typeName, expression);
 			methodDelcaration.getBody().addStatement(qref);
 		} else if (expression instanceof BoolExpr) {
 			BoolExpr boolExpr = (BoolExpr) expression;
