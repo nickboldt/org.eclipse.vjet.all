@@ -55,11 +55,13 @@ import org.eclipse.jdt.launching.IVMInstall;
 import org.eclipse.jdt.launching.IVMRunner;
 import org.eclipse.jdt.launching.JavaRuntime;
 import org.eclipse.jdt.launching.VMRunnerConfiguration;
-
 import org.eclipse.vjet.dsf.jsrunner.JsRunner;
+import org.eclipse.vjet.dsf.jst.IJstMethod;
+import org.eclipse.vjet.dsf.jst.IJstType;
 import org.eclipse.vjet.eclipse.core.VjetPlugin;
 import org.eclipse.vjet.eclipse.launching.VjetLaunchingPlugin;
 import org.eclipse.vjet.vjo.tool.codecompletion.StringUtils;
+import org.eclipse.vjet.vjo.tool.typespace.TypeSpaceMgr;
 
 /**
  * Vjet implementation of a interpreter runner.
@@ -71,7 +73,7 @@ public class VjetInterpreterRunner extends AbstractInterpreterRunner {
 
 	private static final boolean	DEBUG_LAUNCH	= "true"
 															.equalsIgnoreCase(Platform
-																	.getDebugOption("org.eclipse.vjet.eclipse/debug/launch"));
+																	.getDebugOption("org.eclipse.vjet.eclipse.launching/debug/launch"));
 
 	private final String			m_mode;
 
@@ -185,12 +187,14 @@ public class VjetInterpreterRunner extends AbstractInterpreterRunner {
 						if (!melem.isReadOnly()) {
 							String absolutePath = proj.getProject()
 									.getLocation().toFile().getAbsolutePath();
+							absolutePath = absolutePath.replace("//", "/");
+							absolutePath = absolutePath.replace("\\", "/");
 							String srcDir = absolutePath.substring(0,
 									absolutePath.indexOf(proj.getProject()
 											.getName()))
 									+ melem.getPath();
-							srcDir = srcDir.replace("/", "\\");
-							srcDir = srcDir.replace("\\\\", "\\");
+							srcDir = srcDir.replace("//", "/");
+							srcDir = srcDir.replace("\\\\", "/");
 							if (jsFile.startsWith(srcDir)) {
 								sourceRoot = srcDir;
 								break;
@@ -257,7 +261,7 @@ public class VjetInterpreterRunner extends AbstractInterpreterRunner {
 
 		pArgs.add(scriptFilePath.toFile().getAbsolutePath());
 		pArgs.add(vjoClz);
-		// pArgs.add(findMainFunc(vjoClz, proj.getProject().getName()));
+		 pArgs.add(findMainFunc(vjoClz, proj.getProject().getName()));
 
 		// add script arguments as line
 		pArgs.add(new ArgsNormalizer(args).normalize());
@@ -336,6 +340,17 @@ public class VjetInterpreterRunner extends AbstractInterpreterRunner {
 		// for (int a = 0; a < processes.length; a++) {
 		// launch.addProcess(processes[a]);
 		// }
+	}
+
+	private String findMainFunc(String vjoClz, String projectName) {
+		IJstType t = TypeSpaceMgr.findType(projectName, vjoClz);
+		if(t!=null){
+			IJstMethod main = t.getMethod("main", true);
+			if(main!=null){
+				return t.getName() + ".main";
+			}
+		}
+		return "";
 	}
 
 	private String[] getJarPaths(IScriptProject scriptProject) {
