@@ -35,12 +35,18 @@ public class JstCommentHelper {
 			return Collections.EMPTY_LIST;
 		}
 		IBinding binding = jstType.getSource().getBinding();
+		
+//		if(binding==null){
+//			System.out.println("no binding for type" + jstType.getName());
+//		}
+		
 		if (binding instanceof SimpleBinding) {
 			handleSimpleBinding(commentLocations, comments,
 					(SimpleBinding) binding, includeVjetDocs);
 		}
 
 		if (binding instanceof FileBinding) {
+			
 			handleFileBinding(commentLocations, comments, binding,
 					includeVjetDocs);
 
@@ -72,6 +78,9 @@ public class JstCommentHelper {
 			List<JstCommentLocation> commentLocations, List<String> comments,
 			IBinding binding, boolean includeVjetDocs) {
 		FileBinding fileBinding = (FileBinding) binding;
+		if(fileBinding.getFile()==null){
+			return;
+		}
 		RandomAccessFile random = null;
 		try {
 			random = new RandomAccessFile(fileBinding.getFile(), "r");
