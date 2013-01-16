@@ -40,7 +40,7 @@ public class ForInStmt extends BlockStmt implements IStmt {
 		this((ILHS)var, expr);
 	}
 	
-	private ForInStmt(ILHS var, IExpr expr){
+	public ForInStmt(ILHS var, IExpr expr){
 		assert var != null : "var cannot be null";
 		assert expr != null : "expr cannot be null";
 		m_var = var;
