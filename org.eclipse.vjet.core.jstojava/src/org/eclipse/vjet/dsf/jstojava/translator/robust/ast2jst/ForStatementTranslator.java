@@ -19,6 +19,7 @@ import org.eclipse.vjet.dsf.jst.declaration.JstType;
 import org.eclipse.vjet.dsf.jst.declaration.JstVars;
 import org.eclipse.vjet.dsf.jst.expr.AssignExpr;
 import org.eclipse.vjet.dsf.jst.expr.JstInitializer;
+import org.eclipse.vjet.dsf.jst.expr.ListExpr;
 import org.eclipse.vjet.dsf.jst.stmt.ForStmt;
 import org.eclipse.vjet.dsf.jst.token.IExpr;
 import org.eclipse.vjet.dsf.jst.token.IStmt;
@@ -78,7 +79,24 @@ public class ForStatementTranslator extends
 					// JstInitializer init = new JstInitializer(assignExpr
 					// .getLHS(), assignExpr.getExpr());
 					list.add(assignExpr);
-				} else {
+				} else if(translated instanceof ListExpr){
+					JstType obj =JstCache.getInstance().getType("Object");
+					if(obj==null){
+						obj = JstFactory.getInstance().createJstType(
+								"Object", true);
+					}
+					jstVars = new JstVars(obj);
+					
+					ListExpr listExpr = (ListExpr)translated;
+					IExpr[] listOfAsignments = listExpr.getExprTerms();
+					for (IExpr iExpr : listOfAsignments) {
+						if(iExpr instanceof AssignExpr){
+							jstVars.addAssignment((AssignExpr)iExpr);
+						}
+					}
+					
+				}else {
+				
 					System.err.println("Unprocessed type: "
 							+ initializer.getClass()
 							+ " in ForStatementTranslator");

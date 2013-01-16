@@ -97,8 +97,13 @@ public class VjoCcCtxUtil {
 	public static JstBlock getExactBlock(IScriptUnit unit, int position) {
 		List<JstBlock> blocks = unit.getJstBlockList();
 		if (blocks != null && !blocks.isEmpty()) {
-			for (JstBlock block : blocks) {
+			
+			for (int i =blocks.size()-1; i>0;i--) {
+				JstBlock block = blocks.get(i);
 				JstSource source = block.getSource();
+				if(unit.getType().getSource().getStartOffSet() == source.getStartOffSet()){
+					continue;
+				}
 				if (isInSource(source, position)) {
 					return block;
 				}

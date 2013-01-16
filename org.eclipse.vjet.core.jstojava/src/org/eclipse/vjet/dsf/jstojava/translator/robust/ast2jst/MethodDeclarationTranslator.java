@@ -41,7 +41,12 @@ public class MethodDeclarationTranslator extends
 
 	@Override
 	protected ExprStmt doTranslate(MethodDeclaration astNode) {
-		final String methName = String.valueOf(astNode.selector);
+		String methName = null;
+		if(astNode.selector!=null){
+			 methName = String.valueOf(astNode.selector);
+		}
+		
+		
 		final List<IJsCommentMeta> metaArr = getCommentMeta(astNode);
 		JstMethod jstMethod = createJstMethodFromMethodDeclAst(m_ctx, astNode, metaArr, methName);
 		if (m_ctx.getCurrentScope() == ScopeIds.PROPS) {

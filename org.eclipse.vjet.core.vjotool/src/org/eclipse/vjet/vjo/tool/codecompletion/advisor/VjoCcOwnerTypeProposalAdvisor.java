@@ -28,6 +28,9 @@ public class VjoCcOwnerTypeProposalAdvisor extends VjoCcTypeProposalAdvisor {
 	@Override
 	public void advise(VjoCcCtx ctx) {
 		IJstType otype = ctx.getActingType();
+		if(otype==null){
+			return;
+		}
 		String token = ctx.getActingToken();
 		if (StringUtils.isBlankOrEmpty(token)) {
 			if(!otype.isFakeType()){

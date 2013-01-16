@@ -52,6 +52,7 @@ import org.eclipse.mod.wst.jsdt.internal.compiler.ast.MessageSend;
 import org.eclipse.mod.wst.jsdt.internal.compiler.ast.MethodDeclaration;
 import org.eclipse.mod.wst.jsdt.internal.compiler.ast.NullLiteral;
 import org.eclipse.mod.wst.jsdt.internal.compiler.ast.OR_OR_Expression;
+import org.eclipse.mod.wst.jsdt.internal.compiler.ast.ObjectGetterSetterField;
 import org.eclipse.mod.wst.jsdt.internal.compiler.ast.ObjectLiteral;
 import org.eclipse.mod.wst.jsdt.internal.compiler.ast.ObjectLiteralField;
 import org.eclipse.mod.wst.jsdt.internal.compiler.ast.PostfixExpression;
@@ -80,8 +81,11 @@ public final class TranslatorFactory {
 				EmptyStatementTranslator.class);
 
 		s_translatorMap.put(ObjectLiteral.class, ObjectLiteralTranslator.class);
+		
 		s_translatorMap.put(ObjectLiteralField.class,
 				ObjectLiteralFieldTranslator.class);
+		s_translatorMap.put(ObjectGetterSetterField.class,
+				ObjectLiteralFieldGetterSetterTranslator.class);
 		s_translatorMap.put(FunctionExpression.class,
 				FunctionExpressionTranslator.class);
 		s_translatorMap.put(MethodDeclaration.class,

@@ -11,10 +11,13 @@ package org.eclipse.vjet.dsf.jstojava.translator.robust.ast2jst;
 import org.eclipse.vjet.dsf.jst.BaseJstNode;
 import org.eclipse.vjet.dsf.jst.IJstType;
 import org.eclipse.vjet.dsf.jst.declaration.JstVar;
+import org.eclipse.vjet.dsf.jst.expr.FieldAccessExpr;
 import org.eclipse.vjet.dsf.jst.stmt.ForInStmt;
 import org.eclipse.vjet.dsf.jst.term.JstIdentifier;
 import org.eclipse.vjet.dsf.jst.token.IExpr;
 import org.eclipse.vjet.dsf.jstojava.translator.TranslateHelper;
+import org.eclipse.mod.wst.jsdt.internal.compiler.ast.ArrayReference;
+import org.eclipse.mod.wst.jsdt.internal.compiler.ast.FieldReference;
 import org.eclipse.mod.wst.jsdt.internal.compiler.ast.ForInStatement;
 import org.eclipse.mod.wst.jsdt.internal.compiler.ast.LocalDeclaration;
 import org.eclipse.mod.wst.jsdt.internal.compiler.ast.SingleNameReference;
@@ -30,18 +33,34 @@ public class ForInStatementTranslator extends BaseAst2JstTranslator<ForInStateme
 			((BaseJstNode)expr).setSource(TranslateHelper.getSource(statement.collection, m_ctx.getSourceUtil()));
 		}
 		Statement varStatement = statement.iterationVariable;
-		ForInStmt stmt;
+		ForInStmt stmt = null;
 		if (varStatement instanceof LocalDeclaration) {
 			LocalDeclaration locdec = (LocalDeclaration) statement.iterationVariable;
 			JstVar var = new JstVar((IJstType)null, String.valueOf(locdec.getName()));
 			var.setSource(TranslateHelper.getSource(varStatement, m_ctx.getSourceUtil()));
 			stmt = new ForInStmt(var, expr);
 		}
-		else { //SingleNameReference
+		else if(varStatement instanceof SingleNameReference) { //SingleNameReference
 			JstIdentifier var = new JstIdentifier(((SingleNameReference)varStatement).toString());
 			var.setSource(TranslateHelper.getSource(varStatement, m_ctx.getSourceUtil()));
 			stmt = new ForInStmt(var, expr);
+		}else if(varStatement instanceof ArrayReference){
+			ArrayReference ref = (ArrayReference)varStatement;
+			JstIdentifier var = new JstIdentifier(ref.receiver.toString());
+			var.setSource(TranslateHelper.getSource(varStatement, m_ctx.getSourceUtil()));
+			stmt = new ForInStmt(var, expr);
+		}else if(varStatement instanceof FieldReference){
+			Object fieldRef = getTranslatorAndTranslate(varStatement);
+			if(fieldRef instanceof FieldAccessExpr){
+				stmt = new ForInStmt((FieldAccessExpr)fieldRef, expr);
+			}
+		}else{
+			System.err.println("Unprocessed type: "
+					+ varStatement.getClass()
+					+ " in ForInStatementTranslator");
+			return null;
 		}
+		
 		
 		if (m_parent != null){
 			m_parent.addChild(stmt);

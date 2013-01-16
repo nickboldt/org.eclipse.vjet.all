@@ -100,12 +100,16 @@ public class VjoCcHandler implements IVjoCcHandler {
 			return new String[0];
 		}
 		if (completion instanceof JstInheritsOnTypeCompletion) {
-			return new String[] { VjoCcCTypeProposalAdvisor.ID };
+			return new String[] { VjoCcCTypeProposalAdvisor.ID,
+					VjoCcPackageProposalAdvisor.ID};
 		} else if (completion instanceof JstNeedsOnTypeCompletion) {
+			ctx.setActingPackageToken(completion.getToken());
 			return new String[] { VjoCcTypeProposalAdvisor.ID,
 					VjoCcPackageProposalAdvisor.ID };
 		} else if (completion instanceof JstSatisfiesOnTypeCompletion) {
-			return new String[] { VjoCcInterfaceProposalAdvisor.ID };
+			ctx.setActingPackageToken(completion.getToken());
+			return new String[] { VjoCcInterfaceProposalAdvisor.ID,
+					VjoCcPackageProposalAdvisor.ID};
 		} else if (completion instanceof JstFieldOrMethodCompletion) {
 			IJstType type = ctx.getActingType();
 			List<String> list = new ArrayList<String>();

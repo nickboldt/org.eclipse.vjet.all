@@ -15,6 +15,9 @@ import org.eclipse.vjet.dsf.jst.IJstMethod;
 import org.eclipse.vjet.dsf.jst.IJstType;
 import org.eclipse.vjet.dsf.jst.JstCommentLocation;
 import org.eclipse.vjet.dsf.jst.JstSource;
+import org.eclipse.vjet.dsf.jst.declaration.JstArg;
+import org.eclipse.vjet.dsf.jst.declaration.JstBlock;
+import org.eclipse.vjet.dsf.jst.declaration.JstCache;
 import org.eclipse.vjet.dsf.jst.declaration.JstFuncType;
 import org.eclipse.vjet.dsf.jst.declaration.JstMethod;
 import org.eclipse.vjet.dsf.jst.expr.FuncExpr;
@@ -29,36 +32,62 @@ import org.eclipse.vjet.dsf.jstojava.translator.robust.completion.JstCompletion;
 import org.eclipse.vjet.dsf.jstojava.translator.robust.completion.JstFieldOrMethodCompletion;
 import org.eclipse.mod.wst.jsdt.core.ast.IExpression;
 import org.eclipse.mod.wst.jsdt.internal.compiler.ast.ASTNode;
+import org.eclipse.mod.wst.jsdt.internal.compiler.ast.ObjectGetterSetterField;
 import org.eclipse.mod.wst.jsdt.internal.compiler.ast.ObjectLiteral;
 import org.eclipse.mod.wst.jsdt.internal.compiler.ast.ObjectLiteralField;
 import org.eclipse.mod.wst.jsdt.internal.compiler.ast.SingleNameReference;
 
-public class ObjectLiteralFieldTranslator extends
-		BaseAst2JstTranslator<ObjectLiteralField, Object> {
+// TODO basic implementation for now
+// 1. support both get and set
+public class ObjectLiteralFieldGetterSetterTranslator extends
+		BaseAst2JstTranslator<ObjectGetterSetterField, Object> {
 
 	private NV m_result;
 
 	@Override
-	protected Object doTranslate(ObjectLiteralField astObjectliteralField) {
+	protected Object doTranslate(ObjectGetterSetterField astObjectliteralField) {
 		// store completion position
 		int completionPos = m_ctx.getCompletionPos();
 		try {
-			NV nv = new NV();
+		
 			if (astObjectliteralField.initializer instanceof ObjectLiteral) {
 				m_ctx.enterBlock(ScopeIds.PROPERTY);
 			}
-
-			// List<IJsCommentMeta> metaArr =
-			// getCommentMeta(astObjectliteralField);
-			IExpr value = (IExpr) getTranslatorAndTranslate(astObjectliteralField.initializer);
-			// value = TranslateHelper
-			// .getCastable(value, metaArr, m_ctx);
+//			List<IJsCommentMeta> commentMeta = m_ctx.getCommentCollector().getCommentMeta(
+//					astObjectliteralField.sourceStart,
+//					m_ctx.getPreviousNodeSourceEnd(),
+//					m_ctx.getNextNodeSourceStart());
+			
+			
+		
+				JstMethod mtd = new JstMethod();
+				if(astObjectliteralField.varName!=null){
+					IJstType objectT = JstCache.getInstance().getType("Object");
+					mtd.addArg(new JstArg(objectT, astObjectliteralField.varName.toString(), false));
+				}
+				JstBlock blk = new JstBlock();
+				mtd.setBlock(blk);
+				TranslateHelper.addStatementsToJstBlock(astObjectliteralField.statements, blk, astObjectliteralField
+						.sourceEnd(), m_ctx);
+				if(astObjectliteralField.isSetter){
+					mtd.setName("set");
+				}else{
+					mtd.setName("get");
+				}
+				
+			 NV nv =  new NV();
+			 FuncExpr expr = new FuncExpr(mtd);
 			final JstIdentifier id = createId(astObjectliteralField);
-			bindObjLiteralId(astObjectliteralField, id, value, nv);
+			bindObjLiteralId(astObjectliteralField, id, expr, nv);
 			nv.setName(id);
 			nv.addChild(id);
-			nv.setValue(value);
-			nv.addChild(value);
+			nv.setValue(expr);
+			nv.addChild(expr);
+
+			// value = TranslateHelper
+			// .getCastable(value, metaArr, m_ctx);
+			
+
 
 //			List<String> comments = new ArrayList<String>();
 //			String comment =  m_ctx.getCommentCollector().getCommentNonMeta2(astObjectliteralField.sourceStart);
@@ -70,18 +99,19 @@ public class ObjectLiteralFieldTranslator extends
 			if(comment!=null){
 				nv.addCommentLocation(comment);
 			}
+
 //			nv.setComments(m_ctx.getCommentCollector().getCommentNonMeta(
 //					astObjectliteralField.sourceStart()));
-			int start = id.getSource().getStartOffSet();
-			if (value != null && value.getSource() != null) {
-				int end = value.getSource().getEndOffSet();
-				int length = end - start;
-				nv.setSource(TranslateHelper.createJstSource(
-						m_ctx.getSourceUtil(), length, start, end));
-			}
-			if (astObjectliteralField.initializer instanceof ObjectLiteral) {
-				m_ctx.exitBlock();
-			}
+//			int start = id.getSource().getStartOffSet();
+//			if (value != null && value.getSource() != null) {
+//				int end = value.getSource().getEndOffSet();
+//				int length = end - start;
+//				nv.setSource(TranslateHelper.createJstSource(
+//						m_ctx.getSourceUtil(), length, start, end));
+//			}
+//			if (astObjectliteralField.initializer instanceof ObjectLiteral) {
+//				m_ctx.exitBlock();
+//			}
 			m_result = nv;
 			return nv;
 		} finally {
@@ -157,7 +187,7 @@ public class ObjectLiteralFieldTranslator extends
 	}
 
 	@Override
-	protected void checkForCompletion(ObjectLiteralField astNode) {
+	protected void checkForCompletion(ObjectGetterSetterField astNode) {
 		if (m_ctx.isCreatedCompletion()) {
 			return;
 		}
@@ -193,7 +223,7 @@ public class ObjectLiteralFieldTranslator extends
 
 	@Override
 	protected JstCompletion createCompletion(
-			ObjectLiteralField astObjectLiteralField, boolean isAfterSource) {
+			ObjectGetterSetterField astObjectLiteralField, boolean isAfterSource) {
 
 		int completionPos = m_ctx.getCompletionPos();
 		if (completionPos < astObjectLiteralField.sourceStart) {
