@@ -18,41 +18,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.vjet.dsf.jst.IJstMethod;
-import org.eclipse.vjet.dsf.jst.IJstNode;
-import org.eclipse.vjet.dsf.jst.IJstProperty;
-import org.eclipse.vjet.dsf.jst.IJstType;
-import org.eclipse.vjet.dsf.jst.declaration.JstArg;
-import org.eclipse.vjet.dsf.jst.declaration.JstProxyMethod;
-import org.eclipse.vjet.dsf.jst.declaration.JstProxyProperty;
-import org.eclipse.vjet.dsf.jst.declaration.JstVars;
-import org.eclipse.vjet.dsf.jst.term.JstIdentifier;
-import org.eclipse.vjet.dsf.jstojava.translator.JstUtil;
-import org.eclipse.vjet.eclipse.codeassist.CodeassistUtils;
-import org.eclipse.vjet.eclipse.core.IImportDeclaration;
-import org.eclipse.vjet.eclipse.core.IVjoSourceModule;
-import org.eclipse.vjet.eclipse.core.VjetPlugin;
-import org.eclipse.vjet.eclipse.core.VjoLanguageToolkit;
-import org.eclipse.vjet.eclipse.core.VjoNature;
-import org.eclipse.vjet.eclipse.core.search.VjoMatch;
-import org.eclipse.vjet.eclipse.core.search.VjoSearchOccurrenceEngine;
-import org.eclipse.vjet.eclipse.internal.codeassist.select.VjoSelectionEngine;
-import org.eclipse.vjet.eclipse.internal.ui.actions.RemoveOccurrenceAnnotations;
-import org.eclipse.vjet.eclipse.internal.ui.actions.ToggleMarkOccurrencesAction;
-import org.eclipse.vjet.eclipse.internal.ui.dialogs.UnknownContentTypeDialog;
-import org.eclipse.vjet.eclipse.internal.ui.editor.semantic.highlighting.VjoSemanticHighlightingManager;
-import org.eclipse.vjet.eclipse.internal.ui.text.VjoSourceViewerConfiguration;
-import org.eclipse.vjet.eclipse.internal.ui.text.folding.VjoFoldingStructureProvider;
-import org.eclipse.vjet.eclipse.internal.ui.wizards.IHelpContextIds;
-import org.eclipse.vjet.eclipse.ui.VjetPreferenceConstants;
-import org.eclipse.vjet.eclipse.ui.VjetUIImages;
-import org.eclipse.vjet.eclipse.ui.VjetUIPlugin;
-import org.eclipse.vjet.eclipse.ui.VjetUIUtils;
-import org.eclipse.vjet.eclipse.ui.actions.VjoAddCommentAction;
-import org.eclipse.vjet.eclipse.ui.actions.nature.AddVjoNaturePolicyManager;
-import org.eclipse.vjet.eclipse.ui.actions.nature.IAddVjoNaturePolicy;
-import org.eclipse.vjet.eclipse.ui.viewsupport.SelectionListenerWithJSTManager;
-import org.eclipse.vjet.vjo.tool.typespace.TypeSpaceMgr;
 import org.eclipse.core.filebuffers.FileBuffers;
 import org.eclipse.core.filebuffers.ITextFileBuffer;
 import org.eclipse.core.filebuffers.ITextFileBufferManager;
@@ -138,6 +103,40 @@ import org.eclipse.ui.progress.UIJob;
 import org.eclipse.ui.texteditor.ChainedPreferenceStore;
 import org.eclipse.ui.texteditor.IDocumentProvider;
 import org.eclipse.ui.texteditor.ITextEditorActionDefinitionIds;
+import org.eclipse.vjet.dsf.jst.IJstMethod;
+import org.eclipse.vjet.dsf.jst.IJstNode;
+import org.eclipse.vjet.dsf.jst.IJstProperty;
+import org.eclipse.vjet.dsf.jst.IJstType;
+import org.eclipse.vjet.dsf.jst.declaration.JstArg;
+import org.eclipse.vjet.dsf.jst.declaration.JstProxyMethod;
+import org.eclipse.vjet.dsf.jst.declaration.JstProxyProperty;
+import org.eclipse.vjet.dsf.jst.declaration.JstVars;
+import org.eclipse.vjet.dsf.jst.term.JstIdentifier;
+import org.eclipse.vjet.dsf.jstojava.translator.JstUtil;
+import org.eclipse.vjet.eclipse.codeassist.CodeassistUtils;
+import org.eclipse.vjet.eclipse.core.IImportDeclaration;
+import org.eclipse.vjet.eclipse.core.IVjoSourceModule;
+import org.eclipse.vjet.eclipse.core.VjetPlugin;
+import org.eclipse.vjet.eclipse.core.VjoLanguageToolkit;
+import org.eclipse.vjet.eclipse.core.VjoNature;
+import org.eclipse.vjet.eclipse.core.search.VjoMatch;
+import org.eclipse.vjet.eclipse.core.search.VjoSearchOccurrenceEngine;
+import org.eclipse.vjet.eclipse.internal.codeassist.select.VjoSelectionEngine;
+import org.eclipse.vjet.eclipse.internal.ui.actions.RemoveOccurrenceAnnotations;
+import org.eclipse.vjet.eclipse.internal.ui.actions.ToggleMarkOccurrencesAction;
+import org.eclipse.vjet.eclipse.internal.ui.dialogs.UnknownContentTypeDialog;
+import org.eclipse.vjet.eclipse.internal.ui.editor.semantic.highlighting.VjoSemanticHighlightingManager;
+import org.eclipse.vjet.eclipse.internal.ui.text.VjoSourceViewerConfiguration;
+import org.eclipse.vjet.eclipse.internal.ui.text.folding.VjoFoldingStructureProvider;
+import org.eclipse.vjet.eclipse.internal.ui.wizards.IHelpContextIds;
+import org.eclipse.vjet.eclipse.ui.VjetPreferenceConstants;
+import org.eclipse.vjet.eclipse.ui.VjetUIImages;
+import org.eclipse.vjet.eclipse.ui.VjetUIPlugin;
+import org.eclipse.vjet.eclipse.ui.VjetUIUtils;
+import org.eclipse.vjet.eclipse.ui.actions.VjoAddCommentAction;
+import org.eclipse.vjet.eclipse.ui.actions.nature.AddVjoNaturePolicyManager;
+import org.eclipse.vjet.eclipse.ui.actions.nature.IAddVjoNaturePolicy;
+import org.eclipse.vjet.eclipse.ui.viewsupport.SelectionListenerWithJSTManager;
 
 /**
  * Editor for vjo files.
@@ -555,6 +554,7 @@ public class VjoEditor extends JavaScriptEditor {
         markAsStateDependentAction(DLTKActionConstants.ADD_BLOCK_COMMENT, true);
         markAsSelectionDependentAction(DLTKActionConstants.ADD_BLOCK_COMMENT, true);
         bars.setGlobalActionHandler("org.eclipse.vjet.eclipse.ui.AddJavaDocComment", addCommentAction); //$NON-NLS-1$
+
     }
 
     public void createPartControl(Composite parent) {
@@ -842,7 +842,7 @@ public class VjoEditor extends JavaScriptEditor {
     }
 
     @Override
-    protected IPreferenceStore getScriptPreferenceStore() {
+	protected IPreferenceStore getScriptPreferenceStore() {
         return VjetUIPlugin.getDefault().getPreferenceStore();
     }
 

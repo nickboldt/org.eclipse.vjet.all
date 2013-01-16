@@ -353,6 +353,11 @@
       	</command>
       <command name="%ActionDefinition.removeOccurrenceAnnotations.name" description="%ActionDefinition.removeOccurrenceAnnotations.description" categoryId="org.eclipse.dltk.mod.ui.category.source" id="org.eclipse.dltk.mod.ui.edit.text.script.remove.occurrence.annotations">
       </command>
+       <command
+            defaultHandler="org.eclipse.vjet.eclipse.ui.handlers.FormatSourceHandler"
+            id="org.eclipse.vjet.eclipse.ui.command.FormatSource"
+            name="FormatSource">
+      </command>
       <command
             defaultHandler="org.eclipse.vjet.eclipse.ui.handlers.AddBootstrapEntryToVJETProject"
             id="org.eclipse.vjet.eclipse.ui.command.AddBootstrapEntryToVJETProject"
@@ -372,12 +377,15 @@
    <extension point="org.eclipse.ui.keywords">
    		<keyword label="%preferenceKeywords.markoccurrences" id="org.eclipse.dltk.mod.ui.edit.text.script.toggleMarkOccurrences"/>
    	</extension>
+   	
+   	<!--
    	<extension point="org.eclipse.dltk.mod.ui.formatterFactory">
 		<engineContribution natureId="org.eclipse.vjet.core.nature">
 			<formatterFactory class="org.eclipse.vjet.eclipse.ui.formatter.VjetFormatterFactory" id="org.eclipse.vjet.eclipse.ui.formatter.VjetFormatterFactory" priority="10" name="%formatterFactory.name.vjet" description="%formatterFactory.description.vjet">
 			</formatterFactory>
 		</engineContribution>
 	</extension>
+	-->
   <extension point="org.eclipse.vjet.eclipse.ui.addVjoNaturePolicy">
      <naturePolicy class="org.eclipse.vjet.eclipse.ui.actions.nature.java.JavaProjectAddVjoNaturePolicy" description="add vjo nature policy for java project">
      </naturePolicy>
@@ -544,6 +552,27 @@
                commandId="org.eclipse.vjet.eclipse.ui.command.AddBootstrapEntryToVJETProject"
                icon="icons/obj16/sourceEditor.gif"
                label="Add Bootstrap">
+
+			<visibleWhen>
+			   <or>
+			      <with variable="selection">
+			         <iterate ifEmtpy="false">
+			            <instanceof value=" org.eclipse.dltk.mod.internal.core.ScriptProject"/>
+			         </iterate>
+			      </with>
+			      <with variable="activeEditorInput">
+			        <reference definitionId="org.eclipse.vjet.jsfile"/>
+			      </with>
+			   </or>
+			</visibleWhen>
+         </command>
+		</menuContribution>
+		<menuContribution
+            locationURI="popup:org.eclipse.vjet.shortcuts.menu">
+            <command
+               commandId="org.eclipse.vjet.eclipse.ui.command.FormatSource"
+               icon="icons/obj16/sourceEditor.gif"
+               label="Format Source">
 
 			<visibleWhen>
 			   <or>

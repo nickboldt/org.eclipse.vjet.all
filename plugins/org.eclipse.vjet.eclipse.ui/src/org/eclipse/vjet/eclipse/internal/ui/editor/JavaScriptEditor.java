@@ -42,6 +42,7 @@ import org.eclipse.vjet.eclipse.internal.ui.text.IJavaScriptPartitions;
 import org.eclipse.vjet.eclipse.internal.ui.text.JavaScriptPairMatcher;
 import org.eclipse.vjet.eclipse.internal.ui.text.folding.VjoFoldingStructureProvider;
 import org.eclipse.vjet.eclipse.ui.VjetUIPlugin;
+import org.eclipse.vjet.eclipse.ui.actions.FormatAllAction;
 import org.eclipse.vjet.eclipse.ui.actions.JavaScriptGenerateActionGroup;
 
 
@@ -56,84 +57,84 @@ public class JavaScriptEditor extends ScriptEditor {
 	private org.eclipse.dltk.mod.internal.ui.editor.BracketInserter fBracketInserter = new JavaScriptBracketInserter(
 			this);
 
-	protected class FormatElementAction extends Action implements IUpdate {
-
-		/*
-		 * @since 3.2
-		 */
-		FormatElementAction() {
-			setText("Format Eleme&nt"); //$NON-NLS-1$
-			setEnabled(isEditorInputModifiable());
-		}
-
-		/*
-		 * @see org.eclipse.jface.action.IAction#run()
-		 */
-		public void run() {
-
-			final ScriptSourceViewer viewer = (ScriptSourceViewer) getSourceViewer();
-			if (viewer.isEditable()) {
-
-				final Point selection = viewer.rememberSelection();
-				try {
-					viewer.setRedraw(false);
-
-					final String type = TextUtilities.getContentType(viewer
-							.getDocument(),
-							IJavaScriptPartitions.JS_PARTITIONING, selection.x,
-							true);
-					if (type.equals(IDocument.DEFAULT_CONTENT_TYPE)
-							&& selection.y == 0) {
-
-						try {
-							final IModelElement element = getElementAt(
-									selection.x, true);
-							if (element != null && element.exists()) {
-
-								final int kind = element.getElementType();
-								if (kind == IModelElement.TYPE
-										|| kind == IModelElement.METHOD) {
-
-									final ISourceReference reference = (ISourceReference) element;
-									final ISourceRange range = reference
-											.getSourceRange();
-
-									if (range != null) {
-										viewer
-												.setSelectedRange(range
-														.getOffset(), range
-														.getLength());
-										viewer
-												.doOperation(ISourceViewer.FORMAT);
-									}
-								}
-							}
-						} catch (ModelException exception) {
-							// Should not happen
-						}
-					} else {
-						viewer.setSelectedRange(selection.x, 1);
-						viewer.doOperation(ISourceViewer.FORMAT);
-					}
-				} catch (BadLocationException exception) {
-					// Can not happen
-				} finally {
-
-					viewer.setRedraw(true);
-					viewer.restoreSelection();
-				}
-			}
-		}
-
-		/*
-		 * @see org.eclipse.ui.texteditor.IUpdate#update()
-		 * 
-		 * @since 3.2
-		 */
-		public void update() {
-			setEnabled(isEditorInputModifiable());
-		}
-	}
+//	protected class FormatElementAction extends Action implements IUpdate {
+//
+//		/*
+//		 * @since 3.2
+//		 */
+//		FormatElementAction() {
+//			setText("Format Eleme&nt"); //$NON-NLS-1$
+//			setEnabled(isEditorInputModifiable());
+//		}
+//
+//		/*
+//		 * @see org.eclipse.jface.action.IAction#run()
+//		 */
+//		public void run() {
+//
+//			final ScriptSourceViewer viewer = (ScriptSourceViewer) getSourceViewer();
+//			if (viewer.isEditable()) {
+//
+//				final Point selection = viewer.rememberSelection();
+//				try {
+//					viewer.setRedraw(false);
+//
+//					final String type = TextUtilities.getContentType(viewer
+//							.getDocument(),
+//							IJavaScriptPartitions.JS_PARTITIONING, selection.x,
+//							true);
+//					if (type.equals(IDocument.DEFAULT_CONTENT_TYPE)
+//							&& selection.y == 0) {
+//
+//						try {
+//							final IModelElement element = getElementAt(
+//									selection.x, true);
+//							if (element != null && element.exists()) {
+//
+//								final int kind = element.getElementType();
+//								if (kind == IModelElement.TYPE
+//										|| kind == IModelElement.METHOD) {
+//
+//									final ISourceReference reference = (ISourceReference) element;
+//									final ISourceRange range = reference
+//											.getSourceRange();
+//
+//									if (range != null) {
+//										viewer
+//												.setSelectedRange(range
+//														.getOffset(), range
+//														.getLength());
+//										viewer
+//												.doOperation(ISourceViewer.FORMAT);
+//									}
+//								}
+//							}
+//						} catch (ModelException exception) {
+//							// Should not happen
+//						}
+//					} else {
+//						viewer.setSelectedRange(selection.x, 1);
+//						viewer.doOperation(ISourceViewer.FORMAT);
+//					}
+//				} catch (BadLocationException exception) {
+//					// Can not happen
+//				} finally {
+//
+//					viewer.setRedraw(true);
+//					viewer.restoreSelection();
+//				}
+//			}
+//		}
+//
+//		/*
+//		 * @see org.eclipse.ui.texteditor.IUpdate#update()
+//		 * 
+//		 * @since 3.2
+//		 */
+//		public void update() {
+//			setEnabled(isEditorInputModifiable());
+//		}
+//	}
 
 	private JavaScriptPairMatcher bracketMatcher = new JavaScriptPairMatcher(
 			"{}[]()".toCharArray());
@@ -311,5 +312,7 @@ public class JavaScriptEditor extends ScriptEditor {
 				ITextEditorActionConstants.GROUP_EDIT);
 		fActionGroups.addGroup(generateActions);
 		fContextMenuGroup.addGroup(generateActions);
+		
+		
 	}
 }

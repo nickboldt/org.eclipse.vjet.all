@@ -124,8 +124,6 @@ class ASTTreeContentProvider implements ITreeContentProvider {
 				children.add(localDeclaration.binding);
 			if (localDeclaration.getInitialization() != null)
 				children.add(localDeclaration.getInitialization());
-			if (localDeclaration.getTypeBinding() != null)
-				children.add(localDeclaration.getTypeBinding());
 			return children.toArray();
 		}
 		

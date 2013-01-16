@@ -44,6 +44,7 @@ import org.eclipse.ui.texteditor.ITextEditor;
 import org.eclipse.vjet.eclipse.internal.ui.text.completion.JavaScriptCompletionProcessor;
 import org.eclipse.vjet.eclipse.internal.ui.text.completion.JavaScriptContentAssistPreference;
 
+
 public class JavascriptSourceViewerConfiguration extends
 		ScriptSourceViewerConfiguration {
 
@@ -82,17 +83,12 @@ public class JavascriptSourceViewerConfiguration extends
 	 * @see SourceViewerConfiguration#getContentFormatter(ISourceViewer)
 	 */
 	public IContentFormatter getContentFormatter(ISourceViewer sourceViewer) {
-		final MultiPassContentFormatter formatter = new MultiPassContentFormatter(
-				getConfiguredDocumentPartitioning(sourceViewer),
-				IDocument.DEFAULT_CONTENT_TYPE);
+		final MultiPassContentFormatter formatter= new MultiPassContentFormatter(getConfiguredDocumentPartitioning(sourceViewer), IDocument.DEFAULT_CONTENT_TYPE);
 
 		formatter.setMasterStrategy(new JavaScriptFormattingStrategy());
-		// formatter.setSlaveStrategy(new CommentFormattingStrategy(),
-		// IJavaPartitions.JAVA_DOC);
-		// formatter.setSlaveStrategy(new CommentFormattingStrategy(),
-		// IJavaPartitions.JAVA_SINGLE_LINE_COMMENT);
-		// formatter.setSlaveStrategy(new CommentFormattingStrategy(),
-		// IJavaPartitions.JAVA_MULTI_LINE_COMMENT);
+		formatter.setSlaveStrategy(new CommentFormattingStrategy(), IJavaScriptPartitions.JS_DOC);
+		formatter.setSlaveStrategy(new CommentFormattingStrategy(), IJavaScriptPartitions.JS_SINGLE_COMMENT);
+		formatter.setSlaveStrategy(new CommentFormattingStrategy(), IJavaScriptPartitions.JS_MULTI_COMMENT);
 
 		return formatter;
 	}

@@ -16,6 +16,7 @@ import org.eclipse.vjet.eclipse.core.test.contentassist.BaseTemplateTests;
 import org.eclipse.vjet.eclipse.core.test.contentassist.VjoSteppingCodeCompletionTest;
 import org.eclipse.vjet.eclipse.core.test.debug.DebuggerTest;
 import org.eclipse.vjet.eclipse.core.test.debug.StepFilteringPatternTest;
+import org.eclipse.vjet.eclipse.core.test.formatter.FormattingTests;
 import org.eclipse.vjet.eclipse.core.test.parser.VJOSelectionNewTests;
 import org.eclipse.vjet.eclipse.core.test.parser.VjoCallHierarchyTests;
 import org.eclipse.vjet.eclipse.core.test.parser.VjoMarkOccurencesNewTests;
@@ -100,6 +101,7 @@ public class AllTests extends TestSuite {
 		suite.addTestSuite(DefaultValueTester.class);
 //		suite.addTestSuite(VjoValidationPolicy.class);
 		suite.addTestSuite(DebuggerTest.class);
+		suite.addTestSuite(FormattingTests.class);
 		suite.addTestSuite(StepFilteringPatternTest.class);
 //		suite.addTestSuite(OpenMarkerTest.class);
 		// TED test suit

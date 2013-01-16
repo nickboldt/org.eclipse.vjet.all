@@ -11,6 +11,9 @@
  *******************************************************************************/
 package org.eclipse.vjet.eclipse.ui;
 
+import java.util.Iterator;
+import java.util.Map;
+
 import org.eclipse.dltk.mod.ui.CodeFormatterConstants;
 import org.eclipse.dltk.mod.ui.DLTKUIPlugin;
 import org.eclipse.dltk.mod.ui.PreferenceConstants;
@@ -19,6 +22,7 @@ import org.eclipse.dltk.mod.ui.text.DLTKColorConstants;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.preference.PreferenceConverter;
 import org.eclipse.swt.graphics.RGB;
+import org.eclipse.vjet.eclipse.internal.formatter.DefaultCodeFormatterOptions;
 import org.eclipse.vjet.eclipse.internal.ui.text.VjetColorConstants;
 
 public class VjetPreferenceConstants extends PreferenceConstants {
@@ -628,6 +632,21 @@ public class VjetPreferenceConstants extends PreferenceConstants {
 		
 		PreferenceConstants.initializeDefaultValues(store);
 
+		// formatting
+		// Formatter settings
+		Map codeFormatterOptionsMap = org.eclipse.vjet.eclipse.internal.formatter.DefaultCodeFormatterConstants.getEclipseDefaultSettings(); // code formatter defaults
+		for (Iterator iter = codeFormatterOptionsMap.entrySet().iterator(); iter.hasNext();) {
+			Map.Entry entry = (Map.Entry) iter.next();
+			String optionName = (String) entry.getKey();
+			if(entry.getValue() instanceof Integer){
+				store.setDefault(optionName, (Integer)entry.getValue());
+			}else{
+				System.out.println(entry.getValue().getClass());
+			}
+//			optionNames.add(optionName);
+		}
+
+		
 		//Code assist
 		store.setDefault(VjetPreferenceConstants.CODEASSIST_USETHISVJ$, false);
 		

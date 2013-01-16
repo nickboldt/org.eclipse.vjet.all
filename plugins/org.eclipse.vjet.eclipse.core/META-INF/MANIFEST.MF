@@ -33,8 +33,11 @@ Export-Package: org.eclipse.dltk.mod.core.search.indexing,
  org.eclipse.vjet.eclipse.core.validation,
  org.eclipse.vjet.eclipse.core.validation.model,
  org.eclipse.vjet.eclipse.core.validation.utils,
+ org.eclipse.vjet.eclipse.formatter,
  org.eclipse.vjet.eclipse.internal.codeassist.select,
  org.eclipse.vjet.eclipse.internal.core,
  org.eclipse.vjet.eclipse.internal.core.util,
+ org.eclipse.vjet.eclipse.internal.formatter;x-friends:="org.eclipse.vjet.eclipse.test.core,org.eclipse.vjet.eclipse.ui",
+ org.eclipse.vjet.eclipse.internal.formatter.comments;x-friends:="org.eclipse.vjet.eclipse.test.core,org.eclipse.vjet.eclipse.ui",
  org.eclipse.vjet.eclipse.internal.parser
 Bundle-Localization: plugin

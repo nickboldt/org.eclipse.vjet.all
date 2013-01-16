@@ -21,26 +21,28 @@ import org.eclipse.jface.text.formatter.FormattingContextProperties;
 import org.eclipse.jface.text.formatter.IFormattingContext;
 import org.eclipse.text.edits.MalformedTreeException;
 import org.eclipse.text.edits.TextEdit;
-import org.eclipse.vjet.eclipse.internal.ui.formatting.CodeFormatter;
-import org.eclipse.vjet.eclipse.internal.ui.formatting.CodeFormatterUtil;
+
+import org.eclipse.vjet.eclipse.formatter.CodeFormatterUtil;
+import org.eclipse.vjet.eclipse.internal.formatter.CodeFormatter;
+
+
 import org.eclipse.vjet.eclipse.ui.VjetUIPlugin;
 
 /**
- * Formatting strategy for java source code.
+ * Formatting strategy for javascript source code.
  * 
  * @since 3.0
  */
 public class JavaScriptFormattingStrategy extends
 		ContextBasedFormattingStrategy {
-
 	/** Documents to be formatted by this strategy */
-	private final LinkedList fDocuments = new LinkedList();
+	private final LinkedList fDocuments= new LinkedList();
 	/** Partitions to be formatted by this strategy */
-	private final LinkedList fPartitions = new LinkedList();
+	private final LinkedList fPartitions= new LinkedList();
 
 	/**
 	 * Creates a new java formatting strategy.
-	 */
+ 	 */
 	public JavaScriptFormattingStrategy() {
 		super();
 	}
@@ -51,33 +53,17 @@ public class JavaScriptFormattingStrategy extends
 	public void format() {
 		super.format();
 
-		final IDocument document = (IDocument) fDocuments.removeFirst();
-		final TypedPosition partition = (TypedPosition) fPartitions
-				.removeFirst();
+		final IDocument document= (IDocument)fDocuments.removeFirst();
+		final TypedPosition partition= (TypedPosition)fPartitions.removeFirst();
 
 		if (document != null && partition != null) {
-			Map partitioners = null;
+			Map partitioners= null;
 			try {
-				int offset = partition.getOffset();
-				IRegion line= document.getLineInformationOfOffset(offset);
-				int lineOffset= line.getOffset();
-								
-				StringBuffer computeIndentation = new StringBuffer();
-				for (int a=offset;a<(document.getLength());a++){
-					char c=document.getChar(a);
-					if (Character.isISOControl(c))break;
-					if (Character.isWhitespace(c))computeIndentation.append(c);					
-					else break;
-				}
-				final TextEdit edit = CodeFormatterUtil.format2(
-						CodeFormatter.K_JAVA_SCRIPT, document.get(), offset, partition.getLength(),
-						computeIndentation, TextUtilities
-								.getDefaultLineDelimiter(document),
-						getPreferences());
+
+				final TextEdit edit= CodeFormatterUtil.reformat(CodeFormatter.K_JAVASCRIPT_UNIT, document.get(), partition.getOffset(), partition.getLength(), 0, TextUtilities.getDefaultLineDelimiter(document), getPreferences());
 				if (edit != null) {
 					if (edit.getChildrenSize() > 20)
-						partitioners = TextUtilities
-								.removeDocumentPartitioners(document);
+						partitioners= TextUtilities.removeDocumentPartitioners(document);
 
 					edit.apply(document);
 				}
@@ -85,16 +71,14 @@ public class JavaScriptFormattingStrategy extends
 			} catch (MalformedTreeException exception) {
 				VjetUIPlugin.log(exception);
 			} catch (BadLocationException exception) {
-				// Can only happen on concurrent document modification - log and
-				// bail out
+				// Can only happen on concurrent document modification - log and bail out
 				VjetUIPlugin.log(exception);
 			} finally {
 				if (partitioners != null)
-					TextUtilities.addDocumentPartitioners(document,
-							partitioners);
+					TextUtilities.addDocumentPartitioners(document, partitioners);
 			}
 		}
-	}
+ 	}
 
 	/*
 	 * @see org.eclipse.jface.text.formatter.ContextBasedFormattingStrategy#formatterStarts(org.eclipse.jface.text.formatter.IFormattingContext)
@@ -102,11 +86,8 @@ public class JavaScriptFormattingStrategy extends
 	public void formatterStarts(final IFormattingContext context) {
 		super.formatterStarts(context);
 
-		fPartitions.addLast(context
-				.getProperty(FormattingContextProperties.CONTEXT_PARTITION));
-		fDocuments.addLast(context
-				.getProperty(FormattingContextProperties.CONTEXT_MEDIUM));
-
+		fPartitions.addLast(context.getProperty(FormattingContextProperties.CONTEXT_PARTITION));
+		fDocuments.addLast(context.getProperty(FormattingContextProperties.CONTEXT_MEDIUM));
 	}
 
 	/*

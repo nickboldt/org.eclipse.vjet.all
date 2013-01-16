@@ -14,6 +14,11 @@ import org.eclipse.jface.text.IDocument;
 public interface IJavaScriptPartitions {
 
 	public final static String JS_PARTITIONING = IJavaScriptConstants.JS_PARTITIONING;
+	
+	/**
+	 * The identifier of the JavaScript partitioning.
+	 */
+	public final static String JAVA_PARTITIONING= "___java_partitioning";  //$NON-NLS-1$
 
 	public final static String JS_SINGLE_COMMENT = "__javascript_single_comment";
 	public final static String JS_MULTI_COMMENT = "__javascript_multi_comment";
