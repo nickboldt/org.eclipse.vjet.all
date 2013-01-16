@@ -197,9 +197,12 @@ public class JstExpressionBindingResolver implements IJstRefResolver {
 
 		if (innerTypes != null && !innerTypes.isEmpty()) {
 			for (JstType innerType : innerTypes) {
-				innerType.getStatus().setHasResolution();
+				setResolutionStatus(innerType);
+				
 			}
 		}
+		
+		
 
 		List<IJstOType> oTypes = type.getOTypes();
 
@@ -207,7 +210,7 @@ public class JstExpressionBindingResolver implements IJstRefResolver {
 			for (IJstOType oType : oTypes) {
 				if (oType instanceof JstType) {
 					JstType oJstType = (JstType) oType;
-					oJstType.getStatus().setHasResolution();
+					setResolutionStatus(oJstType);
 				}
 			}
 		}
