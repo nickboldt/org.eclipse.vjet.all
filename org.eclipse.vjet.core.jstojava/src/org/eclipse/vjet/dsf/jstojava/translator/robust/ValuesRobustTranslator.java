@@ -11,7 +11,6 @@ package org.eclipse.vjet.dsf.jstojava.translator.robust;
 
 import org.eclipse.vjet.dsf.jstojava.translator.TranslateCtx;
 import org.eclipse.vjet.dsf.jstojava.translator.ValuesTranslator;
-import org.eclipse.mod.wst.jsdt.internal.compiler.ast.CharLiteral;
 import org.eclipse.mod.wst.jsdt.internal.compiler.ast.Expression;
 import org.eclipse.mod.wst.jsdt.internal.compiler.ast.Literal;
 import org.eclipse.mod.wst.jsdt.internal.compiler.ast.MessageSend;
@@ -51,8 +50,7 @@ public class ValuesRobustTranslator extends BaseRobustTranslator {
 		if (((MessageSend) current).arguments != null) {
 			ValuesTranslator translator = weakTranslator.getProvider().getValuesTranslator();
 			Expression expr = ((MessageSend) current).arguments[0];
-			if (expr instanceof CharLiteral 
-					|| expr instanceof StringLiteral) {
+			if (expr instanceof StringLiteral) {
 				//.values('ONE,TWO')
 				translator.processValues((Literal)expr, jst);
 			} else {

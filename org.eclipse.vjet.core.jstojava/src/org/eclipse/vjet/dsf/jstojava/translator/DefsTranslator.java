@@ -233,8 +233,8 @@ public class DefsTranslator extends BasePropsProtosTranslator {
 		IExpr value = nv.getValue();
 
 		if ((nv.getName() != null) && (nv.getName().length() > 0)
-				&& (value instanceof JstLiteral)) {
-			JstLiteral literal = (JstLiteral) value;
+				&& (value instanceof BaseJstNode)) {
+			BaseJstNode literal = (BaseJstNode) value;
 			// create the JstProperty
 			// problem with result type
 			IJstType jstType = null;
@@ -274,7 +274,7 @@ public class DefsTranslator extends BasePropsProtosTranslator {
 			}
 
 			JstProperty jstProperty = new JstProperty(jstType, nv.getName(),
-					(JstLiteral) value, new JstModifiers().setPublic());
+					value, new JstModifiers().setPublic());
 			jstProperty.setSource(nv.getSource());
 
 		

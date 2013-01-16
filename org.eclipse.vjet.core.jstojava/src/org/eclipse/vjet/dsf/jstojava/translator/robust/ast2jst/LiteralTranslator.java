@@ -16,7 +16,6 @@ import org.eclipse.vjet.dsf.jst.term.SimpleLiteral;
 import org.eclipse.vjet.dsf.jstojava.translator.TranslateHelper;
 import org.eclipse.vjet.dsf.jstojava.translator.robust.completion.JstCompletion;
 import org.eclipse.vjet.dsf.jstojava.translator.robust.completion.JstCompletionOnLiteral;
-import org.eclipse.mod.wst.jsdt.internal.compiler.ast.CharLiteral;
 import org.eclipse.mod.wst.jsdt.internal.compiler.ast.DoubleLiteral;
 import org.eclipse.mod.wst.jsdt.internal.compiler.ast.FalseLiteral;
 import org.eclipse.mod.wst.jsdt.internal.compiler.ast.IntLiteral;
@@ -40,21 +39,22 @@ public class LiteralTranslator extends
 		
 		if (literal instanceof IntLiteral) {
 			lit = SimpleLiteral.getIntLiteral(value);
-		} else if (literal instanceof CharLiteral) {
-			if (value.startsWith("'") && value.endsWith("'")) {
-				// remove ' '
-				if (value.length() == 2) {
-					value = "";
-				}
-				else {
-					if(value.length()>2){
-						value = value.substring(1, value.length() - 1);
-					}
-				}
-			}
-			value = JsonObject.escape(value, true);
-			lit = SimpleLiteral.getStringLiteral(value);
-		} else if (literal instanceof StringLiteral) {
+//		} else if (literal instanceof CharLiteral) {
+//			if (value.startsWith("'") && value.endsWith("'")) {
+//				// remove ' '
+//				if (value.length() == 2) {
+//					value = "";
+//				}
+//				else {
+//					if(value.length()>2){
+//						value = value.substring(1, value.length() - 1);
+//					}
+//				}
+//			}
+//			value = JsonObject.escape(value, true);
+//			lit = SimpleLiteral.getStringLiteral(value);
+//		} 
+		}else if (literal instanceof StringLiteral) {
 			value = JsonObject.escape(value);
 			lit = SimpleLiteral.getStringLiteral( value);
 		} else if (literal instanceof TrueLiteral

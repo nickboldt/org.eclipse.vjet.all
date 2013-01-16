@@ -29,7 +29,6 @@ import org.eclipse.vjet.vjo.meta.VjoKeywords;
 import org.eclipse.mod.wst.jsdt.core.ast.IExpression;
 import org.eclipse.mod.wst.jsdt.core.ast.IProgramElement;
 import org.eclipse.mod.wst.jsdt.internal.compiler.ast.ArrayInitializer;
-import org.eclipse.mod.wst.jsdt.internal.compiler.ast.CharLiteral;
 import org.eclipse.mod.wst.jsdt.internal.compiler.ast.Expression;
 import org.eclipse.mod.wst.jsdt.internal.compiler.ast.FunctionExpression;
 import org.eclipse.mod.wst.jsdt.internal.compiler.ast.Literal;
@@ -492,7 +491,7 @@ public class TypeTranslator extends BaseTranslator {
 				//See:SquareBracketCompletionTest.testSbInNeedsFromParser()
 				if (param.expressions != null) {
 					for (IExpression ast : param.expressions) {
-						if (ast instanceof StringLiteral || ast instanceof CharLiteral) {
+						if (ast instanceof StringLiteral) {
 							JstTypeReference type = getType(m_ctx, (Literal) ast);
 							if (type != null) {
 								jstType.addImport(type);

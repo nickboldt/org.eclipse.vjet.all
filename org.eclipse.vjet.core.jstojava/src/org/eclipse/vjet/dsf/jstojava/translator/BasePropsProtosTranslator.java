@@ -13,7 +13,6 @@ import org.eclipse.vjet.dsf.jst.declaration.JstType;
 import org.eclipse.vjet.dsf.jstojava.translator.robust.ast2jst.BaseAst2JstTranslator;
 import org.eclipse.vjet.dsf.jstojava.translator.robust.ast2jst.TranslatorFactory;
 import org.eclipse.vjet.dsf.jstojava.translator.robust.ast2jst.VjoOLTranslator;
-import org.eclipse.mod.wst.jsdt.internal.compiler.ast.CharLiteral;
 import org.eclipse.mod.wst.jsdt.internal.compiler.ast.Expression;
 import org.eclipse.mod.wst.jsdt.internal.compiler.ast.ObjectLiteral;
 import org.eclipse.mod.wst.jsdt.internal.compiler.ast.StringLiteral;
@@ -28,8 +27,7 @@ abstract class BasePropsProtosTranslator extends BaseTranslator {
 	public void process(Expression expr, JstType jstType) {
 		assert expr != null;
 		if (expr instanceof ObjectLiteral
-				|| expr instanceof StringLiteral
-				|| expr instanceof CharLiteral) {
+				|| expr instanceof StringLiteral) {
 			translateExpr(expr, jstType);
 		} else {
 			System.err.println("Unprocessed type in " + getClass().getName());

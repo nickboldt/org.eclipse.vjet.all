@@ -11,7 +11,6 @@ package org.eclipse.vjet.dsf.jstojava.translator;
 import org.eclipse.vjet.dsf.jstojava.report.ErrorReporter;
 import org.eclipse.mod.wst.jsdt.core.ast.IExpression;
 import org.eclipse.mod.wst.jsdt.internal.compiler.ast.ArrayInitializer;
-import org.eclipse.mod.wst.jsdt.internal.compiler.ast.CharLiteral;
 import org.eclipse.mod.wst.jsdt.internal.compiler.ast.StringLiteral;
 
 public abstract class BaseTranslator {
@@ -47,6 +46,6 @@ public abstract class BaseTranslator {
 	}
 
 	protected boolean isString(IExpression param) {
-		return (param instanceof StringLiteral || param instanceof CharLiteral);
+		return (param instanceof StringLiteral);
 	}
 }

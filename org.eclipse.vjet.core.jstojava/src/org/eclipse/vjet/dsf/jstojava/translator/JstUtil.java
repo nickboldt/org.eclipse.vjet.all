@@ -55,7 +55,6 @@ import org.eclipse.vjet.dsf.jst.token.ILHS;
 import org.eclipse.vjet.dsf.jst.token.IStmt;
 import org.eclipse.mod.wst.jsdt.core.ast.IASTNode;
 import org.eclipse.mod.wst.jsdt.core.ast.IExpression;
-import org.eclipse.mod.wst.jsdt.internal.compiler.ast.CharLiteral;
 import org.eclipse.mod.wst.jsdt.internal.compiler.ast.Expression;
 import org.eclipse.mod.wst.jsdt.internal.compiler.ast.Literal;
 import org.eclipse.mod.wst.jsdt.internal.compiler.ast.MessageSend;
@@ -805,7 +804,7 @@ public class JstUtil {
 				Expression[] args = send.arguments;
 				if (args != null && args.length == 1) {
 					Expression arg = args[0];
-					if (arg instanceof StringLiteral || arg instanceof CharLiteral) {
+					if (arg instanceof StringLiteral) {
 						return JstUtil.getCorrectName((Literal)arg);
 					}
 				}

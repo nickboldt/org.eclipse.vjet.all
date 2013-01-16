@@ -14,7 +14,6 @@ import org.eclipse.vjet.dsf.jst.declaration.JstProperty;
 import org.eclipse.vjet.dsf.jst.declaration.JstType;
 import org.eclipse.vjet.dsf.jst.term.SimpleLiteral;
 import org.eclipse.vjet.dsf.jstojava.translator.robust.JstSourceUtil;
-import org.eclipse.mod.wst.jsdt.internal.compiler.ast.CharLiteral;
 import org.eclipse.mod.wst.jsdt.internal.compiler.ast.Literal;
 import org.eclipse.mod.wst.jsdt.internal.compiler.ast.StringLiteral;
 
@@ -26,7 +25,7 @@ public class ValuesTranslator extends BasePropsProtosTranslator {
 	}
 	
 	public void processValues(Literal literal, JstType type) {
-		if (literal instanceof StringLiteral || literal instanceof CharLiteral) {
+		if (literal instanceof StringLiteral) {
 			String s = JstUtil.getCorrectName(literal);
 			String[] names = s.split(",");
 			int index = literal.sourceStart + 1;
