@@ -10,31 +10,21 @@
 package org.eclipse.vjet.eclipse.internal.ui.editor;
 
 import org.eclipse.dltk.mod.core.IDLTKLanguageToolkit;
-import org.eclipse.dltk.mod.core.IModelElement;
-import org.eclipse.dltk.mod.core.ISourceRange;
-import org.eclipse.dltk.mod.core.ISourceReference;
-import org.eclipse.dltk.mod.core.ModelException;
 import org.eclipse.dltk.mod.internal.ui.actions.FoldingActionGroup;
 import org.eclipse.dltk.mod.internal.ui.editor.ScriptEditor;
 import org.eclipse.dltk.mod.internal.ui.editor.ScriptOutlinePage;
-import org.eclipse.dltk.mod.internal.ui.editor.ScriptSourceViewer;
 import org.eclipse.dltk.mod.ui.text.ScriptTextTools;
 import org.eclipse.dltk.mod.ui.text.folding.IFoldingStructureProvider;
-import org.eclipse.jface.action.Action;
 import org.eclipse.jface.preference.IPreferenceStore;
-import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IDocumentExtension3;
 import org.eclipse.jface.text.ITextViewerExtension;
-import org.eclipse.jface.text.TextUtilities;
 import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.jface.util.PropertyChangeEvent;
-import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.actions.ActionGroup;
 import org.eclipse.ui.texteditor.ITextEditorActionConstants;
-import org.eclipse.ui.texteditor.IUpdate;
 import org.eclipse.ui.texteditor.SourceViewerDecorationSupport;
 import org.eclipse.vjet.eclipse.core.VjoLanguageToolkit;
 import org.eclipse.vjet.eclipse.internal.ui.preferences.JavascriptPreferenceConstants;
@@ -42,7 +32,6 @@ import org.eclipse.vjet.eclipse.internal.ui.text.IJavaScriptPartitions;
 import org.eclipse.vjet.eclipse.internal.ui.text.JavaScriptPairMatcher;
 import org.eclipse.vjet.eclipse.internal.ui.text.folding.VjoFoldingStructureProvider;
 import org.eclipse.vjet.eclipse.ui.VjetUIPlugin;
-import org.eclipse.vjet.eclipse.ui.actions.FormatAllAction;
 import org.eclipse.vjet.eclipse.ui.actions.JavaScriptGenerateActionGroup;
 
 
