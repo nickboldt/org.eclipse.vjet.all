@@ -9,8 +9,10 @@
 package org.eclipse.vjet.eclipse.internal.launching;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URI;
+import java.net.URLDecoder;
 
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
@@ -124,49 +126,29 @@ public class VjetSourceLookupParticipant extends
 	}
 
 	private Object getSourceFromFileURI(URI uri) {
-		String pathname = uri.getPath();
-		try {
-			pathname = uri.toURL().getPath();
-		} catch (MalformedURLException e) {
-			VjetLaunchingPlugin.error(e.getLocalizedMessage(), e);
-		}
-		if (pathname == null) {
-			return null;
-		}
-		if (Platform.getOS().equals(Platform.OS_WIN32)) {
-			pathname = pathname.substring(1);
-		}
-
-		return findFileElement(pathname);
-	}
-
-	public static Object findFileElement(String path) {
-
-		File file = new File(path);
-
-		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
-		IContainer container = root.getContainerForLocation(new Path(file
-				.getParent()));
-
-		if (container != null) {
-			IResource resource = container.findMember(file.getName());
-
-			if (resource instanceof IFile) {
-				return resource;
-			}
-
-		} else {
-
-			IWorkspace workspace = ResourcesPlugin.getWorkspace();
-			IPath location = Path.fromOSString(file.getAbsolutePath());
-			IFile ifile = workspace.getRoot().getFile(location);
-			if (ifile.exists()) {
-				return ifile;
-			} else if (file.exists()) {
-				return EnvironmentPathUtils.getFile(EnvironmentManager
-						.getLocalEnvironment(), location);
-			}
+//		String pathname = uri.getPath();
+//		try {
+//			pathname = uri.toURL().getPath();
+//		} catch (MalformedURLException e) {
+//			VjetLaunchingPlugin.error(e.getLocalizedMessage(), e);
+//		}
+//		if (pathname == null) {
+//			return null;
+//		}
+//		if (Platform.getOS().equals(Platform.OS_WIN32)) {
+//			pathname = pathname.substring(1);
+//		}
+		
+		IFile[] files = ResourcesPlugin.getWorkspace().getRoot().findFilesForLocationURI(uri) ;
+		if(files!=null && files.length>0){
+			return files[0];
 		}
 		return null;
+
+//		return findFileElement(pathname);
 	}
+
+	
+	
+	
 }
