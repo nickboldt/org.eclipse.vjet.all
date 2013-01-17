@@ -11,6 +11,7 @@
 package org.eclipse.vjet.eclipse.core.test.formatter;
 
 import junit.framework.Assert;
+import junit.framework.TestCase;
 
 import org.eclipse.jface.text.Document;
 import org.eclipse.jface.text.IDocument;
@@ -28,7 +29,7 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-public class FormattingTests {
+public class FormattingTests extends TestCase {
 	public static final String DELIMITER = TextUtilities
 			.getDefaultLineDelimiter(new Document());
 	protected static final String PREFIX = SingleCommentLine.SINGLE_COMMENT_PREFIX;
@@ -173,7 +174,7 @@ public class FormattingTests {
 	 * @see junit.extensions.TestSetup#setUp()
 	 */
 	@BeforeClass
-	public static  void setUp() throws Exception {
+	public  void setUp() throws Exception {
 		// set up formatting tools
 		fJavaScriptTextTools = VjetUIPlugin.getDefault().getTextTools();
 		JavascriptSourceViewerConfiguration config = new JavascriptSourceViewerConfiguration(
@@ -210,8 +211,8 @@ public class FormattingTests {
 	 * 
 	 * @see junit.extensions.TestSetup#tearDown()
 	 */
-	@AfterClass
-	public static void tearDown() throws Exception {
+
+	public void tearDown() throws Exception {
 		// reset non-interactive
 		if (previousWTPAutoTestNonInteractivePropValue != null) {
 			System.setProperty(WTP_AUTOTEST_NONINTERACTIVE,
