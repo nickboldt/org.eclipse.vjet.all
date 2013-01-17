@@ -365,9 +365,9 @@ public class VjoEditor extends JavaScriptEditor {
                         .getSelection();
                 if (CodeassistUtils.isVjoSourceModule(getInputModelElement())) {
 
-                    updateOccurrenceAnnotations(
-                            (ITextSelection) m_forcedMarkOccurrencesSelection,
-                            getInputModelElement());
+//                    updateOccurrenceAnnotations(
+//                            (ITextSelection) m_forcedMarkOccurrencesSelection,
+//                            getInputModelElement());
                 }
             }
         }
@@ -792,7 +792,9 @@ public class VjoEditor extends JavaScriptEditor {
         IJstNode jstNode = vjoSelectionEngine.convertSelection2JstNode(
                 vjoSourceModule, selection.getOffset(), selection.getOffset()
                         + selection.getLength());
-        IJstType scopeTree = CodeassistUtils.getJstType(vjoSourceModule);
+        IJstType scopeTree = vjoSourceModule.getJstType();
+        if(scopeTree==null)
+        	scopeTree = CodeassistUtils.getJstType(vjoSourceModule);
 
         if (jstNode == null) {
             if (!m_stickyOccurrenceAnnotations)
