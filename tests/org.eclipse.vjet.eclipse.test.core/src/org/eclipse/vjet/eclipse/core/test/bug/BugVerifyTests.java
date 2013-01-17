@@ -47,7 +47,6 @@ import org.eclipse.dltk.mod.core.IBuildpathEntry;
 import org.eclipse.dltk.mod.core.ICodeAssist;
 import org.eclipse.dltk.mod.core.IModelElement;
 import org.eclipse.dltk.mod.core.IPackageDeclaration;
-import org.eclipse.dltk.mod.core.IScriptProject;
 import org.eclipse.dltk.mod.core.ISourceModule;
 import org.eclipse.dltk.mod.core.IType;
 import org.eclipse.dltk.mod.core.ModelException;
@@ -117,13 +116,10 @@ import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.progress.IProgressService;
 import org.eclipse.ui.texteditor.AbstractTextEditor;
 import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
-import org.osgi.framework.Bundle;
-
 import org.eclipse.vjet.dsf.jst.IJstMethod;
 import org.eclipse.vjet.dsf.jst.IJstNode;
 import org.eclipse.vjet.dsf.jst.IJstProperty;
 import org.eclipse.vjet.dsf.jst.IJstType;
-import org.eclipse.vjet.dsf.jst.IScriptUnit;
 import org.eclipse.vjet.dsf.jst.declaration.JstProxyMethod;
 import org.eclipse.vjet.dsf.jst.declaration.JstProxyProperty;
 import org.eclipse.vjet.dsf.jst.declaration.JstTypeReference;
@@ -156,6 +152,7 @@ import org.eclipse.vjet.testframework.view.EditorUtil;
 import org.eclipse.vjet.testframework.view.SyntaxHighlightUtil;
 import org.eclipse.vjet.vjo.tool.typespace.TypeSpaceMgr;
 import org.junit.Ignore;
+import org.osgi.framework.Bundle;
 
 /**
  * verify bugs that window tester can not handle
@@ -1448,8 +1445,8 @@ public class BugVerifyTests extends AbstractVjoModelTests {
     		String typeName = CodeassistUtils.getClassName(file);
     		fileReader = new FileReader(file.getLocation().toFile());
     		String source = FileUtils.readFully(fileReader);
-    		IScriptUnit unit1 = null;
-    		IScriptUnit unit2 = null;
+    		IJstType unit1 = null;
+    		IJstType unit2 = null;
     		VjoParserToJstAndIType m_parser = new VjoParserToJstAndIType();
     		unit1 = m_parser.parse(groupName, typeName, source);
     		unit2 = m_parser.parse(groupName, typeName, source);

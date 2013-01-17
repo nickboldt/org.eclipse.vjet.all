@@ -36,7 +36,6 @@ import org.eclipse.vjet.dsf.jst.IJstMethod;
 import org.eclipse.vjet.dsf.jst.IJstProperty;
 import org.eclipse.vjet.dsf.jst.IJstType;
 import org.eclipse.vjet.dsf.jst.IScriptProblem;
-import org.eclipse.vjet.dsf.jst.IScriptUnit;
 import org.eclipse.vjet.dsf.jst.JstSource;
 import org.eclipse.vjet.dsf.jst.ProblemSeverity;
 import org.eclipse.vjet.dsf.jst.declaration.JstArg;
@@ -130,9 +129,9 @@ public class VjoSourceParser extends AbstractSourceParser{
 				System.out.println("parsing for " + getClass().getName());
 			}
 			// TODO disable full build (parse,resolve,validate)
-			IScriptUnit scriptUnit = parser.parse(groupName, typeName,
+			IJstType scriptUnit = parser.parse(groupName, typeName,
 					new String(source));
-			typeName = scriptUnit.getType().getName();
+			typeName = scriptUnit.getName();
 			
 			if(context==null){
 				//if disable all the validations (syntax and semantic)
@@ -157,9 +156,9 @@ public class VjoSourceParser extends AbstractSourceParser{
 			// Register type to typeSpace when type is not exist in type space
 			// and package path is same with OS path
 			
-			if(scriptUnit!=null && scriptUnit.getType()!=null && 
-					!scriptUnit.getType().getName().equals(typeName)){
-				typeName = scriptUnit.getType().getName();
+			if(scriptUnit!=null  && 
+					!scriptUnit.getName().equals(typeName)){
+				typeName = scriptUnit.getName();
 			}
 			
 			if (scriptUnit != null) {
@@ -168,7 +167,7 @@ public class VjoSourceParser extends AbstractSourceParser{
 				// or onsave events
 				reRegestierType(source, file, groupName, typeName, scriptUnit);
 				// create DLTK ui model from jst
-				processType(scriptUnit.getType(), moduleDeclaration);
+				processType(scriptUnit, moduleDeclaration);
 			}
 			if(context!=null)
 				context.setUnit(scriptUnit);
@@ -204,11 +203,11 @@ public class VjoSourceParser extends AbstractSourceParser{
 	 *            {@link IScriptUnit}
 	 */
 	private void reRegestierType(char[] source, IFile file, String groupName,
-			String typeName, IScriptUnit unit) {
+			String typeName, IJstType unit) {
 		SourceTypeName name = new SourceTypeName(groupName, typeName,
 				new String(source));
 		if (!tsm.existType(name)) {
-			IJstType actualType = unit.getType();
+			IJstType actualType = unit;
 			String actualName = null;
 			if (actualType != null) {
 				actualName = actualType.getName();
@@ -229,7 +228,7 @@ public class VjoSourceParser extends AbstractSourceParser{
 	}
 	
 	private void reRegestierType2(char[] source, IFile file, String groupName,
-			String typeName, IScriptUnit unit) {
+			String typeName, IJstType unit) {
 		SourceTypeName name = new SourceTypeName(groupName, typeName,
 				new String(source));
 		if(tsm.existType(name)){
@@ -238,7 +237,7 @@ public class VjoSourceParser extends AbstractSourceParser{
 			name.setAction(SourceTypeName.ADDED);
 		}
 		
-			IJstType actualType = unit.getType();
+			IJstType actualType = unit;
 			
 			doProcessType(name, null, actualType);
 					

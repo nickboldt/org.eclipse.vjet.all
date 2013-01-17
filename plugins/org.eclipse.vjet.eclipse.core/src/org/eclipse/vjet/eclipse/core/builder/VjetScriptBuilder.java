@@ -65,7 +65,6 @@ import org.eclipse.dltk.mod.core.builder.IBuildContext;
 import org.eclipse.dltk.mod.core.builder.IScriptBuilder;
 import org.eclipse.dltk.mod.core.builder.IScriptBuilderExtension;
 import org.eclipse.dltk.mod.core.environment.EnvironmentPathUtils;
-import org.eclipse.dltk.mod.internal.core.AccumulatingProblemReporter;
 import org.eclipse.dltk.mod.internal.core.BuildpathEntry;
 import org.eclipse.dltk.mod.internal.core.BuiltinProjectFragment;
 import org.eclipse.dltk.mod.internal.core.BuiltinSourceModule;
@@ -73,15 +72,12 @@ import org.eclipse.dltk.mod.internal.core.ExternalProjectFragment;
 import org.eclipse.dltk.mod.internal.core.ExternalSourceModule;
 import org.eclipse.dltk.mod.internal.core.ModelManager;
 import org.eclipse.dltk.mod.internal.core.ScriptProject;
-import org.eclipse.dltk.mod.internal.core.VjoSourceModule;
 import org.eclipse.dltk.mod.internal.core.builder.BuildProblemReporter;
 import org.eclipse.dltk.mod.internal.core.builder.ScriptBuilder;
-import org.eclipse.dltk.mod.internal.core.builder.SourceModuleBuildContext;
 import org.eclipse.dltk.mod.internal.core.builder.State;
 import org.eclipse.osgi.util.NLS;
+import org.eclipse.vjet.dsf.jst.IJstType;
 import org.eclipse.vjet.dsf.jst.IScriptProblem;
-import org.eclipse.vjet.dsf.jst.IScriptUnit;
-import org.eclipse.vjet.dsf.jst.IWritableScriptUnit;
 import org.eclipse.vjet.eclipse.codeassist.CodeassistUtils;
 import org.eclipse.vjet.eclipse.core.VjetPlugin;
 import org.eclipse.vjet.eclipse.core.VjoLanguageToolkit;
@@ -858,14 +854,14 @@ public class VjetScriptBuilder extends ScriptBuilder {
 			// TODO build the files that are dependants of the changed types
 			this.typeSpaceBuilder.incrementalBuildProject(resourcesFrom.changedTypes);
 
-			try {
-				buildElements(localElements, externalElements, monitor,
-						WORK_BUILD - resourceTicks,
-						IScriptBuilder.INCREMENTAL_BUILD,
-						externalFoldersBefore, externalFolders, builders);
-			} catch (CoreException e) {
-				DLTKCore.error(Messages.ScriptBuilder_errorBuildElements, e);
-			}
+//			try {
+//				buildElements(localElements, externalElements, monitor,
+//						WORK_BUILD - resourceTicks,
+//						IScriptBuilder.INCREMENTAL_BUILD,
+//						externalFoldersBefore, externalFolders, builders);
+//			} catch (CoreException e) {
+//				DLTKCore.error(Messages.ScriptBuilder_errorBuildElements, e);
+//			}
 			lastBuildSourceFiles += externalElements.size();
 
 			if (monitor.isCanceled()) {
@@ -1050,7 +1046,7 @@ public class VjetScriptBuilder extends ScriptBuilder {
 					
 					IProblemReporter reporter = module.getProblemReporter();
 					boolean validatable = reporter!=null;
-					IWritableScriptUnit unit = (IWritableScriptUnit)module.getUnit();
+					IJstType unit = module.getUnit();
 					TypeSpaceMgr.getInstance().getController().resolve(module.getVjoSourceModule().getGroupName(), unit);
 					if (unit != null) {
 						//if disable all the validations (syntax and semantic)

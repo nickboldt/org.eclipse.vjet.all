@@ -10,12 +10,11 @@ package org.eclipse.vjet.eclipse.core.validation;
 
 import java.util.List;
 
-import org.eclipse.vjet.dsf.jst.IJstType;
-import org.eclipse.vjet.dsf.jst.IScriptProblem;
-import org.eclipse.vjet.dsf.jst.IScriptUnit;
-import org.eclipse.vjet.eclipse.core.validation.utils.ProblemUtility;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.dltk.mod.compiler.problem.DefaultProblem;
+import org.eclipse.vjet.dsf.jst.IJstType;
+import org.eclipse.vjet.dsf.jst.IScriptProblem;
+import org.eclipse.vjet.eclipse.core.validation.utils.ProblemUtility;
 
 public abstract class AbstractValidator implements IValidator {
 
@@ -38,12 +37,6 @@ public abstract class AbstractValidator implements IValidator {
 
 	}
 
-	public final List<DefaultProblem> validate(IScriptUnit unit)
-			throws CoreException {
 
-		List<IScriptProblem> problems = doValidate(unit);
-		return ProblemUtility.reportProblems(problems);
-
-	}
 
 }

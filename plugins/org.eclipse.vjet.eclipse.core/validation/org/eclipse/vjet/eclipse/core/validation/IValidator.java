@@ -11,25 +11,20 @@ package org.eclipse.vjet.eclipse.core.validation;
 import java.util.List;
 import java.util.Set;
 
-import org.eclipse.vjet.dsf.jst.IJstType;
-import org.eclipse.vjet.dsf.jst.IScriptProblem;
-import org.eclipse.vjet.dsf.jst.IScriptUnit;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.dltk.mod.compiler.problem.DefaultProblem;
+import org.eclipse.vjet.dsf.jst.IJstType;
+import org.eclipse.vjet.dsf.jst.IScriptProblem;
 
 public interface IValidator {
 
 	List<DefaultProblem> validate( IJstType jstType)
 			throws CoreException;
 
-	List<DefaultProblem> validate( IScriptUnit jstType)
-	throws CoreException;
-
 	Set<IResource> deriveResources(Object object);
 	
 	List<IScriptProblem> doValidate( IJstType jstType);
 
-	List<IScriptProblem> doValidate( IScriptUnit unit);
 	
 }

@@ -10,19 +10,16 @@ package org.eclipse.vjet.eclipse.core.parser;
 
 import java.util.List;
 
-import org.eclipse.vjet.dsf.jst.IScriptProblem;
-import org.eclipse.vjet.dsf.jst.IScriptUnit;
+import org.eclipse.dltk.mod.compiler.problem.DefaultProblem;
+import org.eclipse.dltk.mod.compiler.problem.IProblem;
+import org.eclipse.dltk.mod.compiler.problem.IProblemReporter;
+import org.eclipse.vjet.dsf.jst.IJstType;
 import org.eclipse.vjet.dsf.jst.ts.JstTypeSpaceMgr;
 import org.eclipse.vjet.dsf.jstojava.controller.JstParseController;
 import org.eclipse.vjet.dsf.jstojava.parser.VjoParser;
 import org.eclipse.vjet.eclipse.core.VjetPlugin;
 import org.eclipse.vjet.eclipse.core.ts.VjoJstTypeLoader;
-import org.eclipse.vjet.eclipse.core.validation.ValidationEntry;
-import org.eclipse.vjet.eclipse.core.validation.utils.ProblemUtility;
 import org.eclipse.vjet.vjo.tool.typespace.TypeSpaceMgr;
-import org.eclipse.dltk.mod.compiler.problem.DefaultProblem;
-import org.eclipse.dltk.mod.compiler.problem.IProblem;
-import org.eclipse.dltk.mod.compiler.problem.IProblemReporter;
 
 /**
  * Changed by Jack at 2009.10.14: Because ScriptUnit has handle all the problems
@@ -53,14 +50,14 @@ public class VjoParserToJstAndIType {
 		this(null);
 	}
 
-	public IScriptUnit parse(String groupName, String typeName, String source,
+	public IJstType parse(String groupName, String typeName, String source,
 			int completionPos) {
 		if(VjetPlugin.TRACE_PARSER){
 			System.out.println("%%%PARSING: typename:" + typeName + ", group:" + groupName);
 		}
 		this.completionPos = completionPos;
 		// parse
-		IScriptUnit unit = innerParse(groupName, typeName, source);
+		IJstType unit = innerParse(groupName, typeName, source);
 		
 
 		if (unit != null) {
@@ -101,11 +98,11 @@ public class VjoParserToJstAndIType {
 		return m_controller;
 	}
 
-	public IScriptUnit parse(String groupName, String typeName, String source) {
+	public IJstType parse(String groupName, String typeName, String source) {
 		return parse(groupName, typeName, source, -1);
 	}
 
-	private IScriptUnit innerParse(String groupName, String typeName,
+	private IJstType innerParse(String groupName, String typeName,
 			String source) {
 
 		JstParseController m_controller = getJstParseController();
@@ -114,7 +111,7 @@ public class VjoParserToJstAndIType {
 				.getJstTypeSpaceMgr());
 		try {
 
-			IScriptUnit unit = m_controller.parseAndResolve(groupName,
+			IJstType unit = m_controller.parseAndResolve(groupName,
 					typeName, source);
 			return unit;
 		} catch (Exception e) {

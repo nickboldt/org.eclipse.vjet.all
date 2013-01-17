@@ -12,15 +12,14 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import org.eclipse.core.resources.IResource;
 import org.eclipse.vjet.dsf.jsgen.shared.validation.vjo.VjoSemanticProblem;
 import org.eclipse.vjet.dsf.jsgen.shared.validation.vjo.VjoSemanticRulePolicy;
 import org.eclipse.vjet.dsf.jsgen.shared.validation.vjo.VjoValidationDriver;
 import org.eclipse.vjet.dsf.jsgen.shared.validation.vjo.VjoValidationResult;
 import org.eclipse.vjet.dsf.jst.IJstType;
 import org.eclipse.vjet.dsf.jst.IScriptProblem;
-import org.eclipse.vjet.dsf.jst.IScriptUnit;
 import org.eclipse.vjet.vjo.tool.typespace.TypeSpaceMgr;
-import org.eclipse.core.resources.IResource;
 
 /**
  * Basic validation
@@ -43,31 +42,7 @@ public class BasicValidator extends AbstractValidator{
 		return validator;
 	}
 	
-	/**
-	 * 
-	 * Do validate with jstTYPe
-	 * @param jstType {@link IJstType}
-	 * @return list
-	 */
-	public List<IScriptProblem> doValidate(IJstType jstType) {
-		List<IScriptProblem> problems = new LinkedList<IScriptProblem>();
 
-		List<IJstType> typeList = new LinkedList<IJstType>();
-		typeList.add(jstType);
-
-		VjoValidationDriver driver = new VjoValidationDriver();
-		driver.setTypeSpaceMgr(TypeSpaceMgr.getInstance().getController()
-				.getJstTypeSpaceMgr());
-
-		VjoValidationResult result = driver.validate(typeList, jstType
-				.getPackage().getGroupName());
-
-		for (VjoSemanticProblem prob : result.getAllProblems()) {
-			problems.add(prob);
-		}
-
-		return problems;
-	}
 
 	
 	/**
@@ -76,9 +51,9 @@ public class BasicValidator extends AbstractValidator{
      * @param jstType {@link IScriptUnit}
      * @return list
      */
-	public List<IScriptProblem> doValidate(IScriptUnit scriptUnit) {
+	public List<IScriptProblem> doValidate(IJstType scriptUnit) {
 
-		List<IScriptUnit> typeList = new LinkedList<IScriptUnit>();
+		List<IJstType> typeList = new LinkedList<IJstType>();
 		typeList.add(scriptUnit);
 
 		// initPolicySettings();
@@ -88,7 +63,7 @@ public class BasicValidator extends AbstractValidator{
 				.getJstTypeSpaceMgr());
 
 		VjoValidationResult result = driver.validateComplete(typeList,
-				scriptUnit.getType().getPackage().getGroupName(),VjoValidationDriver.VjoValidationMode.validateType);
+				scriptUnit.getPackage().getGroupName(),VjoValidationDriver.VjoValidationMode.validateType);
 
 		List<IScriptProblem> problems = new LinkedList<IScriptProblem>();
 		for (VjoSemanticProblem prob : result.getAllProblems()) {

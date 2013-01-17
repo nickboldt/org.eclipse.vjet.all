@@ -6,7 +6,6 @@ import java.net.URL;
 
 import org.eclipse.vjet.dsf.jst.IJstParseController;
 import org.eclipse.vjet.dsf.jst.IJstType;
-import org.eclipse.vjet.dsf.jst.IScriptUnit;
 import org.eclipse.vjet.dsf.jst.ts.JstTypeSpaceMgr;
 import org.eclipse.vjet.dsf.jstojava.controller.JstParseController;
 import org.eclipse.vjet.dsf.jstojava.loader.DefaultJstTypeLoader;
@@ -56,10 +55,10 @@ public class TypeConstructResolverExtensionTests {
 
 	private void addTypeToTS(IJstParseController pc, JstTypeSpaceMgr ts,
 			URL file, String groupName, String typeName) {
-		IScriptUnit su1 = pc.parseAndResolve(groupName, typeName,
+		IJstType su1 = pc.parseAndResolve(groupName, typeName,
 				VjoParser.getContent(file));
-		ts.processEvent(new AddTypeEvent<IJstType>(new TypeName(groupName, su1
-				.getType().getName()), su1.getType()));
+		ts.processEvent(new AddTypeEvent<IJstType>(new TypeName(groupName, 
+				su1.getName()), su1));
 	}
 
 }

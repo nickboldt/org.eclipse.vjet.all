@@ -15,18 +15,6 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
-import org.eclipse.vjet.dsf.jst.IJstNode;
-import org.eclipse.vjet.dsf.jst.IJstType;
-import org.eclipse.vjet.dsf.jst.IScriptUnit;
-import org.eclipse.vjet.dsf.jst.JstSource;
-import org.eclipse.vjet.dsf.jst.declaration.JstBlock;
-import org.eclipse.vjet.dsf.jst.declaration.JstMethod;
-import org.eclipse.vjet.dsf.jst.declaration.JstPackage;
-import org.eclipse.vjet.dsf.jst.reserved.JsCoreKeywords;
-import org.eclipse.vjet.dsf.jst.term.JstIdentifier;
-import org.eclipse.vjet.eclipse.core.VjetPlugin;
-import org.eclipse.vjet.eclipse.core.parser.VjoParserToJstAndIType;
-import org.eclipse.vjet.vjo.meta.VjoKeywords;
 import org.eclipse.dltk.mod.core.ISourceModule;
 import org.eclipse.dltk.mod.internal.core.VjoSourceModule;
 import org.eclipse.dltk.mod.ui.text.IColorManager;
@@ -39,6 +27,17 @@ import org.eclipse.jface.text.rules.IToken;
 import org.eclipse.jface.text.rules.SingleLineRule;
 import org.eclipse.jface.text.rules.Token;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.vjet.dsf.jst.IJstNode;
+import org.eclipse.vjet.dsf.jst.IJstType;
+import org.eclipse.vjet.dsf.jst.JstSource;
+import org.eclipse.vjet.dsf.jst.declaration.JstBlock;
+import org.eclipse.vjet.dsf.jst.declaration.JstMethod;
+import org.eclipse.vjet.dsf.jst.declaration.JstPackage;
+import org.eclipse.vjet.dsf.jst.reserved.JsCoreKeywords;
+import org.eclipse.vjet.dsf.jst.term.JstIdentifier;
+import org.eclipse.vjet.eclipse.core.VjetPlugin;
+import org.eclipse.vjet.eclipse.core.parser.VjoParserToJstAndIType;
+import org.eclipse.vjet.vjo.meta.VjoKeywords;
 
 public class VjoCodeScanner extends JavascriptCodeScanner {
 	private static String fgTokenProperties[] = new String[] {
@@ -293,7 +292,7 @@ public class VjoCodeScanner extends JavascriptCodeScanner {
 		if(VjetPlugin.TRACE_PARSER){
 			System.out.println("parsing for " + getClass().getName());
 		}
-		IScriptUnit scriptUnit = parser.parse(groupName, typeName, content);
+		IJstType scriptUnit = parser.parse(groupName, typeName, content);
 		List<JstIdentifier> identifiers = getJstIdentifierFromScriptUnit(scriptUnit);
 		if (identifiers.isEmpty()) {
 			return;
@@ -327,7 +326,7 @@ public class VjoCodeScanner extends JavascriptCodeScanner {
 		Collections.sort(hightPoints, pointComparator);
 	}
 
-	private List<JstIdentifier> getJstIdentifierFromScriptUnit(IScriptUnit unit) {
+	private List<JstIdentifier> getJstIdentifierFromScriptUnit(IJstType unit) {
 		List<JstBlock> blocks = unit.getJstBlockList();
 		if (blocks == null) {
 			return Collections.emptyList();

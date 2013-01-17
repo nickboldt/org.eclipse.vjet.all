@@ -52,10 +52,7 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.vjet.dsf.jst.IJstNode;
 import org.eclipse.vjet.dsf.jst.IJstType;
-import org.eclipse.vjet.dsf.jst.IScriptProblem;
-import org.eclipse.vjet.dsf.jst.IScriptUnit;
 import org.eclipse.vjet.dsf.jst.JstSource;
-import org.eclipse.vjet.dsf.jst.declaration.JstBlock;
 import org.eclipse.vjet.dsf.jst.declaration.JstMethod;
 import org.eclipse.vjet.dsf.jst.declaration.JstProperty;
 import org.eclipse.vjet.dsf.jst.declaration.JstType;
@@ -413,14 +410,14 @@ public class ScriptUnitView extends ViewPart implements ISelectionListener{
 			}
 
 			VjoSourceModule sourceModule = ((VjoSourceModule)modelElement);
-			IScriptUnit scriptUnit = this.getScriptUnit(sourceModule, (VjoEditor)part);
+			IJstType scriptUnit = sourceModule.getJstType();
 
 			//add to fix NPE
 			if (scriptUnit == null)
 				return;
 
 			//record the latest jst type
-			this.jstType = scriptUnit.getType();
+			this.jstType = scriptUnit;
 
 			this.vjoEditor = (VjoEditor)part;
 			this.vjoEditor.getScriptSourceViewer().getDocument().addDocumentListener(this.documentListener);
@@ -451,12 +448,7 @@ public class ScriptUnitView extends ViewPart implements ISelectionListener{
 		}
 	}
 
-	private IJstType getJstType(VjoSourceModule sourceModule) {
-		if (sourceModule instanceof NativeVjoSourceModule)
-			return TypeSpaceMgr.getInstance().findType(sourceModule.getTypeName());
-		else
-			return sourceModule.getJstType();
-	}
+
 
 
 	/**
@@ -466,45 +458,13 @@ public class ScriptUnitView extends ViewPart implements ISelectionListener{
 	 * @param vjoEditor
 	 * @return
 	 */
-	private IScriptUnit getScriptUnit(VjoSourceModule sourceModule, VjoEditor vjoEditor) {
+	private IJstType getScriptUnit(VjoSourceModule sourceModule, VjoEditor vjoEditor) {
 		try {
 			String groupName = sourceModule.getGroupName();
 			String fileName = sourceModule.getTypeName().typeName();
 			System.out.println(groupName);
 			if(groupName.equals(".org.eclipse.dltk.mod.core.external.folders")){
-				final IJstType type = TypeSpaceMgr.getInstance().findType(sourceModule.getTypeName());
-				return new IScriptUnit() {
-
-					@Override
-					public IJstType getType() {
-						// TODO Auto-generated method stub
-						return type;
-					}
-
-					@Override
-					public JstBlock getSyntaxRoot() {
-						// TODO Auto-generated method stub
-						return null;
-					}
-
-					@Override
-					public List<IScriptProblem> getProblems() {
-						// TODO Auto-generated method stub
-						return null;
-					}
-
-					@Override
-					public IJstNode getNode(int startOffset) {
-						// TODO Auto-generated method stub
-						return null;
-					}
-
-					@Override
-					public List<JstBlock> getJstBlockList() {
-						// TODO Auto-generated method stub
-						return null;
-					}
-				};
+				return TypeSpaceMgr.getInstance().findType(sourceModule.getTypeName());
 			}
 			// if from lib don't parse it get type from typespace
 
@@ -590,10 +550,10 @@ public class ScriptUnitView extends ViewPart implements ISelectionListener{
 				return;
 			}
 			VjoSourceModule sourceModule = (VjoSourceModule)element;
-			IScriptUnit scriptUnit = getScriptUnit(sourceModule, vjoEditor);
+			IJstType scriptUnit = getScriptUnit(sourceModule, vjoEditor);
 
 			//record jst type
-			jstType = scriptUnit.getType();
+			jstType = scriptUnit;
 
 			//reset input
 			((ScriptUnitTreeContentProvider)viewer.getContentProvider()).setScriptUnit(scriptUnit);

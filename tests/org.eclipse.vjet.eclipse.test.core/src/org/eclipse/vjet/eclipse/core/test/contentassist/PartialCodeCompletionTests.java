@@ -1665,7 +1665,7 @@ public class PartialCodeCompletionTests extends AbstractVjoModelTests {
 			int position;
 			position = lastPositionInFile(beforeWord, module);
 			IJstType type = parser.parse(module.getGroupName(), new String(module
-					.getFileName()), module.getSourceContents(), position).getType();
+					.getFileName()), module.getSourceContents(), position);
 			TypeSpaceMgr.parser().resolve(type);
 			return type;
 		} catch (ModelException e) {

@@ -11,18 +11,17 @@
  */
 package org.eclipse.vjet.eclipse.internal.ui.view.scriptunit;
 
+import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.vjet.dsf.jst.IJstMethod;
 import org.eclipse.vjet.dsf.jst.IJstNode;
 import org.eclipse.vjet.dsf.jst.IJstProperty;
 import org.eclipse.vjet.dsf.jst.IJstType;
-import org.eclipse.vjet.dsf.jst.IScriptUnit;
 import org.eclipse.vjet.dsf.jst.JstSource;
 import org.eclipse.vjet.dsf.jst.declaration.JstVar;
 import org.eclipse.vjet.dsf.jst.term.JstIdentifier;
 import org.eclipse.vjet.dsf.jstojava.translator.JstUtil;
-import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.jface.viewers.LabelProvider;
-import org.eclipse.swt.graphics.Image;
 
 /**
  * 
@@ -60,8 +59,8 @@ class ScriptUnitTreeLabelProvider extends LabelProvider {
 	 * @see org.eclipse.jface.viewers.LabelProvider#getText(java.lang.Object)
 	 */
 	public String getText(Object element) {
-		if (element instanceof IScriptUnit)
-			return "Script Unit";
+		if (element instanceof IJstType)
+			return "JstType";
 			
 		if (element instanceof IJstNode)
 			return getJstNodeLabel((IJstNode)element);

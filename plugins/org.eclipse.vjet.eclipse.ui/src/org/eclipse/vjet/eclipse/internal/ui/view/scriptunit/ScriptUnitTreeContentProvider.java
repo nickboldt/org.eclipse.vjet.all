@@ -15,18 +15,17 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.eclipse.vjet.dsf.jst.BaseJstNode;
-import org.eclipse.vjet.dsf.jst.IJstType;
-import org.eclipse.vjet.dsf.jst.IScriptUnit;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.vjet.dsf.jst.BaseJstNode;
+import org.eclipse.vjet.dsf.jst.IJstType;
 
 /**
  * 
  *
  */
 class ScriptUnitTreeContentProvider implements ITreeContentProvider {
-	private IScriptUnit scriptUnit;
+	private IJstType scriptUnit;
 	
 	/* (non-Javadoc)
 	 * @see org.eclipse.jface.viewers.ITreeContentProvider#getChildren(java.lang.Object)
@@ -36,9 +35,9 @@ class ScriptUnitTreeContentProvider implements ITreeContentProvider {
 			return (Object[])parentElement;
 		}
 		
-		if (parentElement instanceof IScriptUnit) {
-			return this.getScriptUnitChildren((IScriptUnit)parentElement);
-		}
+//		if (parentElement instanceof IJstType) {
+//			return this.getScriptUnitChildren((IJstType)parentElement);
+//		}
 		
 		if (parentElement instanceof IJstType) {
 			IJstType jstType = (IJstType)parentElement;
@@ -64,12 +63,12 @@ class ScriptUnitTreeContentProvider implements ITreeContentProvider {
 		return new Object[0];
 	}
 
-	private Object[] getScriptUnitChildren(IScriptUnit scriptUnit) {
+	private Object[] getScriptUnitChildren(IJstType scriptUnit) {
 		List children = new ArrayList();
 		
 		//add jst type
-		if (scriptUnit.getType() != null)
-			children.add(scriptUnit.getType());
+		if (scriptUnit != null)
+			children.add(scriptUnit);
 		
 //		//syntax root
 //		if (scriptUnit.getSyntaxRoot() != null)
@@ -136,7 +135,7 @@ class ScriptUnitTreeContentProvider implements ITreeContentProvider {
 	/**
 	 * @param scriptUnit the scriptUnit to set
 	 */
-	public void setScriptUnit(IScriptUnit scriptUnit) {
+	public void setScriptUnit(IJstType scriptUnit) {
 		this.scriptUnit = scriptUnit;
 	}
 

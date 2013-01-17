@@ -90,7 +90,7 @@ public class VjoCompletionEngine extends ScriptCompletionEngine {
 		try {
 			type = parser
 					.parse(vjoModule.getGroupName(), vmodule.getTypeName().typeName(),  module.getSourceContents(),
-							position).getType();
+							position);
 
 			TypeSpaceMgr.parser().resolve(type);
 						

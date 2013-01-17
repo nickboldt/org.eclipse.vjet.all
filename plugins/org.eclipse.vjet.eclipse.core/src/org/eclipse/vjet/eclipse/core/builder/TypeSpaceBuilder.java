@@ -14,6 +14,7 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -24,14 +25,21 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceDelta;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.dltk.mod.core.DLTKContentTypeManager;
 import org.eclipse.dltk.mod.core.DLTKCore;
 import org.eclipse.dltk.mod.core.IBuildpathEntry;
 import org.eclipse.dltk.mod.core.IScriptProject;
+import org.eclipse.dltk.mod.core.ISourceModule;
 import org.eclipse.dltk.mod.core.ModelException;
 import org.eclipse.dltk.mod.internal.core.Model;
 import org.eclipse.dltk.mod.internal.core.ModelManager;
 import org.eclipse.dltk.mod.internal.core.ScriptProject;
+import org.eclipse.dltk.mod.internal.core.VjoSourceHelper;
+import org.eclipse.dltk.mod.internal.core.builder.StandardScriptBuilder;
+import org.eclipse.vjet.dsf.jsgen.shared.validation.vjo.VjoValidationDriver;
+import org.eclipse.vjet.dsf.jsgen.shared.validation.vjo.VjoValidationResult;
 import org.eclipse.vjet.dsf.jst.IJstType;
 import org.eclipse.vjet.dsf.jst.declaration.JstType;
 import org.eclipse.vjet.dsf.jst.ts.JstTypeSpaceMgr;
@@ -47,6 +55,11 @@ import org.eclipse.vjet.dsf.ts.event.group.BatchGroupLoadingEvent;
 import org.eclipse.vjet.dsf.ts.event.group.IGroupEventListener;
 import org.eclipse.vjet.dsf.ts.event.group.RemoveGroupDependencyEvent;
 import org.eclipse.vjet.dsf.ts.event.group.RemoveGroupEvent;
+import org.eclipse.vjet.dsf.ts.event.type.AddTypeEvent;
+import org.eclipse.vjet.dsf.ts.event.type.ITypeEventListener;
+import org.eclipse.vjet.dsf.ts.event.type.ModifyTypeEvent;
+import org.eclipse.vjet.dsf.ts.event.type.RemoveTypeEvent;
+import org.eclipse.vjet.dsf.ts.event.type.RenameTypeEvent;
 import org.eclipse.vjet.eclipse.codeassist.CodeassistUtils;
 import org.eclipse.vjet.eclipse.core.PiggyBackClassPathUtil;
 import org.eclipse.vjet.eclipse.core.VjetPlugin;
@@ -594,6 +607,80 @@ public class TypeSpaceBuilder {
 	}
 
 	public static void addGroupEventListeners(JstTypeSpaceMgr jstTypeSpaceMgr) {
+		jstTypeSpaceMgr.registerSourceEventListener((new ITypeEventListener<JstType>() {
+
+			@Override
+			public EventListenerStatus<JstType> onTypeAdded(
+					AddTypeEvent<JstType> event, IEventListenerHandle handle,
+					ISourceEventCallback<JstType> callBack) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+			@Override
+			public EventListenerStatus<JstType> onTypeRenamed(
+					RenameTypeEvent event, IEventListenerHandle handle,
+					ISourceEventCallback<JstType> callBack) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+			@Override
+			public EventListenerStatus<JstType> onTypeModified(
+					ModifyTypeEvent event, IEventListenerHandle handle,
+					ISourceEventCallback<JstType> callBack) {
+				// TODO Auto-generated method stub
+				// revalidate type now
+				String filename = event.getFileName();
+				TypeSpaceMgr ts = TypeSpaceMgr.getInstance();
+				IJstType type = ts.findType(event.getTypeName());
+				System.out.println("validating dependent type" + type.getName());
+				
+				// need to revalidate type -- issue is with script unit block validtion removal.
+				// validte type and update markers
+				// we need to figure out if we should remove the idea of script unit 
+				// since it is no longer helpful in this case
+				
+				List<IJstType> dependents = ts.getTypeSpace().getAllDependents(event.getTypeName());
+				
+				if(dependents != null){
+					for(IJstType jstType: dependents){
+					final List<ISourceModule> selectedSourceModules = new LinkedList<ISourceModule>();
+					final StandardScriptBuilder scriptBuild = new StandardScriptBuilder();
+					final ScriptProject scriptProject = CodeassistUtils
+							.getScriptProject(jstType.getPackage().getGroupName());
+					VjoSourceHelper.getAllSourceModulesFromJst(selectedSourceModules, dependents, scriptProject);
+					if(selectedSourceModules.size() > 0){
+						scriptBuild.initialize(scriptProject);
+						scriptBuild.buildModelElements(scriptProject, selectedSourceModules,
+								new NullProgressMonitor(),1);
+					}
+					}
+				}
+				
+				
+			
+				// how to get vjosource module?
+				
+//				IProblemReporter reporter = module.getProblemReporter();
+//				ProblemUtility.reportProblems(result.getAllProblems());
+//				for (IProblem problem : ) {
+//					reporter.reportProblem(problem);
+//				}
+
+				
+				return null;
+			}
+
+			@Override
+			public EventListenerStatus<JstType> onTypeRemoved(
+					RemoveTypeEvent event, IEventListenerHandle handle,
+					ISourceEventCallback<JstType> callBack) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+			
+		}));
 		jstTypeSpaceMgr.registerSourceEventListener(new IGroupEventListener<JstType>(){
 
 			@Override

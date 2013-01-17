@@ -190,7 +190,7 @@ public class JsCodeGenTool implements IJs2JavaCodeGenTool {
 		TranslateConfig cfg = new TranslateConfig();
 		cfg.setSkiptImplementation(true);
 		VjoParser p = new VjoParser(cfg);
-		JstType t = (JstType) p.parse(ONDEMAND, inputFile).getType();
+		JstType t = (JstType) p.parse(ONDEMAND, inputFile);
 		
 		 BuildController c = new BuildController();
 		 JstTypeSpaceMgr mgr = c.loadType(ONDEMAND, t);

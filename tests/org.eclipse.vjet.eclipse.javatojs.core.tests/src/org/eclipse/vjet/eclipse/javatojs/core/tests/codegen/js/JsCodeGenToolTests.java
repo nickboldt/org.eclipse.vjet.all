@@ -197,7 +197,7 @@ public class JsCodeGenToolTests /*extends TestCase*/ {
 			TranslateConfig cfg = new TranslateConfig();
 			cfg.setSkiptImplementation(true);
 			VjoParser p = new VjoParser(cfg);
-			IJstType t = p.parse("ONDEMAND", inputURL).getType();
+			IJstType t = p.parse("ONDEMAND", inputURL);
 			Assert.assertNotNull(t);
 			
 			JsCodeGenTool.genJsr(t, output.getOutputStream(), CodeStyle.PRETTY);
@@ -274,11 +274,11 @@ public class JsCodeGenToolTests /*extends TestCase*/ {
 			TranslateConfig cfg = new TranslateConfig();
 			cfg.setSkiptImplementation(true);
 			VjoParser p = new VjoParser(cfg);
-			IJstType t = p.parse("ONDEMAND", inputURL).getType();
+			IJstType t = p.parse("ONDEMAND", inputURL);
 			Assert.assertNotNull(t);
 			ByteArrayOutputStreamWriter writer = (ByteArrayOutputStreamWriter) output
 			.getOutputStream();
-			ByteArrayOutputStream outputStream = writer.getOutputStream();			
+//			ByteArrayOutputStream outputStream = writer.getOutputStream();			
 			
 			b.append(Z.fmt("TYPE", output.getType()));
 			System.out.println(b.toString());

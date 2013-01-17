@@ -16,6 +16,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
@@ -56,15 +57,19 @@ public class VjoJstTypeLoader implements IJstTypeLoader {
 		absolutePath = absolutePath.replace("\\", "/");
 		URI fileURI = null;
 		if (absolutePath.contains(groupName)) {
-			fileURI = new URI(absolutePath.substring(absolutePath
-					.indexOf(groupName)));
+			String substring = absolutePath.substring(absolutePath
+					.indexOf(groupName));
+			fileURI = new URI(URLEncoder.encode(substring,"utf-8"));
 		} else if (absolutePath.contains(actualGroupFolderName)) {
-			fileURI = new URI(absolutePath.substring(
+			String replace = absolutePath.substring(
 					absolutePath.indexOf(actualGroupFolderName)).replace(
-					actualGroupFolderName, groupName));
+					actualGroupFolderName, groupName);
+			
+			fileURI = new URI(URLEncoder.encode(replace,"utf-8"));
 
 		} else {
-			fileURI = new URI(absolutePath);
+			
+			fileURI = new URI(URLEncoder.encode(absolutePath,"utf-8"));
 		}
 
 		TypeSpaceMgr.getInstance().getTypeToFileMap().put(

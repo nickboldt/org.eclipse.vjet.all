@@ -14,22 +14,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.vjet.dsf.jst.IJstNode;
-import org.eclipse.vjet.dsf.jst.IJstType;
-import org.eclipse.vjet.dsf.jst.IScriptProblem;
-import org.eclipse.vjet.dsf.jst.IScriptUnit;
-import org.eclipse.vjet.dsf.jst.declaration.JstBlock;
-import org.eclipse.vjet.dsf.jstojava.translator.JstUtil;
-import org.eclipse.vjet.dsf.ts.type.TypeName;
-import org.eclipse.vjet.eclipse.codeassist.CodeassistUtils;
-import org.eclipse.vjet.eclipse.core.IVjoSourceModule;
-import org.eclipse.vjet.eclipse.core.VjetPlugin;
-import org.eclipse.vjet.eclipse.core.parser.VjoParserToJstAndIType;
-import org.eclipse.vjet.eclipse.internal.compiler.VjoSourceElementParser;
-import org.eclipse.vjet.vjo.tool.typespace.ITypeSpaceRunnable;
-import org.eclipse.vjet.vjo.tool.typespace.SourceTypeName;
-import org.eclipse.vjet.vjo.tool.typespace.TypeSpaceListener;
-import org.eclipse.vjet.vjo.tool.typespace.TypeSpaceMgr;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
@@ -50,6 +34,21 @@ import org.eclipse.dltk.mod.core.SourceParserUtil;
 import org.eclipse.dltk.mod.core.WorkingCopyOwner;
 import org.eclipse.dltk.mod.internal.core.builder.StandardScriptBuilder;
 import org.eclipse.dltk.mod.utils.CorePrinter;
+import org.eclipse.vjet.dsf.jst.IJstNode;
+import org.eclipse.vjet.dsf.jst.IJstType;
+import org.eclipse.vjet.dsf.jst.IScriptProblem;
+import org.eclipse.vjet.dsf.jst.declaration.JstBlock;
+import org.eclipse.vjet.dsf.jstojava.translator.JstUtil;
+import org.eclipse.vjet.dsf.ts.type.TypeName;
+import org.eclipse.vjet.eclipse.codeassist.CodeassistUtils;
+import org.eclipse.vjet.eclipse.core.IVjoSourceModule;
+import org.eclipse.vjet.eclipse.core.VjetPlugin;
+import org.eclipse.vjet.eclipse.core.parser.VjoParserToJstAndIType;
+import org.eclipse.vjet.eclipse.internal.compiler.VjoSourceElementParser;
+import org.eclipse.vjet.vjo.tool.typespace.ITypeSpaceRunnable;
+import org.eclipse.vjet.vjo.tool.typespace.SourceTypeName;
+import org.eclipse.vjet.vjo.tool.typespace.TypeSpaceListener;
+import org.eclipse.vjet.vjo.tool.typespace.TypeSpaceMgr;
 
 public class VjoSourceModule extends JSSourceModule implements
 		TypeSpaceListener, IVjoSourceModule {
@@ -309,11 +308,11 @@ public class VjoSourceModule extends JSSourceModule implements
 			if(VjetPlugin.TRACE_PARSER){
 				System.out.println("parsing for " + getClass().getName());
 			}
-			IScriptUnit scriptUnit = parser.parse(typeName.groupName(),
+			IJstType scriptUnit = parser.parse(typeName.groupName(),
 					getTypeName().typeName(),  typeName
 							.source());
 			if (scriptUnit != null) {
-				jstType = scriptUnit.getType();
+				jstType = scriptUnit;
 			}
 		} catch (Exception e) {
 			DLTKCore.error(e.getMessage(), e);
