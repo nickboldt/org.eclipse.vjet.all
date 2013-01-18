@@ -69,7 +69,7 @@ public class JsFormattingTests {
 		URL jsFile = ResourceUtil.getResource(this.getClass(), "FormattingTest2.js.txt");
 		String goldString = JsPreGenHelper.url2String(jsFile);
 		IJstType type = new VjoParser().addLib(
-				LibManager.getInstance().getJsNativeGlobalLib()).parse(null, jsFile).getType();
+				LibManager.getInstance().getJsNativeGlobalLib()).parse(null, jsFile);
 		
 		GeneratorCtx ctx = new GeneratorCtx(CodeStyle.PRETTY);
 		ctx.setNewline(TestHelper.NEWLINE);

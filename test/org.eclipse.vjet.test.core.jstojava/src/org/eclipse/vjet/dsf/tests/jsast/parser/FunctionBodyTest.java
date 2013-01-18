@@ -66,7 +66,7 @@ public class FunctionBodyTest implements ICommentConstants {
 		LibManager.getInstance().setResourceResolver(jstLibResolver);
 		URL url = ResourceUtil.getResource(this.getClass(),fileName);
 		jstType = new VjoParser().addLib(LibManager.getInstance().getJsNativeGlobalLib())
-			.parse(null, url).getType();
+			.parse(null, url);
 	}
 	
 	@Test

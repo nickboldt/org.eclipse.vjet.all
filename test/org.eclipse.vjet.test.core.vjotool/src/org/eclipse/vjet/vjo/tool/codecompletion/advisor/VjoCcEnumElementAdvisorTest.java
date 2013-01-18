@@ -17,9 +17,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.eclipse.vjet.dsf.common.resource.ResourceUtil;
 import org.eclipse.vjet.dsf.jst.IJstProperty;
 import org.eclipse.vjet.dsf.jst.IJstType;
-import org.eclipse.vjet.dsf.jst.IScriptUnit;
 import org.eclipse.vjet.dsf.jstojava.parser.VjoParser;
 import org.eclipse.vjet.dsf.ts.type.TypeName;
 import org.eclipse.vjet.vjo.tool.codecompletion.IVjoCcProposalData;
@@ -28,9 +28,6 @@ import org.eclipse.vjet.vjo.tool.codecompletion.VjoCcCtx;
 import org.eclipse.vjet.vjo.tool.codecompletion.jsresource.CodeCompletionUtil;
 import org.junit.Assert;
 import org.junit.Test;
-
-
-import org.eclipse.vjet.dsf.common.resource.ResourceUtil;
 
 //@Category({P1,FAST,UNIT})
 //@ModuleInfo(value="DsfPrebuild",subModuleId="VJET")
@@ -145,8 +142,7 @@ public class VjoCcEnumElementAdvisorTest extends VjoCcBaseTest {
 	
 	public static void main(String [] args) throws IOException{
 		URL url = ResourceUtil.getResource(VjoCcEnumElementAdvisorTest.class, "ProtosAdvisorTest1.js");
-		IScriptUnit unit = new VjoParser().parse("test", url);
-		IJstType type = unit.getType();
+		IJstType type = new VjoParser().parse("test", url);
 		System.out.println(type.getName());
 	}
 }

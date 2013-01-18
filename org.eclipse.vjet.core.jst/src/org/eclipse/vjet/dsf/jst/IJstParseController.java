@@ -14,10 +14,10 @@ import org.eclipse.vjet.dsf.jst.ts.JstTypeSpaceMgr;
 
 public interface IJstParseController {
 
-	public IScriptUnit parse(String groupName, String fileName, String source);
-	public IScriptUnit parse(String groupName, File sourceFile);
-	public IScriptUnit parseAndResolve(String groupName, String fileName, String source);
-	public IScriptUnit parseAndResolve(String groupName, File sourceFile);
+	public IJstType parse(String groupName, String fileName, String source);
+	public IJstType parse(String groupName, File sourceFile);
+	public IJstType parseAndResolve(String groupName, String fileName, String source);
+	public IJstType parseAndResolve(String groupName, File sourceFile);
 	public void resolve(IJstType type);
 	public void resolve(IJstProperty property);
 	public void resolve(IJstMethod method);

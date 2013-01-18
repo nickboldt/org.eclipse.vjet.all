@@ -14,17 +14,12 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Collections;
-import java.util.List;
 
+import org.eclipse.vjet.dsf.common.resource.ResourceUtil;
 import org.eclipse.vjet.dsf.jsgen.shared.validation.vjo.VjoSemanticProblem;
 import org.eclipse.vjet.dsf.jsgen.shared.validation.vjo.VjoValidationResult;
-import org.eclipse.vjet.dsf.jst.IJstNode;
 import org.eclipse.vjet.dsf.jst.IJstParseController;
 import org.eclipse.vjet.dsf.jst.IJstType;
-import org.eclipse.vjet.dsf.jst.IScriptProblem;
-import org.eclipse.vjet.dsf.jst.IScriptUnit;
-import org.eclipse.vjet.dsf.jst.IWritableScriptUnit;
-import org.eclipse.vjet.dsf.jst.declaration.JstBlock;
 import org.eclipse.vjet.dsf.jst.declaration.JstCache;
 import org.eclipse.vjet.dsf.jst.ts.IJstTypeLoader;
 import org.eclipse.vjet.dsf.jst.ts.JstTypeSpaceMgr;
@@ -41,8 +36,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 
-import org.eclipse.vjet.dsf.common.resource.ResourceUtil;
-
 public class BasicValidationScriptUnitTest {
 	
 	protected JstTypeSpaceMgr mgr;
@@ -55,14 +48,14 @@ public class BasicValidationScriptUnitTest {
 		return new DefaultJstTypeLoader();
 	}
 	
-	protected IScriptUnit lookUpTarget(final String path)
+	protected IJstType lookUpTarget(final String path)
 		throws Exception{
 		final File testFile = new File(ResourceUtil.getResource(this.getClass(), path).getFile());
 		
 		return lookUpTarget(testFile);
 	}
 	
-	protected IScriptUnit lookUpTarget(final String path, StringBuilder sb)
+	protected IJstType lookUpTarget(final String path, StringBuilder sb)
 		throws Exception{
 		final File targetFile = new File(ResourceUtil.getResource(
 				this.getClass(), path).getFile());
@@ -87,55 +80,31 @@ public class BasicValidationScriptUnitTest {
 		return lookUpTarget(targetFile);
 	}
 	
-	private IScriptUnit lookUpTarget(final File targetFile){
+	private IJstType lookUpTarget(final File targetFile){
 		
 		final VjoParser p = new VjoParser(); 
 		JstParseController c = new JstParseController(p);
 		
-		final IWritableScriptUnit target =(IWritableScriptUnit)c.parse("test", targetFile.getAbsolutePath(),
+		final IJstType targetType =c.parse("test", targetFile.getAbsolutePath(),
 				VjoParser.getContent(targetFile));
-		
-		final IJstType targetType = target.getType();
 		
 		JstTypeSpaceMgr mgr = new JstTypeSpaceMgr(c, new OnDemandAllTypeLoader(
 				"test", targetType));
 		mgr.initialize();
 		TsLibLoader.loadDefaultLibs(mgr);
 		
-		c.resolve("test", target);
+		c.resolve("test", targetType);
 		
 		mgr.processEvent(new AddGroupEvent("test", null,
 				Collections.EMPTY_LIST, Collections.EMPTY_LIST));
 		
-		IJstType findType = target.getType();
+		IJstType findType = targetType;
 		if(targetType.getName()!=null){
 			findType = mgr.getQueryExecutor().findType(new TypeName("test", targetType.getName()));
 		}
 		final IJstType finalTypeSpaceType = findType;
 		
-		
-		return new IScriptUnit(){
-
-			public IJstNode getNode(int startOffset) {
-				return target.getNode(startOffset);
-			}
-
-			public List<IScriptProblem> getProblems() {
-				return target.getProblems();
-			}
-
-			public JstBlock getSyntaxRoot() {
-				return target.getSyntaxRoot();
-			}
-			
-			public List<JstBlock> getJstBlockList() {
-				return target.getJstBlockList();
-			}
-
-			public IJstType getType() {
-				return finalTypeSpaceType != null ? finalTypeSpaceType : targetType;
-			}
-		};
+		return finalTypeSpaceType;
 	}
 	
 	protected void printResult(VjoValidationResult result){

@@ -73,7 +73,7 @@ public class JsToJavaGen {
 //		TsLibLoader.loadDefaultLibs(mgr);
 		cfg.setSkiptImplementation(true);
 		VjoParser p = new VjoParser(cfg);
-		IJstType t = p.parse(ONDEMAND, new File(location)).getType();
+		IJstType t = p.parse(ONDEMAND, new File(location));
 		mgr = c.loadType(ONDEMAND,t);
 		
 		GenerationConfig config = new GenerationConfig();

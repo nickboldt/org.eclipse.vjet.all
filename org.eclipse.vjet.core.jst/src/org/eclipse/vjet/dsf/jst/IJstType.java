@@ -721,5 +721,14 @@ public interface IJstType extends IJstNode {
 	Map<String, Object> getOptions();
 
 	boolean isSingleton();
+	
+
+	List<JstBlock> getJstBlockList();
+	
+	void setJstBlockList(List<JstBlock> blocks);
+	
+	List<IScriptProblem> getProblems();
+
+	void setProblems(List<IScriptProblem> probs);
 
 }

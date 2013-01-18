@@ -23,20 +23,21 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.mod.wst.jsdt.core.ast.IProgramElement;
+import org.eclipse.mod.wst.jsdt.internal.compiler.ast.CompilationUnitDeclaration;
+import org.eclipse.mod.wst.jsdt.internal.compiler.ast.FieldReference;
+import org.eclipse.mod.wst.jsdt.internal.compiler.ast.MessageSend;
+import org.eclipse.mod.wst.jsdt.internal.compiler.ast.SingleNameReference;
 import org.eclipse.vjet.af.common.error.ErrorList;
 import org.eclipse.vjet.af.common.error.ErrorObject;
 import org.eclipse.vjet.dsf.common.exceptions.DsfRuntimeException;
 import org.eclipse.vjet.dsf.jsgen.shared.ids.ScopeIds;
 import org.eclipse.vjet.dsf.jsgen.shared.jstvalidator.DefaultJstProblem;
-import org.eclipse.vjet.dsf.jst.BaseJstNode;
 import org.eclipse.vjet.dsf.jst.FileBinding;
 import org.eclipse.vjet.dsf.jst.IJstLib;
-import org.eclipse.vjet.dsf.jst.IJstNode;
 import org.eclipse.vjet.dsf.jst.IJstParser;
 import org.eclipse.vjet.dsf.jst.IJstType;
 import org.eclipse.vjet.dsf.jst.IScriptProblem;
-import org.eclipse.vjet.dsf.jst.IScriptUnit;
-import org.eclipse.vjet.dsf.jst.IWritableScriptUnit;
 import org.eclipse.vjet.dsf.jst.ProblemSeverity;
 import org.eclipse.vjet.dsf.jst.SimpleBinding;
 import org.eclipse.vjet.dsf.jst.declaration.JstBlock;
@@ -52,44 +53,11 @@ import org.eclipse.vjet.dsf.jstojava.translator.TranslateConfig;
 import org.eclipse.vjet.dsf.jstojava.translator.TranslateCtx;
 import org.eclipse.vjet.dsf.jstojava.translator.robust.completion.JstCompletion;
 import org.eclipse.vjet.vjo.meta.VjoKeywords;
-import org.eclipse.mod.wst.jsdt.core.ast.IProgramElement;
-import org.eclipse.mod.wst.jsdt.internal.compiler.ast.CompilationUnitDeclaration;
-import org.eclipse.mod.wst.jsdt.internal.compiler.ast.FieldReference;
-import org.eclipse.mod.wst.jsdt.internal.compiler.ast.MessageSend;
-import org.eclipse.mod.wst.jsdt.internal.compiler.ast.SingleNameReference;
 
 public class VjoParser implements IJstParser {
 
 	@SuppressWarnings("unchecked")
-	public static final IScriptUnit UNKNOWNUNIT = new IScriptUnit() {
-		
-		@Override
-		public List<JstBlock> getJstBlockList() {
-			return Collections.EMPTY_LIST;
-		}
-
-		@SuppressWarnings("serial")
-		@Override
-		public IJstNode getNode(int startOffset) {
-			return new BaseJstNode() {};
-		}
-
-		@Override
-		public List<IScriptProblem> getProblems() {
-			return Collections.EMPTY_LIST;
-		}
-
-		@Override
-		public JstBlock getSyntaxRoot() {
-			return new JstBlock();
-		}
-
-		@Override
-		public IJstType getType() {
-			return JstFactory.getInstance().createJstType(false);
-		}
-	};
-
+	public static final IJstType UNKNOWNUNIT =  JstFactory.getInstance().createJstType("UNKNOWN_TYPE", false);
 	private TranslateConfig m_config;
 
 	private boolean s_debug = false;
@@ -102,47 +70,47 @@ public class VjoParser implements IJstParser {
 		m_config = cfg;
 	}
 
-	public IWritableScriptUnit parse(String groupName, String fileName, String source) {
+	public IJstType parse(String groupName, String fileName, String source) {
 		return parseInternal(groupName, fileName, source, new TranslateCtx(
 				m_config), null);
 	}
 	
-	public IWritableScriptUnit parse(String groupName, String fileName, String source, TranslateCtx ctx) {
+	public IJstType parse(String groupName, String fileName, String source, TranslateCtx ctx) {
 		return parseInternal(groupName, fileName, source, ctx, null);
 	}
 
-	public IScriptUnit parse(String groupName, URL url) {
+	public IJstType parse(String groupName, URL url) {
 		return parse(groupName, url.getFile(), getContent(url));
 	}
 
-	public IScriptUnit parse(String groupName, URL url,
+	public IJstType parse(String groupName, URL url,
 			boolean skiptImplementation) {
 		return parse(groupName, url.getFile(), getContent(url),
 				skiptImplementation);
 	}
 
-	public IScriptUnit parse(String groupName, File file) {
+	public IJstType parse(String groupName, File file) {
 		return parseInternal(groupName, file.getAbsolutePath(),
 				getContent(file), file);
 	}
 
-	public IScriptUnit parse(String groupName, File file, TranslateCtx ctx) {
+	public IJstType parse(String groupName, File file, TranslateCtx ctx) {
 		return parseInternal(groupName, file.getAbsolutePath(),
 				getContent(file), ctx, file);
 	}
 
-	public IScriptUnit parse(String groupName, File file,
+	public IJstType parse(String groupName, File file,
 			boolean skiptImplementation) {
 		return parseInternal(groupName, file.getAbsolutePath(),
 				getContent(file), skiptImplementation, file);
 	}
 
-	public IScriptUnit parse(String groupName, String fileName, File file,
+	public IJstType parse(String groupName, String fileName, File file,
 			TranslateCtx ctx) {
 		return parseInternal(groupName, fileName, getContent(file), ctx, file);
 	}
 
-	public IScriptUnit parse(String groupName, String fileName, String source,
+	public IJstType parse(String groupName, String fileName, String source,
 			boolean skiptImplementation) {
 		return parseInternal(groupName, fileName, source, skiptImplementation,
 				null);
@@ -153,13 +121,13 @@ public class VjoParser implements IJstParser {
 //		return parseInternal(groupName, fileName, source, ctx, null);
 //	}
 
-	private IScriptUnit parseInternal(String groupName, String fileName,
+	private IJstType parseInternal(String groupName, String fileName,
 			String source, File file) {
 		return parseInternal(groupName, fileName, source, new TranslateCtx(
 				m_config), file);
 	}
 
-	private IScriptUnit parseInternal(String groupName, String fileName,
+	private IJstType parseInternal(String groupName, String fileName,
 			String source, boolean skiptImplementation, File file) {
 		TranslateConfig config = new TranslateConfig();
 		config.setSkiptImplementation(skiptImplementation);
@@ -168,7 +136,7 @@ public class VjoParser implements IJstParser {
 				config), file);
 	}
 
-	private IWritableScriptUnit parseInternal(final String groupName,
+	private IJstType parseInternal(final String groupName,
 			final String fileName, final String source, final TranslateCtx ctx,
 			final File file) {
 		if (s_debug) {
@@ -176,7 +144,7 @@ public class VjoParser implements IJstParser {
 		}
 
 		ctx.setGroup(groupName);
-		preParse(groupName, fileName, source);
+	
 		Map<?, ?> settings = Collections.EMPTY_MAP;
 		final String mysource = convertHTMLCommentsToJsComments(source);
 		char[] charsource = mysource.toCharArray();
@@ -200,9 +168,9 @@ public class VjoParser implements IJstParser {
 
 		JstBlock block = null;
 		List<JstBlock> createJstBlock = createJstBlock(ctx, ast);
-		if (createJstBlock != null && createJstBlock.size() > 0) {
-			block = createJstBlock.get(0);
-		}
+//		if (createJstBlock != null && createJstBlock.size() > 0) {
+//			block = createJstBlock.get(0);
+//		}
 
 		ctx.setScriptUnitBlockList(createJstBlock);
 		final IJstType type = SyntaxTreeFactory2.createJST(ast, ctx);
@@ -214,7 +182,9 @@ public class VjoParser implements IJstParser {
 			((JstType) type).setPackage(new JstPackage());
 		}
 		final List<IScriptProblem> probs = createProblems(ctx);
-
+		type.setProblems(probs);
+		type.setJstBlockList(createJstBlock);
+		
 		// TODO use SimpleBinding when working on file/not saved
 		// when using source this could be an issue with memory.
 		
@@ -227,7 +197,7 @@ public class VjoParser implements IJstParser {
 			}
 		}
 		type.getPackage().setGroupName(groupName);
-		return createScriptUnit(block, createJstBlock, type, probs);
+		return type;
 
 	}
 
@@ -236,13 +206,13 @@ public class VjoParser implements IJstParser {
 		JstCache.getInstance().printTypes(System.out);
 	}
 
-	private IWritableScriptUnit createScriptUnit(final JstBlock block,
-			final List<JstBlock> blockList, final IJstType type,
-			final List<IScriptProblem> probs) {
-		IWritableScriptUnit unit = new WorkableScriptUnit(block,blockList,type,probs);
-		postParse(unit);
-		return unit;
-	}
+//	private IWritableScriptUnit createScriptUnit(final JstBlock block,
+//			final List<JstBlock> blockList, final IJstType type,
+//			final List<IScriptProblem> probs) {
+//		IWritableScriptUnit unit = new WorkableScriptUnit(block,blockList,type,probs);
+//		postParse(unit);
+//		return unit;
+//	}
 
 	private List<JstBlock> createJstBlock(TranslateCtx ctx,
 			CompilationUnitDeclaration ast) {
@@ -442,18 +412,6 @@ public class VjoParser implements IJstParser {
 	//		
 	//		
 	// }
-
-	@Override
-	public IScriptUnit postParse(IScriptUnit unit) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public IScriptUnit preParse(String groupName, String fileName, String source) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	public TranslateCtx getDefaultTranslateCtx() {
 		return new TranslateCtx(m_config);

@@ -42,7 +42,7 @@ public class VjoSyntaxParsingTests {
 		
 		IJstParseController c = new JstParseController(p);
 		
-		IJstType type = c.parse(name, name, file).getType();
+		IJstType type = c.parse(name, name, file);
 		ParseUtils.validateJstSource(type);
 		
 		
@@ -63,7 +63,7 @@ public class VjoSyntaxParsingTests {
 		
 		IJstParseController c = new JstParseController(p);
 		
-		IJstType type = c.parse(name, name, file).getType();
+		IJstType type = c.parse(name, name, file);
 //		ParseUtils.printTree(type);
 		ParseUtils.validateJstSource(type);
 		
@@ -84,7 +84,7 @@ public class VjoSyntaxParsingTests {
 		
 		IJstParseController c = new JstParseController(p);
 		
-		IJstType type = c.parse(name, name, file).getType();
+		IJstType type = c.parse(name, name, file);
 		ParseUtils.printTree(type);
 		
 		
@@ -104,7 +104,7 @@ public class VjoSyntaxParsingTests {
 		
 		IJstParseController c = new JstParseController(p);
 		
-		IJstType type = c.parse(name, name, file).getType();
+		IJstType type = c.parse(name, name, file);
 		ParseUtils.printTree(type);
 		
 		

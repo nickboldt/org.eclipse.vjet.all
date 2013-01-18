@@ -20,11 +20,11 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.vjet.dsf.common.Z;
 import org.eclipse.vjet.dsf.common.exceptions.DsfRuntimeException;
 import org.eclipse.vjet.dsf.jst.IJstMethod;
 import org.eclipse.vjet.dsf.jst.IJstProperty;
 import org.eclipse.vjet.dsf.jst.IJstType;
-import org.eclipse.vjet.dsf.jst.IScriptUnit;
 import org.eclipse.vjet.dsf.jst.declaration.JstArg;
 import org.eclipse.vjet.dsf.jst.declaration.JstCache;
 import org.eclipse.vjet.dsf.jst.declaration.JstFactory;
@@ -48,8 +48,6 @@ import org.eclipse.vjet.dsf.jstojava.report.ErrorReporter;
 import org.eclipse.vjet.dsf.jstojava.translator.TranslateHelper;
 import org.eclipse.vjet.dsf.jstojava.translator.robust.JstSourceUtil;
 import org.eclipse.vjet.vjo.lib.LibManager;
-
-import org.eclipse.vjet.dsf.common.Z;
 
 public class BootstrapParser {
 
@@ -126,13 +124,13 @@ public class BootstrapParser {
 		p.addLib(LibManager.getInstance().getJsNativeGlobalLib());
 		
 		for(URL extention: extentionTypes){
-			IScriptUnit unit = p.parse(groupName, extention);
+			IJstType unit = p.parse(groupName, extention);
 			
-			fixUnit(unit);
+			fixUnit((JstType)unit);
 			
-			JstCache.getInstance().addType((JstType)unit.getType());
+			JstCache.getInstance().addType((JstType)unit);
 
-			mapOfTypes.put(unit.getType().getName(), unit.getType());
+			mapOfTypes.put(unit.getName(), unit);
 		}
 		
 		
@@ -140,8 +138,7 @@ public class BootstrapParser {
 	}
 
 	
-	private static void fixUnit(IScriptUnit unit) {
-		JstType t = (JstType)unit.getType();
+	private static void fixUnit(JstType t) {
 		t.setImpliedImport(true);
 		t.getModifiers().setStatic(true);
 		if("vjo.Object".equals(t.getName())){
@@ -316,17 +313,14 @@ public class BootstrapParser {
 			String groupName) {
 		VjoParser p = new VjoParser();
 		p.addLib(LibManager.getInstance().getJsNativeGlobalLib());
-		IScriptUnit su = p.parse(groupName, topLevelExtApi);
-		
-		
-		return su.getType();
+		return p.parse(groupName, topLevelExtApi);
 	}
 	
 	private static IJstType createTopLevelObj(URL topLevelExtApi,
 			String groupName) {
 		VjoParser p = new VjoParser();
 		p.addLib(LibManager.getInstance().getJsNativeGlobalLib());
-		IJstType type = p.parse(groupName, topLevelExtApi).getType();
+		IJstType type = p.parse(groupName, topLevelExtApi);
 		if(type instanceof JstType){
 			((JstType)type).setImpliedImport(true);
 		}

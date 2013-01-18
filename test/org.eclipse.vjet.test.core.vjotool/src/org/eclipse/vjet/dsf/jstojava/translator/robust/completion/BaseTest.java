@@ -17,19 +17,18 @@ import java.net.URL;
 import java.util.Collection;
 import java.util.List;
 
-import org.eclipse.vjet.dsf.jst.IJstMethod;
-import org.eclipse.vjet.dsf.jst.IJstParseController;
-import org.eclipse.vjet.dsf.jst.IJstProperty;
-import org.eclipse.vjet.dsf.jst.IJstType;
-import org.eclipse.vjet.dsf.jst.IScriptUnit;
-import org.eclipse.vjet.dsf.jstojava.parser.SyntaxTreeFactory2;
-import org.eclipse.vjet.dsf.jstojava.parser.VjoParser;
-import org.eclipse.vjet.dsf.jstojava.translator.TranslateCtx;
-import org.eclipse.vjet.vjo.tool.codecompletion.jsresource.CodeCompletionUtil;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.mod.wst.jsdt.internal.compiler.ast.CompilationUnitDeclaration;
 import org.eclipse.mod.wst.jsdt.internal.compiler.batch.CompilationUnit;
 import org.eclipse.mod.wst.jsdt.internal.compiler.env.ICompilationUnit;
+import org.eclipse.vjet.dsf.jst.IJstMethod;
+import org.eclipse.vjet.dsf.jst.IJstParseController;
+import org.eclipse.vjet.dsf.jst.IJstProperty;
+import org.eclipse.vjet.dsf.jst.IJstType;
+import org.eclipse.vjet.dsf.jstojava.parser.SyntaxTreeFactory2;
+import org.eclipse.vjet.dsf.jstojava.parser.VjoParser;
+import org.eclipse.vjet.dsf.jstojava.translator.TranslateCtx;
+import org.eclipse.vjet.vjo.tool.codecompletion.jsresource.CodeCompletionUtil;
 
 public abstract class BaseTest {
 
@@ -110,39 +109,36 @@ public abstract class BaseTest {
 		m_translateCtx = new TranslateCtx();
 		m_translateCtx.setCompletionPos(position);
 
-		IScriptUnit unit = vjoParser.parse("Test", fullName, content,
+		IJstType unit = vjoParser.parse("Test", fullName, content,
 				m_translateCtx);
 		assertNotNull(unit);
-		IJstType jstType = unit.getType();
-		assertNotNull(jstType);
-		return jstType;
+
+		return unit;
 	}
 
 	protected IJstType getJstTypeFromVjoParser(String fileName,
 			String fullName, int position) {
-		IScriptUnit unit = getScriptUnitFromVjoParser(fileName, fullName,
+		IJstType unit = getScriptUnitFromVjoParser(fileName, fullName,
 				position);
-		assertNotNull(unit);
-		IJstType jstType = unit.getType();
-		assertNotNull(jstType);
-		return jstType;
-	}
-
-	protected IScriptUnit getScriptUnitFromVjoParser(String fileName,
-			String fullName, String token) {
-		IScriptUnit unit = getScriptUnitFromVjoParser(fileName, fullName, token);
 		assertNotNull(unit);
 		return unit;
 	}
 
-	protected IScriptUnit getScriptUnitFromVjoParser(String fileName,
+	protected IJstType getScriptUnitFromVjoParser(String fileName,
+			String fullName, String token) {
+		IJstType unit = getScriptUnitFromVjoParser(fileName, fullName, token);
+		assertNotNull(unit);
+		return unit;
+	}
+
+	protected IJstType getScriptUnitFromVjoParser(String fileName,
 			String fullName, int position) {
 		VjoParser vjoParser = new VjoParser();
 		String content = getFileContent(fileName, null);
 		m_translateCtx = new TranslateCtx();
 		m_translateCtx.setCompletionPos(position);
 
-		IScriptUnit unit = vjoParser.parse("Test", fullName, content,
+		IJstType unit = vjoParser.parse("Test", fullName, content,
 				m_translateCtx);
 		assertNotNull(unit);
 		return unit;

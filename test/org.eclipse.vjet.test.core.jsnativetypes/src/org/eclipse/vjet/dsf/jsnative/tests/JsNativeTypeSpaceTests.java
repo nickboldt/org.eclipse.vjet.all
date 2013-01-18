@@ -12,12 +12,12 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.vjet.dsf.common.Z;
 import org.eclipse.vjet.dsf.dap.proxy.Ol;
 import org.eclipse.vjet.dsf.javatojs.util.SupportedBrowser;
 import org.eclipse.vjet.dsf.javatojs.util.SupportedDomLevel;
@@ -40,12 +40,8 @@ import org.eclipse.vjet.dsf.jst.IJstParseController;
 import org.eclipse.vjet.dsf.jst.IJstParser;
 import org.eclipse.vjet.dsf.jst.IJstProperty;
 import org.eclipse.vjet.dsf.jst.IJstType;
-import org.eclipse.vjet.dsf.jst.IScriptProblem;
-import org.eclipse.vjet.dsf.jst.IScriptUnit;
-import org.eclipse.vjet.dsf.jst.IWritableScriptUnit;
 import org.eclipse.vjet.dsf.jst.datatype.JstReservedTypes;
 import org.eclipse.vjet.dsf.jst.declaration.JstArg;
-import org.eclipse.vjet.dsf.jst.declaration.JstBlock;
 import org.eclipse.vjet.dsf.jst.declaration.JstCache;
 import org.eclipse.vjet.dsf.jst.declaration.JstPackage;
 import org.eclipse.vjet.dsf.jst.declaration.JstRefType;
@@ -65,9 +61,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-
-import org.eclipse.vjet.dsf.common.Z;
 
 //@ModuleInfo(value="JsNativeResource",subModuleId="JsNativeResource")
 public class JsNativeTypeSpaceTests {
@@ -500,7 +493,7 @@ public class JsNativeTypeSpaceTests {
 	
 	IJstParser getParser(){
 		return new IJstParser(){
-			public IWritableScriptUnit parse(String groupName, String fileName, String source){
+			public IJstType parse(String groupName, String fileName, String source){
 				final JstType type = JstCache.getInstance().getType(fileName);
 				if (type == null ){
 					return null;
@@ -509,78 +502,19 @@ public class JsNativeTypeSpaceTests {
 					type.setPackage(new JstPackage());
 				}
 				type.getPackage().setGroupName(groupName);
-				IWritableScriptUnit unit = new IWritableScriptUnit(){
-
-					public IJstNode getNode(int startOffset) {
-						// TODO Auto-generated method stub
-						return null;
-					}
-
-					public List<IScriptProblem> getProblems() {
-						// TODO Auto-generated method stub
-						return null;
-					}
-
-					public JstBlock getSyntaxRoot() {
-						// TODO Auto-generated method stub
-						return null;
-					}
-					
-					public List<JstBlock> getJstBlockList() {
-						return new ArrayList<JstBlock>();
-					}
-
-					public IJstType getType() {
-						// TODO Auto-generated method stub
-						return type;
-					}
-
-					@Override
-					public void setType(IJstType type) {
-						// TODO Auto-generated method stub
-						
-					}
-
-					@Override
-					public void setSyntaxRoot(JstBlock block) {
-						// TODO Auto-generated method stub
-						
-					}
-
-					@Override
-					public void setJstBlockList(List<JstBlock> blocks) {
-						// TODO Auto-generated method stub
-						
-					}
-
-					@Override
-					public void setProblems(List<IScriptProblem> probs) {
-						// TODO Auto-generated method stub
-						
-					}
-					
-				};
-				
-				return unit;
-			}
-
-			@Override
-			public IScriptUnit postParse(IScriptUnit unit) {
-				// TODO Auto-generated method stub
-				return null;
-			}
-
-			@Override
-			public IScriptUnit preParse(String groupName, String fileName,
-					String source) {
-				// TODO Auto-generated method stub
-				return null;
-			}
 			
+					
+						return type;
+		
+			}
+
 			@Override
-			public IScriptUnit parse(String groupName, File file) {
+			public IJstType parse(String groupName, File file) {
+				// TODO Auto-generated method stub
 				return null;
 			}
+
+			
 		};
 	}
 	

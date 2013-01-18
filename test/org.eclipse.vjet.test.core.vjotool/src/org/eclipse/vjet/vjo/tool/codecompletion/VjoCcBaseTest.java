@@ -14,20 +14,18 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-
+import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.vjet.dsf.jsnative.anno.Constructor;
 import org.eclipse.vjet.dsf.jsnative.anno.Function;
 import org.eclipse.vjet.dsf.jsnative.anno.Property;
 import org.eclipse.vjet.dsf.jsnative.anno.Static;
 import org.eclipse.vjet.dsf.jst.IJstParseController;
 import org.eclipse.vjet.dsf.jst.IJstType;
-import org.eclipse.vjet.dsf.jst.IScriptUnit;
 import org.eclipse.vjet.dsf.jst.ts.JstTypeSpaceMgr;
 import org.eclipse.vjet.dsf.jstojava.parser.VjoParser;
 import org.eclipse.vjet.dsf.ts.type.TypeName;
 import org.eclipse.vjet.dsf.util.JavaSourceLocator;
 import org.eclipse.vjet.vjo.tool.codecompletion.jsresource.CodeCompletionUtil;
-import org.eclipse.core.runtime.FileLocator;
 
 public abstract class VjoCcBaseTest{
 
@@ -85,7 +83,7 @@ public abstract class VjoCcBaseTest{
 		return type;
 	}
 	
-	protected IScriptUnit getScriptUnit(String groupName, String fileName, String source) {
+	protected IJstType getScriptUnit(String groupName, String fileName, String source) {
 		VjoParser parser = new VjoParser();
 		return parser.parse(groupName, fileName, source);
 	}

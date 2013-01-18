@@ -14,6 +14,7 @@ package org.eclipse.vjet.dsf.vjolang.feature.tests;
 
 
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
@@ -22,11 +23,11 @@ import java.util.List;
 
 import junit.framework.Assert;
 
+import org.eclipse.vjet.dsf.common.FileUtils;
 import org.eclipse.vjet.dsf.jst.IJstMethod;
 import org.eclipse.vjet.dsf.jst.IJstNode;
 import org.eclipse.vjet.dsf.jst.IJstParseController;
 import org.eclipse.vjet.dsf.jst.IJstType;
-import org.eclipse.vjet.dsf.jst.IScriptUnit;
 import org.eclipse.vjet.dsf.jst.declaration.JstBlock;
 import org.eclipse.vjet.dsf.jst.declaration.JstVars;
 import org.eclipse.vjet.dsf.jst.expr.AssignExpr;
@@ -45,10 +46,6 @@ import org.eclipse.vjet.vjo.lib.LibManager;
 import org.eclipse.vjet.vjo.lib.TsLibLoader;
 import org.junit.Ignore;
 import org.junit.Test;
-
-
-
-import org.eclipse.vjet.dsf.common.FileUtils;
 
 //@ModuleInfo(value="DsfPrebuild",subModuleId="JsToJava")
 public class ParsingTests {
@@ -86,11 +83,11 @@ public class ParsingTests {
 		
 		VjoParser p = new VjoParser();
 		IJstParseController c = new JstParseController(p);
-		IScriptUnit unit = c.parse(name, name, file);
-		IJstType type = unit.getType();
+		IJstType type = c.parse(name, name, file);
+
 		//ParseUtils.printTree(type);
 
-		assertTrue(unit.getProblems().isEmpty());
+		assertTrue(type.getProblems().isEmpty());
 		ParseUtils.validateJstSource(type);
 		
 	}
@@ -106,9 +103,9 @@ public class ParsingTests {
 		String name = "bugArguments.js";
 		//bugArguments.js
 		String file = FileUtils.getResourceAsString(ParsingTests.class, name);
-		IScriptUnit unit = ParseUtils.createScriptUnit(name, file);
-		assertTrue(unit.getProblems().size()==0);
-		JstDepthFirstTraversal.accept(unit.getType(), new IJstVisitor(){
+		IJstType type = ParseUtils.createScriptUnit(name, file);
+		assertTrue(type.getProblems().size()==0);
+		JstDepthFirstTraversal.accept(type, new IJstVisitor(){
 
 			public void endVisit(IJstNode node) {
 				// TODO Auto-generated method stub
@@ -151,7 +148,7 @@ public class ParsingTests {
 		String file = FileUtils.getResourceAsString(ParsingTests.class, name);
 		VjoParser p = new VjoParser();
 		IJstParseController c = new JstParseController(p);
-		IScriptUnit unit = c.parse(name, name, file);
+		IJstType unit = c.parse(name, name, file);
 		assertTrue(unit.getProblems().isEmpty());
 		
 	}
@@ -165,7 +162,7 @@ public class ParsingTests {
 		VjoParser p = new VjoParser();
 		p.addLib(LibManager.getInstance().getJsNativeGlobalLib());
 		IJstParseController c = new JstParseController(p);
-		IJstType t = c.parse(name, name, file).getType();
+		IJstType t = c.parse(name, name, file);
 		ParseUtils.validateJstSource(t);
 		
 		List<? extends IJstMethod> methods = JstTypeHelper.getDeclaredMethods(t.getMethods());
@@ -195,7 +192,7 @@ public class ParsingTests {
 		VjoParser p = new VjoParser();
 		p.addLib(LibManager.getInstance().getJsNativeGlobalLib());
 		IJstParseController c = new JstParseController(p);
-		IJstType t = c.parse(name, name, file).getType();
+		IJstType t = c.parse(name, name, file);
 		ParseUtils.printTree(t);
 	}
 	
@@ -209,7 +206,7 @@ public class ParsingTests {
 		VjoParser p = new VjoParser();
 		p.addLib(LibManager.getInstance().getJsNativeGlobalLib());
 		IJstParseController c = new JstParseController(p);
-		IJstType t = c.parse(name, name, file).getType();
+		IJstType t = c.parse(name, name, file);
 		ParseUtils.printTree(t);
 	}
 	
@@ -223,8 +220,11 @@ public class ParsingTests {
 		VjoParser p = new VjoParser();
 		p.addLib(LibManager.getInstance().getJsNativeGlobalLib());
 		IJstParseController c = new JstParseController(p);
-		IScriptUnit t = c.parse(name, name, file);
-		ParseUtils.validateJstSource(t.getSyntaxRoot());
+		IJstType t = c.parse(name, name, file);
+		for(JstBlock b: t.getJstBlockList()){
+			ParseUtils.printTree(b);
+		}
+
 	}
 	
 	@Test
@@ -237,8 +237,10 @@ public class ParsingTests {
 		VjoParser p = new VjoParser();
 		p.addLib(LibManager.getInstance().getJsNativeGlobalLib());
 		IJstParseController c = new JstParseController(p);
-		IScriptUnit t = c.parse(name, name, file);
-		ParseUtils.validateJstSource(t.getSyntaxRoot());
+		IJstType t = c.parse(name, name, file);
+		for(JstBlock b: t.getJstBlockList()){
+			ParseUtils.printTree(b);
+		}
 	}
 	
 	@Test
@@ -251,7 +253,7 @@ public class ParsingTests {
 		VjoParser p = new VjoParser();
 		p.addLib(LibManager.getInstance().getJsNativeGlobalLib());
 		IJstParseController c = new JstParseController(p);
-		IJstType t = c.parse(name, name, file).getType();
+		IJstType t = c.parse(name, name, file);
 //		ParseUtils.printTree(t);
 		ParseUtils.validateJstSource(t);
 
@@ -300,8 +302,7 @@ public class ParsingTests {
 	public void testVjoAsArray() throws Exception {
 		String name = "vjoasarray.txt";
 		String file = FileUtils.getResourceAsString(ParsingTests.class, name);
-		IScriptUnit unit = ParseUtils.createScriptUnit(name, file);
-		IJstType type = unit.getType();
+		IJstType type = ParseUtils.createScriptUnit(name, file);
 		assertTrue(type.getSatisfies().size()!=0);
 		assertTrue(type.getExtends().size()!=0);
 		ParseUtils.genType(type);
@@ -315,8 +316,8 @@ public class ParsingTests {
 	public void testbug1425() throws Exception {
 		String name = "bug1425.txt";
 		String file = FileUtils.getResourceAsString(ParsingTests.class, name);
-		IScriptUnit unit  = ParseUtils.createScriptUnit(name, file);
-		ParseUtils.genType(unit.getType());
+		IJstType type  = ParseUtils.createScriptUnit(name, file);
+		ParseUtils.genType(type);
 	}
 	
 	@Test
@@ -325,8 +326,8 @@ public class ParsingTests {
 	public void testbug2024() throws Exception {
 		String name = "bug2024.txt";
 		String file = FileUtils.getResourceAsString(ParsingTests.class, name);
-		IScriptUnit unit = ParseUtils.createScriptUnit(name, file);
-		ParseUtils.genType(unit.getType());
+		IJstType type = ParseUtils.createScriptUnit(name, file);
+		ParseUtils.genType(type);
 	}
 	
 	@Test
@@ -356,8 +357,8 @@ public class ParsingTests {
 		JstTypeSpaceMgr ts = new JstTypeSpaceMgr(controller, new DefaultJstTypeLoader());
 		ts.initialize();
 		TsLibLoader.loadDefaultLibs(ts);
-		IScriptUnit unit = ParseUtils.createScriptUnit(name, file);
-		ts.processEvent(new AddTypeEvent<IJstType>(typename,unit.getType()));
+		IJstType unit = ParseUtils.createScriptUnit(name, file);
+		ts.processEvent(new AddTypeEvent<IJstType>(typename,unit));
 		
 		IJstType type = ts.getQueryExecutor().findType(typename);
 		
@@ -403,12 +404,12 @@ public class ParsingTests {
 		JstTypeSpaceMgr ts = new JstTypeSpaceMgr(controller, new DefaultJstTypeLoader());
 		ts.initialize();
 		TsLibLoader.loadDefaultLibs(ts);
-		IScriptUnit unit = ParseUtils.createScriptUnit(name, file);
-		ts.processEvent(new AddTypeEvent<IJstType>(typename,unit.getType()));
+		IJstType unit = ParseUtils.createScriptUnit(name, file);
+		ts.processEvent(new AddTypeEvent<IJstType>(typename,unit));
 		
 		IJstType type = ts.getQueryExecutor().findType(typename);
 		
-		
+		assertEquals(unit,type);
 		
 //		ParseUtils.printTree2(type);
 		
@@ -442,8 +443,8 @@ public class ParsingTests {
 		JstTypeSpaceMgr ts = new JstTypeSpaceMgr(controller, new DefaultJstTypeLoader());
 		ts.initialize();
 		TsLibLoader.loadDefaultLibs(ts);
-		IScriptUnit unit = ParseUtils.createScriptUnit(name, file);
-		ts.processEvent(new AddTypeEvent<IJstType>(typename,unit.getType()));
+		IJstType unit = ParseUtils.createScriptUnit(name, file);
+		ts.processEvent(new AddTypeEvent<IJstType>(typename,unit));
 		
 		IJstType type = ts.getQueryExecutor().findType(typename);
 		
@@ -485,8 +486,8 @@ public class ParsingTests {
 		JstTypeSpaceMgr ts = new JstTypeSpaceMgr(controller, new DefaultJstTypeLoader());
 		ts.initialize();
 		TsLibLoader.loadDefaultLibs(ts);
-		IScriptUnit unit = ParseUtils.createScriptUnit(name, file);
-		ts.processEvent(new AddTypeEvent<IJstType>(typename,unit.getType()));
+		IJstType unit = ParseUtils.createScriptUnit(name, file);
+		ts.processEvent(new AddTypeEvent<IJstType>(typename,unit));
 		
 		IJstType type = ts.getQueryExecutor().findType(typename);
 		
@@ -527,8 +528,8 @@ public class ParsingTests {
 		JstTypeSpaceMgr ts = new JstTypeSpaceMgr(controller, new DefaultJstTypeLoader());
 		ts.initialize();
 		TsLibLoader.loadDefaultLibs(ts);
-		IScriptUnit unit = ParseUtils.createScriptUnit(name, file);
-		ts.processEvent(new AddTypeEvent<IJstType>(typename,unit.getType()));
+		IJstType unit = ParseUtils.createScriptUnit(name, file);
+		ts.processEvent(new AddTypeEvent<IJstType>(typename,unit));
 		
 		IJstType type = ts.getQueryExecutor().findType(typename);
 		
@@ -555,8 +556,8 @@ public class ParsingTests {
 		JstTypeSpaceMgr ts = new JstTypeSpaceMgr(controller, new DefaultJstTypeLoader());
 		ts.initialize();
 		TsLibLoader.loadDefaultLibs(ts);
-		IScriptUnit unit = ParseUtils.createScriptUnit(name, file);
-		ts.processEvent(new AddTypeEvent<IJstType>(typename,unit.getType()));
+		IJstType unit = ParseUtils.createScriptUnit(name, file);
+		ts.processEvent(new AddTypeEvent<IJstType>(typename,unit));
 		
 		IJstType type = ts.getQueryExecutor().findType(typename);
 		

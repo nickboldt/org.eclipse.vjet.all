@@ -13,7 +13,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.net.URL;
 
-import org.eclipse.vjet.dsf.jst.IScriptUnit;
+import org.eclipse.vjet.dsf.jst.IJstType;
 import org.eclipse.vjet.dsf.jstojava.parser.VjoParser;
 import org.junit.Test;
 
@@ -24,9 +24,9 @@ public class ETypeTests extends BaseTest{
 //		CompilationUnitDeclaration ast = prepareAst(
 //				"etypetest1.txt", null);
 		URL testFile = ETypeTests.class.getResource("etypetest1.txt");
-		IScriptUnit isu = new VjoParser().parse("test", testFile);
+		IJstType isu = new VjoParser().parse("test", testFile);
 		assertNotNull(isu);
-		assertTrue(isu.getType().isEnum());
+		assertTrue(isu.isEnum());
 	}
 	
 	@Test
@@ -34,9 +34,9 @@ public class ETypeTests extends BaseTest{
 //		CompilationUnitDeclaration ast = prepareAst(
 //				"etypetest1.txt", null);
 		URL testFile = ETypeTests.class.getResource("etypetest2.txt");
-		IScriptUnit isu = new VjoParser().parse("test", testFile);
+		IJstType isu = new VjoParser().parse("test", testFile);
 		assertNotNull(isu);
-		assertTrue(isu.getType().isEnum());
+		assertTrue(isu.isEnum());
 	}
 	
 }

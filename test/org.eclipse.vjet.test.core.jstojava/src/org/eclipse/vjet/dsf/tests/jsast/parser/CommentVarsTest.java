@@ -111,7 +111,7 @@ public class CommentVarsTest implements ICommentConstants {
 		LibManager.getInstance().setResourceResolver(jstLibResolver);
 		URL simple1 = ResourceUtil.getResource(this.getClass(),fileName);
 		jstType = new VjoParser().addLib(LibManager.getInstance().getJsNativeGlobalLib())
-			.parse(null, simple1).getType();
+			.parse(null, simple1);
 	}
 	
 	@Test

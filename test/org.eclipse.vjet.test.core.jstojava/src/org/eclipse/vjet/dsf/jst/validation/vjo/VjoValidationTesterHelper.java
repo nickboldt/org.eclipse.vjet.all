@@ -20,6 +20,7 @@ import java.util.List;
 
 import junit.framework.TestCase;
 
+import org.eclipse.vjet.dsf.common.resource.ResourceUtil;
 import org.eclipse.vjet.dsf.jsgen.shared.ids.VjoSyntaxProbIds;
 import org.eclipse.vjet.dsf.jsgen.shared.validation.vjo.VjoSemanticProblem;
 import org.eclipse.vjet.dsf.jsgen.shared.validation.vjo.VjoValidationDriver;
@@ -27,7 +28,6 @@ import org.eclipse.vjet.dsf.jsgen.shared.validation.vjo.VjoValidationResult;
 import org.eclipse.vjet.dsf.jst.IJstNode;
 import org.eclipse.vjet.dsf.jst.IJstType;
 import org.eclipse.vjet.dsf.jst.IScriptProblem;
-import org.eclipse.vjet.dsf.jst.IScriptUnit;
 import org.eclipse.vjet.dsf.jst.JstProblemId;
 import org.eclipse.vjet.dsf.jst.declaration.JstBlock;
 import org.eclipse.vjet.dsf.jst.ts.JstTypeSpaceMgr;
@@ -46,8 +46,6 @@ import org.eclipse.vjet.vjo.lib.LibManager;
 import org.eclipse.vjet.vjo.lib.TsLibLoader;
 import org.junit.Assert;
 
-import org.eclipse.vjet.dsf.common.resource.ResourceUtil;
-
 /**
  * Vjo Validation tester helper class
  * 
@@ -58,18 +56,12 @@ public class VjoValidationTesterHelper {
 
     private static final String ONDEMAND = "ONDEMAND";
 
-    private IScriptUnit m_unit = null;
 
     private IJstType m_jstType = null;
 
-    private List<IScriptUnit> m_unitList = new LinkedList<IScriptUnit>();
+    private List<IJstType> m_unitList = new LinkedList<IJstType>();
 
-    VjoParser m_p = new VjoParser() {
-        @Override
-        public IScriptUnit postParse(IScriptUnit unit) {
-            return unit;
-        }
-    };
+    VjoParser m_p = new VjoParser();
 
     JstParseController m_c = new JstParseController(m_p);
 
@@ -149,7 +141,6 @@ public class VjoValidationTesterHelper {
     	
     	
         m_jstType = null;
-        m_unit = null;
         m_unitList.clear();
 
         if (testFolderName == null) {
@@ -182,10 +173,10 @@ public class VjoValidationTesterHelper {
         // jsttype will be resolved in typespace event though
         String typeName = getTypeName(testFile.getFile());
 	
-		IScriptUnit unit = m_c.parse(grpName, typeName,
+		IJstType unit = m_c.parse(grpName, typeName,
                 VjoParser.getContent(testFile));
         final JstTypeSpaceMgr mgr = new JstTypeSpaceMgr(m_c, new OnDemandValidationTestLoader(
-                grpName, unit.getType(), testFile));
+                grpName, unit, testFile));
         //added by huzhou as asynchronous ITypeSpaceEventListener is causing underdetermined test case failures
         mgr.getConfig().setSynchronousEvents(true);
         mgr.initialize();
@@ -241,18 +232,18 @@ public class VjoValidationTesterHelper {
 
  
         if(printTree)
-        ParseUtils.printTree2(unit.getType());
+        ParseUtils.printTree2(unit);
         
         unit = m_c.parseAndResolve(grpName, typeName,
                 VjoParser.getContent(testFile));
 
         if(printTree)
-        	ParseUtils.printTree2(unit.getType());
+        	ParseUtils.printTree2(unit);
 
         
         TestCase.assertNotNull(mgr.getTypeSpace().getGroup(grpName));
         TestCase.assertNotNull(mgr.getQueryExecutor().findAllTypesInPackage(
-                unit.getType().getPackage().getName()));
+                unit.getPackage().getName()));
 
         VjoValidationResult result = doValidate(unit, mgr);
         return result.getAllProblems();
@@ -325,23 +316,11 @@ public class VjoValidationTesterHelper {
             testFile = new File(sb.toString());
         }
 
-        VjoParser p = new VjoParser() {
-            @Override
-            public IScriptUnit postParse(IScriptUnit unit) {
-//                System.out.println("POSTPARSE TYPE :" + unit.getType());
-//                for (IJstTypeReference ref : JstRefTypeDependencyCollector
-//                        .getDependency(unit.getType()).values()) {
-//                    System.out.println("DEPENDENCIES");
-//                    System.out.println(ref.getReferencedType().getName());
-//                }
-
-                return unit;
-            }
-        };
+        VjoParser p = new VjoParser() ;
 
         JstParseController c = new JstParseController(p);
 
-        IScriptUnit unit = c.parse(ONDEMAND, testFile.getAbsolutePath(),
+        IJstType unit = c.parse(ONDEMAND, testFile.getAbsolutePath(),
                 VjoParser.getContent(testFile));
 
         unit = c.parseAndResolve(ONDEMAND, testFile.getAbsolutePath(),
@@ -374,20 +353,20 @@ public class VjoValidationTesterHelper {
      * @return
      * @throws AssertionError
      */
-    private VjoValidationResult doValidate(final IScriptUnit unit,
+    private VjoValidationResult doValidate(final IJstType jstType,
             JstTypeSpaceMgr ts) throws AssertionError {
         // unitList.clear();
-        IJstType jstType = null;
+
         // IScriptUnit unit = null;
         VjoValidationDriver driver = new VjoValidationDriver();
         // final VjoParser p = new VjoParser(); // syntax validation
         // unit = p.parse("test", testFile);
-        if (unit == null)
+        if (jstType == null)
             throw new AssertionError("Unable to find specified test file.");
         // if (VjoValidationBaseTester.isOnDemand()) {
 //        jstType = ts.getTypeSpace().getType(
 //                new TypeName(ONDEMAND, unit.getType().getName()));
-        jstType = unit.getType();
+       
         // } else {
         // jstType = unit.getType();
         // }
@@ -395,9 +374,9 @@ public class VjoValidationTesterHelper {
         Assert.assertNotNull(jstType);
         if (jstType == null)
             throw new AssertionError("Unable to parse specified test file.");
-        if (unit.getProblems().size() > 0) {
+        if (jstType.getProblems().size() > 0) {
         	final StringBuilder sb = new StringBuilder();
-        	for(IScriptProblem p: unit.getProblems()){
+        	for(IScriptProblem p: jstType.getProblems()){
         		sb.append(p.toString());
         		sb.append('\n');
         	}
@@ -416,37 +395,8 @@ public class VjoValidationTesterHelper {
         // TypeName(LibManager.JS_NATIVE_LIB_NAME,"Global"));
         driver.setTypeSpaceMgr(ts);
 
-        List<IScriptUnit> types = new ArrayList<IScriptUnit>();
-        final IJstType resolvedType = jstType;
-
-        types.add(new IScriptUnit() {
-
-            @Override
-            public List<JstBlock> getJstBlockList() {
-                return unit.getJstBlockList();
-            }
-
-            @Override
-            public IJstNode getNode(int startOffset) {
-                return unit.getNode(startOffset);
-            }
-
-            @Override
-            public List<IScriptProblem> getProblems() {
-                return unit.getProblems();
-            }
-
-            @Override
-            public JstBlock getSyntaxRoot() {
-                return unit.getSyntaxRoot();
-            }
-
-            @Override
-            public IJstType getType() {
-                return resolvedType;
-            }
-
-        });
+        List<IJstType> types = new ArrayList<IJstType>();
+        types.add(jstType);
         VjoValidationResult result = driver.validateComplete(types, ONDEMAND);
         Assert.assertFalse(driver.hasInternalErrors());
         return result;
@@ -456,27 +406,27 @@ public class VjoValidationTesterHelper {
             JstTypeSpaceMgr ts) throws AssertionError {
         m_unitList.clear();
         m_jstType = null;
-        m_unit = null;
+
         VjoValidationDriver driver = new VjoValidationDriver();
         final VjoParser p = new VjoParser(); // syntax validation
-        m_unit = p.parse("test", testFile);
-        if (m_unit == null)
+        m_jstType = p.parse("test", testFile);
+        if (m_jstType == null)
             throw new AssertionError(
                     "Can't find specify test file, Please check it.");
-        m_jstType = m_unit.getType();
+   
 
         Assert.assertNotNull(m_jstType);
         if (m_jstType == null)
             throw new AssertionError(
                     "Can't parse specify test file, Please check it.");
-        if (m_unit.getProblems().size() > 0) {
+        if (m_jstType.getProblems().size() > 0) {
             throw new AssertionError(
                     "Test js file have syntax error, Please check it.");
         }
         // if(unit.getType().isClass() && unit.getType().getExtend() == null)
         // throw new AssertionError(
         // "Can't find the type extends, Please check it.");
-        m_unitList.add(m_unit);
+        m_unitList.add(m_jstType);
         ts.getTypeSpace().addAllGlobalTypeMembers(
                 new TypeName(LibManager.JS_NATIVE_LIB_NAME, "Global"));
         driver.setTypeSpaceMgr(ts);

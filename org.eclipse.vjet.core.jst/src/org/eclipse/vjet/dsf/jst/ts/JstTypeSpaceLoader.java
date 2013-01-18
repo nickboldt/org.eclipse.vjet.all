@@ -190,7 +190,7 @@ public class JstTypeSpaceLoader implements ITypeSpaceLoader {
 					
 					}
 						
-					type = controller.parse(srcType.getGroupName(), srcType.getFileName(), source).getType();
+					type = controller.parse(srcType.getGroupName(), srcType.getFileName(), source);
 					
 				}
 				
@@ -243,6 +243,7 @@ public class JstTypeSpaceLoader implements ITypeSpaceLoader {
 				}
 			}
 			catch (Throwable e) {
+				e.printStackTrace();
 				hasError = true;
 				failedStatus.addErrorSource(new EventListenerStatus.ErrorSource(srcType.getGroupName() + ": " + srcType.getFileName(), "VJO parse error", e));				
 			}finally{

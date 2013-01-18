@@ -36,7 +36,7 @@ public class JSTToolableAPITesting {
 	public void main() {
 		URL simple1 = JSTToolableAPITesting.class.getResource("simplevjo.js.txt");
 		IJstType type = new VjoParser().addLib(LibManager.getInstance().getJsNativeGlobalLib())
-			.parse(null, simple1).getType();
+			.parse(null, simple1);
 		//type.dump();
 		
 		// API to acces type information

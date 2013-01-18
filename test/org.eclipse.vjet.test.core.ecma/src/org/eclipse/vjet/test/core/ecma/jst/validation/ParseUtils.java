@@ -19,7 +19,6 @@ import org.eclipse.vjet.dsf.jsgen.shared.vjo.VjoGenerator;
 import org.eclipse.vjet.dsf.jst.IJstNode;
 import org.eclipse.vjet.dsf.jst.IJstParseController;
 import org.eclipse.vjet.dsf.jst.IJstType;
-import org.eclipse.vjet.dsf.jst.IScriptUnit;
 import org.eclipse.vjet.dsf.jst.traversal.JstDepthFirstTraversal;
 import org.eclipse.vjet.dsf.jst.ts.util.JstPrettyPrintVisitor;
 import org.eclipse.vjet.dsf.jstojava.controller.JstParseController;
@@ -77,11 +76,11 @@ public class ParseUtils {
 	
 	
 	
-	public static IScriptUnit createScriptUnit(String name, String file) {
+	public static IJstType createScriptUnit(String name, String file) {
 		VjoParser p = new VjoParser();
 		IJstParseController c = new JstParseController(p);
-		IScriptUnit unit = c.parse(name, name, file);
-		return unit;
+		return c.parse(name, name, file);
+
 	}
 	
 	

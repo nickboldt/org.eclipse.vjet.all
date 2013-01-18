@@ -16,7 +16,8 @@ import java.net.URL;
 import java.util.Arrays;
 import java.util.Collection;
 
-import org.eclipse.vjet.dsf.jst.IScriptUnit;
+import org.eclipse.vjet.dsf.common.resource.ResourceUtil;
+import org.eclipse.vjet.dsf.jst.IJstType;
 import org.eclipse.vjet.dsf.jstojava.parser.VjoParser;
 import org.eclipse.vjet.vjo.lib.LibManager;
 import org.junit.After;
@@ -25,10 +26,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
-
-
-
-import org.eclipse.vjet.dsf.common.resource.ResourceUtil;
 
 /**
  * 
@@ -39,7 +36,7 @@ import org.eclipse.vjet.dsf.common.resource.ResourceUtil;
 //@ModuleInfo(value="DsfPrebuild",subModuleId="JsToJava")
 public class IncompleteFunctionTest implements ICommentConstants {
 	
-	private IScriptUnit jstUnit = null;
+	private IJstType jstUnit = null;
 	
 	private String fileName = null; 
 	

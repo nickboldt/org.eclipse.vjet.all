@@ -239,7 +239,7 @@ public class OnDemandAllTypeLoader implements IJstTypeLoader {
             cfg.setSkiptImplementation(true);
             VjoParser p = new VjoParser(cfg);
             // System.out.println("url: "+url);
-            IJstType type = p.parse(m_group, url).getType();
+            IJstType type = p.parse(m_group, url);
             if (type != null) {
                 findSources(type);
             }

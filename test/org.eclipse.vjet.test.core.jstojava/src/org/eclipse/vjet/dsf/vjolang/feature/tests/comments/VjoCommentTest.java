@@ -21,7 +21,6 @@ import org.eclipse.vjet.dsf.jsgen.shared.vjo.VjoGenerator;
 import org.eclipse.vjet.dsf.jst.IJstParseController;
 import org.eclipse.vjet.dsf.jst.IJstType;
 import org.eclipse.vjet.dsf.jst.IScriptProblem;
-import org.eclipse.vjet.dsf.jst.IScriptUnit;
 import org.eclipse.vjet.dsf.jstojava.controller.JstParseController;
 import org.eclipse.vjet.dsf.jstojava.parser.VjoParser;
 import org.eclipse.vjet.dsf.test.utils.TestHelper;
@@ -48,7 +47,7 @@ public class VjoCommentTest {
 	//@Category({P2, UNIT, FAST})
 	//@Description("Test casting in comments parsed")
 	public void testCast() throws IOException {
-		IScriptUnit unit = compareText("SimpleCast.vjo");
+		IJstType unit = compareText("SimpleCast.vjo");
 		//TODO: test ArrayInitializers
 		//TODO: test object literals
 	}
@@ -77,7 +76,7 @@ public class VjoCommentTest {
 //			" final final ctype, method declared abstract in ctype," +
 //			" method declaration with incorrect format")
 	public void testErrors() throws Exception{
-		IScriptUnit unit = checkErrors("AbstractFinal.vjo");
+		IJstType unit = checkErrors("AbstractFinal.vjo");
 		assertEquals(1, unit.getProblems().size());
 		IScriptProblem scriptProblem = unit.getProblems().get(0);
 		assertEquals(44, scriptProblem.getSourceEnd());
@@ -136,19 +135,19 @@ public class VjoCommentTest {
 	}
 	
 	
-	private static IScriptUnit checkErrors(String fileName) throws IOException{
+	private static IJstType checkErrors(String fileName) throws IOException{
 		String file = getFileContents(fileName);
-		IScriptUnit unit = parseUnit(fileName, file);
+		IJstType unit = parseUnit(fileName, file);
 //		assertValidText(fileName, file, unit.getType());
 		return unit;
 
 	}
 	
 	
-	public static IScriptUnit compareText(String fileName) throws IOException {
+	public static IJstType compareText(String fileName) throws IOException {
 		String file = getFileContents(fileName);
-		IScriptUnit unit = parseUnit(fileName, file);
-		assertValidText(fileName, file, unit.getType());
+		IJstType unit = parseUnit(fileName, file);
+		assertValidText(fileName, file, unit);
 		return unit;
 	}
 
@@ -157,14 +156,14 @@ public class VjoCommentTest {
 		return file;
 	}
 
-	private static IScriptUnit parseUnit(String fileName, String file) throws IOException {
+	private static IJstType parseUnit(String fileName, String file) throws IOException {
 		VjoParser p = new VjoParser();
 		p.addLib(LibManager.getInstance().getJavaPrimitiveLib());
 		p.addLib(LibManager.getInstance().getJsNativeGlobalLib());
 		p.addLib(LibManager.getInstance().getBrowserTypesLib());
 		IJstParseController c = new JstParseController(p);
-		IScriptUnit unit = c.parse(fileName, fileName, file);
-		return unit;
+		return c.parse(fileName, fileName, file);
+
 	}
 
 	private static void assertValidText(String fileName, String file,

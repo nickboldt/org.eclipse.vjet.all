@@ -86,7 +86,7 @@ public class OnDemandValidationTestLoader implements IJstTypeLoader {
 			if(s_debug){
 				System.out.println("url = " + url);
 			}
-			IJstType type = p.parse(m_group, url).getType();
+			IJstType type = p.parse(m_group, url);
 			if (type!=null) {
 				findSources(type);
 			}

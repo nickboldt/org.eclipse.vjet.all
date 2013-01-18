@@ -14,7 +14,6 @@ import java.util.List;
 import org.eclipse.vjet.dsf.jsgen.shared.ids.ScopeIds;
 import org.eclipse.vjet.dsf.jst.IJstParseController;
 import org.eclipse.vjet.dsf.jst.IJstType;
-import org.eclipse.vjet.dsf.jst.IWritableScriptUnit;
 import org.eclipse.vjet.dsf.jst.JstSource;
 import org.eclipse.vjet.dsf.jst.declaration.JstBlock;
 import org.eclipse.vjet.dsf.jst.declaration.JstType;
@@ -108,9 +107,9 @@ public class VjoCcEngine implements IVjoCcEngine {
 		// resolve JstType from String content
 		TranslateCtx translateCtx = new TranslateCtx();
 		translateCtx.setCompletionPos(position);
-		IWritableScriptUnit scriptUnit = parseJstContent(groupName, typeName, content,
+		IJstType jstType = parseJstContent(groupName, typeName, content,
 				position, translateCtx);
-		IJstType jstType = scriptUnit.getType();
+		
 		if (jstType == null) {
 			return null;
 		}
@@ -119,40 +118,39 @@ public class VjoCcEngine implements IVjoCcEngine {
 			// JstCompletionOnMethodAccess is useless for CC, so try recalculate
 			// it
 			content = preProcessContent(content, position);
-			IWritableScriptUnit scriptUnit1 = parseJstContent(groupName, typeName,
+			IJstType jstType1 = parseJstContent(groupName, typeName,
 					content, position, translateCtx);
-			IJstType jstType1 = scriptUnit.getType();
 			if (jstType1 != null) {
 				IJstCompletion jstCompletion1 = getJstCompletion(translateCtx,
 						position);
 				if (jstCompletion1 != null
 						&& !(jstCompletion1 instanceof JstCompletionOnMemberAccess)) {
 					jstType = jstType1;
-					scriptUnit = scriptUnit1;
+					
 					jstCompletion = jstCompletion1;
 				}
 			}
 		}
 		if(m_jstParseController instanceof JstParseController){
-			((JstParseController)m_jstParseController).resolve(groupName,scriptUnit);
+			((JstParseController)m_jstParseController).resolve(groupName,jstType);
 		}
 		
 		TypeName typeNameT = new TypeName(groupName,getTypeName(groupName, typeName));
 		
-		if((!scriptUnit.getType().equals(jstType)) &&jstCompletion instanceof JstCompletion){
+		if(jstCompletion instanceof JstCompletion){
 			JstCompletion c = (JstCompletion)jstCompletion;
 			
 			if(c.getRealParent() instanceof IJstType){
 				
-				c.setRealParent(scriptUnit.getType());
+				c.setRealParent(jstType);
 			}
-			c.setParent(scriptUnit.getType());
-			jstType = scriptUnit.getType();
-			typeName = scriptUnit.getType().getName();
+			c.setParent(jstType);
+//			jstType = jstType;
+			typeName = jstType.getName();
 			typeNameT = new TypeName(groupName, typeName);
 			
 		}
-		List<JstBlock> blocks = scriptUnit.getJstBlockList();
+		List<JstBlock> blocks = jstType.getJstBlockList();
 		if (blocks != null && !blocks.isEmpty()) {
 			for (JstBlock block : blocks) {
 				m_jstParseController.resolve(jstType, block); // this is new
@@ -168,7 +166,7 @@ public class VjoCcEngine implements IVjoCcEngine {
 			ctx.setCompletion(jstCompletion);
 		}
 		ctx.setOffset(position);
-		ctx.setScriptUnit(scriptUnit);
+		ctx.setScriptUnit(jstType);
 		ctx.setContent(content);
 		return ctx;
 	}
@@ -190,12 +188,10 @@ public class VjoCcEngine implements IVjoCcEngine {
 		return typeName.replace("\\", ".");
 	}
 
-	private IWritableScriptUnit parseJstContent(String groupName, String typeName,
+	private IJstType parseJstContent(String groupName, String typeName,
 			String content, int position, TranslateCtx ctx) {
 		VjoParser vjoParser = new VjoParser();
-
-		IWritableScriptUnit scriptUnit = vjoParser.parse(groupName, typeName, content, ctx);
-		return scriptUnit;
+		return vjoParser.parse(groupName, typeName, content, ctx);
 	}
 
 	private JstCompletion getJstCompletion(TranslateCtx ctx, int position) {

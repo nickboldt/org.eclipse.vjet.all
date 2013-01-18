@@ -23,6 +23,7 @@ import org.eclipse.vjet.dsf.jst.IJstOType;
 import org.eclipse.vjet.dsf.jst.IJstProperty;
 import org.eclipse.vjet.dsf.jst.IJstType;
 import org.eclipse.vjet.dsf.jst.IJstTypeReference;
+import org.eclipse.vjet.dsf.jst.IScriptProblem;
 import org.eclipse.vjet.dsf.jst.JstCommentLocation;
 import org.eclipse.vjet.dsf.jst.JstSource;
 import org.eclipse.vjet.dsf.jst.token.IStmt;
@@ -694,6 +695,28 @@ public class JstExtendedType implements IJstType {
 	@Override
 	public boolean isSingleton() {
 		return m_targetType.isSingleton();
+	}
+
+	@Override
+	public List<JstBlock> getJstBlockList() {
+		throw new UnsupportedOperationException("secondary types not supported for extension");
+	}
+
+	@Override
+	public List<IScriptProblem> getProblems() {
+		throw new UnsupportedOperationException("secondary types not supported for extension");
+	}
+
+	@Override
+	public void setJstBlockList(List<JstBlock> blocks) {
+		throw new UnsupportedOperationException("secondary types not supported for extension");
+		
+	}
+
+	@Override
+	public void setProblems(List<IScriptProblem> probs) {
+		throw new UnsupportedOperationException("secondary types not supported for extension");
+		
 	}
 	
 

@@ -45,9 +45,9 @@ public class SimpleJsDocTests {
 		assertTrue(positiveCtx.getErrorReporter().getWarnings().size()==0);
 	
 		
-		IJstType posJST = new VjoParser().parse("TEST", goodCaseFile.getFile(), goodCase, false).getType();
+		IJstType posJST = new VjoParser().parse("TEST", goodCaseFile.getFile(), goodCase, false);
 		assertEquals(2,posJST.getCommentLocations().size());
-		IJstType posJST2 = new VjoParser().parse("TEST", goodCaseFile.getFile(), goodCase, false).getType();
+		IJstType posJST2 = new VjoParser().parse("TEST", goodCaseFile.getFile(), goodCase, false);
 		assertEquals(2,posJST2.getCommentLocations().size());
 		assertEquals(2,posJST.getCommentLocations().size());
 		assertEquals(posJST, posJST2);
@@ -108,7 +108,7 @@ public class SimpleJsDocTests {
 		assertTrue(positiveCtx.getErrorReporter().getWarnings().size()==0);
 		
 		
-		IJstType posJST = new VjoParser().parse("TEST", goodCaseFile.getFile(), goodCase, false).getType();
+		IJstType posJST = new VjoParser().parse("TEST", goodCaseFile.getFile(), goodCase, false);
 
 		List<JstCommentLocation> commentLocations = posJST.getEmbededType("A").getCommentLocations();
 		String comment = JstCommentHelper.getCommentsAsString(posJST, commentLocations).get(0);
@@ -144,7 +144,7 @@ public class SimpleJsDocTests {
 		assertTrue(positiveCtx.getErrorReporter().getWarnings().size()==0);
 		
 		
-		IJstType posJST = new VjoParser().parse("TEST", goodCaseFile.getFile(), goodCase, false).getType();
+		IJstType posJST = new VjoParser().parse("TEST", goodCaseFile.getFile(), goodCase, false);
 		
 		
 		

@@ -26,7 +26,6 @@ import org.eclipse.vjet.dsf.jst.IJstProperty;
 import org.eclipse.vjet.dsf.jst.IJstRefType;
 import org.eclipse.vjet.dsf.jst.IJstType;
 import org.eclipse.vjet.dsf.jst.IJstTypeReference;
-import org.eclipse.vjet.dsf.jst.IScriptUnit;
 import org.eclipse.vjet.dsf.jst.JstSource;
 import org.eclipse.vjet.dsf.jst.declaration.JstArg;
 import org.eclipse.vjet.dsf.jst.declaration.JstBlock;
@@ -106,7 +105,7 @@ public class VjoCcCtx {
 
 	private IJstType calledType;
 
-	private IScriptUnit m_scriptUnit;
+	private IJstType m_scriptUnit;
 
 	private List<IJstNode> m_scriptNodes = new ArrayList<IJstNode>();
 	private List<JstIdentifier> m_identifers = new ArrayList<JstIdentifier>();
@@ -472,7 +471,7 @@ public class VjoCcCtx {
 
 	}
 
-	public void setScriptUnit(IScriptUnit scriptUnit) {
+	public void setScriptUnit(IJstType scriptUnit) {
 		this.m_scriptUnit = scriptUnit;
 		if (m_scriptUnit == null) {
 			return;
@@ -501,7 +500,7 @@ public class VjoCcCtx {
 		return m_scriptNodes.isEmpty();
 	}
 
-	private List<IJstNode> getJstNodeFromScriptUnit(IScriptUnit unit,
+	private List<IJstNode> getJstNodeFromScriptUnit(IJstType unit,
 			int position) {
 		List<IJstNode> result = new ArrayList<IJstNode>();
 		JstBlock block = VjoCcCtxUtil.getExactBlock(unit, position);
@@ -566,7 +565,7 @@ public class VjoCcCtx {
 	}
 
 	private List<JstIdentifier> getJstIdentifierFromScriptUnit(
-			IScriptUnit unit, int position) {
+			IJstType unit, int position) {
 		List<JstIdentifier> result = new ArrayList<JstIdentifier>();
 		JstBlock block = VjoCcCtxUtil.getExactBlock(unit, position);
 		if (block != null) {

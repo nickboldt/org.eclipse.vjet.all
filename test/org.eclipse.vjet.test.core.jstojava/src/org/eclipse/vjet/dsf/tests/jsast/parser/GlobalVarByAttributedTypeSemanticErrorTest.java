@@ -62,7 +62,7 @@ public class GlobalVarByAttributedTypeSemanticErrorTest implements ICommentConst
 		File resource= new File(url.getFile());
 //		URL url = ResourceUtil.getResource(BadCommentTest.class,fileName);
 		String fileAsString = Kit.readReader(new FileReader(resource));;
-		jstType = p.parse(fileName, resource.getAbsolutePath(), fileAsString, ctx).getType();
+		jstType = p.parse(fileName, resource.getAbsolutePath(), fileAsString, ctx);
 		assertNotNull(jstType);
 	}
 		

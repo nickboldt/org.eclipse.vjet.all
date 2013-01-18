@@ -419,7 +419,7 @@ public class JstLibBuildMain {
 								srcFile);
 
 				JstType jstType = (JstType) controller.parse(m_outputFile,
-						srcType.getFileName(), srcType.getSource()).getType();
+						srcType.getFileName(), srcType.getSource());
 				jstTypeList.add(jstType);
 			} catch (Exception e) {
 				e.printStackTrace();

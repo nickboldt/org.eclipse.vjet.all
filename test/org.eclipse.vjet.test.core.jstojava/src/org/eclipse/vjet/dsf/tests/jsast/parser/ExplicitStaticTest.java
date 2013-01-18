@@ -62,7 +62,7 @@ public class ExplicitStaticTest implements ICommentConstants {
 		}
 		File resource= new File(url.getFile());
 		String fileAsString =Kit.readReader(new FileReader(resource));
-		jstType = p.parse(fileName, resource.getAbsolutePath(), fileAsString, ctx).getType();
+		jstType = p.parse(fileName, resource.getAbsolutePath(), fileAsString, ctx);
 		assertNotNull(jstType);
 	}
 	

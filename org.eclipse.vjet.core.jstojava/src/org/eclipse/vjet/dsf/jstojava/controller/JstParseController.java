@@ -18,12 +18,9 @@ import org.eclipse.vjet.dsf.jst.IJstParser;
 import org.eclipse.vjet.dsf.jst.IJstProperty;
 import org.eclipse.vjet.dsf.jst.IJstRefResolver;
 import org.eclipse.vjet.dsf.jst.IJstType;
-import org.eclipse.vjet.dsf.jst.IScriptUnit;
-import org.eclipse.vjet.dsf.jst.IWritableScriptUnit;
 import org.eclipse.vjet.dsf.jst.ResolutionResult;
 import org.eclipse.vjet.dsf.jst.declaration.JstBlock;
 import org.eclipse.vjet.dsf.jst.declaration.JstType;
-
 import org.eclipse.vjet.dsf.jst.lib.IJstLibProvider;
 import org.eclipse.vjet.dsf.jst.ts.JstTypeSpaceMgr;
 import org.eclipse.vjet.dsf.jstojava.parser.VjoParser;
@@ -51,21 +48,21 @@ public class JstParseController implements IJstParseController {
 		m_libProvider.getAll();		
 	}
 
-	public synchronized IScriptUnit parse(String groupName, String fileName, String source) {
+	public synchronized IJstType parse(String groupName, String fileName, String source) {
 		return m_parser.parse(groupName, fileName, source);
 	}
 	
-	public synchronized IScriptUnit parse(String groupName, File sourceFile) {
+	public synchronized IJstType parse(String groupName, File sourceFile) {
 		return m_parser.parse(groupName, sourceFile);
 	}
 
-	public synchronized IScriptUnit parseAndResolve(String groupName, String fileName,
+	public synchronized IJstType parseAndResolve(String groupName, String fileName,
 			String source) {
 		if (source == null) {
 			throw new DsfRuntimeException("missing source for " + fileName);
 		}
 		
-		IWritableScriptUnit unit = null;
+		IJstType unit;
 		ParseResultHolder holder = getCacheHolder(groupName, fileName, source);			
 		if (holder.isLoaded()) {
 			//System.out.println("Using Cache Result");
@@ -79,7 +76,7 @@ public class JstParseController implements IJstParseController {
 		return unit;
 	}
 	
-	public synchronized IScriptUnit parseAndResolve(String groupName, File sourceFile) {
+	public synchronized IJstType parseAndResolve(String groupName, File sourceFile) {
 		if (sourceFile == null) {
 			throw new DsfRuntimeException("missing source file!");
 		}
@@ -92,19 +89,19 @@ public class JstParseController implements IJstParseController {
 		m_resolver.resolve(type);
 	}
 	
-	public void resolve(String groupName, IWritableScriptUnit su) {
-		addResolutionResultToSU(su, m_resolver.resolve(groupName, su.getType()));
+	public void resolve(String groupName, IJstType su) {
+		addResolutionResultToSU(su, m_resolver.resolve(groupName, su));
 		for (JstBlock block : su.getJstBlockList()) {
 			addResolutionResultToSU(su, m_resolver.resolve(null, block));			
 		}
 	}
 	
-	private void addResolutionResultToSU(IWritableScriptUnit su, ResolutionResult resolve) {
+	private void addResolutionResultToSU(IJstType su, ResolutionResult resolve) {
 		su.getProblems().addAll(resolve.getProblems());
 		if(resolve.getType()!=null){
 			
-			if(su.getType() instanceof JstType && resolve.getType() instanceof JstType){
-				JstType type = (JstType)su.getType();
+			if(su instanceof JstType && resolve.getType() instanceof JstType){
+				JstType type = (JstType)su;
 				if(type != resolve.getType()){
 					JstTypeCopier.replace(type, (JstType)resolve.getType());
 					// TODO look into faster resolution here...
@@ -115,15 +112,11 @@ public class JstParseController implements IJstParseController {
 				
 			}else{
 			
-			
-				su.setType(resolve.getType());
+				su = resolve.getType();
 			}
 		}
 	}
 
-	public void resolve(String groupName, IJstType type) {
-		m_resolver.resolve(groupName, type);
-	}
 	
 	public void resolve(IJstProperty property) {
 		m_resolver.resolve(property);
@@ -174,7 +167,7 @@ public class JstParseController implements IJstParseController {
 		private final String m_group;
 		private final String m_fileName;
 		private final String m_source;
-		private IWritableScriptUnit m_result = null;
+		private IJstType m_result = null;
 		private boolean m_loaded = false;
 		
 		ParseResultHolder(String group, String fileName, String source) {
@@ -193,11 +186,11 @@ public class JstParseController implements IJstParseController {
 			return m_loaded;
 		}
 		
-		IWritableScriptUnit getResult() {
+		IJstType getResult() {
 			return m_result;
 		}
 		
-		void setResult(IWritableScriptUnit result) {
+		void setResult(IJstType result) {
 			m_result = result;
 			m_loaded = true;
 		}

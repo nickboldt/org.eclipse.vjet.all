@@ -61,7 +61,7 @@ public class GlobalVarByAttributedTypeSyntaxErrorTest implements ICommentConstan
 		}
 		File resource= new File(url.getFile());
 		String fileAsString = Kit.readReader(new FileReader(resource));
-		jstType = p.parse(fileName, resource.getAbsolutePath(), fileAsString, ctx).getType();
+		jstType = p.parse(fileName, resource.getAbsolutePath(), fileAsString, ctx);
 		assertNotNull(jstType);
 	}
 		

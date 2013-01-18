@@ -18,15 +18,12 @@ import static org.junit.Assert.assertTrue;
 import java.util.HashMap;
 import java.util.List;
 
+import org.eclipse.vjet.dsf.common.FileUtils;
 import org.eclipse.vjet.dsf.jst.IJstProperty;
 import org.eclipse.vjet.dsf.jst.IJstType;
-import org.eclipse.vjet.dsf.jst.IScriptUnit;
+import org.eclipse.vjet.dsf.jst.declaration.JstBlock;
 import org.junit.Before;
 import org.junit.Test;
-
-
-
-import org.eclipse.vjet.dsf.common.FileUtils;
 
 //@ModuleInfo(value="DsfPrebuild",subModuleId="JsToJava")
 public class VjoNSTests {
@@ -86,10 +83,9 @@ public class VjoNSTests {
 	public  void testOuterVJ() throws Exception {
 		String name = "vjDollar.txt";
 		String file = FileUtils.getResourceAsString(ParsingTests.class, name);
-		IScriptUnit unit = ParseUtils.createScriptUnit(name, file);
+		IJstType outerType = ParseUtils.createScriptUnit(name, file);
 		//ParseUtils.printTree(unit.getSyntaxRoot());
-		
-		IJstType outerType = unit.getType();		
+			
 		//System.err.println("Outer type="+ outerType.getName());
 		
 		IJstProperty outerVJProp = outerType.getProperty("vj$");
@@ -111,10 +107,8 @@ public class VjoNSTests {
 	public  void testInnerVJ() throws Exception {
 		String name = "vjDollar.txt";
 		String file = FileUtils.getResourceAsString(ParsingTests.class, name);
-		IScriptUnit unit = ParseUtils.createScriptUnit(name, file);
+		IJstType outerType = ParseUtils.createScriptUnit(name, file);
 		//ParseUtils.printTree(unit.getSyntaxRoot());
-		
-		IJstType outerType = unit.getType();	
 		
 		IJstType innerType = outerType.getEmbededType("Inner1");
 		IJstProperty innerVJProp = innerType.getProperty("vj$");
@@ -136,10 +130,10 @@ public class VjoNSTests {
 	public  void testInnerVJ2() throws Exception {
 		String name = "vjDollar.txt";
 		String file = FileUtils.getResourceAsString(ParsingTests.class, name);
-		IScriptUnit unit = ParseUtils.createScriptUnit(name, file);
+		IJstType unit = ParseUtils.createScriptUnit(name, file);
 		//ParseUtils.printTree(unit.getSyntaxRoot());
 		
-		IJstType outerType = unit.getType();	
+		IJstType outerType = unit;	
 		
 		IJstType innerType = outerType.getEmbededType("Inner1").getEmbededType("Inner1_1");
 		IJstProperty innerVJProp = innerType.getProperty("vj$");
@@ -161,10 +155,10 @@ public class VjoNSTests {
 	public  void testInnerStaticVJ() throws Exception {
 		String name = "vjDollar.txt";
 		String file = FileUtils.getResourceAsString(ParsingTests.class, name);
-		IScriptUnit unit = ParseUtils.createScriptUnit(name, file);
+		IJstType unit = ParseUtils.createScriptUnit(name, file);
 		//ParseUtils.printTree(unit.getSyntaxRoot());
 		
-		IJstType outerType = unit.getType();	
+		IJstType outerType = unit;	
 		
 		IJstType innerStaticType = outerType.getEmbededType("InnerS");
 		IJstProperty innerStaticVJProp = innerStaticType.getProperty("vj$");
@@ -186,10 +180,10 @@ public class VjoNSTests {
 	public  void testInnerStaticVJ2() throws Exception {
 		String name = "vjDollar.txt";
 		String file = FileUtils.getResourceAsString(ParsingTests.class, name);
-		IScriptUnit unit = ParseUtils.createScriptUnit(name, file);
+		IJstType unit = ParseUtils.createScriptUnit(name, file);
 		//ParseUtils.printTree(unit.getSyntaxRoot());
 		
-		IJstType outerType = unit.getType();	
+		IJstType outerType = unit;	
 		
 		IJstType innerStaticType = outerType.getEmbededType("InnerS").getEmbededType("InnerS1_1");
 		IJstProperty innerStaticVJProp = innerStaticType.getProperty("vj$");
@@ -212,10 +206,9 @@ public class VjoNSTests {
 	public  void testInnerStaticVJ3() throws Exception {
 		String name = "vjDollar.txt";
 		String file = FileUtils.getResourceAsString(ParsingTests.class, name);
-		IScriptUnit unit = ParseUtils.createScriptUnit(name, file);
+		IJstType outerType = ParseUtils.createScriptUnit(name, file);
 		//ParseUtils.printTree(unit.getSyntaxRoot());
 		
-		IJstType outerType = unit.getType();	
 		
 		IJstType innerStaticType = outerType.getEmbededType("InnerS").getEmbededType("InnerS1_1").getEmbededType("Inner1_1_1");
 		IJstProperty innerStaticVJProp = innerStaticType.getProperty("vj$");
@@ -257,10 +250,12 @@ public class VjoNSTests {
 	public void testVj$() throws Exception {
 		String name = "vjDollar.txt";
 		String file = FileUtils.getResourceAsString(ParsingTests.class, name);
-		IScriptUnit unit = ParseUtils.createScriptUnit(name, file);
-		ParseUtils.printTree(unit.getSyntaxRoot());
-		assertNotNull(unit.getType());
-		IJstType type = unit.getType();
+		IJstType unit = ParseUtils.createScriptUnit(name, file);
+		for(JstBlock b: unit.getJstBlockList()){
+			ParseUtils.printTree(b);
+		}
+		assertNotNull(unit);
+		IJstType type = unit;
 		
 		assertNotNull(type.getProperty("vj$", true));
 		

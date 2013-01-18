@@ -47,7 +47,7 @@ public class VjoSelectionTests {
 		
 		URL file = ResourceUtil.getResource(getClass(),"simplevjocommented.js.txt");
 		type = new VjoParser().addLib(LibManager.getInstance().getJsNativeGlobalLib())
-			.parse(null, file).getType();
+			.parse(null, file);
 		
 		
 	}

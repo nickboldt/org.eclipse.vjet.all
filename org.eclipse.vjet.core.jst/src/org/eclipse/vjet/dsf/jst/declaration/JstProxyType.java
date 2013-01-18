@@ -20,6 +20,7 @@ import org.eclipse.vjet.dsf.jst.IJstOType;
 import org.eclipse.vjet.dsf.jst.IJstProperty;
 import org.eclipse.vjet.dsf.jst.IJstType;
 import org.eclipse.vjet.dsf.jst.IJstTypeReference;
+import org.eclipse.vjet.dsf.jst.IScriptProblem;
 import org.eclipse.vjet.dsf.jst.JstCommentLocation;
 import org.eclipse.vjet.dsf.jst.JstSource;
 import org.eclipse.vjet.dsf.jst.token.IStmt;
@@ -788,5 +789,28 @@ public abstract class JstProxyType implements IJstType {
 		return m_targetType.isSingleton();
 	}
 
+	@Override
+	public List<JstBlock> getJstBlockList() {
+		throw new UnsupportedOperationException("proxy types not supported for extension");
+	}
+
+	@Override
+	public List<IScriptProblem> getProblems() {
+		throw new UnsupportedOperationException("proxy types not supported for extension");
+	}
+	
+	
+	public void setJstBlockList(List<JstBlock> blocks){
+		throw new UnsupportedOperationException("proxy types not supported for extension");
+	}
+	
+
+	@Override
+	public void setProblems(List<IScriptProblem> probs) {
+		throw new UnsupportedOperationException("proxy types not supported for extension");
+		
+	}
+	
+	
 	
 }

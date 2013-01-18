@@ -59,7 +59,7 @@ public class LocalVarByAttributedTypeSemanticErrorTest implements ICommentConsta
 				                fileName).getFile());
 		URL url = ResourceUtil.getResource(BadCommentTest.class,fileName);
 		String fileAsString = JsPreGenHelper.url2String(url);
-		jstType = p.parse(fileName, resource.getAbsolutePath(), fileAsString, ctx).getType();
+		jstType = p.parse(fileName, resource.getAbsolutePath(), fileAsString, ctx);
 		assertNotNull(jstType);
 	}
 		

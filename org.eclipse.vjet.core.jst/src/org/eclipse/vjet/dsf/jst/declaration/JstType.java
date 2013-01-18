@@ -22,10 +22,12 @@ import org.eclipse.vjet.dsf.jst.BaseJstNode;
 import org.eclipse.vjet.dsf.jst.IJstDoc;
 import org.eclipse.vjet.dsf.jst.IJstGlobalVar;
 import org.eclipse.vjet.dsf.jst.IJstMethod;
+import org.eclipse.vjet.dsf.jst.IJstNode;
 import org.eclipse.vjet.dsf.jst.IJstOType;
 import org.eclipse.vjet.dsf.jst.IJstProperty;
 import org.eclipse.vjet.dsf.jst.IJstType;
 import org.eclipse.vjet.dsf.jst.IJstTypeReference;
+import org.eclipse.vjet.dsf.jst.IScriptProblem;
 import org.eclipse.vjet.dsf.jst.ISynthesized;
 import org.eclipse.vjet.dsf.jst.token.IStmt;
 import org.eclipse.vjet.dsf.jst.traversal.IJstNodeVisitor;
@@ -110,6 +112,10 @@ public class JstType extends BaseJstNode implements IJstType {
 	private List<IJstType> m_secondaryTypes;
 
 	private boolean m_singleton;
+	
+	
+	private List<JstBlock> m_blockList;
+	private List<IScriptProblem> m_probs;
 
 	//
 	// Constructor
@@ -3049,6 +3055,8 @@ public class JstType extends BaseJstNode implements IJstType {
 		clearVarTable();
 		clearSecondaryTypes();
 		clearOuterType();
+		clearJstBlockList();
+		clearProblems();
 	}
 
 	private void clearGlobalVars() {
@@ -3325,7 +3333,31 @@ public class JstType extends BaseJstNode implements IJstType {
 		
 	}
 
+	public List<JstBlock> getJstBlockList(){
+		return m_blockList;
+	}
+	
+	public void setJstBlockList(List<JstBlock> blocks){
+		m_blockList = blocks;
+	}
+	
+	public void clearJstBlockList(){
+		m_blockList = null;
+	}
+	
+	public List<IScriptProblem> getProblems(){
+		return m_probs;
+	}
 
+	@Override
+	public void setProblems(List<IScriptProblem> probs) {
+		m_probs = probs;
+		
+	}
+	
+	public void clearProblems(){
+		m_probs = null;
+	}
 
 
 }

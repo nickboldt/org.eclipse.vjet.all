@@ -326,7 +326,7 @@ public class JstEventListener implements
 
 			IJstParseController jstParseController = m_mgr.getJstParseController();
 			if (type == null) {
-				type = jstParseController.parseAndResolve(groupName, fileName, event.getTypeSource()).getType();
+				type = jstParseController.parseAndResolve(groupName, fileName, event.getTypeSource());
 			}
 			
 			if (type == null) {
@@ -451,7 +451,7 @@ public class JstEventListener implements
 			
 			if (type == null) {
 				IJstParseController jstParseController = m_mgr.getJstParseController();
-				type = jstParseController.parseAndResolve(groupName, fileName, event.getTypeSource()).getType();
+				type = jstParseController.parseAndResolve(groupName, fileName, event.getTypeSource());
 			}
 			
 			if (type == null){

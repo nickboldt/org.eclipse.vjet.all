@@ -23,10 +23,6 @@ import junit.framework.TestCase;
 import org.eclipse.vjet.dsf.jst.IJstNode;
 import org.eclipse.vjet.dsf.jst.IJstParser;
 import org.eclipse.vjet.dsf.jst.IJstType;
-import org.eclipse.vjet.dsf.jst.IScriptProblem;
-import org.eclipse.vjet.dsf.jst.IScriptUnit;
-import org.eclipse.vjet.dsf.jst.IWritableScriptUnit;
-import org.eclipse.vjet.dsf.jst.declaration.JstBlock;
 import org.eclipse.vjet.dsf.jst.declaration.JstCache;
 import org.eclipse.vjet.dsf.jst.declaration.JstPackage;
 import org.eclipse.vjet.dsf.jst.declaration.JstType;
@@ -290,7 +286,7 @@ public class BaseTest extends TestCase {
 
 	IJstParser getParser(){
 		return new IJstParser(){
-			public IWritableScriptUnit parse(String groupName, String fileName, String source){
+			public IJstType parse(String groupName, String fileName, String source){
 				
 				
 				final JstType type = JstCache.getInstance().getType(fileName);
@@ -302,78 +298,21 @@ public class BaseTest extends TestCase {
 				}
 				type.getPackage().setGroupName(groupName);
 				
-				return new IWritableScriptUnit(){
-
-					public IJstNode getNode(int startOffset) {
-						// TODO Auto-generated method stub
-						return null;
-					}
-
-					public List<IScriptProblem> getProblems() {
-						// TODO Auto-generated method stub
-						return null;
-					}
-
-					public JstBlock getSyntaxRoot() {
-						// TODO Auto-generated method stub
-						return null;
-					}
+				 
+				return type;
 					
-					public List<JstBlock> getJstBlockList() {
-						return new ArrayList<JstBlock>();
-					}
-
-					public IJstType getType() {
-			
-						return type;
-					}
-
-					@Override
-					public void setType(IJstType type) {
-						// TODO Auto-generated method stub
-						
-					}
-
-					@Override
-					public void setSyntaxRoot(JstBlock block) {
-						// TODO Auto-generated method stub
-						
-					}
-
-					@Override
-					public void setJstBlockList(List<JstBlock> blocks) {
-						// TODO Auto-generated method stub
-						
-					}
-
-					@Override
-					public void setProblems(List<IScriptProblem> probs) {
-						// TODO Auto-generated method stub
-						
-					}
-					
-				};
 				
 				
 			}
 
 			@Override
-			public IScriptUnit postParse(IScriptUnit unit) {
+			public IJstType parse(String groupName, File file) {
 				// TODO Auto-generated method stub
 				return null;
 			}
 
-			@Override
-			public IScriptUnit preParse(String groupName, String fileName,
-					String source) {
-				// TODO Auto-generated method stub
-				return null;
-			}
 			
-			@Override
-			public IScriptUnit parse(String groupName, File file) {
-				return null;
-			}
+		
 
 		};
 	}

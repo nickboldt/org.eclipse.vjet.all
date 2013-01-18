@@ -86,7 +86,7 @@ public class JsDocTests {
 		assertTrue(positiveCtx.getErrorReporter().getWarnings().size()==0);
 	
 		
-		IJstType posJST = new VjoParser().parse("TEST", goodCaseFile.getFile(), goodCase, false).getType();
+		IJstType posJST = new VjoParser().parse("TEST", goodCaseFile.getFile(), goodCase, false);
 		List<? extends IJstMethod> methods = posJST.getMethods();
 		assertTrue(methods.size()>0);
 		

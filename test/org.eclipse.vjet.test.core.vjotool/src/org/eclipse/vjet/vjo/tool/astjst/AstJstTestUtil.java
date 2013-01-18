@@ -49,7 +49,7 @@ public class AstJstTestUtil {
 			content = FileUtils.readStream(testFile.openStream());
 			TranslateCtx ctx = new TranslateCtx();
 			IJstType jst = control.parseAndResolve(CodeCompletionUtil.GROUP_NAME,
-					testFile.getFile(), content).getType();
+					testFile.getFile(), content);
 //			IJstType jst = SyntaxTreeFactory2.createJST(null, content
 //					.toCharArray(), testFile.getName(), null, ctx);
 			bean = new AstJstBean(ctx, jst, ctx.getAST());

@@ -10,7 +10,6 @@ package org.eclipse.vjet.dsf.jsgen.shared.validation.vjo;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -26,15 +25,13 @@ import org.eclipse.vjet.dsf.jst.IJstNode;
 import org.eclipse.vjet.dsf.jst.IJstType;
 import org.eclipse.vjet.dsf.jst.IJstTypeReference;
 import org.eclipse.vjet.dsf.jst.IScriptProblem;
-import org.eclipse.vjet.dsf.jst.IScriptUnit;
 import org.eclipse.vjet.dsf.jst.declaration.JstPackage;
 import org.eclipse.vjet.dsf.jst.term.JstIdentifier;
 import org.eclipse.vjet.dsf.jst.ts.JstTypeSpaceMgr;
+import org.eclipse.vjet.dsf.logger.Logger;
 import org.eclipse.vjet.dsf.ts.ITypeSpace;
 import org.eclipse.vjet.dsf.ts.group.IGroup;
 import org.eclipse.vjet.dsf.ts.type.TypeName;
-
-import org.eclipse.vjet.dsf.logger.Logger;
 
 /**
  * 
@@ -112,15 +109,15 @@ public class VjoValidationDriver {
 		return result;
 	}
 	
-	public VjoValidationResult validateComplete(Map<String, IScriptUnit> entryJstTypes, String groupId){
+	public VjoValidationResult validateComplete(Map<String, IJstType> entryJstTypes, String groupId){
 		return validateComplete(entryJstTypes, groupId, VjoValidationMode.validateTypeSpace);
 	}
 	
-	public VjoValidationResult validateComplete(Map<String, IScriptUnit> entryJstTypes, String groupId, VjoValidationMode mode){
+	public VjoValidationResult validateComplete(Map<String, IJstType> entryJstTypes, String groupId, VjoValidationMode mode){
 		final Map<String, IJstType> toValidate = new LinkedHashMap<String, IJstType>();
 
-		for(Map.Entry<String, IScriptUnit> entry : entryJstTypes.entrySet()){
-			toValidate.put(entry.getKey(), entry.getValue().getType());
+		for(Map.Entry<String, IJstType> entry : entryJstTypes.entrySet()){
+			toValidate.put(entry.getKey(), entry.getValue());
 		}
 		
 		//copy the dependencies to the ctx
@@ -132,12 +129,12 @@ public class VjoValidationDriver {
 		//depth 1st traverse the dependency tree
 		for(Map.Entry<String, IJstType> typeEntry : toValidate.entrySet()){
 			final String uniquePath = typeEntry.getKey();
-			final IScriptUnit scriptUnit = entryJstTypes.get(uniquePath);
+			final IJstType jsttype = entryJstTypes.get(uniquePath);
 			IJstType jstType2Validate = typeEntry.getValue();
 			
 			try{
 				//skip validations as there're syntax errors
-				walkThrough(jstType2Validate, scriptUnit.getJstBlockList(), scriptUnit.getProblems(), ctx, groupId, uniquePath, mode);
+				walkThrough(jstType2Validate, jsttype.getJstBlockList(), jsttype.getProblems(), ctx, groupId, uniquePath, mode);
 			}
 			catch(VjoValidationRuntimeException ex){
 				ex.printStackTrace(); //KEEPME
@@ -158,7 +155,7 @@ public class VjoValidationDriver {
 		return result;
 	}
 	
-	public VjoValidationResult validateComplete(List<IScriptUnit> entryJstTypes, String groupId) {
+	public VjoValidationResult validateComplete(List<IJstType> entryJstTypes, String groupId) {
 		return validateComplete(entryJstTypes, groupId, VjoValidationMode.validateTypeSpace);
 	}
 	
@@ -170,13 +167,13 @@ public class VjoValidationDriver {
 	 * @param mode
 	 * @return
 	 */
-	public VjoValidationResult validateComplete(List<IScriptUnit> entryJstTypes, String groupId, VjoValidationMode mode) {
-		final Map<IJstType, IScriptUnit> type2UnitMap = new HashMap<IJstType, IScriptUnit>();
+	public VjoValidationResult validateComplete(List<IJstType> entryJstTypes, String groupId, VjoValidationMode mode) {
+//		final Map<IJstType, IScriptUnit> type2UnitMap = new HashMap<IJstType, IScriptUnit>();
 		final List<IJstType> toValidate = new ArrayList<IJstType>();
 
-		for(IScriptUnit unit : entryJstTypes){
-			type2UnitMap.put(unit.getType(), unit);
-			toValidate.add(unit.getType());
+		for(IJstType unit : entryJstTypes){
+//			type2UnitMap.put(unit, unit);
+			toValidate.add(unit);
 		}
 		
 		//copy the dependencies to the ctx
@@ -187,10 +184,10 @@ public class VjoValidationDriver {
 		
 		//depth 1st traverse the dependency tree
 		for(IJstType jstType : toValidate){
-			final IScriptUnit scriptUnit = type2UnitMap.get(jstType);
+//			final IScriptUnit scriptUnit = type2UnitMap.get(jstType);
 			try{
 				//skip validations as there're syntax errors
-				walkThrough(jstType, scriptUnit.getJstBlockList(), scriptUnit.getProblems(), ctx, groupId, null, mode);
+				walkThrough(jstType, jstType.getJstBlockList(), jstType.getProblems(), ctx, groupId, null, mode);
 			}
 			catch(VjoValidationRuntimeException ex){
 //				ex.printStackTrace(); //KEEPME

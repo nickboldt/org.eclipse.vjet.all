@@ -10,7 +10,7 @@ package org.eclipse.vjet.vjo.tool.codecompletion;
 
 import java.util.List;
 
-import org.eclipse.vjet.dsf.jst.IScriptUnit;
+import org.eclipse.vjet.dsf.jst.IJstType;
 import org.eclipse.vjet.dsf.jst.JstSource;
 import org.eclipse.vjet.dsf.jst.declaration.JstBlock;
 import org.eclipse.vjet.dsf.jst.term.JstIdentifier;
@@ -94,14 +94,14 @@ public class VjoCcCtxUtil {
 	 * @param position
 	 * @return
 	 */
-	public static JstBlock getExactBlock(IScriptUnit unit, int position) {
+	public static JstBlock getExactBlock(IJstType unit, int position) {
 		List<JstBlock> blocks = unit.getJstBlockList();
 		if (blocks != null && !blocks.isEmpty()) {
 			
 			for (int i =blocks.size()-1; i>0;i--) {
 				JstBlock block = blocks.get(i);
 				JstSource source = block.getSource();
-				if(unit.getType().getSource().getStartOffSet() == source.getStartOffSet()){
+				if(unit.getSource().getStartOffSet() == source.getStartOffSet()){
 					continue;
 				}
 				if (isInSource(source, position)) {
@@ -111,7 +111,7 @@ public class VjoCcCtxUtil {
 			}
 		}
 		//return default
-		return unit.getSyntaxRoot();
+		return null;
 //		return null;
 	}
 	

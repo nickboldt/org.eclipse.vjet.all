@@ -46,7 +46,7 @@ public class VjoJstTests {
 //		File simple1 = new File(ResourceUtil.getResource(VjoJstTests.class, "simplevjo.js.txt").getFile());
 		URL simple1 = ResourceUtil.getResource(VjoJstTests.class, "simplevjo.js.txt");
 		IJstType type = new VjoParser().addLib(LibManager.getInstance().getJsNativeGlobalLib())
-			.parse(null, simple1).getType();
+			.parse(null, simple1);
 			
 //		((JstType)type).dump();
 		assertFalse(type.isInterface());
@@ -78,7 +78,7 @@ public class VjoJstTests {
 //		File simple1 = new File(ResourceUtil.getResource(VjoJstTests.class, "typewithdef.js.txt").getFile());
 		URL simple1 = ResourceUtil.getResource(VjoJstTests.class, "typewithdef.js.txt");
 		IJstType type = new VjoParser().addLib(LibManager.getInstance().getJsNativeGlobalLib())
-			.parse(null, simple1).getType();
+			.parse(null, simple1);
 
 //		((JstType)type).dump();
 		assertFalse(type.isInterface());
@@ -97,7 +97,7 @@ public class VjoJstTests {
 //				"simplevjoinnertype.js.txt").getFile());
 		URL simple1 = ResourceUtil.getResource(VjoJstTests.class, "simplevjoinnertype.js.txt");
 		IJstType type = new VjoParser().addLib(LibManager.getInstance().getJsNativeGlobalLib())
-			.parse(null, simple1).getType();	
+			.parse(null, simple1);	
 //		((JstType)type).dump();
 		assertFalse(type.isInterface());
 		assertEquals("a.b.c", type.getPackage().getName());
@@ -114,7 +114,7 @@ public class VjoJstTests {
 //		File simple1 = new File(ResourceUtil.getResource(VjoJstTests.class, "simpleitype.js.txt").getFile());
 		URL simple1 = ResourceUtil.getResource(VjoJstTests.class, "simpleitype.js.txt");
 		IJstType type = new VjoParser().addLib(LibManager.getInstance().getJsNativeGlobalLib())
-			.parse(null, simple1).getType();		
+			.parse(null, simple1);		
 //		((JstType)type).dump();		
 		assertTrue(type.isInterface());			
 		assertEquals("org.eclipse.vjet.dsf.tests.jsast.parser", type.getPackage().getName());
@@ -133,7 +133,7 @@ public class VjoJstTests {
 //		File simple1 = new File(ResourceUtil.getResource(VjoJstTests.class, "simpleatype.js.txt").getFile());
 		URL simple1 = ResourceUtil.getResource(VjoJstTests.class, "simpleatype.js.txt");
 		IJstType type = new VjoParser().addLib(LibManager.getInstance().getJsNativeGlobalLib())
-			.parse(null, simple1).getType();
+			.parse(null, simple1);
 //		((JstType)type).dump();		
 		assertFalse(type.isInterface());
 		assertEquals("org.eclipse.vjet.dsf.tests.jsast.parser", type.getPackage().getName());
@@ -152,7 +152,7 @@ public class VjoJstTests {
 //		File simple1 = new File(ResourceUtil.getResource(VjoJstTests.class, "simplevjoenum.js.txt").getFile());
 		URL simple1 = ResourceUtil.getResource(VjoJstTests.class, "simplevjoenum.js.txt");
 		IJstType type = new VjoParser().addLib(LibManager.getInstance().getJsNativeGlobalLib())
-			.parse(null, simple1).getType();
+			.parse(null, simple1);
 //		((JstType)type).dump();		
 		assertFalse(type.isInterface());
 		assertTrue(type.isEnum());
@@ -171,7 +171,7 @@ public class VjoJstTests {
 //		File simple1 = new File(ResourceUtil.getResource(this.getClass(), "OL1.txt").getFile());
 		URL simple1 = ResourceUtil.getResource(VjoJstTests.class, "OL1.txt");
 		IJstType type = new VjoParser().addLib(LibManager.getInstance().getJsNativeGlobalLib())
-			.parse("testgroup", simple1.getPath(), VjoParser.getContent(simple1), ctx).getType();
+			.parse("testgroup", simple1.getPath(), VjoParser.getContent(simple1), ctx);
 		IJstMethod mtd = type.getMethod("a");
 		assertEquals(true, mtd.getBlock().getStmts().get(0) instanceof JstVars);
 		

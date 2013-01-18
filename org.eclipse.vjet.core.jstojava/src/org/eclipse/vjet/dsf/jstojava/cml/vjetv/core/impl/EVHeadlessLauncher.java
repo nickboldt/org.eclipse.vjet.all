@@ -24,12 +24,9 @@ import org.eclipse.vjet.dsf.jsgen.shared.ids.VjoSyntaxProbIds;
 import org.eclipse.vjet.dsf.jsgen.shared.validation.vjo.VjoSemanticProblem;
 import org.eclipse.vjet.dsf.jsgen.shared.validation.vjo.VjoValidationDriver;
 import org.eclipse.vjet.dsf.jsgen.shared.validation.vjo.VjoValidationResult;
-import org.eclipse.vjet.dsf.jst.IJstNode;
 import org.eclipse.vjet.dsf.jst.IJstType;
 import org.eclipse.vjet.dsf.jst.IScriptProblem;
-import org.eclipse.vjet.dsf.jst.IScriptUnit;
 import org.eclipse.vjet.dsf.jst.JstProblemId;
-import org.eclipse.vjet.dsf.jst.declaration.JstBlock;
 import org.eclipse.vjet.dsf.jst.declaration.JstCache;
 import org.eclipse.vjet.dsf.jst.declaration.JstFactory;
 import org.eclipse.vjet.dsf.jst.ts.JstTypeSpaceMgr;
@@ -83,49 +80,22 @@ public class EVHeadlessLauncher implements IHeadLessLauncher {
      * @return {@link VjoSemanticProblem}
      * @throws AssertionError
      */
-    private List<VjoSemanticProblem> doSemanticValidate(final IScriptUnit unit,
+    private List<VjoSemanticProblem> doSemanticValidate(final IJstType unit,
             JstTypeSpaceMgr ts) throws AssertionError {
         IJstType jstType = null;
         VjoValidationDriver driver = new VjoValidationDriver();
         if (unit == null)
             throw new AssertionError("Unable to find specified test file.");
         jstType = ts.getTypeSpace().getType(
-                new TypeName(ONDEMAND, unit.getType().getName()));
-        ts.processEvent(new AddTypeEvent<IJstType>(new TypeName(ONDEMAND,unit.getType().getName()), unit.getType()));
+                new TypeName(ONDEMAND, unit.getName()));
+        ts.processEvent(new AddTypeEvent<IJstType>(new TypeName(ONDEMAND,unit.getName()), unit));
 
         driver.setTypeSpaceMgr(ts);
 
-        List<IScriptUnit> types = new ArrayList<IScriptUnit>();
-        final IJstType resolvedType = unit.getType();
+        List<IJstType> types = new ArrayList<IJstType>();
+//        final IJstType resolvedType = unit;
 
-        types.add(new IScriptUnit() {
-
-            @Override
-            public List<JstBlock> getJstBlockList() {
-                return unit.getJstBlockList();
-            }
-
-            @Override
-            public IJstNode getNode(int startOffset) {
-                return unit.getNode(startOffset);
-            }
-
-            @Override
-            public List<IScriptProblem> getProblems() {
-                return unit.getProblems();
-            }
-
-            @Override
-            public JstBlock getSyntaxRoot() {
-                return unit.getSyntaxRoot();
-            }
-
-            @Override
-            public IJstType getType() {
-                return resolvedType;
-            }
-
-        });
+        types.add(jstType);
         VjoValidationResult result = driver.validateComplete(types, ONDEMAND);
         return result.getAllProblems();
     }
@@ -174,7 +144,7 @@ public class EVHeadlessLauncher implements IHeadLessLauncher {
      *            {@link IScriptUnit}
      */
     private List<VjoSemanticProblem> handleSyntaxProblems(
-            List<VjoSemanticProblem> actualProblemList, IScriptUnit unit) {
+            List<VjoSemanticProblem> actualProblemList, IJstType unit) {
         List<IScriptProblem> lists = unit.getProblems();
         JstProblemId problemID;
         for (IScriptProblem scriptProblem : lists) {
@@ -248,7 +218,7 @@ public class EVHeadlessLauncher implements IHeadLessLauncher {
         // Step2: parse specify JS file
         
         // TEMP load first file 
-        IScriptUnit unit = c.parse(ONDEMAND, "",
+        IJstType unit = c.parse(ONDEMAND, "",
                 "");
 
         // Step3: load depend jsttypes from source path.
@@ -387,7 +357,7 @@ public class EVHeadlessLauncher implements IHeadLessLauncher {
 
 
         // Step5: Resolve JS file and do syntax validation.
-        IScriptUnit unit = c.parseAndResolve(ONDEMAND, validateFile.getAbsolutePath(),
+        IJstType unit = c.parseAndResolve(ONDEMAND, validateFile.getAbsolutePath(),
                 VjoParser.getContent(validateFile));
       
 

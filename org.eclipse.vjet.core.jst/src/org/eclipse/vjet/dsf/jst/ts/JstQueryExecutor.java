@@ -70,7 +70,8 @@ public class JstQueryExecutor {
 	public IJstType findType(final TypeName typeName){
 		try {
 			//m_locker.lockShared();
-			return m_ts.getType(typeName);
+			IJstType type = m_ts.getType(typeName);
+			return type;
 		}
 		finally{
 			//m_locker.releaseShared();

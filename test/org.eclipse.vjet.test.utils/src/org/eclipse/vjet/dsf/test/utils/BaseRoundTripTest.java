@@ -48,7 +48,7 @@ public class BaseRoundTripTest {
 				fileName).getFile());
 		FileInputStream fis = new FileInputStream(simple1);
 		goldString = FileUtils.readStream(fis);
-		jstType = new VjoParser().parse(null, simple1).getType();
+		jstType = new VjoParser().parse(null, simple1);
 	}
 
 	@Test
