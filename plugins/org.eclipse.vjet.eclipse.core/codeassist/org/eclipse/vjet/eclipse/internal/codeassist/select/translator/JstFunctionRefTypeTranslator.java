@@ -82,7 +82,12 @@ public class JstFunctionRefTypeTranslator extends DefaultNodeTranslator {
 					jstType);
 		}
 		if (mElement == null) {
-			mElement = convert(jstNode)[0];
+			IModelElement[] convert = convert(jstNode);
+			if(convert.length>0){
+				mElement = convert[0];
+			}else{
+				System.err.println("could not find converter for " + jstNode.getClass());
+			}
 		}
 		
 		final JstFunctionRefType jstFunctionRefType = (JstFunctionRefType)jstNode;
