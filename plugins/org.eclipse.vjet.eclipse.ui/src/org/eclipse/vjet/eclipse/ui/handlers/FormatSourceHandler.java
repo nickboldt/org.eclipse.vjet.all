@@ -30,11 +30,11 @@ import org.eclipse.dltk.mod.core.IProjectFragment;
 import org.eclipse.dltk.mod.core.IScriptFolder;
 import org.eclipse.dltk.mod.core.IScriptProject;
 import org.eclipse.dltk.mod.core.ModelException;
-import org.eclipse.dltk.mod.internal.core.ModelManager;
 import org.eclipse.dltk.mod.internal.corext.util.Messages;
 import org.eclipse.dltk.mod.internal.corext.util.Resources;
 import org.eclipse.dltk.mod.internal.ui.actions.WorkbenchRunnableAdapter;
 import org.eclipse.dltk.mod.internal.ui.dialogs.OptionalMessageDialog;
+import org.eclipse.dltk.mod.internal.ui.editor.ExternalFileEditorInput;
 import org.eclipse.dltk.mod.ui.util.ExceptionHandler;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
@@ -43,7 +43,6 @@ import org.eclipse.jface.text.DocumentRewriteSession;
 import org.eclipse.jface.text.DocumentRewriteSessionType;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IDocumentExtension;
-import org.eclipse.jface.text.IDocumentExtension3;
 import org.eclipse.jface.text.IDocumentExtension4;
 import org.eclipse.jface.text.TextSelection;
 import org.eclipse.jface.text.formatter.FormattingContextProperties;
@@ -55,10 +54,12 @@ import org.eclipse.jface.window.Window;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.vjet.eclipse.core.VjetPlugin;
 import org.eclipse.vjet.eclipse.internal.ui.editor.ActionMessages;
+import org.eclipse.vjet.eclipse.internal.ui.editor.VjoEditor;
 import org.eclipse.vjet.eclipse.internal.ui.text.CommentFormattingContext;
 import org.eclipse.vjet.eclipse.internal.ui.text.CommentFormattingStrategy;
 import org.eclipse.vjet.eclipse.internal.ui.text.IJavaScriptPartitions;
@@ -89,11 +90,20 @@ public class FormatSourceHandler extends AbstractHandler {
 		m_shell = HandlerUtil.getActiveWorkbenchWindow(event).getShell();
         IWorkbenchPage page = HandlerUtil.getActiveWorkbenchWindow(event).getActivePage();
         IEditorInput editorInput = page.getActiveEditor().getEditorInput();
+       
+        
 		if(base instanceof TextSelection){
 			// format selected text
-			// TODO -- not sure why JSDT doesn't support formatting only selected text... need to know indent level?
-			
-			System.out.println("format selected text");
+			 IWorkbenchPart part = page.getActivePart();
+			 
+				IModelElement modelElement = null;
+				if (editorInput instanceof ExternalFileEditorInput) {
+					modelElement = ((ExternalFileEditorInput)editorInput).getModelElement();
+				}
+				else
+					modelElement = ((VjoEditor)part).getInputModelElement();
+
+				formatElems(new IModelElement[]{modelElement});
 			
 		}
 		
