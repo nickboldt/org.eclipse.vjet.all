@@ -145,8 +145,8 @@ public class VjoOTypeTest extends VjoValidationBaseTester{
 		expectProblems.clear();
 		expectProblems.add(createNewProblem(MethodProbIds.UndefinedMethod, 8, 0));
 		expectProblems.add(createNewProblem(MethodProbIds.ParameterMismatch, 9, 0));
-	//	expectProblems.add(createNewProblem(MethodProbIds.UndefinedMethod, 14, 0));
-	//	expectProblems.add(createNewProblem(MethodProbIds.ParameterMismatch, 12, 0));
+		expectProblems.add(createNewProblem(MethodProbIds.UndefinedMethod, 14, 0));
+		expectProblems.add(createNewProblem(MethodProbIds.ParameterMismatch, 15, 0));
 		
 		actualProblems = getVjoSemanticProblem("org.eclipse.vjet.dsf.jst.validation.vjo.rt.otype.", "CallbackClient.js", this.getClass());
 		assertProblemEquals(expectProblems, actualProblems);
