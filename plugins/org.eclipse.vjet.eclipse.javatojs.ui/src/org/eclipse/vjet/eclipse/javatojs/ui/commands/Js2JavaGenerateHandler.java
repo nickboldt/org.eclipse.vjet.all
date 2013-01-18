@@ -11,6 +11,7 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.dltk.mod.core.IModelElement;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.IEditorInput;
@@ -50,6 +51,10 @@ public class Js2JavaGenerateHandler extends AbstractHandler {
 					if (obj instanceof IAdaptable) {
 						IJs2JavaCodeGenInput input = (IJs2JavaCodeGenInput) ((IAdaptable) obj)
 								.getAdapter(IJs2JavaCodeGenInput.class);
+						if(obj instanceof IModelElement){
+							Object x = ((IAdaptable) obj).getAdapter(IJs2JavaCodeGenInput.class);
+							System.out.println(x);
+						}
 						if (input != null) {
 							inputList.add(input);
 						}

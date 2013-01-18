@@ -6,6 +6,7 @@ package org.eclipse.vjet.eclipse.javatojs.ui.adapters;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IAdapterFactory;
+import org.eclipse.dltk.mod.core.IModelElement;
 import org.eclipse.vjet.core.codegen.bootstrap.IJs2JavaCodeGenInput;
 
 
@@ -47,10 +48,10 @@ public class Js2JavaAdapterFactory implements IAdapterFactory {
 			/*
 			 * it is a JDT object
 			 */
-//			if (adaptableObject instanceof IJavaElement) {
-//				return createInput(((IJavaElement) adaptableObject)
-//						.getResource());
-//			}
+			if (adaptableObject instanceof IModelElement) {
+				return createInput(((IModelElement) adaptableObject)
+						.getResource());
+			}
 			/*
 			 * it adapts to a resource
 			 */

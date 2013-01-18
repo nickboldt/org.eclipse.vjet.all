@@ -111,7 +111,7 @@ public class Js2JavaGenerateJob extends WorkspaceJob {
 				Object obj = ClassloaderUtils
 						.getWorkspaceObject(
 								"org.eclipse.vjet.eclipse.javatojs.core.JsCodeGenTool",
-								ClassLoaderKey.DEFAULT);
+								ClassLoaderKey.WORKSPACECODEGEN);
 				if (obj instanceof IJs2JavaCodeGenTool) {
 					return (IJs2JavaCodeGenTool) obj;
 				}
