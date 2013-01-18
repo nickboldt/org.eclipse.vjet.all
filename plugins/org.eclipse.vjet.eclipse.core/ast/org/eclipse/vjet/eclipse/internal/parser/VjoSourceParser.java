@@ -141,7 +141,7 @@ public class VjoSourceParser extends AbstractSourceParser{
 				List<DefaultProblem> dproblems = null;
 				List<IScriptProblem> problems = scriptUnit.getProblems();
 				// if there are no syntax errors in script unit
-				if (!problems.isEmpty()  ) {
+				if (problems!=null && !problems.isEmpty()  ) {
 					dproblems = ProblemUtility.reportProblems(problems);
 				}else{
 					dproblems = ValidationEntry.validator(scriptUnit);
