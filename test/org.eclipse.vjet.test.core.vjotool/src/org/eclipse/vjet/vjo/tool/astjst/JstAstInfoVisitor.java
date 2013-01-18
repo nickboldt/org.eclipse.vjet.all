@@ -36,6 +36,7 @@ import org.eclipse.vjet.dsf.jst.declaration.JstProxyMethod;
 import org.eclipse.vjet.dsf.jst.declaration.JstProxyProperty;
 import org.eclipse.vjet.dsf.jst.declaration.JstRawBlock;
 import org.eclipse.vjet.dsf.jst.declaration.JstRefType;
+import org.eclipse.vjet.dsf.jst.declaration.JstSynthesizedMethod;
 import org.eclipse.vjet.dsf.jst.declaration.JstType;
 import org.eclipse.vjet.dsf.jst.declaration.JstTypeReference;
 import org.eclipse.vjet.dsf.jst.declaration.JstTypeWithArgs;
@@ -562,5 +563,9 @@ public class JstAstInfoVisitor implements IJstNodeVisitor {
 	public void visit(JstInferredType node) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	public void visit(JstSynthesizedMethod mtd){
+		value = mtd.getName().getName();
 	}
 }

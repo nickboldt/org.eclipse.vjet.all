@@ -58,7 +58,7 @@
 			<node position='1' status='pass'>
 				<bindingnode>createLine</bindingnode>
 				<bindingtype></bindingtype>
-				<bindingclass>JstMethod</bindingclass>
+				<bindingclass>JstSynthesizedMethod</bindingclass>
 				<bindingparent></bindingparent>
 			</node>
 		</jxpath>
