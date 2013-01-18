@@ -109,6 +109,8 @@ public class VjoCcCtxUtil {
 				}
 																// API
 			}
+			
+			return blocks.get(0);
 		}
 		//return default
 		return null;

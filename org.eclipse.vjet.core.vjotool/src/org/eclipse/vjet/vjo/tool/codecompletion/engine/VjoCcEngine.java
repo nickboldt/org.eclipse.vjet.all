@@ -107,6 +107,75 @@ public class VjoCcEngine implements IVjoCcEngine {
 		// resolve JstType from String content
 		TranslateCtx translateCtx = new TranslateCtx();
 		translateCtx.setCompletionPos(position);
+		IJstType scriptUnit = parseJstContent(groupName, typeName, content,
+				position, translateCtx);
+		IJstType jstType = scriptUnit;
+		if (scriptUnit == null) {
+			return null;
+		}
+		IJstCompletion jstCompletion = getJstCompletion(translateCtx, position);
+		if (jstCompletion instanceof JstCompletionOnMemberAccess) {
+			// JstCompletionOnMethodAccess is useless for CC, so try recalculate
+			// it
+			content = preProcessContent(content, position);
+			IJstType jstType1 = parseJstContent(groupName, typeName,
+					content, position, translateCtx);
+			if (jstType1 != null) {
+				IJstCompletion jstCompletion1 = getJstCompletion(translateCtx,
+						position);
+				if (jstCompletion1 != null
+						&& !(jstCompletion1 instanceof JstCompletionOnMemberAccess)) {
+					jstType = jstType1;
+					scriptUnit = jstType1;
+					jstCompletion = jstCompletion1;
+				}
+			}
+		}
+		if(m_jstParseController instanceof JstParseController){
+			((JstParseController)m_jstParseController).resolve(groupName,scriptUnit);
+		}
+		
+		TypeName typeNameT = new TypeName(groupName,getTypeName(groupName, typeName));
+		
+		if((!scriptUnit.equals(jstType)) &&jstCompletion instanceof JstCompletion){
+			JstCompletion c = (JstCompletion)jstCompletion;
+			
+			if(c.getRealParent() instanceof IJstType){
+				
+				c.setRealParent(scriptUnit);
+			}
+			c.setParent(scriptUnit);
+			jstType = scriptUnit;
+			typeName = scriptUnit.getName();
+			typeNameT = new TypeName(groupName, typeName);
+			
+		}
+		List<JstBlock> blocks = scriptUnit.getJstBlockList();
+		if (blocks != null && !blocks.isEmpty()) {
+			for (JstBlock block : blocks) {
+				m_jstParseController.resolve(jstType, block); // this is new
+																// API
+			}
+		}
+		// create VjoCcCtx
+		VjoCcCtx ctx = new VjoCcCtx(m_jstParseController.getJstTypeSpaceMgr(), typeNameT);
+		
+		if (jstCompletion == null) {
+			ctx.setActingType(jstType);
+		} else {
+			ctx.setCompletion(jstCompletion);
+		}
+		ctx.setOffset(position);
+		ctx.setScriptUnit(scriptUnit);
+		ctx.setContent(content);
+		return ctx;
+	}
+	
+	public VjoCcCtx genCcContext2(String groupName, String typeName,
+			String content, int position) {
+		// resolve JstType from String content
+		TranslateCtx translateCtx = new TranslateCtx();
+		translateCtx.setCompletionPos(position);
 		IJstType jstType = parseJstContent(groupName, typeName, content,
 				position, translateCtx);
 		
@@ -142,7 +211,7 @@ public class VjoCcEngine implements IVjoCcEngine {
 			
 			if(c.getRealParent() instanceof IJstType){
 				
-				c.setRealParent(jstType);
+				c.setRealParent(c.getRealParent());
 			}
 			c.setParent(jstType);
 //			jstType = jstType;
@@ -170,6 +239,7 @@ public class VjoCcEngine implements IVjoCcEngine {
 		ctx.setContent(content);
 		return ctx;
 	}
+
 
 	/**
 	 * Calculate the correct type name;
