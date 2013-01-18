@@ -634,8 +634,7 @@ public class TypeSpaceBuilder {
 				String filename = event.getFileName();
 				TypeSpaceMgr ts = TypeSpaceMgr.getInstance();
 				IJstType type = ts.findType(event.getTypeName());
-				System.out.println("validating dependent type" + type.getName());
-				
+								
 				// need to revalidate type -- issue is with script unit block validtion removal.
 				// validte type and update markers
 				// we need to figure out if we should remove the idea of script unit 
