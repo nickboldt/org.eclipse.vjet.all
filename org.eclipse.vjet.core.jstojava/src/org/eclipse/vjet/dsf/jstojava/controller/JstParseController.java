@@ -91,13 +91,16 @@ public class JstParseController implements IJstParseController {
 	
 	public void resolve(String groupName, IJstType su) {
 		addResolutionResultToSU(su, m_resolver.resolve(groupName, su));
+		if(su.getJstBlockList()==null){
+			return;
+		}
 		for (JstBlock block : su.getJstBlockList()) {
 			addResolutionResultToSU(su, m_resolver.resolve(null, block));			
 		}
 	}
 	
 	private void addResolutionResultToSU(IJstType su, ResolutionResult resolve) {
-		su.getProblems().addAll(resolve.getProblems());
+		su.setProblems(resolve.getProblems());
 		if(resolve.getType()!=null){
 			
 			if(su instanceof JstType && resolve.getType() instanceof JstType){
