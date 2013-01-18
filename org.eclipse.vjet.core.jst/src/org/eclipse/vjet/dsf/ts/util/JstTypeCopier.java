@@ -58,6 +58,8 @@ public class JstTypeCopier  {
 		replace.setSingleton(copy.isSingleton());
 		replace.setMethods(copy.getMethods());
 		replace.setProperties(copy.getProperties());
+		replace.setJstBlockList(copy.getJstBlockList());
+		replace.setProblems(copy.getProblems());
 	}
 
 
