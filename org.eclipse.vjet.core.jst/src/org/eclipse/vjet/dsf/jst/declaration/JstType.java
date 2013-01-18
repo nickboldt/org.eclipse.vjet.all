@@ -115,7 +115,7 @@ public class JstType extends BaseJstNode implements IJstType {
 	
 	
 	private List<JstBlock> m_blockList;
-	private List<IScriptProblem> m_probs;
+	private transient List<IScriptProblem> m_probs;
 
 	//
 	// Constructor
