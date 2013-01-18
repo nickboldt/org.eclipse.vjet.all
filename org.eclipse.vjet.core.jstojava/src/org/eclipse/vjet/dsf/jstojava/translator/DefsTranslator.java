@@ -194,14 +194,11 @@ public class DefsTranslator extends BasePropsProtosTranslator {
 		if (commentMeta != null) {
 			JstMethod meth = (JstMethod) TranslateHelper.MethodTranslateHelper
 					.createJstSynthesizedMethod(commentMeta, m_ctx, name);
-			JstMethod meth2 = new JstMethod(meth.getName(),
-					meth.getModifiers(), meth.getRtnType());
-			for (JstArg a : meth.getArgs()) {
-				meth2.addArg(a);
-			}
-			meth2.setSource(nv.getSource());
-			processFunctionDef(jstType, meth2);
-			jstType.addMethod(meth2);
+
+		
+			meth.setSource(nv.getSource());
+			processFunctionDef(jstType, meth);
+//			jstType.addMethod(meth);
 		}
 
 	}
