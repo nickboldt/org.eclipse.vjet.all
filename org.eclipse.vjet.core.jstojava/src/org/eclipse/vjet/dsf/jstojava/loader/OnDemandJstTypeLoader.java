@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.vjet.dsf.jst.FileBinding;
 import org.eclipse.vjet.dsf.jst.IJstType;
 import org.eclipse.vjet.dsf.jst.IJstTypeReference;
 import org.eclipse.vjet.dsf.jst.ts.IJstTypeLoader;
@@ -112,6 +113,10 @@ public class OnDemandJstTypeLoader implements IJstTypeLoader{
 	}
 	
 	protected void addSource(JavaSourceLocator locator, IJstType ineed) {
+		if(ineed.getSource()!=null && ineed.getSource().getBinding() !=null && ineed.getSource().getBinding() instanceof FileBinding){
+			m_sources.add(new SourceType(m_group, ineed.getName(),null, ((FileBinding)ineed.getSource().getBinding()).getFile()));
+		}
+		
 		URL url = locator.getSourceUrl(ineed.getName(), JS);
 		if(url==null){
 			url = locator.getSourceUrl(ineed.getName(), VJO);
