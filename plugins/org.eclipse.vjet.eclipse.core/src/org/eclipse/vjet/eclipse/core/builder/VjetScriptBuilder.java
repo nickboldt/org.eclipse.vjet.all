@@ -637,6 +637,7 @@ public class VjetScriptBuilder extends ScriptBuilder {
 			TypeSpaceBuilder
 					.getSerFileGroupDepends(scriptProject, groupDepends);
 
+			// setup type space group but don't add any types to group
 			this.typeSpaceBuilder.buildProject(scriptProject, null, monitor,
 					groupDepends, bootstrapPath);
 
@@ -692,6 +693,7 @@ public class VjetScriptBuilder extends ScriptBuilder {
 						}
 					}
 				}
+				// add types to group
 				buildElements(localElements, externalElements, monitor,
 						WORK_BUILD - resourceTicks, IScriptBuilder.FULL_BUILD,
 						Collections.EMPTY_SET, externalFolders, builders);

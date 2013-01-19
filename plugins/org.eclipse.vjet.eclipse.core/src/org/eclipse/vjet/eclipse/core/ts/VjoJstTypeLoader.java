@@ -102,8 +102,9 @@ public class VjoJstTypeLoader implements IJstTypeLoader {
 
 
 			if (srcPathList == null || srcPathList.size() == 0) {
-				typeList.addAll(loadJstTypesFromGroup(groupName,
-						actualGroupFolderName, groupFolderOrFile,group.getSrcPathInclusionPatterns(), group.getSrcPathExclusionPatterns()));
+				// DO NOT LOAD types here only adding group dependencies and bootstrap info
+//				typeList.addAll(loadJstTypesFromGroup(groupName,
+//						actualGroupFolderName, groupFolderOrFile,group.getSrcPathInclusionPatterns(), group.getSrcPathExclusionPatterns()));
 			} else {
 				for (String srcPath : srcPathList) {
 					File srcFolder = getGroupSrcFolder(groupPath, srcPath);
