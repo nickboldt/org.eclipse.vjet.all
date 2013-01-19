@@ -251,7 +251,10 @@ public class TypeSpaceMgr {
 	 */
 	private AddGroupEvent createGroupEvent(GroupInfo group) {
 		return new AddGroupEvent(group.getGroupName(), group.getGroupPath(),
-				group.getSrcPath().getSourcePaths(), group.getClassPath(), group.getDirectDependency(), group.getBootstrapPath(),
+				null, 
+				group.getClassPath(), 
+				group.getDirectDependency(), 
+				group.getBootstrapPath(),
 				group.getSrcPath().getInclusionRules(), group.getSrcPath().getExclusionRules());
 	}
 
