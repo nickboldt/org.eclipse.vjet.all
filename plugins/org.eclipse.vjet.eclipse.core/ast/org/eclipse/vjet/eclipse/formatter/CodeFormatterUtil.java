@@ -13,8 +13,8 @@ package org.eclipse.vjet.eclipse.formatter;
 import java.util.Map;
 
 import org.eclipse.core.runtime.Assert;
+
 import org.eclipse.dltk.mod.core.IScriptProject;
-import org.eclipse.jdt.core.dom.BodyDeclaration;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.BadPositionCategoryException;
 import org.eclipse.jface.text.DefaultPositionUpdater;
@@ -28,6 +28,8 @@ import org.eclipse.text.edits.MultiTextEdit;
 import org.eclipse.text.edits.ReplaceEdit;
 import org.eclipse.text.edits.TextEdit;
 import org.eclipse.vjet.eclipse.core.VjetPlugin;
+import org.eclipse.vjet.eclipse.internal.formatter.CodeFormatter;
+import org.eclipse.vjet.eclipse.internal.formatter.DefaultCodeFormatterConstants;
 //import org.eclipse.wst.jsdt.core.IJavaScriptProject;
 //import org.eclipse.wst.jsdt.core.JavaScriptCore;
 //import org.eclipse.wst.jsdt.core.ToolFactory;
@@ -38,8 +40,6 @@ import org.eclipse.vjet.eclipse.core.VjetPlugin;
 //import org.eclipse.wst.jsdt.core.formatter.CodeFormatter;
 //import org.eclipse.wst.jsdt.core.formatter.DefaultCodeFormatterConstants;
 //import org.eclipse.wst.jsdt.internal.ui.JavaScriptPlugin;
-import org.eclipse.vjet.eclipse.internal.formatter.CodeFormatter;
-import org.eclipse.vjet.eclipse.internal.formatter.DefaultCodeFormatterConstants;
 
 public class CodeFormatterUtil {
 				

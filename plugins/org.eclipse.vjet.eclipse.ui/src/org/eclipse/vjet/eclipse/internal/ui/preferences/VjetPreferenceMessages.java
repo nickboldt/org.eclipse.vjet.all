@@ -128,6 +128,13 @@ public class VjetPreferenceMessages extends NLS {
 	public static String VJETEditorCodeAssistBlock_Sorter_Relevance;
 	public static String VJETEditorCodeAssistBlock_Sorter_Alphabet;
 	public static String VJETEditorCodeAssistBlock_CamelMatch;
+
+	public static String CleanUpPreferencePage_Description;
+
+	public static String CodeFormatterPreferencePage_title;
+	public static String CodeFormatterPreferencePage_description;
+
+	
 	static {
 		NLS.initializeMessages(BUNDLE_NAME, VjetPreferenceMessages.class);
 	}

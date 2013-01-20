@@ -263,7 +263,18 @@
 	          <test property="org.eclipse.core.resources.projectNature" value="org.eclipse.vjet.core.nature"/>
 	        </adapt> 
         </enabledWhen> 
-    </page>         
+    </page>     
+    <page
+            name="%codeFormatterPrefName"
+            category="org.eclipse.vjet.eclipse.propertyPage" 
+            class="org.eclipse.vjet.eclipse.internal.ui.preferences.CodeFormatterPreferencePage"
+            id="org.eclipse.vjet.ui.propertyPages.CodeFormatterPreferencePage">
+           <enabledWhen>
+		        <adapt type="org.eclipse.core.resources.IProject">
+		          <test property="org.eclipse.core.resources.projectNature" value="org.eclipse.vjet.core.nature"/>
+		        </adapt> 
+           </enabledWhen>
+      </page>    
  </extension>
  <extension point="org.eclipse.ui.preferencePages"> 	          
 	    <page class="org.eclipse.vjet.eclipse.internal.ui.preferences.VjetGlobalPreferencesPage" id="org.eclipse.vjet.eclipse.ui.vjet" name="%VJOPreferencePage.name"/>
@@ -289,6 +300,16 @@
 	<page name="%membersSortOrderPage.name" category="org.eclipse.vjet.eclipse.ui.vjet" class="org.eclipse.vjet.eclipse.internal.ui.preferences.VJOMembersOrderPreferencePage" id="org.eclipse.vjet.eclipse.ui.preferences.MembersOrderPreferencePage">
 
          <keywordReference id="org.eclipse.vjet.eclipse.ui.sortorder"/>
+      </page>
+      
+        <page
+            name="%codeFormatterPrefName"
+            category="org.eclipse.vjet.eclipse.ui.vjet" 
+            class="org.eclipse.vjet.eclipse.internal.ui.preferences.CodeFormatterPreferencePage"
+            id="org.eclipse.vjet.eclipse.ui.preferences.CodeFormatterPreferencePage">
+            <keywordReference id="org.eclipse.vjet.eclipse.ui.formatter"/>
+           
+        
       </page>
    <!--
 	<page

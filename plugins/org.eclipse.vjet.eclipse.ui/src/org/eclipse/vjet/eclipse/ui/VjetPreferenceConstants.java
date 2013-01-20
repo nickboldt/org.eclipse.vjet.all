@@ -719,5 +719,17 @@ public class VjetPreferenceConstants extends PreferenceConstants {
 	public static final String CODEASSIST_APPENDCOMMENT = "append_annotion";
 	public static final String CODEASSIST_CAMEL_MATCH = "camel_match";
 	public static final String EDITOR_DEFAULT_COLOR = DLTKColorConstants.DLTK_DEFAULT;
+
+	
+	/**
+	 * A named preference that controls which profile is used by the code formatter.
+	 * <p>
+	 * Value is of type <code>String</code>.
+	 * </p>
+	 *
+	 * 
+	 */	
+	public static final String FORMATTER_PROFILE= "formatter_profile"; //$NON-NLS-1$
+	
 	
 }

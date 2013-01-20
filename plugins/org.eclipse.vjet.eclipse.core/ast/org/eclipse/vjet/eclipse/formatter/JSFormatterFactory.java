@@ -3,14 +3,14 @@ package org.eclipse.vjet.eclipse.formatter;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.eclipse.vjet.eclipse.core.VjetPlugin;
-import org.eclipse.vjet.eclipse.internal.formatter.CodeFormatter;
-import org.eclipse.vjet.eclipse.internal.formatter.DefaultCodeFormatter;
-import org.eclipse.vjet.eclipse.internal.formatter.DefaultCodeFormatterConstants;
 import org.eclipse.mod.wst.jsdt.core.compiler.IScanner;
 import org.eclipse.mod.wst.jsdt.internal.compiler.classfmt.ClassFileConstants;
 import org.eclipse.mod.wst.jsdt.internal.compiler.impl.CompilerOptions;
 import org.eclipse.mod.wst.jsdt.internal.core.util.PublicScanner;
+import org.eclipse.vjet.eclipse.core.VjetPlugin;
+import org.eclipse.vjet.eclipse.internal.formatter.CodeFormatter;
+import org.eclipse.vjet.eclipse.internal.formatter.DefaultCodeFormatter;
+import org.eclipse.vjet.eclipse.internal.formatter.DefaultCodeFormatterConstants;
 
 
 public class JSFormatterFactory {
@@ -82,7 +82,6 @@ public class JSFormatterFactory {
 	 * @see JavaScriptCore#getOptions()
 	 */
 	public static CodeFormatter createCodeFormatter(Map options, int mode) {
-		// TODO VjetPlugin.getOptions()
 		if (options == null) 
 			options = VjetPlugin.getOptions();
 		Map currentOptions = new HashMap(options);

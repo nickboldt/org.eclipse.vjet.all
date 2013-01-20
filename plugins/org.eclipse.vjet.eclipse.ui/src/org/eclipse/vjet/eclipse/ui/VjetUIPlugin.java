@@ -14,6 +14,7 @@ import org.eclipse.vjet.eclipse.internal.ui.editor.NativeElementFileAdvisor;
 import org.eclipse.vjet.eclipse.internal.ui.editor.VjoEditor;
 import org.eclipse.vjet.eclipse.internal.ui.preferences.codestyle.CodeTemplateContextType;
 import org.eclipse.vjet.eclipse.internal.ui.preferences.codestyle.CodeTemplates;
+import org.eclipse.vjet.eclipse.internal.ui.preferences.formatting.FormatterProfileStore;
 import org.eclipse.vjet.eclipse.internal.ui.text.VjoTextTools;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -131,6 +132,8 @@ public class VjetUIPlugin extends AbstractUIPlugin implements IStartup {
         //End of added
 		setPluginInstance(this);
 
+		FormatterProfileStore.checkCurrentOptionsVersion();
+		
 		new WorkbenchJob("Starting VJET UI plugin") {
 			
 			@Override
