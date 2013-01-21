@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Hashtable;
 import java.util.Map;
 
 import org.eclipse.core.commands.AbstractHandler;
@@ -16,6 +17,7 @@ import org.eclipse.core.filebuffers.ITextFileBufferManager;
 import org.eclipse.core.filebuffers.LocationKind;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRunnable;
+import org.eclipse.core.resources.ProjectScope;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -25,11 +27,15 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.core.runtime.preferences.IEclipsePreferences;
+import org.eclipse.core.runtime.preferences.IScopeContext;
+import org.eclipse.dltk.mod.core.DLTKCore;
 import org.eclipse.dltk.mod.core.IModelElement;
 import org.eclipse.dltk.mod.core.IProjectFragment;
 import org.eclipse.dltk.mod.core.IScriptFolder;
 import org.eclipse.dltk.mod.core.IScriptProject;
 import org.eclipse.dltk.mod.core.ModelException;
+import org.eclipse.dltk.mod.core.PreferencesLookupDelegate;
 import org.eclipse.dltk.mod.internal.corext.util.Messages;
 import org.eclipse.dltk.mod.internal.corext.util.Resources;
 import org.eclipse.dltk.mod.internal.ui.actions.WorkbenchRunnableAdapter;
@@ -65,6 +71,7 @@ import org.eclipse.vjet.eclipse.internal.ui.text.CommentFormattingStrategy;
 import org.eclipse.vjet.eclipse.internal.ui.text.IJavaScriptPartitions;
 import org.eclipse.vjet.eclipse.internal.ui.text.JavaScriptFormattingStrategy;
 import org.eclipse.vjet.eclipse.ui.VjetUIPlugin;
+import org.osgi.service.prefs.BackingStoreException;
 
 /**
  * Our sample handler extends AbstractHandler, an IHandler base class.
@@ -183,7 +190,24 @@ public class FormatSourceHandler extends AbstractHandler {
 	}
 	
 	private static Map getFomatterSettings(IScriptProject project) {
-		return new HashMap(project.getOptions(true));
+		
+		Map defaultOptions = VjetPlugin.getOptions();
+		PreferencesLookupDelegate context = new PreferencesLookupDelegate(project.getProject());
+		
+		String[] propertyNames = new String[defaultOptions.size()];
+		
+		propertyNames = (String[]) defaultOptions.keySet().toArray(propertyNames);
+		
+		Hashtable projectOptions = new Hashtable(propertyNames.length);
+		for (int i = 0; i < propertyNames.length; i++) {
+			String propertyName = propertyNames[i];
+			String value = context.getString(VjetPlugin.PLUGIN_ID,propertyName);
+			if (value != null && defaultOptions.containsKey(propertyName)) {
+				projectOptions.put(propertyName, value.trim());
+			}
+		}
+		
+		return new HashMap(projectOptions);
 	}
 	
 	private void doRunOnMultiple(IModelElement[] cus, MultiStatus status, IProgressMonitor monitor) throws OperationCanceledException {

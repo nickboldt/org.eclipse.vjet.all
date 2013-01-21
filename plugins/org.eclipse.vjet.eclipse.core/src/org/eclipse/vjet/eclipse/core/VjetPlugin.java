@@ -274,11 +274,6 @@ public class VjetPlugin extends Plugin {
 			addTraceGroupEventListeners();
 		}
 		
-		// formatter
-		// Formatter settings
-		ModelManager.getModelManager().setOptions(new Hashtable(DefaultCodeFormatterConstants.getEclipseDefaultSettings()));
-
-		
 		
 		setPluginInstance(this);
 		DefaultValidator.getValidator();
@@ -461,6 +456,7 @@ public class VjetPlugin extends Plugin {
 
 	public static Map getOptions() {
 		// TODO Auto-generated method stub
+		
 		return DefaultCodeFormatterConstants.getEclipseDefaultSettings();
 //		return DefaultCodeFormatterConstants.getEclipseDefaultSettings();
 	}

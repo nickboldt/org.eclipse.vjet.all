@@ -96,10 +96,10 @@ public class FormatterProfileManager extends ProfileManager {
 	}
 
 	protected String getSelectedProfileId(IScopeContext instanceScope) { 
-		String profileId= instanceScope.getNode(VjetPlugin.PLUGIN_ID).get(PROFILE_KEY, null);
+		String profileId= instanceScope.getNode(VjetUIPlugin.PLUGIN_ID).get(PROFILE_KEY, null);
 		if (profileId == null) {
 			// request from bug 129427
-			profileId= new DefaultScope().getNode(VjetPlugin.PLUGIN_ID).get(PROFILE_KEY, null);
+			profileId= DefaultScope.INSTANCE.getNode(VjetUIPlugin.PLUGIN_ID).get(PROFILE_KEY, null);
 			// fix for bug 89739
 			if (DEFAULT_PROFILE.equals(profileId)) { // default default: 
 				IEclipsePreferences node= instanceScope.getNode(VjetPlugin.PLUGIN_ID);
