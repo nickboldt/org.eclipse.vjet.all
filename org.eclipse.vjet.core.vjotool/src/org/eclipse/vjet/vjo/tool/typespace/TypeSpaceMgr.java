@@ -75,8 +75,6 @@ public class TypeSpaceMgr {
 
 	public static final String WINDOW_VAR = "window";
 
-	private boolean isAllowChanges = true;
-
 	private final TypeSpaceLocker m_locker = new TypeSpaceLocker();
 
 	private Collection<TypeSpaceListener> m_listeners = new ArrayList<TypeSpaceListener>();
@@ -233,8 +231,7 @@ public class TypeSpaceMgr {
 	 */
 	public AddGroupEvent createGroupEvent(GroupInfo group, List<String> groups) {
 
-		if (!groups.contains(group.getGroupName())
-				&& group.getSrcPath()!=null) {
+		if (!groups.contains(group.getGroupName())) {
 			groups.add(group.getGroupName());
 			return createGroupEvent(group);
 		}
@@ -250,12 +247,17 @@ public class TypeSpaceMgr {
 	 * @return {@link AddGroupEvent} event.
 	 */
 	private AddGroupEvent createGroupEvent(GroupInfo group) {
+		
+		
+		
+		List<String> inclusionRules = group.getSrcPath().getInclusionRules();
+		List<String> exclusionRules = group.getSrcPath().getExclusionRules();
 		return new AddGroupEvent(group.getGroupName(), group.getGroupPath(),
-				null, 
+				group.isLibrary()? group.getSrcPath().getSourcePaths(): null, 
 				group.getClassPath(), 
 				group.getDirectDependency(), 
 				group.getBootstrapPath(),
-				group.getSrcPath().getInclusionRules(), group.getSrcPath().getExclusionRules());
+				inclusionRules, exclusionRules);
 	}
 
 	/**
@@ -364,11 +366,10 @@ public class TypeSpaceMgr {
 		monitor.preparationTypeListStarted();
 		List<GroupInfo> list = m_typeLoader.getGroupInfo();
 		monitor.preparationTypeListFinished();
-		loadTypes(monitor, list, callback);
+		loadTypes(monitor, list);
 	}
 
-	private void loadTypes(TypeLoadMonitor monitor, List<GroupInfo> list,
-			final ISourceEventCallback<IJstType> callback) {
+	private void loadTypes(TypeLoadMonitor monitor, List<GroupInfo> list) {
 
 		try {
 			// m_locker.lockExclusive();
@@ -388,8 +389,7 @@ public class TypeSpaceMgr {
 			// reconciled DLTK to JST models
 			int totalGroups = initGroupSize + list.size();
 
-			loadToTypeSpace(monitor, list, new TypeSpaceLoadEvent(totalGroups,
-					callback, m_locker, monitor));
+			loadToTypeSpace(monitor, list, new TypeSpaceLoadEvent(totalGroups, m_locker, monitor));
 
 		} finally {
 			// m_locker.releaseExclusive();
@@ -551,7 +551,7 @@ public class TypeSpaceMgr {
 			List<GroupInfo> list = m_typeLoader.getGroupInfo(group);
 			monitor.preparationTypeListFinished();
 
-			loadTypes(monitor, list, callback);
+			loadTypes(monitor, list);
 		}
 	}
 
@@ -743,7 +743,7 @@ public class TypeSpaceMgr {
 	 */
 	private void doRefresh(TypeLoadMonitor monitor,
 			ISourceEventCallback<IJstType> callback) {
-		if (m_typeLoader != null && isAllowChanges()) {
+		if (m_typeLoader != null) {
 			loadChangedTypes(monitor, modifyTypeCallback);
 		}
 	}
@@ -774,10 +774,6 @@ public class TypeSpaceMgr {
 		for (IJstType jstType : types) {
 			getController().resolve(jstType);
 		}
-	}
-
-	public boolean isAllowChanges() {
-		return isAllowChanges;
 	}
 
 	public void setAllowChanges(boolean isAllowChanges) {
@@ -938,11 +934,10 @@ public class TypeSpaceMgr {
 	 * @param callback
 	 *            {@link ISourceEventCallback} call back object.
 	 */
-	public void load(TypeLoadMonitor monitor, List<GroupInfo> list,
-			ISourceEventCallback<IJstType> callback) {
-		if (isAllowChanges()) {
-			loadTypes(monitor, list, callback);
-		}
+	public void load(TypeLoadMonitor monitor, List<GroupInfo> list) {
+
+			loadTypes(monitor, list);
+		
 	}
 
 

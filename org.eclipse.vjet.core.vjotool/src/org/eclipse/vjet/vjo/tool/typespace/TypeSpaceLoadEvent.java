@@ -19,16 +19,16 @@ import org.eclipse.vjet.dsf.ts.event.EventListenerStatus.ErrorSource;
 public class TypeSpaceLoadEvent implements ISourceEventCallback<IJstType> {
 
 	private int m_totalGroupsInTs;
-	private ISourceEventCallback<IJstType> m_callback;
+//	private ISourceEventCallback<IJstType> m_callback;
 	//commenting out as nothing is reading from this var.
 //	private TypeSpaceLocker m_locker;
 	private TypeLoadMonitor m_monitor;
 
 	public TypeSpaceLoadEvent(int totalGroupsInTS,
-			ISourceEventCallback<IJstType> callback, TypeSpaceLocker locker,
+		 TypeSpaceLocker locker,
 			TypeLoadMonitor monitor) {
 		m_totalGroupsInTs = totalGroupsInTS;
-		m_callback = callback;
+
 //		m_locker = locker;
 		m_monitor = monitor;
 
@@ -51,15 +51,11 @@ public class TypeSpaceLoadEvent implements ISourceEventCallback<IJstType> {
 		//does same thing.  Commenting out the above else if and adding line
 		//below.
 
-		if (m_callback != null) {
-			m_callback.onComplete(status);
-		}
+
 	}
 
 	public void onProgress(float percent) {
-		if (m_callback != null) {
-			m_callback.onProgress(percent);
-		}
+
 		if (m_monitor != null) {
 			m_monitor.loadTypeStarted(percent);
 		}

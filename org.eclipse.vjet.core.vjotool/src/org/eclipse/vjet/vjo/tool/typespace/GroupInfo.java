@@ -27,6 +27,7 @@ public class GroupInfo {
 	private String m_groupPath;
 	private List<String> m_directDependency;
 	private List<String> m_bootstrapPath;
+	private boolean m_library;
 
 	public GroupInfo(String grpName, String groupPath, SourcePathInfo srcPath,
 			List<String> classPath, final List<String> directDependency) {
@@ -108,6 +109,12 @@ public class GroupInfo {
 		}
 		buffer.append("]");
 		return buffer.toString();
+	}
+	public boolean isLibrary() {
+		return m_library;
+	}
+	public void setLibrary(boolean m_library) {
+		this.m_library = m_library;
 	}
 
 }
