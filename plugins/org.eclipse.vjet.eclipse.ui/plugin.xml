@@ -133,12 +133,6 @@
    </extension>
    
    <extension point="org.eclipse.ui.actionSetPartAssociations">
-   	  <!-- comment by kevin, remove extra 'Open Type' menu
-      <actionSetPartAssociation targetID="org.eclipse.vjet.eclipse.ui.VjetActionSet">
-	  <part id="org.eclipse.dltk.mod.ui.ScriptExplorer"/>
-	  <part id="org.eclipse.vjet.ui.VjetJsEditor"/>
-      </actionSetPartAssociation>
-      -->
       
       <actionSetPartAssociation targetID="org.eclipse.ui.edit.text.actionSet.presentation">
          <part id="org.eclipse.vjet.ui.VjetJsEditor"/>
@@ -149,29 +143,6 @@
       </actionSetPartAssociation>
    </extension>
 
-   <extension point="org.eclipse.ui.popupMenus">
-      <objectContribution adaptable="true" id="org.eclipse.vjet.eclipse.core.addVjoNatureAction" objectClass="org.eclipse.core.resources.IResource">
-      		<menu id="org.eclipse.vjet.shortcuts.menu" label="VJet">
-				<separator name="group_general"/>
-				<separator name="group_other"/>
-			</menu>
-         <action class="org.eclipse.vjet.eclipse.internal.ui.actions.AddVjoNatureAction" enablesFor="1" icon="platform:/plugin/org.eclipse.vjet.eclipse.ui/icons/ctool16/newjscript_wiz.gif" id="org.eclipse.vjet.eclipse.core.addVjoNatureAction" label="%addVjetNature.label" menubarPath="org.eclipse.vjet.shortcuts.menu/group_general" style="push">
-         </action>
-         <action class="org.eclipse.vjet.eclipse.internal.ui.actions.UpdateVjetBuildPathFromJavaClasspathAction" enablesFor="1" icon="platform:/plugin/org.eclipse.vjet.eclipse.ui/icons/ctool16/newjscript_wiz.gif" id="org.eclipse.vjet.eclipse.internal.ui.actions.UpdateVjetBuildPathFromJavaClasspathAction" label="%updateVjetBuildpath.label" menubarPath="org.eclipse.vjet.shortcuts.menu/group_general" style="push">
-         </action>
-         <visibility>
-         	<objectState name="open" value="true">
-            	</objectState>
-         </visibility>
-            </objectContribution>
-      <objectContribution adaptable="true" id="org.eclipse.vjet.eclipse.internal.ui.actions.VjoValidationAction" objectClass="org.eclipse.core.resources.IResource">
-      <menu id="org.eclipse.vjet.shortcuts.menu" label="VJet">
-				<separator name="group_validation"/>
-			</menu>
-         <action class="org.eclipse.vjet.eclipse.internal.ui.actions.VjoValidationAction" enablesFor="+" icon="platform:/plugin/org.eclipse.vjet.eclipse.ui/icons/ctool16/newjscript_wiz.gif" id="org.eclipse.vjet.eclipse.ui.vjoValidation" label="%vjetValidate" menubarPath="org.eclipse.vjet.shortcuts.menu/group_validation" style="push">
-         </action>
-      </objectContribution>
-   </extension>
    <extension point="org.eclipse.ui.newWizards">
       <category id="org.eclipse.vjet.eclipse.ui" name="%vjoCategory">
       </category>
@@ -564,9 +535,64 @@
             name="Vjo Support Library"
             nature="org.eclipse.vjet.core.nature">
       </buildpathContainerPath>
+      
+      
    </extension>
+   
+     <extension point="org.eclipse.core.expressions.definitions">
+   <definition id="org.eclipse.vjet.jsfile">
+      <adapt type="org.eclipse.core.resources.IResource">
+             <test property="org.eclipse.core.resources.extension"
+                   value="js">
+             </test>
+      </adapt>
+   </definition>
+      <definition id="org.eclipse.vjet.javafile">
+      <adapt type="org.eclipse.core.resources.IResource">
+             <test property="org.eclipse.core.resources.extension"
+                   value="java">
+             </test>
+      </adapt>
+   </definition>
+</extension>
+   
+   <extension point="org.eclipse.ui.popupMenus">
+      <objectContribution adaptable="true" id="org.eclipse.vjet.eclipse.core.addVjoNatureAction" objectClass="org.eclipse.core.resources.IResource">
+      		<menu id="org.eclipse.vjet.shortcuts.menu" label="VJet">
+				<separator name="group_general"/>
+				<separator name="group_other"/>
+			</menu>
+         <action class="org.eclipse.vjet.eclipse.internal.ui.actions.AddVjoNatureAction" enablesFor="1" icon="platform:/plugin/org.eclipse.vjet.eclipse.ui/icons/ctool16/newjscript_wiz.gif" id="org.eclipse.vjet.eclipse.core.addVjoNatureAction" label="%addVjetNature.label" menubarPath="org.eclipse.vjet.shortcuts.menu/group_general" style="push">
+         </action>
+         <action class="org.eclipse.vjet.eclipse.internal.ui.actions.UpdateVjetBuildPathFromJavaClasspathAction" enablesFor="1" icon="platform:/plugin/org.eclipse.vjet.eclipse.ui/icons/ctool16/newjscript_wiz.gif" id="org.eclipse.vjet.eclipse.internal.ui.actions.UpdateVjetBuildPathFromJavaClasspathAction" label="%updateVjetBuildpath.label" menubarPath="org.eclipse.vjet.shortcuts.menu/group_general" style="push">
+         </action>
+         <visibility>
+         	<objectState name="open" value="true">
+            	</objectState>
+         </visibility>
+            </objectContribution>
+      <objectContribution adaptable="true" id="org.eclipse.vjet.eclipse.internal.ui.actions.VjoValidationAction" objectClass="org.eclipse.core.resources.IResource">
+      <menu id="org.eclipse.vjet.shortcuts.menu" label="VJet">
+				<separator name="group_validation"/>
+			</menu>
+         <action class="org.eclipse.vjet.eclipse.internal.ui.actions.VjoValidationAction" enablesFor="+" icon="platform:/plugin/org.eclipse.vjet.eclipse.ui/icons/ctool16/newjscript_wiz.gif" id="org.eclipse.vjet.eclipse.ui.vjoValidation" label="%vjetValidate" menubarPath="org.eclipse.vjet.shortcuts.menu/group_validation" style="push">
+         </action>
+      </objectContribution>
+   </extension>
+   
+   
    <extension
          point="org.eclipse.ui.menus">
+
+      <menuContribution
+            locationURI="popup:org.eclipse.ui.popup.any">
+         <menu
+               id="org.eclipse.vjet.shortcuts.menu"
+               label="VJET">
+         </menu>
+      </menuContribution>
+      
+      
        <menuContribution
             locationURI="popup:org.eclipse.vjet.shortcuts.menu">
             <command
@@ -575,16 +601,11 @@
                label="Add Bootstrap">
 
 			<visibleWhen>
-			   <or>
 			      <with variable="selection">
 			         <iterate ifEmtpy="false">
 			            <instanceof value=" org.eclipse.dltk.mod.internal.core.ScriptProject"/>
 			         </iterate>
 			      </with>
-			      <with variable="activeEditorInput">
-			        <reference definitionId="org.eclipse.vjet.jsfile"/>
-			      </with>
-			   </or>
 			</visibleWhen>
          </command>
 		</menuContribution>
