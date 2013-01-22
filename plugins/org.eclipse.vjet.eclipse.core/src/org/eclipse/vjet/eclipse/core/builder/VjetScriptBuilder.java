@@ -634,8 +634,9 @@ public class VjetScriptBuilder extends ScriptBuilder {
 			List<String> groupDepends = new ArrayList<String>();
 			IBuildpathEntry bootstrapPath = TypeSpaceBuilder
 					.getBootstrapDir(scriptProject);
-			TypeSpaceBuilder
-					.getSerFileGroupDepends(scriptProject, groupDepends);
+			
+//			TypeSpaceBuilder
+//					.getSerFileGroupDepends(scriptProject, groupDepends);
 
 			// setup type space group but don't add any types to group
 			this.typeSpaceBuilder.buildProject(scriptProject, null, monitor,

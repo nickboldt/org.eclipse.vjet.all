@@ -81,13 +81,13 @@ public class TypeSpaceBuilder {
 			IProgressMonitor monitor, List<String> groupDepends, IBuildpathEntry bootstrapPath) {
 
 		// add group event
-		String name = project.getProject().getName();
-		File groupPath = project.getProject().getLocation().toFile();
-		SourcePathInfo sourceInfo = PiggyBackClassPathUtil
-		.getProjectSrcPath_DLTK(project);
-		List<String> srcPaths = sourceInfo.getSourcePaths();
+//		String name = project.getProject().getName();
+//		File groupPath = project.getProject().getLocation().toFile();
+//		SourcePathInfo sourceInfo = PiggyBackClassPathUtil
+//		.getProjectSrcPath_DLTK(project);
+//		List<String> srcPaths = sourceInfo.getSourcePaths();
 		// TODO support library zip entries
-		List<String> classPaths = new ArrayList<String>();
+//		List<String> classPaths = new ArrayList<String>();
 
 		List<String> bootstrapDirs = new ArrayList<String>();
 		if(bootstrapPath!=null){
@@ -101,8 +101,7 @@ public class TypeSpaceBuilder {
 		TypeSpaceMgr mgr = TypeSpaceMgr.getInstance();
 //		// log list of groups being processed
 		TypeSpaceTracer.logLoadEvent(info);
-		mgr.load(new EclipseTypeLoadMonitor(monitor), info, null);
-
+		mgr.load(new EclipseTypeLoadMonitor(monitor), info);
 
 
 
@@ -435,9 +434,11 @@ public class TypeSpaceBuilder {
 				SourcePathInfo srcPathInfo = new SourcePathInfo();
 				srcPathInfo.addSourcePath(file.getPath());
 
-
-				info.add(new GroupInfo(file.getName(), file.getAbsolutePath(),
-						srcPathInfo, null, groupDependency.get(file.getName())));
+				
+				GroupInfo groupInfo = new GroupInfo(file.getName(), file.getAbsolutePath(),
+						srcPathInfo, null, groupDependency.get(file.getName()));
+				groupInfo.setLibrary(true);
+				info.add(groupInfo);
 				classPaths.add(fileName);
 				System.out.println("ScriptProject<" + project.getElementName()
 						+ "> depends on :" + u);
@@ -447,7 +448,7 @@ public class TypeSpaceBuilder {
 		SourcePathInfo sourcePathInfo = PiggyBackClassPathUtil
 				.getProjectSrcPath_DLTK(project);
 		List<String> srcPaths = sourcePathInfo.getSourcePaths();
-
+		sourcePathInfo.setSourcePaths(srcPaths);
 		String name = project.getProject().getName();
 		java.io.File groupPath = project.getProject().getLocation().toFile();
 
@@ -631,10 +632,10 @@ public class TypeSpaceBuilder {
 					ISourceEventCallback<JstType> callBack) {
 				// TODO Auto-generated method stub
 				// revalidate type now
-				String filename = event.getFileName();
+//				String filename = event.getFileName();
 				TypeSpaceMgr ts = TypeSpaceMgr.getInstance();
-				IJstType type = ts.findType(event.getTypeName());
-								
+//				IJstType type = ts.findType(event.getTypeName());
+							
 				// need to revalidate type -- issue is with script unit block validtion removal.
 				// validte type and update markers
 				// we need to figure out if we should remove the idea of script unit 
