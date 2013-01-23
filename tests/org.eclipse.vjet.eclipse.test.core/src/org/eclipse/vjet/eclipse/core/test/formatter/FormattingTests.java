@@ -30,6 +30,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class FormattingTests extends TestCase {
+	private static final String SPACE_TAB = "    ";
 	public static final String DELIMITER = TextUtilities
 			.getDefaultLineDelimiter(new Document());
 	protected static final String PREFIX = SingleCommentLine.SINGLE_COMMENT_PREFIX;
@@ -98,31 +99,31 @@ public class FormattingTests extends TestCase {
 				+ DELIMITER + "});";
 		String afterContents = "dojo.declare(\"myDojo.Test\", [], {"
 				+ DELIMITER
-				+ "\t"
+				+ SPACE_TAB
 				+ PREFIX
 				+ "this is a really long comment that will have to be wrapped into multiple"
 				+ DELIMITER
-				+ "\t"
+				+ SPACE_TAB
 				+ PREFIX
 				+ "lines because it is so very very long"
 				+ DELIMITER
-				+ "\t"
+				+ SPACE_TAB
 				+ PREFIX
 				+ "this is a really long comment that will have to be wrapped into multiple"
 				+ DELIMITER
-				+ "\t"
+				+ SPACE_TAB
 				+ PREFIX
 				+ "lines because it is so very very long"
 				+ DELIMITER
 				+ DELIMITER
-				+ "\t"
+				+ SPACE_TAB
 				+ PREFIX
 				+ "this is a shorter comment"
 				+ DELIMITER
-				+ "\t"
+				+ SPACE_TAB
 				+ "constructor : function() {"
 				+ DELIMITER
-				+ "\t"
+				+ SPACE_TAB
 				+ "}"
 				+ DELIMITER
 				+ PREFIX
