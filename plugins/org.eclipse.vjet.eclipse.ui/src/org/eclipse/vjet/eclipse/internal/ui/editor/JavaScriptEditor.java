@@ -46,6 +46,7 @@ public class JavaScriptEditor extends ScriptEditor {
 	private org.eclipse.dltk.mod.internal.ui.editor.BracketInserter fBracketInserter = new JavaScriptBracketInserter(
 			this);
 
+	
 //	protected class FormatElementAction extends Action implements IUpdate {
 //
 //		/*
@@ -287,15 +288,6 @@ public class JavaScriptEditor extends ScriptEditor {
 
 	protected void createActions() {
 		super.createActions();
-
-		// TODO Disable menus
-		// Action action = new FormatElementAction();
-		// action
-		// .setActionDefinitionId(IScriptEditorActionDefinitionIds.QUICK_FORMAT);
-		// setAction("QuickFormat", action); //$NON-NLS-1$
-		// markAsStateDependentAction("QuickFormat", true); //$NON-NLS-1$
-		// setAction(DLTKActionConstants.FORMAT_ELEMENT, action);
-		// markAsStateDependentAction(DLTKActionConstants.FORMAT_ELEMENT, true);
 
 		ActionGroup generateActions = new JavaScriptGenerateActionGroup(this,
 				ITextEditorActionConstants.GROUP_EDIT);

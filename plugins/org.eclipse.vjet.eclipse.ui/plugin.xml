@@ -87,8 +87,16 @@
    <extension point="org.eclipse.ui.bindings">
    <!--
           	<key sequence="M1+M2+T" contextId="org.eclipse.dltk.mod.ui.scriptEditorScope" commandId="org.eclipse.dltk.mod.ui.navigate.open.type" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
-       -->
-            <key sequence="M2+M3+O" contextId="org.eclipse.dltk.mod.ui.scriptEditorScope" commandId="org.eclipse.dltk.mod.ui.edit.text.script.toggleMarkOccurrences" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
+      
+            <key sequence="M2+M3+O" contextId="org.eclipse.dltk.mod.ui.scriptEditorScope" 
+            commandId="org.eclipse.dltk.mod.ui.edit.text.script.toggleMarkOccurrences" 
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
+         -->   
+            <key sequence="M1+M2+F" 
+            	contextId="org.eclipse.dltk.mod.ui.scriptEditorScope" 
+            	commandId="org.eclipse.vjet.eclipse.ui.command.FormatSource" 
+            	schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
+            	
    </extension>
    <extension point="org.eclipse.core.expressions.definitions">
       <definition id="org.eclipse.vjet.eclipse.ui.inDltk">
@@ -610,11 +618,11 @@
          </command>
 		</menuContribution>
 		<menuContribution
-            locationURI="popup:org.eclipse.vjet.shortcuts.menu">
+             locationURI="popup:org.eclipse.dltk.mod.ui.source.menu">
             <command
                commandId="org.eclipse.vjet.eclipse.ui.command.FormatSource"
                icon="icons/obj16/sourceEditor.gif"
-               label="Format Source">
+               label="Format">
 
 			<visibleWhen>
 			   <or>

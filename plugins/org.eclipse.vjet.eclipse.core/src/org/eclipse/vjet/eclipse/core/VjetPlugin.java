@@ -456,8 +456,8 @@ public class VjetPlugin extends Plugin {
 
 	public static Map getOptions() {
 		// TODO Auto-generated method stub
+		return DefaultCodeFormatterConstants.getJavaConventionsSettings();
 		
-		return DefaultCodeFormatterConstants.getEclipseDefaultSettings();
 //		return DefaultCodeFormatterConstants.getEclipseDefaultSettings();
 	}
 

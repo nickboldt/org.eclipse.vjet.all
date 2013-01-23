@@ -116,54 +116,45 @@ public class VjetUIPlugin extends AbstractUIPlugin implements IStartup {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
+	 * @see
+	 * org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext
+	 * )
 	 */
 	@Override
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
-		
-		//Added by Eric.Ma to fix <VJET JS> view name in view list
-		IPerspectiveDescriptor[] allSets = PlatformUI.getWorkbench().getPerspectiveRegistry().getPerspectives();
-        for (IPerspectiveDescriptor iPerspectiveDescriptor : allSets) {
-            if(iPerspectiveDescriptor.getId().contains("VJET_JS")){
-                PlatformUI.getWorkbench().getPerspectiveRegistry().deletePerspective(iPerspectiveDescriptor);
-            }
-        }
-        //End of added
+
+		// Added by Eric.Ma to fix <VJET JS> view name in view list
+		IPerspectiveDescriptor[] allSets = PlatformUI.getWorkbench()
+				.getPerspectiveRegistry().getPerspectives();
+		for (IPerspectiveDescriptor iPerspectiveDescriptor : allSets) {
+			if (iPerspectiveDescriptor.getId().contains("VJET_JS")) {
+				PlatformUI.getWorkbench().getPerspectiveRegistry()
+						.deletePerspective(iPerspectiveDescriptor);
+			}
+		}
+		// End of added
 		setPluginInstance(this);
 
 		FormatterProfileStore.checkCurrentOptionsVersion();
-		
-		new WorkbenchJob("Starting VJET UI plugin") {
-			
-			@Override
-			public IStatus runInUIThread(IProgressMonitor arg0) {
-				IWorkbenchWindow window = PlatformUI.getWorkbench()
-				.getActiveWorkbenchWindow();
-				window.getPartService().addPartListener(partListener);
-				registryAdvisor();
-				reloadFont();
-				return new Status(IStatus.OK, PLUGIN_ID, IStatus.OK, "Finished creating part", null);
-	
-			}
-		}.schedule();
-		
-//		Display.getDefault().asyncExec(new Runnable() {
-//			public void run() {
-//				IWorkbenchWindow window = PlatformUI.getWorkbench()
-//						.getActiveWorkbenchWindow();
-//				window.getPartService().addPartListener(partListener);
-//				// window.addPerspectiveListener(perspectiveListener);
-//				registryAdvisor();
-//				reloadFont();
-//			}
-//		});
-		
-        
-        // add by patrick
-        // make the vjet editor default to js file
-        IEditorRegistry editorRegistry = VjetUIPlugin.getDefault().getWorkbench().getEditorRegistry();
-        editorRegistry.setDefaultEditor(getExtentionPattern(), VjoEditor.EDITOR_ID);
+
+		// Display.getDefault().asyncExec(new Runnable() {
+		// public void run() {
+		// IWorkbenchWindow window = PlatformUI.getWorkbench()
+		// .getActiveWorkbenchWindow();
+		// window.getPartService().addPartListener(partListener);
+		// // window.addPerspectiveListener(perspectiveListener);
+		// registryAdvisor();
+		// reloadFont();
+		// }
+		// });
+
+		// add by patrick
+		// make the vjet editor default to js file
+		IEditorRegistry editorRegistry = VjetUIPlugin.getDefault()
+				.getWorkbench().getEditorRegistry();
+		editorRegistry.setDefaultEditor(getExtentionPattern(),
+				VjoEditor.EDITOR_ID);
 	}
 
 	private String getExtentionPattern() {
@@ -195,7 +186,9 @@ public class VjetUIPlugin extends AbstractUIPlugin implements IStartup {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext)
+	 * @see
+	 * org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext
+	 * )
 	 */
 	@Override
 	public void stop(BundleContext context) throws Exception {
@@ -296,6 +289,7 @@ public class VjetUIPlugin extends AbstractUIPlugin implements IStartup {
 	public static void log(int severity, String message) {
 		log(new Status(severity, PLUGIN_ID, severity, message, null));
 	}
+
 	public static void log(Exception e) {
 		log(new Status(IStatus.ERROR, PLUGIN_ID, IStatus.ERROR, null, e));
 	}
@@ -304,12 +298,24 @@ public class VjetUIPlugin extends AbstractUIPlugin implements IStartup {
 		getDefault().getLog().log(status);
 	}
 
-	//add by patrick
+	// add by patrick
 	@Override
 	public void earlyStartup() {
 		System.out.println("Vjet UI early startup.");
+		new WorkbenchJob("Starting VJET UI plugin") {
+
+			@Override
+			public IStatus runInUIThread(IProgressMonitor arg0) {
+				IWorkbenchWindow window = PlatformUI.getWorkbench()
+						.getActiveWorkbenchWindow();
+				window.getPartService().addPartListener(partListener);
+				registryAdvisor();
+				reloadFont();
+				return new Status(IStatus.OK, PLUGIN_ID, IStatus.OK,
+						"Finished creating part", null);
+
+			}
+		}.schedule();
 	}
-	
-	
 
 }

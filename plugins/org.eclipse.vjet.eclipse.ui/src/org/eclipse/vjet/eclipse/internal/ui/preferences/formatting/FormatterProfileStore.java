@@ -113,9 +113,9 @@ public class FormatterProfileStore extends ProfileStore {
 				profiles= new ArrayList();
 			}
 			ProfileManager manager= new FormatterProfileManager(profiles, instanceScope, access, profileVersioner);
-			if (manager.getSelected() instanceof CustomProfile) {
+//			if (manager.getSelected() instanceof CustomProfile) {
 				manager.commitChanges(instanceScope); // updates JavaScriptCore options
-			}
+//			}
 			uiPreferences.putInt(PREF_FORMATTER_PROFILES + VERSION_KEY_SUFFIX, profileVersioner.getCurrentVersion());
 			savePreferences(instanceScope);
 						

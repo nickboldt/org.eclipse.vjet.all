@@ -31,7 +31,7 @@ public class FormatterProfileManager extends ProfileManager {
 	public final static String ECLIPSE_PROFILE= "org.eclipse.vjet.ui.default.eclipse_profile"; //$NON-NLS-1$
 	public final static String JAVA_PROFILE= "org.eclipse.vjet.ui.default.sun_profile"; //$NON-NLS-1$
 	
-	public final static String DEFAULT_PROFILE= ECLIPSE_PROFILE;
+	public final static String DEFAULT_PROFILE= JAVA_PROFILE;
 	
 	private final static KeySet[] KEY_SETS= new KeySet[] {
 		new KeySet(VjetPlugin.PLUGIN_ID, new ArrayList(DefaultCodeFormatterConstants.getJavaConventionsSettings().keySet())),

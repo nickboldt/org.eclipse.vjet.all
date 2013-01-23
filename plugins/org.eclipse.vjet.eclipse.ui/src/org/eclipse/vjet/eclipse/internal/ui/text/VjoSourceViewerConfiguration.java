@@ -39,6 +39,8 @@ import org.eclipse.jface.text.ITextDoubleClickStrategy;
 import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.jface.text.contentassist.ContentAssistant;
 import org.eclipse.jface.text.contentassist.IContentAssistProcessor;
+import org.eclipse.jface.text.formatter.IContentFormatter;
+import org.eclipse.jface.text.formatter.MultiPassContentFormatter;
 import org.eclipse.jface.text.information.IInformationPresenter;
 import org.eclipse.jface.text.information.IInformationProvider;
 import org.eclipse.jface.text.information.InformationPresenter;
@@ -453,5 +455,16 @@ public class VjoSourceViewerConfiguration extends
 		}
 		return fVjoDoubleClickSelector;
 	}
+	
+	public IContentFormatter getContentFormatter(ISourceViewer sourceViewer) {
+			final MultiPassContentFormatter formatter= new MultiPassContentFormatter(getConfiguredDocumentPartitioning(sourceViewer), IDocument.DEFAULT_CONTENT_TYPE);
+	
+			formatter.setMasterStrategy(new JavaScriptFormattingStrategy());
+			formatter.setSlaveStrategy(new CommentFormattingStrategy(), IJavaScriptPartitions.JS_DOC);
+			formatter.setSlaveStrategy(new CommentFormattingStrategy(), IJavaScriptPartitions.JS_SINGLE_COMMENT);
+			formatter.setSlaveStrategy(new CommentFormattingStrategy(), IJavaScriptPartitions.JS_MULTI_COMMENT);
+	
+			return formatter;
+		}
 
 }
