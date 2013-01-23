@@ -72,8 +72,9 @@ public class VjoJstTypeLoader implements IJstTypeLoader {
 			fileURI = new URI(URLEncoder.encode(absolutePath,"utf-8"));
 		}
 
+		String typekey = groupName + "#" + typeName;
 		TypeSpaceMgr.getInstance().getTypeToFileMap().put(
-				groupName + "#" + typeName, fileURI);
+				typekey, fileURI);
 
 		SourceType srcType = new SourceType(groupName, typeName,
 				new String(bs), file);

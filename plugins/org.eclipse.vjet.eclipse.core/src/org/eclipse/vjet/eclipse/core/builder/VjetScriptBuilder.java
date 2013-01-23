@@ -57,8 +57,10 @@ import org.eclipse.dltk.mod.core.IModelElementVisitor;
 import org.eclipse.dltk.mod.core.IModelMarker;
 import org.eclipse.dltk.mod.core.IProjectFragment;
 import org.eclipse.dltk.mod.core.IScriptFolder;
+import org.eclipse.dltk.mod.core.IScriptProject;
 import org.eclipse.dltk.mod.core.ISourceModule;
 import org.eclipse.dltk.mod.core.ISourceModuleInfoCache.ISourceModuleInfo;
+import org.eclipse.dltk.mod.core.IType;
 import org.eclipse.dltk.mod.core.ModelException;
 import org.eclipse.dltk.mod.core.SourceParserUtil;
 import org.eclipse.dltk.mod.core.builder.IBuildContext;
@@ -72,6 +74,8 @@ import org.eclipse.dltk.mod.internal.core.ExternalProjectFragment;
 import org.eclipse.dltk.mod.internal.core.ExternalSourceModule;
 import org.eclipse.dltk.mod.internal.core.ModelManager;
 import org.eclipse.dltk.mod.internal.core.ScriptProject;
+import org.eclipse.dltk.mod.internal.core.VjoSourceHelper;
+import org.eclipse.dltk.mod.internal.core.VjoSourceModule;
 import org.eclipse.dltk.mod.internal.core.builder.BuildProblemReporter;
 import org.eclipse.dltk.mod.internal.core.builder.ScriptBuilder;
 import org.eclipse.dltk.mod.internal.core.builder.State;
@@ -104,7 +108,7 @@ public class VjetScriptBuilder extends ScriptBuilder {
 	public long lastBuildSourceFiles = 0;
 	private TypeSpaceBuilder typeSpaceBuilder = new TypeSpaceBuilder();
 
-	static class ResourceVisitor implements IResourceDeltaVisitor,
+	 class ResourceVisitor implements IResourceDeltaVisitor,
 			IResourceVisitor {
 		final Set resources = new HashSet();
 		List<SourceTypeName> changedTypes = new ArrayList<SourceTypeName>();
@@ -128,15 +132,33 @@ public class VjetScriptBuilder extends ScriptBuilder {
 			if (resource.getType() == IResource.FILE) {
 				SourceTypeName name;
 				IFile file = (IFile) resource;
+				
+				ISourceModule module = VjoSourceHelper.getModuleFromResource(file, scriptProject);
 				TypeSpaceMgr tsmgr = TypeSpaceMgr.getInstance();
-				if (file.exists()) {
-					name = createSourceTypeName(file);
-				} else {
-					name = createSourceTypeName(file,
-							SourceTypeName.EMPTY_CONTENT);
-				}
-
 				String typeName = CodeassistUtils.getClassName(file);
+				if(module instanceof VjoSourceModule){
+					VjoSourceModule vjoSourceModule = (VjoSourceModule) module;
+					IType iType = vjoSourceModule.getTypes()[0];
+					
+					String pkg = vjoSourceModule.getPackageDeclarations()[0].getElementName();
+					if(!pkg.equals("")){
+						pkg = pkg + ".";
+					}
+					typeName = pkg + iType.getFullyQualifiedName();
+					name = new SourceTypeName(scriptProject.getElementName(),typeName);
+					
+//					typeName = module.getElementName();
+				}else{
+				
+					if (file.exists()) {
+						name = createSourceTypeName(file);
+					} else {
+						name = createSourceTypeName(file,
+								SourceTypeName.EMPTY_CONTENT);
+					}
+
+				}
+				
 
 				switch (delta.getKind()) {
 				case IResourceDelta.ADDED:
@@ -678,22 +700,7 @@ public class VjetScriptBuilder extends ScriptBuilder {
 			resourceTicks = Math.min(resourceTicks, WORK_BUILD / 4);
 			Object o = null;
 			try {
-				for (Iterator i = localElements.iterator(); i.hasNext();) {
-					o = i.next();
-					if (o instanceof IModelElement) {
-						final IResource resource = ((IModelElement) o)
-								.getResource();
-						if (resource != null) {
-							final String template = Messages.ValidatorBuilder_clearingResourceMarkers;
-							resource.deleteMarkers(
-									DefaultProblem.MARKER_TYPE_PROBLEM, true,
-									IResource.DEPTH_INFINITE);
-							resource.deleteMarkers(
-									DefaultProblem.MARKER_TYPE_TASK, true,
-									IResource.DEPTH_INFINITE);
-						}
-					}
-				}
+				clearMarkers(localElements);
 				// add types to group
 				buildElements(localElements, externalElements, monitor,
 						WORK_BUILD - resourceTicks, IScriptBuilder.FULL_BUILD,
@@ -720,6 +727,26 @@ public class VjetScriptBuilder extends ScriptBuilder {
 			monitor.done();
 			ModelManager.getModelManager().setLastBuiltState(currentProject,
 					this.lastState);
+		}
+	}
+
+	private void clearMarkers(List localElements) throws CoreException {
+		Object o;
+		for (Iterator i = localElements.iterator(); i.hasNext();) {
+			o = i.next();
+			if (o instanceof IModelElement) {
+				final IResource resource = ((IModelElement) o)
+						.getResource();
+				if (resource != null) {
+					final String template = Messages.ValidatorBuilder_clearingResourceMarkers;
+					resource.deleteMarkers(
+							DefaultProblem.MARKER_TYPE_PROBLEM, true,
+							IResource.DEPTH_INFINITE);
+					resource.deleteMarkers(
+							DefaultProblem.MARKER_TYPE_TASK, true,
+							IResource.DEPTH_INFINITE);
+				}
+			}
 		}
 	}
 
@@ -854,9 +881,14 @@ public class VjetScriptBuilder extends ScriptBuilder {
 			if (monitor.isCanceled()) {
 				return;
 			}
+			
+//			clearMarkers(localElements);
+			
+			
 			// TODO build the files that are dependants of the changed types
 			this.typeSpaceBuilder.incrementalBuildProject(resourcesFrom.changedTypes);
 
+		
 //			try {
 //				buildElements(localElements, externalElements, monitor,
 //						WORK_BUILD - resourceTicks,

@@ -14,11 +14,14 @@ import org.eclipse.dltk.mod.compiler.problem.DefaultProblem;
 import org.eclipse.dltk.mod.compiler.problem.IProblem;
 import org.eclipse.dltk.mod.compiler.problem.IProblemReporter;
 import org.eclipse.vjet.dsf.jst.IJstType;
+import org.eclipse.vjet.dsf.jst.IScriptProblem;
 import org.eclipse.vjet.dsf.jst.ts.JstTypeSpaceMgr;
 import org.eclipse.vjet.dsf.jstojava.controller.JstParseController;
 import org.eclipse.vjet.dsf.jstojava.parser.VjoParser;
 import org.eclipse.vjet.eclipse.core.VjetPlugin;
 import org.eclipse.vjet.eclipse.core.ts.VjoJstTypeLoader;
+import org.eclipse.vjet.eclipse.core.validation.ValidationEntry;
+import org.eclipse.vjet.eclipse.core.validation.utils.ProblemUtility;
 import org.eclipse.vjet.vjo.tool.typespace.TypeSpaceMgr;
 
 /**
@@ -61,24 +64,6 @@ public class VjoParserToJstAndIType {
 		
 
 		if (unit != null) {
-//			//if disable all the validations (syntax and semantic)
-//			if  (!ValidationEntry.isEnableVjetValidation()) {
-//				return unit;
-//			}
-//			// deal with problems
-//			List<DefaultProblem> dproblems = null;
-//			List<IScriptProblem> problems = unit.getProblems();
-//			// if there are no syntax errors in script unit
-//			if (!problems.isEmpty() && validatable ) {
-//				dproblems = ProblemUtility.reportProblems(problems);
-//			}else if(validatable){
-//				dproblems = ValidationEntry.validator(unit);
-//			}
-//			
-//			if (dproblems != null) {
-//				reportProblems(dproblems, reporter);
-//			}
-//			
 			return unit;
 		}
 		return VjoParser.UNKNOWNUNIT;

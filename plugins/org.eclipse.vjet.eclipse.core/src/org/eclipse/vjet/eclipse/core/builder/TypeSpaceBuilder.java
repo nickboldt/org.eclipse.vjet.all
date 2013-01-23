@@ -78,19 +78,20 @@ public class TypeSpaceBuilder {
 	}
 
 	public void buildProject(ScriptProject project, Map args,
-			IProgressMonitor monitor, List<String> groupDepends, IBuildpathEntry bootstrapPath) {
+			IProgressMonitor monitor, List<String> groupDepends,
+			IBuildpathEntry bootstrapPath) {
 
 		// add group event
-//		String name = project.getProject().getName();
-//		File groupPath = project.getProject().getLocation().toFile();
-//		SourcePathInfo sourceInfo = PiggyBackClassPathUtil
-//		.getProjectSrcPath_DLTK(project);
-//		List<String> srcPaths = sourceInfo.getSourcePaths();
+		// String name = project.getProject().getName();
+		// File groupPath = project.getProject().getLocation().toFile();
+		// SourcePathInfo sourceInfo = PiggyBackClassPathUtil
+		// .getProjectSrcPath_DLTK(project);
+		// List<String> srcPaths = sourceInfo.getSourcePaths();
 		// TODO support library zip entries
-//		List<String> classPaths = new ArrayList<String>();
+		// List<String> classPaths = new ArrayList<String>();
 
 		List<String> bootstrapDirs = new ArrayList<String>();
-		if(bootstrapPath!=null){
+		if (bootstrapPath != null) {
 			String portableString = "";
 			portableString = getRelativeProjectPath(project, bootstrapPath);
 			bootstrapDirs.add(portableString);
@@ -99,20 +100,16 @@ public class TypeSpaceBuilder {
 		processAddGroup(info, project.getProject());
 
 		TypeSpaceMgr mgr = TypeSpaceMgr.getInstance();
-//		// log list of groups being processed
+		// // log list of groups being processed
 		TypeSpaceTracer.logLoadEvent(info);
 		mgr.load(new EclipseTypeLoadMonitor(monitor), info);
 
-
-
-
-		if(VjetPlugin.TRACE_TYPESPACE){
+		if (VjetPlugin.TRACE_TYPESPACE) {
 			System.out.println("project: " + project);
 			System.out.println("args: " + args);
 			System.out.println("monitor: " + monitor);
 			System.out.println("project buildpath: " + groupDepends);
 			System.out.println("bootstrapPath: " + bootstrapPath);
-
 
 		}
 
@@ -120,49 +117,50 @@ public class TypeSpaceBuilder {
 
 	public void incrementalBuildProject(List<SourceTypeName> changedTypes) {
 
-//		IResourceDelta[] resourceDeltas = delta
-//				.getAffectedChildren();
-//		TypeSpaceMgr tsmgr =  TypeSpaceMgr.getInstance();
-//		List<GroupInfo> info = new ArrayList<GroupInfo>();
-//		List<SourceTypeName> changedTypes = new ArrayList<SourceTypeName>();
-//
-//		for (IResourceDelta resourceDelta : resourceDeltas) {
-//			IProject project = resourceDelta.getResource().getProject();
-//
-//			if (!project.exists() || !project.isOpen()) {
-//				continue;
-//			}
-//
-//			// process delta if project exist and type space loading is
-//			// finished else create add group event.
-//			if (tsmgr.existGroup(project.getName()) ) {
-//				changedTypes.addAll(processDelta(resourceDelta));
-//			} else if (tsmgr.isLoaded()) {
-//				// for (Object o :
-//				// m_tsmgr.getController().getJstTypeSpaceMgr().getTypeSpace().getGroups().keySet().toArray())
-//				// {
-//				// String s = (String)o;
-//				// if (!s.endsWith(".jar")) {
-//				// System.out.println(o);
-//				// }
-//				// }
-//				// updateGroupDepends();
-//				processAddGroup(info, project);
-//			}
-//
-//		}
-//
-//		// Calls group load job if group info list in not empty else call
-//		// refresh job for changes resources.
-//		if (!info.isEmpty()) {
-//
-//			TypeSpaceGroupLoadJob groupLoadJob = new TypeSpaceGroupLoadJob(info);
-//			tsmgr.setLoaded(false);
-//			groupLoadJob.schedule();
+		// IResourceDelta[] resourceDeltas = delta
+		// .getAffectedChildren();
+		// TypeSpaceMgr tsmgr = TypeSpaceMgr.getInstance();
+		// List<GroupInfo> info = new ArrayList<GroupInfo>();
+		// List<SourceTypeName> changedTypes = new ArrayList<SourceTypeName>();
+		//
+		// for (IResourceDelta resourceDelta : resourceDeltas) {
+		// IProject project = resourceDelta.getResource().getProject();
+		//
+		// if (!project.exists() || !project.isOpen()) {
+		// continue;
+		// }
+		//
+		// // process delta if project exist and type space loading is
+		// // finished else create add group event.
+		// if (tsmgr.existGroup(project.getName()) ) {
+		// changedTypes.addAll(processDelta(resourceDelta));
+		// } else if (tsmgr.isLoaded()) {
+		// // for (Object o :
+		// //
+		// m_tsmgr.getController().getJstTypeSpaceMgr().getTypeSpace().getGroups().keySet().toArray())
+		// // {
+		// // String s = (String)o;
+		// // if (!s.endsWith(".jar")) {
+		// // System.out.println(o);
+		// // }
+		// // }
+		// // updateGroupDepends();
+		// processAddGroup(info, project);
+		// }
+		//
+		// }
+		//
+		// // Calls group load job if group info list in not empty else call
+		// // refresh job for changes resources.
+		// if (!info.isEmpty()) {
+		//
+		// TypeSpaceGroupLoadJob groupLoadJob = new TypeSpaceGroupLoadJob(info);
+		// tsmgr.setLoaded(false);
+		// groupLoadJob.schedule();
 
-		if(!changedTypes.isEmpty()) {
+		if (!changedTypes.isEmpty()) {
 			TypeSpaceTracer.loadRefreshEvent(changedTypes);
-			for(SourceTypeName type:changedTypes){
+			for (SourceTypeName type : changedTypes) {
 				TypeSpaceMgr.doProcessType(type, null);
 
 			}
@@ -174,10 +172,10 @@ public class TypeSpaceBuilder {
 
 		try {
 			IScriptProject scriptProject;
-			Model model =  ModelManager.getModelManager().getModel();
+			Model model = ModelManager.getModelManager().getModel();
 			scriptProject = model.getScriptProject(project.getName());
 			if (scriptProject.exists()) {
-				Map<String, List<String>> groups = new HashMap<String,List<String>>();
+				Map<String, List<String>> groups = new HashMap<String, List<String>>();
 				createDepends(groups, scriptProject);
 				populateGroupInfos(info, scriptProject, groups);
 			}
@@ -186,8 +184,9 @@ public class TypeSpaceBuilder {
 		}
 	}
 
-	private static IBuildpathEntry[] createDepends(Map<String, List<String>> groups,
-			IScriptProject project) throws ModelException {
+	private static IBuildpathEntry[] createDepends(
+			Map<String, List<String>> groups, IScriptProject project)
+			throws ModelException {
 
 		List<String> list = getDependsProjects(groups, project.getElementName());
 
@@ -199,8 +198,8 @@ public class TypeSpaceBuilder {
 		return entries;
 	}
 
-	private static List<String> getDependsProjects(Map<String, List<String>> groups,
-			String group) {
+	private static List<String> getDependsProjects(
+			Map<String, List<String>> groups, String group) {
 		List<String> list = groups.get(group);
 		if (list == null) {
 			list = new ArrayList<String>();
@@ -209,7 +208,8 @@ public class TypeSpaceBuilder {
 		return list;
 	}
 
-	private List<SourceTypeName> loadFile(IResourceDelta delta, IResource resource) {
+	private List<SourceTypeName> loadFile(IResourceDelta delta,
+			IResource resource) {
 		IFile file = (IFile) resource;
 
 		SourceTypeName name = null;
@@ -322,7 +322,7 @@ public class TypeSpaceBuilder {
 	private List<SourceTypeName> loadVjoFile(IResourceDelta delta, IFile file) {
 		SourceTypeName name;
 		List<SourceTypeName> changedTypes = new ArrayList<SourceTypeName>();
-		TypeSpaceMgr tsmgr =  TypeSpaceMgr.getInstance();
+		TypeSpaceMgr tsmgr = TypeSpaceMgr.getInstance();
 		if (file.exists()) {
 			name = createSourceTypeName(file);
 		} else {
@@ -402,7 +402,6 @@ public class TypeSpaceBuilder {
 			final Map<String, List<String>> groupDependency)
 			throws ModelException {
 
-
 		// initialize dltk build path
 		if (!PiggyBackClassPathUtil
 				.ifScriptProjectInitializedFromJavaProject(project)) {
@@ -434,9 +433,9 @@ public class TypeSpaceBuilder {
 				SourcePathInfo srcPathInfo = new SourcePathInfo();
 				srcPathInfo.addSourcePath(file.getPath());
 
-				
-				GroupInfo groupInfo = new GroupInfo(file.getName(), file.getAbsolutePath(),
-						srcPathInfo, null, groupDependency.get(file.getName()));
+				GroupInfo groupInfo = new GroupInfo(file.getName(),
+						file.getAbsolutePath(), srcPathInfo, null,
+						groupDependency.get(file.getName()));
 				groupInfo.setLibrary(true);
 				info.add(groupInfo);
 				classPaths.add(fileName);
@@ -458,12 +457,13 @@ public class TypeSpaceBuilder {
 			portableString = getRelativeProjectPath(project, bootstrapPath);
 			bootstrapDirs.add(portableString);
 		}
-		info.add(new GroupInfo(name, groupPath.getAbsolutePath(), sourcePathInfo,
-				classPaths, groupDependency.get(name), bootstrapDirs));
+		info.add(new GroupInfo(name, groupPath.getAbsolutePath(),
+				sourcePathInfo, classPaths, groupDependency.get(name),
+				bootstrapDirs));
 	}
 
-
-	private static String getRelativeProjectPath(IScriptProject project, IBuildpathEntry bootstrap) {
+	private static String getRelativeProjectPath(IScriptProject project,
+			IBuildpathEntry bootstrap) {
 		String name = project.getElementName();
 		String bootstrapPath = bootstrap.getPath().toPortableString();
 		if (bootstrapPath.lastIndexOf(name) != -1) {
@@ -471,27 +471,26 @@ public class TypeSpaceBuilder {
 				bootstrapPath = "";
 			} else {
 				bootstrapPath = bootstrapPath.substring(bootstrapPath
-						.indexOf(name)
-						+ name.length());
+						.indexOf(name) + name.length());
 
 			}
 		}
 		return bootstrapPath;
 	}
 
-
-	public static IBuildpathEntry getBootstrapDir(IScriptProject project) throws ModelException {
+	public static IBuildpathEntry getBootstrapDir(IScriptProject project)
+			throws ModelException {
 		IBuildpathEntry[] entries = project.getRawBuildpath();
 		for (IBuildpathEntry entry : entries) {
-			if(entry.getEntryKind() == IBuildpathEntry.BPE_BOOTSTRAP){
+			if (entry.getEntryKind() == IBuildpathEntry.BPE_BOOTSTRAP) {
 				return entry;
 			}
 		}
 		return null;
 	}
 
-	public static IBuildpathEntry[] getSerFileGroupDepends(IScriptProject project,
-			List<String> list) throws ModelException {
+	public static IBuildpathEntry[] getSerFileGroupDepends(
+			IScriptProject project, List<String> list) throws ModelException {
 		IBuildpathEntry[] entries = project.getRawBuildpath();
 		for (IBuildpathEntry entry : entries) {
 			// process only project entries
@@ -500,46 +499,46 @@ public class TypeSpaceBuilder {
 				list.add(entry.getPath().segment(0));
 				// add transitive project dependencies
 
-				getSerFileGroupDepends(CodeassistUtils.getScriptProject(entry.getPath().segment(0)), list);
+				getSerFileGroupDepends(CodeassistUtils.getScriptProject(entry
+						.getPath().segment(0)), list);
 
-
-			} else if (entry.getEntryKind() == IBuildpathEntry.BPE_LIBRARY){
-				String id = entry.getPath().segment(entry.getPath().segmentCount()-1);
+			} else if (entry.getEntryKind() == IBuildpathEntry.BPE_LIBRARY) {
+				String id = entry.getPath().segment(
+						entry.getPath().segmentCount() - 1);
 				list.add(id);
 
 			} else if (entry.getEntryKind() == IBuildpathEntry.BPE_CONTAINER) {
 				String id = entry.getPath().segment(0);
 
 				if (VjetPlugin.VJETTL_ID.equals(id)) {
-					//add built in libs
+					// add built in libs
 					list.add(entry.getPath().lastSegment());
 
 				}
 
-
 				if (VjetPlugin.VJOLIB_ID.equals(id)) {
-					//add built in libs
+					// add built in libs
 					String[] defaultLibs = TsLibLoader.getVjoGroups();
 					for (int i = 0; i < defaultLibs.length; i++) {
 						list.add(defaultLibs[i]);
 					}
 				}
 				if (VjetPlugin.BROWSERSDK_ID.equals(id)) {
-					//add built in libs
+					// add built in libs
 					String[] defaultLibs = TsLibLoader.getBrowserGroups();
 					for (int i = 0; i < defaultLibs.length; i++) {
 						list.add(defaultLibs[i]);
 					}
 				}
 				if (VjetPlugin.JSNATIVESDK_ID.equals(id)) {
-					//add built in libs
+					// add built in libs
 					String[] defaultLibs = TsLibLoader.getJsNativeGroups();
 					for (int i = 0; i < defaultLibs.length; i++) {
 						list.add(defaultLibs[i]);
 					}
 				}
-				if (VjetPlugin.SDK_CONTAINER .equals(id)) {
-					//add built in libs
+				if (VjetPlugin.SDK_CONTAINER.equals(id)) {
+					// add built in libs
 					String[] defaultLibs = TsLibLoader.getDefaultLibNames();
 					for (int i = 0; i < defaultLibs.length; i++) {
 						list.add(defaultLibs[i]);
@@ -550,186 +549,206 @@ public class TypeSpaceBuilder {
 		return entries;
 	}
 
-	public static void addGroupTraceEventListeners(JstTypeSpaceMgr jstTypeSpace){
-		jstTypeSpace.registerSourceEventListener(new IGroupEventListener<IJstType>() {
+	public static void addGroupTraceEventListeners(JstTypeSpaceMgr jstTypeSpace) {
+		jstTypeSpace
+				.registerSourceEventListener(new IGroupEventListener<IJstType>() {
 
-			@Override
-			public EventListenerStatus<IJstType> onBatchGroupLoaded(
-					BatchGroupLoadingEvent event,
-					IEventListenerHandle handle,
-					ISourceEventCallback callBack) {
-				System.out.println("on batch group add dependendency");
-				TypeSpaceTracer.onBatchLoaded(event);
-				return null;
-			}
+					@Override
+					public EventListenerStatus<IJstType> onBatchGroupLoaded(
+							BatchGroupLoadingEvent event,
+							IEventListenerHandle handle,
+							ISourceEventCallback callBack) {
+						System.out.println("on batch group add dependendency");
+						TypeSpaceTracer.onBatchLoaded(event);
+						return null;
+					}
 
-			@Override
-			public EventListenerStatus onGroupAddDependency(
-					AddGroupDependencyEvent event,
-					IEventListenerHandle handle,
-					ISourceEventCallback callBack) {
-				// TODO Auto-generated method stub
-				System.out.println("onGroupAddDependency for group:" + event.getGroupName());
-				System.out.println("\tgroup path: " + event.getGroupPath());
-				System.out.println("\tdependency list: " + event.getDependencyList());
-				return null;
-			}
+					@Override
+					public EventListenerStatus onGroupAddDependency(
+							AddGroupDependencyEvent event,
+							IEventListenerHandle handle,
+							ISourceEventCallback callBack) {
+						// TODO Auto-generated method stub
+						System.out.println("onGroupAddDependency for group:"
+								+ event.getGroupName());
+						System.out.println("\tgroup path: "
+								+ event.getGroupPath());
+						System.out.println("\tdependency list: "
+								+ event.getDependencyList());
+						return null;
+					}
 
-			@Override
-			public EventListenerStatus onGroupAdded(AddGroupEvent event,
-					IEventListenerHandle handle,
-					ISourceEventCallback callBack) {
-				// TODO Auto-generated method stub
-				System.out.println("on group added");
-				System.out.println("bootstrap paths:" + event.getBootStrapList());
+					@Override
+					public EventListenerStatus onGroupAdded(
+							AddGroupEvent event, IEventListenerHandle handle,
+							ISourceEventCallback callBack) {
+						// TODO Auto-generated method stub
+						System.out.println("on group added");
+						System.out.println("bootstrap paths:"
+								+ event.getBootStrapList());
 
-				System.out.println(event);
-				return null;
-			}
+						System.out.println(event);
+						return null;
+					}
 
-			@Override
-			public EventListenerStatus onGroupRemoveDependency(
-					RemoveGroupDependencyEvent event,
-					IEventListenerHandle handle,
-					ISourceEventCallback callBack) {
-				System.out.println("on group remove dependency");
-				System.out.println(event);
-				return null;
-			}
+					@Override
+					public EventListenerStatus onGroupRemoveDependency(
+							RemoveGroupDependencyEvent event,
+							IEventListenerHandle handle,
+							ISourceEventCallback callBack) {
+						System.out.println("on group remove dependency");
+						System.out.println(event);
+						return null;
+					}
 
-			@Override
-			public void onGroupRemoved(RemoveGroupEvent event) {
-				// TODO Auto-generated method stub
-				System.out.println("on group removed");
-				System.out.println(event);
-			}
+					@Override
+					public void onGroupRemoved(RemoveGroupEvent event) {
+						// TODO Auto-generated method stub
+						System.out.println("on group removed");
+						System.out.println(event);
+					}
 
-		});
+				});
 	}
 
 	public static void addGroupEventListeners(JstTypeSpaceMgr jstTypeSpaceMgr) {
-		jstTypeSpaceMgr.registerSourceEventListener((new ITypeEventListener<JstType>() {
+		jstTypeSpaceMgr
+				.registerSourceEventListener((new ITypeEventListener<JstType>() {
 
-			@Override
-			public EventListenerStatus<JstType> onTypeAdded(
-					AddTypeEvent<JstType> event, IEventListenerHandle handle,
-					ISourceEventCallback<JstType> callBack) {
-				// TODO Auto-generated method stub
-				return null;
-			}
-
-			@Override
-			public EventListenerStatus<JstType> onTypeRenamed(
-					RenameTypeEvent event, IEventListenerHandle handle,
-					ISourceEventCallback<JstType> callBack) {
-				// TODO Auto-generated method stub
-				return null;
-			}
-
-			@Override
-			public EventListenerStatus<JstType> onTypeModified(
-					ModifyTypeEvent event, IEventListenerHandle handle,
-					ISourceEventCallback<JstType> callBack) {
-				// TODO Auto-generated method stub
-				// revalidate type now
-//				String filename = event.getFileName();
-				TypeSpaceMgr ts = TypeSpaceMgr.getInstance();
-//				IJstType type = ts.findType(event.getTypeName());
-							
-				// need to revalidate type -- issue is with script unit block validtion removal.
-				// validte type and update markers
-				// we need to figure out if we should remove the idea of script unit 
-				// since it is no longer helpful in this case
-				
-				List<IJstType> dependents = ts.getTypeSpace().getAllDependents(event.getTypeName());
-				
-				if(dependents != null){
-					for(IJstType jstType: dependents){
-					final List<ISourceModule> selectedSourceModules = new LinkedList<ISourceModule>();
-					final StandardScriptBuilder scriptBuild = new StandardScriptBuilder();
-					final ScriptProject scriptProject = CodeassistUtils
-							.getScriptProject(jstType.getPackage().getGroupName());
-					VjoSourceHelper.getAllSourceModulesFromJst(selectedSourceModules, dependents, scriptProject);
-					if(selectedSourceModules.size() > 0){
-						scriptBuild.initialize(scriptProject);
-						scriptBuild.buildModelElements(scriptProject, selectedSourceModules,
-								new NullProgressMonitor(),1);
+					@Override
+					public EventListenerStatus<JstType> onTypeAdded(
+							AddTypeEvent<JstType> event,
+							IEventListenerHandle handle,
+							ISourceEventCallback<JstType> callBack) {
+						// TODO Auto-generated method stub
+						return null;
 					}
+
+					@Override
+					public EventListenerStatus<JstType> onTypeRenamed(
+							RenameTypeEvent event, IEventListenerHandle handle,
+							ISourceEventCallback<JstType> callBack) {
+						// TODO Auto-generated method stub
+						return null;
 					}
-				}
-				
-				
-			
-				// how to get vjosource module?
-				
-//				IProblemReporter reporter = module.getProblemReporter();
-//				ProblemUtility.reportProblems(result.getAllProblems());
-//				for (IProblem problem : ) {
-//					reporter.reportProblem(problem);
-//				}
 
-				
-				return null;
-			}
+					@Override
+					public EventListenerStatus<JstType> onTypeModified(
+							ModifyTypeEvent event, IEventListenerHandle handle,
+							ISourceEventCallback<JstType> callBack) {
+						// TODO Auto-generated method stub
+						// revalidate type now
+						// String filename = event.getFileName();
+						TypeSpaceMgr ts = TypeSpaceMgr.getInstance();
+						// IJstType type = ts.findType(event.getTypeName());
 
-			@Override
-			public EventListenerStatus<JstType> onTypeRemoved(
-					RemoveTypeEvent event, IEventListenerHandle handle,
-					ISourceEventCallback<JstType> callBack) {
-				// TODO Auto-generated method stub
-				return null;
-			}
-			
-		}));
-		jstTypeSpaceMgr.registerSourceEventListener(new IGroupEventListener<JstType>(){
+						// need to revalidate type -- issue is with script unit
+						// block validtion removal.
+						// validte type and update markers
+						// we need to figure out if we should remove the idea of
+						// script unit
+						// since it is no longer helpful in this case
+						IJstType type = ts.findType(event.getTypeName());
+						buildType(type);
+						List<IJstType> dependents = ts.getTypeSpace()
+								.getAllDependents(event.getTypeName());
 
-			@Override
-			public EventListenerStatus<JstType> onBatchGroupLoaded(
-					BatchGroupLoadingEvent event, IEventListenerHandle handle,
-					ISourceEventCallback<JstType> callBack) {
-				// TODO Auto-generated method stub
-				return null;
-			}
+						if (dependents != null) {
+							for (IJstType jstType : dependents) {
+								buildType(jstType);
+							}
+						}
 
-			@Override
-			public EventListenerStatus<JstType> onGroupAddDependency(
-					AddGroupDependencyEvent event, IEventListenerHandle handle,
-					ISourceEventCallback<JstType> callBack) {
-				// TODO Auto-generated method stub
-				return null;
-			}
+						// how to get vjosource module?
 
-			@Override
-			public EventListenerStatus<JstType> onGroupAdded(
-					AddGroupEvent event, IEventListenerHandle handle,
-					ISourceEventCallback<JstType> callBack) {
-				// TODO Auto-generated method stub
-				return null;
-			}
+						// IProblemReporter reporter =
+						// module.getProblemReporter();
+						// ProblemUtility.reportProblems(result.getAllProblems());
+						// for (IProblem problem : ) {
+						// reporter.reportProblem(problem);
+						// }
 
-			@Override
-			public EventListenerStatus<JstType> onGroupRemoveDependency(
-					RemoveGroupDependencyEvent event,
-					IEventListenerHandle handle,
-					ISourceEventCallback<JstType> callBack) {
-				// TODO Auto-generated method stub
-				return null;
-			}
+						return null;
+					}
 
-			@Override
-			public void onGroupRemoved(RemoveGroupEvent event) {
-				// remove the bootstrap entries for the group
-				String groupId = event.getGroupName();
-				TypeResolverRegistry.getInstance().clear(groupId);
-				TypeExtensionRegistry.getInstance().clear(groupId);
-				FunctionMetaRegistry.getInstance().clear(groupId);
-			}
+					private void buildType(IJstType jstType) {
+						final List<ISourceModule> selectedSourceModules = new LinkedList<ISourceModule>();
+						final StandardScriptBuilder scriptBuild = new StandardScriptBuilder();
+						final ScriptProject scriptProject = CodeassistUtils
+								.getScriptProject(jstType.getPackage()
+										.getGroupName());
+						List<IJstType> dependant = new ArrayList<IJstType>();
+						dependant.add(jstType);
+						VjoSourceHelper.getAllSourceModulesFromJst(
+								selectedSourceModules, dependant,
+								scriptProject);
+						if (selectedSourceModules.size() > 0) {
+							scriptBuild.initialize(scriptProject);
+							scriptBuild.buildModelElements(
+									scriptProject,
+									selectedSourceModules,
+									new NullProgressMonitor(), 1);
+						}
+					}
 
-		});
+					@Override
+					public EventListenerStatus<JstType> onTypeRemoved(
+							RemoveTypeEvent event, IEventListenerHandle handle,
+							ISourceEventCallback<JstType> callBack) {
+						// TODO Auto-generated method stub
+						return null;
+					}
 
+				}));
+		jstTypeSpaceMgr
+				.registerSourceEventListener(new IGroupEventListener<JstType>() {
+
+					@Override
+					public EventListenerStatus<JstType> onBatchGroupLoaded(
+							BatchGroupLoadingEvent event,
+							IEventListenerHandle handle,
+							ISourceEventCallback<JstType> callBack) {
+						// TODO Auto-generated method stub
+						return null;
+					}
+
+					@Override
+					public EventListenerStatus<JstType> onGroupAddDependency(
+							AddGroupDependencyEvent event,
+							IEventListenerHandle handle,
+							ISourceEventCallback<JstType> callBack) {
+						// TODO Auto-generated method stub
+						return null;
+					}
+
+					@Override
+					public EventListenerStatus<JstType> onGroupAdded(
+							AddGroupEvent event, IEventListenerHandle handle,
+							ISourceEventCallback<JstType> callBack) {
+						// TODO Auto-generated method stub
+						return null;
+					}
+
+					@Override
+					public EventListenerStatus<JstType> onGroupRemoveDependency(
+							RemoveGroupDependencyEvent event,
+							IEventListenerHandle handle,
+							ISourceEventCallback<JstType> callBack) {
+						// TODO Auto-generated method stub
+						return null;
+					}
+
+					@Override
+					public void onGroupRemoved(RemoveGroupEvent event) {
+						// remove the bootstrap entries for the group
+						String groupId = event.getGroupName();
+						TypeResolverRegistry.getInstance().clear(groupId);
+						TypeExtensionRegistry.getInstance().clear(groupId);
+						FunctionMetaRegistry.getInstance().clear(groupId);
+					}
+
+				});
 
 	}
-
-
 
 }

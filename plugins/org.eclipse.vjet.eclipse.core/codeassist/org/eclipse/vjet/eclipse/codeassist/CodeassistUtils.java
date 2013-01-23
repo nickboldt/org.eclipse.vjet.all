@@ -1885,7 +1885,6 @@ public class CodeassistUtils {
 	public static IJstType findNativeJstType(String name) {
 
 		TypeSpaceMgr mgr = TypeSpaceMgr.getInstance();
-		mgr.waitUntilLoaded();
 		for (int i = 0; i < TsLibLoader.getDefaultLibNames().length; i++) {
 			String groupName = TsLibLoader.getDefaultLibNames()[i];
 			if (mgr.existType(groupName, name)) {
@@ -2453,7 +2452,6 @@ public class CodeassistUtils {
 	public static String getNativeGroupName(String typeName) {
 		if (!nativeTypeGroupMap.containsKey(typeName)) {
 			TypeSpaceMgr mgr = TypeSpaceMgr.getInstance();
-			mgr.waitUntilLoaded();
 			for (int i = 0; i < TsLibLoader.getDefaultLibNames().length; i++) {
 				String groupName = TsLibLoader.getDefaultLibNames()[i];
 				if (mgr.existType(groupName, typeName)) {

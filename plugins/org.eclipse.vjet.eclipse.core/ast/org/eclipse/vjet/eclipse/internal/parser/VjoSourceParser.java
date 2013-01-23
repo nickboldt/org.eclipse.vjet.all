@@ -147,7 +147,7 @@ public class VjoSourceParser extends AbstractSourceParser{
 					dproblems = ValidationEntry.validator(scriptUnit);
 				}
 				
-				if (dproblems != null) {
+				if (dproblems != null && !dproblems.isEmpty()) {
 					parser.reportProblems(dproblems, reporter);
 				}
 				}

@@ -598,6 +598,11 @@ public class VjoEditor extends JavaScriptEditor {
             // When the selectionChange is from outline view, the selection
             // is an instance of ITreeSelection, so I add the codes below.
             else if (m_forcedMarkOccurrencesSelection instanceof ITreeSelection) {
+            	if(getSelectionProvider()==null || getSelectionProvider()
+                        .getSelection()==null){
+            		return;
+            	}
+            	
                 ISelection editorSelection = getSelectionProvider()
                         .getSelection();
                 if (editorSelection instanceof ITextSelection) {
