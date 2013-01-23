@@ -9,6 +9,8 @@
 package org.eclipse.vjet.dsf.jstojava.controller;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.eclipse.vjet.dsf.common.exceptions.DsfRuntimeException;
 import org.eclipse.vjet.dsf.jst.IJstMethod;
@@ -18,6 +20,7 @@ import org.eclipse.vjet.dsf.jst.IJstParser;
 import org.eclipse.vjet.dsf.jst.IJstProperty;
 import org.eclipse.vjet.dsf.jst.IJstRefResolver;
 import org.eclipse.vjet.dsf.jst.IJstType;
+import org.eclipse.vjet.dsf.jst.IScriptProblem;
 import org.eclipse.vjet.dsf.jst.ResolutionResult;
 import org.eclipse.vjet.dsf.jst.declaration.JstBlock;
 import org.eclipse.vjet.dsf.jst.declaration.JstType;
@@ -69,8 +72,18 @@ public class JstParseController implements IJstParseController {
 			unit = holder.getResult();
 		}
 		else {
+			List<IScriptProblem> problems = new ArrayList<IScriptProblem>();
 			unit = m_parser.parse(groupName, fileName, source);
+			problems.addAll(unit.getProblems());
+			((JstType)unit).clearProblems();
+			
 			resolve(groupName, unit);
+			if(unit.getProblems()!=null){
+				// resolution problems
+				problems.addAll(unit.getProblems());
+			}
+			unit.setProblems(problems);
+			
 			holder.setResult(unit);
 		}	
 		return unit;
@@ -100,7 +113,8 @@ public class JstParseController implements IJstParseController {
 	}
 	
 	private void addResolutionResultToSU(IJstType su, ResolutionResult resolve) {
-		su.setProblems(resolve.getProblems());
+//		su.getProblems().addAll(resolve.getProblems());
+		
 		if(resolve.getType()!=null){
 			
 			if(su instanceof JstType && resolve.getType() instanceof JstType){

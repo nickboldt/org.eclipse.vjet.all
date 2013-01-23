@@ -195,6 +195,8 @@ public class VjoParser implements IJstParser {
 			} else { // binding file
 				type.getSource().setBinding(new FileBinding(file));
 			}
+		}else if(type.getSource()!=null && type.getSource().getBinding() instanceof SimpleBinding){
+			type.getSource().setBinding(new SimpleBinding(fileName, source));
 		}
 		type.getPackage().setGroupName(groupName);
 		return type;
