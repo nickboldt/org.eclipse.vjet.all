@@ -112,8 +112,9 @@ public class PreferencesLookupDelegate implements IPreferencesLookupDelegate {
 
 	private IScopeContext[] getLookupScopes(IProject project) {
 		List list = new ArrayList(3);
-		list.add(new InstanceScope());
-		list.add(new DefaultScope());
+
+		list.add(InstanceScope.INSTANCE);
+		list.add(DefaultScope.INSTANCE);
 
 		if (project != null) {
 			list.add(0, new ProjectScope(project));

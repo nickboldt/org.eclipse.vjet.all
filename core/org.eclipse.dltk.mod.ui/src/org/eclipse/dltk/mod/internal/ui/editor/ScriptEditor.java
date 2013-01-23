@@ -375,7 +375,7 @@ public abstract class ScriptEditor extends AbstractDecoratedTextEditor
 				DocumentCommand command);
 	}
 
-	class AdaptedSourceViewer extends ScriptSourceViewer implements
+	protected class AdaptedSourceViewer extends ScriptSourceViewer implements
 			ICompletionListener {
 		private List fTextConverters;
 
