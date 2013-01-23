@@ -1091,7 +1091,7 @@ public class VjetScriptBuilder extends ScriptBuilder {
 						// deal with problems
 						List<DefaultProblem> dproblems = null;
 						List<IScriptProblem> problems = unit.getProblems();
-						if (!problems.isEmpty() && validatable) {
+						if (problems!=null && !problems.isEmpty() && validatable) {
 							dproblems = ProblemUtility.reportProblems(problems);	
 						}else if(validatable){
 							dproblems = ValidationEntry.validator(unit);
