@@ -67,6 +67,9 @@ public class VjetEditorColoringConfigurationBlock extends
 
 			{ PreferencesMessages.DLTKEditorPreferencePage_keywords,
 					VjetPreferenceConstants.EDITOR_KEYWORD_COLOR, sCoreCategory },
+					
+					{ PreferencesMessages.DLTKEditorPreferencePage_returnKeyword,
+						VjetPreferenceConstants.EDITOR_KEYWORD_RETURN_COLOR, sCoreCategory },
 
 			{ PreferencesMessages.DLTKEditorPreferencePage_strings,
 					VjetPreferenceConstants.EDITOR_STRING_COLOR, sCoreCategory },

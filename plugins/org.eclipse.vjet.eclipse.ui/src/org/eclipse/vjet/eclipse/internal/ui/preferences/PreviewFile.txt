@@ -18,6 +18,7 @@ vjo.type('test.package.TestType')
 	 //> public void handleRequest(String message); This is a single line vjo comment.
 	 foobar : function(message) {
 			var x = new Date(); /*< Date*/
+			return messages;
 	 }
 }).props({
 
@@ -37,5 +38,6 @@ vjo.type('test.package.TestType')
      //FIXME
      var pattern=/java/i;
      pattern.test("JavaScript");
+     return name;
      }
 });
