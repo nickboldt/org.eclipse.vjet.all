@@ -9,6 +9,7 @@
  *******************************************************************************/
 package org.eclipse.vjet.dsf.ts.util;
 
+import org.eclipse.vjet.dsf.jst.IJstTypeReference;
 import org.eclipse.vjet.dsf.jst.declaration.JstType;
 
 
@@ -36,15 +37,21 @@ public class JstTypeCopier  {
 		replace.setEnumValues(copy.getEnumValues());
 		replace.setExpects(copy.getExpects());
 		replace.setFakeType(copy.isFakeType());
-		replace.setExtends(copy.getExtends());
-		replace.setImports(copy.getImports());
-		replace.setInactiveImports(copy.getInactiveImports());
+		replace.addExtend(copy.getExtendRef());
+		for(IJstTypeReference ref : copy.getImportsRef()){
+			replace.addImport(ref);
+		}
+		for(IJstTypeReference ref: copy.getInactiveImportsRef()){
+			replace.addInactiveImport(ref);
+		}
 		replace.setInitBlock(copy.getInitBlock());
 		replace.setInstanceInitializers(copy.getInstanceInitializers());
 		replace.setImpliedImport(copy.isImpliedImport());
 		replace.setGlobalVars(copy.getGlobalVars());
 		replace.setStaticInitializers(copy.getStaticInitializers());
-		replace.setMixins(copy.getMixins());
+		for(IJstTypeReference ref: copy.getMixinsRef()){
+			replace.addMixin(ref);
+		}
 		replace.setModifers(copy.getModifiers());
 		replace.setOptions(copy.getOptions());
 		replace.setOTypes(copy.getOTypes());
