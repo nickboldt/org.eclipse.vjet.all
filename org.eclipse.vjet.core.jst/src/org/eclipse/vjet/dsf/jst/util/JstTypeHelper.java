@@ -465,7 +465,9 @@ public class JstTypeHelper {
 	 * @return
 	 */
 	public static JstPackage getTruePackage(IJstType type) {
-
+		if(type==null){
+			return null;
+		}
 		return getRootType(type).getPackage();
 	}
 
