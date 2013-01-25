@@ -74,17 +74,21 @@ public class JstParseController implements IJstParseController {
 		else {
 			List<IScriptProblem> problems = new ArrayList<IScriptProblem>();
 			unit = m_parser.parse(groupName, fileName, source);
-			problems.addAll(unit.getProblems());
-			((JstType)unit).clearProblems();
-			
-			resolve(groupName, unit);
-			if(unit.getProblems()!=null){
-				// resolution problems
+			if(unit!=null){
 				problems.addAll(unit.getProblems());
+				((JstType)unit).clearProblems();
+				resolve(groupName, unit);
+				if(unit.getProblems()!=null){
+					// resolution problems
+					problems.addAll(unit.getProblems());
+				}
+				unit.setProblems(problems);
+				
+				holder.setResult(unit);
 			}
-			unit.setProblems(problems);
 			
-			holder.setResult(unit);
+			
+			
 		}	
 		return unit;
 	}
