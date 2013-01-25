@@ -144,7 +144,7 @@ public class VjetScriptBuilder extends ScriptBuilder {
 					if(!pkg.equals("")){
 						pkg = pkg + ".";
 					}
-					typeName = pkg + iType.getFullyQualifiedName();
+					typeName = pkg + iType.getElementName();
 					name = new SourceTypeName(scriptProject.getElementName(),typeName);
 					
 //					typeName = module.getElementName();
