@@ -147,6 +147,7 @@ public class VjetScriptBuilder extends ScriptBuilder {
 					typeName = pkg + iType.getElementName();
 					name = new SourceTypeName(scriptProject.getElementName(),typeName);
 					
+					name.setSource(new String(getFileContent(file)));
 //					typeName = module.getElementName();
 				}else{
 				
