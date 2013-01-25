@@ -37,7 +37,6 @@ public class JSSourceModuleFactory implements ISourceModuleFactory {
 	 */
 	public ISourceModule createSourceModule(ScriptFolder parent, String name,
 			WorkingCopyOwner owner) {
-//		TypeSpaceMgr.getInstance().waitUntilLoaded();
 		return new VjoSourceModule(parent, name, owner);
 	}
 

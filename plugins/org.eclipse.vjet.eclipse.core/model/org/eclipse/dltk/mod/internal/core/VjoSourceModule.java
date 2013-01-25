@@ -134,19 +134,10 @@ public class VjoSourceModule extends JSSourceModule implements
 			IResource underlyingResource) throws ModelException {
 		try {
 
+			
 			final JSSourceModuleElementInfo moduleInfo = (JSSourceModuleElementInfo) info;
 
-			IBuffer buffer = null;
-			// ensure buffer is opened
-			if (hasBuffer()) {
-				buffer = getBufferManager().getBuffer(this);
-				if (buffer == null) {
-					buffer = openBuffer(progressMonitor, moduleInfo);
-				}
-			}
-
-			final char[] contents = (buffer == null) ? null : buffer
-					.getCharacters();
+			
 
 			// generate structure and compute syntax problems if needed
 			final VjoSourceModuleStructureRequestor requestor = new VjoSourceModuleStructureRequestor(
@@ -189,25 +180,15 @@ public class VjoSourceModule extends JSSourceModule implements
 			
 			if(jstType==null && isVirtualTypeResource(resource)){
 				
-				IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
-		    	IResource typespaceresource = root.findMember(resource.getFullPath());
-		    	if (typespaceresource != null) {
-		    	    URI location = typespaceresource.getLocationURI();
-		    	    String typeName = location.getPath().replace("/", ".");
-		    	    String groupName = location.getHost();
-		    	    if(typeName.indexOf(".")==0){
-		    	    	typeName = typeName.substring(1,typeName.length());
-		    	    }
-		    	    typeName = typeName.replace(".js", "");
-				
-				jstType = CodeassistUtils.findJstType(groupName, typeName);
-		    	}
+				jstType = TypeSpaceMgr.QE().findType(stName);
+		    	
 			}else if (jstType == null || !reparsed) {
 				if ("".equals(stName.groupName().trim())
 						&& (resource == null || !resource.exists())) {
 					jstType = CodeassistUtils.findNativeJstType(stName
 							.typeName());
 				} else {
+					final char[] contents = getContents(progressMonitor, moduleInfo);
 					processType(contents);
 				}
 			}
@@ -242,6 +223,22 @@ public class VjoSourceModule extends JSSourceModule implements
 		} catch (CoreException e) {
 			throw new ModelException(e);
 		}
+	}
+
+	private char[] getContents(IProgressMonitor progressMonitor,
+			final JSSourceModuleElementInfo moduleInfo) throws ModelException {
+		IBuffer buffer = null;
+		// ensure buffer is opened
+		if (hasBuffer()) {
+			buffer = getBufferManager().getBuffer(this);
+			if (buffer == null) {
+				buffer = openBuffer(progressMonitor, moduleInfo);
+			}
+		}
+
+		final char[] contents = (buffer == null) ? null : buffer
+				.getCharacters();
+		return contents;
 	}
 
 	private boolean isVirtualTypeResource(IResource fileSystemLoc) {

@@ -1096,6 +1096,21 @@ public class VjoEditor extends JavaScriptEditor {
 			} else if (input instanceof org.eclipse.dltk.mod.internal.debug.ui.ExternalFileEditorInput) {
 				return;
 			}
+			else if (input instanceof FileEditorInput){
+				
+				String scheme = ((FileEditorInput) input).getFile().getLocationURI().getScheme();
+				if(scheme.equals("typespace")){
+					IProject project = this.getInputModelElement().getScriptProject()
+							.getProject();
+					
+					IAddVjoNaturePolicy policy = AddVjoNaturePolicyManager
+							.getInstance().getPolicy(project);
+					policy.addVjoNature(project);
+					
+				}
+				
+				
+			}
 			IProject project = this.getInputModelElement().getScriptProject()
 					.getProject();
 			boolean hasNature = project.hasNature(VjoNature.NATURE_ID);

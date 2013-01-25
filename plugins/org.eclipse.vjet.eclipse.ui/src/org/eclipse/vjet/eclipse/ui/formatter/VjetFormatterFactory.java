@@ -23,6 +23,14 @@ public class VjetFormatterFactory extends AbstractScriptFormatterFactory {
 			Map preferences) {
 		return new VjetFormatter(preferences);
 	}
+	
+	/**
+	 * @since 2.0
+	 */
+	public Map<String, String> changeToIndentingOnly(
+			Map<String, String> preferences) {
+		return preferences;
+	}
 
 	public PreferenceKey[] getPreferenceKeys() {
 		// TODO Auto-generated method stub

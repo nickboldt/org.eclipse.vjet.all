@@ -922,26 +922,6 @@ public class VjoOutlinePage extends ScriptOutlinePage {
 		new DLTKViewerDragSupport(fOutlineViewer).start();
 	}
 
-	/**
-	 * Checks whether a given Java element is an inner type.
-	 * 
-	 * @param element
-	 *            the java element
-	 * @return <code>true</code> iff the given element is an inner type
-	 */
-	private boolean isInnerType(IModelElement element) {
-
-		if (element != null && element.getElementType() == IModelElement.TYPE) {
-
-			IModelElement parent = element.getParent();
-			if (parent != null) {
-				int parentElementType = parent.getElementType();
-				return (parentElementType != IModelElement.SOURCE_MODULE);
-			}
-		}
-
-		return false;
-	}
 
 	@Override
 	protected void registerSpecialToolbarActions(IActionBars actionBars) {

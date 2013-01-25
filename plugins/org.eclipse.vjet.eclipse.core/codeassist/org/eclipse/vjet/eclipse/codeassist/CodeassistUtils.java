@@ -8,6 +8,7 @@
  *******************************************************************************/
 package org.eclipse.vjet.eclipse.codeassist;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -1726,6 +1727,17 @@ public class CodeassistUtils {
 	 * @return
 	 */
 	public static SourceTypeName getTypeName(IResource resource) {
+		
+		URI locationURI = resource.getLocationURI();
+		if(locationURI.getScheme().equals("typespace")){
+			String groupName = locationURI.getHost();
+			String typeName = locationURI.getPath();
+				typeName = typeName.replace("/", ".");
+				typeName = typeName.substring(1,typeName.length());
+				typeName = typeName.substring(0, typeName.indexOf(".js"));
+				return new SourceTypeName(groupName, typeName);
+		}
+		
 		String project = resource.getProject().getName();
 		List<IPath> sourceFolders = getSourceFolders(project);
 		String className = getClassName(sourceFolders, resource
@@ -1734,6 +1746,9 @@ public class CodeassistUtils {
 		name.setAction(SourceTypeName.CHANGED);
 		return name;
 	}
+	
+	
+	
 	/**
 	 * Return the type name in back end Dsf style for Native type (has no correspondent eclipse resource)
 	 * @param jstType

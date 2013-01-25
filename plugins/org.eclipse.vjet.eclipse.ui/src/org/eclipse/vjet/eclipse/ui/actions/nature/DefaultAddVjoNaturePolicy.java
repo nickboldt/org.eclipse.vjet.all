@@ -49,6 +49,11 @@ public class DefaultAddVjoNaturePolicy implements IAddVjoNaturePolicy {
 	 */
 	protected void addVjoNatureID(IProject project) {
 		try {
+			
+			if (project.getFile(".project").exists()){
+				return; //do nothing
+			}
+			
 			IProjectDescription description = project.getDescription();
 			String[] natureIds = description.getNatureIds();
 			
@@ -77,12 +82,19 @@ public class DefaultAddVjoNaturePolicy implements IAddVjoNaturePolicy {
 	 */
 	protected void buildBuildPathFile(IProject project) {
 		try {
-			if (project.getFile(".buildpath").exists())
-				project.getFile(".buildpath").delete(false, null);
-			// TODO this should check for existance of src directory assumes js is under src
+			if (project.getFile(".buildpath").exists()){
+				return; //do nothing
+			}
+			
+			if(project.getFolder("src").exists()){
 			project.getFile(".buildpath").create(
 					DefaultAddVjoNaturePolicy.class.getResourceAsStream(
 							"buildpath.snap"), true, null);
+			}else{
+				project.getFile(".buildpath").create(
+						DefaultAddVjoNaturePolicy.class.getResourceAsStream(
+								"buildpathnosrc.snap"), true, null);
+			}
 		} catch (CoreException e) {
 			e.printStackTrace();
 		}

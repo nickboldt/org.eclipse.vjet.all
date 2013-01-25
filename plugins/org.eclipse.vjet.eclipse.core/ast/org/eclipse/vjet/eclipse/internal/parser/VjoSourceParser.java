@@ -9,6 +9,7 @@
 package org.eclipse.vjet.eclipse.internal.parser;
 
 import java.io.File;
+import java.net.URI;
 import java.util.Collection;
 import java.util.List;
 
@@ -111,6 +112,14 @@ public class VjoSourceParser extends AbstractSourceParser{
 		String strPath = new String(fileName).replace(File.separatorChar, '/');
 		IPath path = workspaceRoot.getFullPath().append(strPath);
 		IFile file = workspaceRoot.getFile(path);
+		URI locationURI = file.getLocationURI();
+		// for virtual resources use typespace jst do not parse
+		if(locationURI.getScheme().equals("typespace")){
+			SourceTypeName srctypeName = CodeassistUtils.getTypeName(file);
+			IJstType jsttype = TypeSpaceMgr.QE().findType(srctypeName);
+			processType(jsttype, moduleDeclaration);
+			return moduleDeclaration;
+		}
 		String groupName = file.getProject().getName();
 		// TODO doesn't check src directories
 		String substring = strPath.substring(strPath.indexOf(groupName)+groupName.length(), strPath.lastIndexOf('/'));
