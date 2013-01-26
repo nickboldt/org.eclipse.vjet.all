@@ -155,16 +155,17 @@ public class EditorConfigurationBlock extends AbstractConfigurationBlock {
 					CodeFormatterConstants.FORMATTER_TAB_CHAR, tabPolicyLabels,
 					tabPolicyValues);
 
-			// addLabelledTextField(
-			// generalGroup,
-			// FormatterMessages.IndentationTabPage_general_group_option_indent_size,
-			// CodeFormatterConstants.FORMATTER_INDENTATION_SIZE, 2, 1,
-			// true);
+			addLabelledTextField(
+					generalGroup,
+					FormatterMessages.IndentationTabPage_general_group_option_tab_size,
+					CodeFormatterConstants.FORMATTER_TAB_SIZE, 2, 1, true);
 
 			addLabelledTextField(
 					generalGroup,
 					FormatterMessages.IndentationTabPage_general_group_option_indent_size,
-					CodeFormatterConstants.FORMATTER_TAB_SIZE, 2, 1, true);
+					CodeFormatterConstants.FORMATTER_INDENTATION_SIZE, 2, 1,
+					true);
+
 		}
 
 		if ((flags & FLAG_TAB_ALWAYS_INDENT) != 0) {

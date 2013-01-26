@@ -141,8 +141,8 @@ public abstract class PropertyAndPreferencePage extends PreferencePage
 				fChangeWorkspaceSettings.setLayoutData(new GridData(SWT.END,
 						SWT.CENTER, false, false));
 			} else {
-				LayoutUtil.setHorizontalSpan(fUseProjectSettings
-						.getSelectionButton(null), 2);
+				LayoutUtil.setHorizontalSpan(
+						fUseProjectSettings.getSelectionButton(null), 2);
 			}
 
 			Label horizontalLine = new Label(composite, SWT.SEPARATOR
@@ -162,7 +162,8 @@ public abstract class PropertyAndPreferencePage extends PreferencePage
 	}
 
 	/*
-	 * @see org.eclipse.jface.preference.IPreferencePage#createContents(Composite)
+	 * @see
+	 * org.eclipse.jface.preference.IPreferencePage#createContents(Composite)
 	 */
 	protected Control createContents(Composite parent) {
 		Composite composite = new Composite(parent, SWT.NONE);
@@ -341,7 +342,8 @@ public abstract class PropertyAndPreferencePage extends PreferencePage
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.eclipse.ui.IWorkbenchPreferencePage#init(org.eclipse.ui.IWorkbench)
+	 * @see
+	 * org.eclipse.ui.IWorkbenchPreferencePage#init(org.eclipse.ui.IWorkbench)
 	 */
 	public void init(IWorkbench workbench) {
 	}
@@ -358,7 +360,9 @@ public abstract class PropertyAndPreferencePage extends PreferencePage
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.eclipse.ui.IWorkbenchPropertyPage#setElement(org.eclipse.core.runtime.IAdaptable)
+	 * @see
+	 * org.eclipse.ui.IWorkbenchPropertyPage#setElement(org.eclipse.core.runtime
+	 * .IAdaptable)
 	 */
 	public void setElement(IAdaptable element) {
 		fProject = (IProject) element.getAdapter(IResource.class);
@@ -367,7 +371,8 @@ public abstract class PropertyAndPreferencePage extends PreferencePage
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.eclipse.jface.preference.PreferencePage#applyData(java.lang.Object)
+	 * @see
+	 * org.eclipse.jface.preference.PreferencePage#applyData(java.lang.Object)
 	 */
 	public void applyData(Object data) {
 		if (data instanceof Map) {
