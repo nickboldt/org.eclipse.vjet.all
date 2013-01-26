@@ -282,17 +282,6 @@ public abstract class AbstractConfigurationBlock implements
 			String key = (String) combo.getData();
 			String value = (String) data.get(combo.getText());
 			fStore.setValue(key, value);
-
-			// Add by Oliver. 2009-05-05. If we select the 'Tab only' in the
-			// Combo, will disable the 'tab size' textbox.
-			Set texts = fTextFields.keySet();
-			if (texts.size() > 0) {
-				Text t = (Text) texts.toArray()[0];
-				t.setEnabled(!value.equals("space"));
-				t.setText("4");
-
-				// fStore.setValue("formatter.tabulation.char", "4");
-			}
 		}
 	};
 
