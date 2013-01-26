@@ -18,6 +18,7 @@ import org.eclipse.vjet.dsf.jsgen.shared.ids.MethodProbIds;
 import org.eclipse.vjet.dsf.jsgen.shared.validation.vjo.VjoSemanticProblem;
 import org.eclipse.vjet.dsf.jst.validation.vjo.VjoValidationBaseTester;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 
@@ -31,6 +32,7 @@ import org.junit.Test;
  */
 //@Category( { P1, FAST, UNIT })
 //@ModuleInfo(value="DsfPrebuild",subModuleId="JsToJava")
+
 public class VjoType extends VjoValidationBaseTester {
 
     @Before
@@ -40,11 +42,16 @@ public class VjoType extends VjoValidationBaseTester {
                 MethodProbIds.WrongNumberOfArguments, 26, 0));
         expectProblems.add(createNewProblem(MethodProbIds.ParameterMismatch,
                 27, 0));
+        expectProblems.add(createNewProblem(null,
+                16, 0));
+        expectProblems.add(createNewProblem(null,
+                47, 0));
     }
 
     @Test
     //@Category( { P1, FAST, UNIT })
     //@Description("Test Vjo type's methods")
+    @Ignore("need to determine how to validate this since it has syntax errors")
     public void testIfstatement1() {
         List<VjoSemanticProblem> problems = getVjoSemanticProblem(
                 "syntax.global.vjoType/", "VjoType.js", this.getClass());
