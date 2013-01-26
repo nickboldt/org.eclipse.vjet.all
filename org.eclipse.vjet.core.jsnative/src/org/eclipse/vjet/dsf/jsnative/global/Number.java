@@ -29,6 +29,8 @@ public interface Number extends Object {
 	@Constructor void Number(Number number);
 	
 	@Constructor void Number(String number);
+	
+	@Constructor void Number(Date number);
 		
 	/**
 	 * The maximum numeric value representable in JavaScript. 
