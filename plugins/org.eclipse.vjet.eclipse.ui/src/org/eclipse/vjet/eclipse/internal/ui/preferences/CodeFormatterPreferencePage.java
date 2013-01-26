@@ -10,8 +10,8 @@
  *******************************************************************************/
 package org.eclipse.vjet.eclipse.internal.ui.preferences;
 
-
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.vjet.eclipse.core.VjoNature;
 import org.eclipse.vjet.eclipse.internal.ui.preferences.formatting.CodeFormatterConfigurationBlock;
 import org.eclipse.vjet.eclipse.internal.ui.preferences.formatting.ProfileConfigurationBlock;
 
@@ -20,25 +20,24 @@ import org.eclipse.vjet.eclipse.internal.ui.preferences.formatting.ProfileConfig
  */
 public final class CodeFormatterPreferencePage extends ProfilePreferencePage {
 
-	public static final String PREF_ID= "org.eclipse.vjet.ui.preferences.CodeFormatterPreferencePage"; //$NON-NLS-1$
-	public static final String PROP_ID= "org.eclipse.vjet.ui.propertyPages.CodeFormatterPreferencePage"; //$NON-NLS-1$
-	
-	public CodeFormatterPreferencePage() {		
+	public static final String PREF_ID = "org.eclipse.vjet.ui.preferences.CodeFormatterPreferencePage"; //$NON-NLS-1$
+	public static final String PROP_ID = "org.eclipse.vjet.ui.propertyPages.CodeFormatterPreferencePage"; //$NON-NLS-1$
+
+	public CodeFormatterPreferencePage() {
 		// only used when page is shown programatically
-		setTitle(VjetPreferenceMessages.CodeFormatterPreferencePage_title);		 
+		setTitle(VjetPreferenceMessages.CodeFormatterPreferencePage_title);
 	}
-	
-	
+
 	public void createControl(Composite parent) {
-	    super.createControl(parent);
-//    	PlatformUI.getWorkbench().getHelpSystem().setHelp(getControl(), IJavaHelpContextIds.CODEFORMATTER_PREFERENCE_PAGE);
+		super.createControl(parent);
+		// PlatformUI.getWorkbench().getHelpSystem().setHelp(getControl(),
+		// IJavaHelpContextIds.CODEFORMATTER_PREFERENCE_PAGE);
 	}
 
-	protected ProfileConfigurationBlock createConfigurationBlock(PreferencesAccess access) {
-	    return new CodeFormatterConfigurationBlock(
-	    		getProject(), access);
-    }
-
+	protected ProfileConfigurationBlock createConfigurationBlock(
+			PreferencesAccess access) {
+		return new CodeFormatterConfigurationBlock(getProject(), access);
+	}
 
 	@Override
 	protected String getPreferencePageId() {
@@ -48,6 +47,10 @@ public final class CodeFormatterPreferencePage extends ProfilePreferencePage {
 	@Override
 	protected String getPropertyPageId() {
 		return PROP_ID;
+	}
+
+	protected String getNatureId() {
+		return VjoNature.NATURE_ID;
 	}
 
 }
