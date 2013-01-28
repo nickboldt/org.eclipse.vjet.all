@@ -2513,7 +2513,13 @@ public class JstExpressionTypeLinkerHelper {
 			final JstIdentifier id, final String name,JstMixedType mtype) {
 
 		// TODO we need a multiple node binding here since multiple 
-
+		// bug 399299
+		if(id.getJstBinding()!=null){
+			// do not rebind again in the jstmixed type case where there are 2 names.
+			// first one in wins
+			return;
+		}
+		// end bug 399299
 		IJstNode oBinding = otype.getProperty(name, false);
 		if (oBinding != null) {
 			id.setJstBinding(oBinding);
