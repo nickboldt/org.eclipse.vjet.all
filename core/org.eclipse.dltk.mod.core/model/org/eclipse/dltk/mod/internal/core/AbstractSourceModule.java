@@ -328,8 +328,12 @@ public abstract class AbstractSourceModule extends Openable implements
 		IBuffer buffer = getBufferNotOpen();
 		if (buffer == null)
 			return getBufferContent();
-		return buffer.getContents().toCharArray();
-		// return getSource().toCharArray();
+		if (buffer.getContents() != null) {
+			return buffer.getContents().toCharArray();
+		} else if (getSource() != null) {
+			return getSource().toCharArray();
+		}
+		return new char[1];
 	}
 
 	public String getSourceContents() {
