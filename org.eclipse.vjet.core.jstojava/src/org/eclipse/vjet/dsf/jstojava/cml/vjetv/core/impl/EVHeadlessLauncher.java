@@ -82,12 +82,10 @@ public class EVHeadlessLauncher implements IHeadLessLauncher {
      */
     private List<VjoSemanticProblem> doSemanticValidate(final IJstType unit,
             JstTypeSpaceMgr ts) throws AssertionError {
-        IJstType jstType = null;
         VjoValidationDriver driver = new VjoValidationDriver();
         if (unit == null)
             throw new AssertionError("Unable to find specified test file.");
-        jstType = ts.getTypeSpace().getType(
-                new TypeName(ONDEMAND, unit.getName()));
+        
         ts.processEvent(new AddTypeEvent<IJstType>(new TypeName(ONDEMAND,unit.getName()), unit));
 
         driver.setTypeSpaceMgr(ts);
@@ -95,7 +93,7 @@ public class EVHeadlessLauncher implements IHeadLessLauncher {
         List<IJstType> types = new ArrayList<IJstType>();
 //        final IJstType resolvedType = unit;
 
-        types.add(jstType);
+        types.add(unit);
         VjoValidationResult result = driver.validateComplete(types, ONDEMAND);
         return result.getAllProblems();
     }
