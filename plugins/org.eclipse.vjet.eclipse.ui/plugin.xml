@@ -285,8 +285,8 @@
             name="%codeFormatterPrefName"
             category="org.eclipse.vjet.eclipse.ui.vjet" 
             class="org.eclipse.vjet.eclipse.internal.ui.preferences.CodeFormatterPreferencePage"
-            id="org.eclipse.vjet.eclipse.ui.preferences.CodeFormatterPreferencePage">
-            <keywordReference id="org.eclipse.vjet.eclipse.ui.formatter"/>
+            id="org.eclipse.vjet.ui.preferences.CodeFormatterPreferencePage">
+            <keywordReference id="org.eclipse.vjet.ui.formatter"/>
            
         
       </page>
@@ -376,6 +376,7 @@
    </extension>
    <extension point="org.eclipse.ui.keywords">
    		<keyword label="%preferenceKeywords.markoccurrences" id="org.eclipse.dltk.mod.ui.edit.text.script.toggleMarkOccurrences"/>
+   		<keyword label="%preferenceKeywords.format" id="org.eclipse.vjet.ui.formatter"/>
    	</extension>
    	
    	<!--
