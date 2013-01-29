@@ -842,16 +842,16 @@ public class VjoTypeInfoViewer {
 			String name = jstType.getName();
 			String group = jstType.getPackage().getGroupName();
 			// Deprecated
-			if (CodeassistUtils.isBinaryType(jstType)) {
-				type = CodeassistUtils.findNativeSourceType(jstType);
-				if (type == null)
-					continue;
-				if (jstType.isInterface()) {
-					flags = Modifiers.AccInterface;
-				}
-			}
+//			if (CodeassistUtils.isBinaryType(jstType)) {
+//				type = CodeassistUtils.findNativeSourceType(jstType);
+//				if (type == null)
+//					continue;
+//				if (jstType.isInterface()) {
+//					flags = Modifiers.AccInterface;
+//				}
+//			}
 			// Deprecated
-			else if (CodeassistUtils.isNativeType(jstType)) {
+			if (CodeassistUtils.isNativeType(jstType)) {
 				IJstType jtype = CodeassistUtils.findNativeJstType(name);
 				if (jtype == null) {
 					continue;
@@ -882,7 +882,7 @@ public class VjoTypeInfoViewer {
 					if (rootDltkType == null)
 						continue;
 					else
-						type = findDLTKType(rootDltkType, name);
+						type = rootDltkType;
 
 					if (type != null) {
 						
