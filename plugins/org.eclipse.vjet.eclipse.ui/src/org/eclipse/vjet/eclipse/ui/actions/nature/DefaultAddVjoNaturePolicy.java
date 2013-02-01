@@ -50,8 +50,8 @@ public class DefaultAddVjoNaturePolicy implements IAddVjoNaturePolicy {
 	protected void addVjoNatureID(IProject project) {
 		try {
 			
-			if (project.getFile(".project").exists()){
-				return; //do nothing
+			if (project.getFile(".project").exists() && project.getNature(VjoNature.NATURE_ID) !=null){
+				return;
 			}
 			
 			IProjectDescription description = project.getDescription();
