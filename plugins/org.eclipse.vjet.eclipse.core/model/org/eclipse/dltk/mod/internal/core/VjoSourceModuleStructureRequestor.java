@@ -557,7 +557,7 @@ public class VjoSourceModuleStructureRequestor implements
 		JSSourceMethod handle = null;
 		
 
-		if (parentHandle.getElementType() == IModelElement.TYPE || parentHandle.getElementType() == IJSInitializer.ELEMENT_TYPE) {
+		if (parentHandle.getElementType() == IModelElement.TYPE || parentHandle.getElementType() == IModelElement.METHOD || parentHandle.getElementType() == IJSInitializer.ELEMENT_TYPE) {
 			if(parentHandle.getElementType()==11){
 				parentHandle = (ModelElement)parentHandle.getParent();
 			}

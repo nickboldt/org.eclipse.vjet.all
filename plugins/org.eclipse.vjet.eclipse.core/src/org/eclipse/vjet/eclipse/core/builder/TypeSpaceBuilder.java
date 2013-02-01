@@ -649,6 +649,10 @@ public class TypeSpaceBuilder {
 						// script unit
 						// since it is no longer helpful in this case
 						IJstType type = ts.findType(event.getTypeName());
+						if(type==null){
+							return null;
+							
+						}
 						buildType(type);
 						List<IJstType> dependents = ts.getTypeSpace()
 								.getAllDependents(event.getTypeName());

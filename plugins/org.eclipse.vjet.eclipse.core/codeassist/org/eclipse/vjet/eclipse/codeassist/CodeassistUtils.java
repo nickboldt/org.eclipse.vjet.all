@@ -9,57 +9,16 @@
 package org.eclipse.vjet.eclipse.codeassist;
 
 import java.net.URI;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Deque;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.vjet.dsf.jst.BaseJstNode;
-import org.eclipse.vjet.dsf.jst.IJstMethod;
-import org.eclipse.vjet.dsf.jst.IJstNode;
-import org.eclipse.vjet.dsf.jst.IJstProperty;
-import org.eclipse.vjet.dsf.jst.IJstType;
-import org.eclipse.vjet.dsf.jst.IJstTypeReference;
-import org.eclipse.vjet.dsf.jst.JstSource;
-import org.eclipse.vjet.dsf.jst.declaration.JstArg;
-import org.eclipse.vjet.dsf.jst.declaration.JstBlock;
-import org.eclipse.vjet.dsf.jst.declaration.JstConstructor;
-import org.eclipse.vjet.dsf.jst.declaration.JstMethod;
-import org.eclipse.vjet.dsf.jst.declaration.JstPackage;
-import org.eclipse.vjet.dsf.jst.declaration.JstProperty;
-import org.eclipse.vjet.dsf.jst.declaration.JstProxyType;
-import org.eclipse.vjet.dsf.jst.declaration.JstTypeRefType;
-import org.eclipse.vjet.dsf.jst.declaration.JstVar;
-import org.eclipse.vjet.dsf.jst.declaration.JstVars;
-import org.eclipse.vjet.dsf.jst.expr.AssignExpr;
-import org.eclipse.vjet.dsf.jst.expr.FieldAccessExpr;
-import org.eclipse.vjet.dsf.jst.expr.MtdInvocationExpr;
-import org.eclipse.vjet.dsf.jst.reserved.JsCoreKeywords;
-import org.eclipse.vjet.dsf.jst.stmt.RtnStmt;
-import org.eclipse.vjet.dsf.jst.term.JstIdentifier;
-import org.eclipse.vjet.dsf.jst.token.IExpr;
-import org.eclipse.vjet.dsf.jst.ts.JstQueryExecutor;
-import org.eclipse.vjet.dsf.jst.ts.JstTypeSpaceMgr;
-import org.eclipse.vjet.dsf.ts.ITypeSpace;
-import org.eclipse.vjet.dsf.ts.TypeSpace;
-import org.eclipse.vjet.dsf.ts.group.IGroup;
-import org.eclipse.vjet.dsf.ts.type.TypeName;
-import org.eclipse.vjet.eclipse.codeassist.keywords.CompletionConstants;
-import org.eclipse.vjet.eclipse.codeassist.keywords.CompletionContext;
-import org.eclipse.vjet.eclipse.core.IJSMethod;
-import org.eclipse.vjet.eclipse.core.IJSType;
-import org.eclipse.vjet.eclipse.core.IVjoSourceModule;
-import org.eclipse.vjet.eclipse.core.VjoNature;
-import org.eclipse.vjet.eclipse.internal.codeassist.select.JstNodeDLTKElementResolver;
-import org.eclipse.vjet.vjo.lib.TsLibLoader;
-import org.eclipse.vjet.vjo.meta.VjoKeywords;
-import org.eclipse.vjet.vjo.tool.codecompletion.CodeCompletionUtils;
-import org.eclipse.vjet.vjo.tool.codecompletion.StringUtils;
-import org.eclipse.vjet.vjo.tool.typespace.SourceTypeName;
-import org.eclipse.vjet.vjo.tool.typespace.TypeSpaceMgr;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -107,7 +66,53 @@ import org.eclipse.dltk.mod.internal.core.SourceModule;
 import org.eclipse.dltk.mod.internal.core.VjoLocalVariable;
 import org.eclipse.dltk.mod.internal.core.VjoSourceModule;
 import org.eclipse.dltk.mod.internal.core.VjoSourceType;
-
+import org.eclipse.vjet.dsf.jst.BaseJstNode;
+import org.eclipse.vjet.dsf.jst.IJstMethod;
+import org.eclipse.vjet.dsf.jst.IJstNode;
+import org.eclipse.vjet.dsf.jst.IJstProperty;
+import org.eclipse.vjet.dsf.jst.IJstType;
+import org.eclipse.vjet.dsf.jst.IJstTypeReference;
+import org.eclipse.vjet.dsf.jst.JstSource;
+import org.eclipse.vjet.dsf.jst.declaration.JstArg;
+import org.eclipse.vjet.dsf.jst.declaration.JstBlock;
+import org.eclipse.vjet.dsf.jst.declaration.JstConstructor;
+import org.eclipse.vjet.dsf.jst.declaration.JstMethod;
+import org.eclipse.vjet.dsf.jst.declaration.JstObjectLiteralType;
+import org.eclipse.vjet.dsf.jst.declaration.JstPackage;
+import org.eclipse.vjet.dsf.jst.declaration.JstProperty;
+import org.eclipse.vjet.dsf.jst.declaration.JstProxyMethod;
+import org.eclipse.vjet.dsf.jst.declaration.JstProxyType;
+import org.eclipse.vjet.dsf.jst.declaration.JstTypeRefType;
+import org.eclipse.vjet.dsf.jst.declaration.JstVar;
+import org.eclipse.vjet.dsf.jst.declaration.JstVars;
+import org.eclipse.vjet.dsf.jst.expr.AssignExpr;
+import org.eclipse.vjet.dsf.jst.expr.FieldAccessExpr;
+import org.eclipse.vjet.dsf.jst.expr.MtdInvocationExpr;
+import org.eclipse.vjet.dsf.jst.reserved.JsCoreKeywords;
+import org.eclipse.vjet.dsf.jst.stmt.RtnStmt;
+import org.eclipse.vjet.dsf.jst.term.JstIdentifier;
+import org.eclipse.vjet.dsf.jst.term.NV;
+import org.eclipse.vjet.dsf.jst.term.ObjLiteral;
+import org.eclipse.vjet.dsf.jst.token.IExpr;
+import org.eclipse.vjet.dsf.jst.ts.JstQueryExecutor;
+import org.eclipse.vjet.dsf.jst.ts.JstTypeSpaceMgr;
+import org.eclipse.vjet.dsf.ts.ITypeSpace;
+import org.eclipse.vjet.dsf.ts.TypeSpace;
+import org.eclipse.vjet.dsf.ts.group.IGroup;
+import org.eclipse.vjet.dsf.ts.type.TypeName;
+import org.eclipse.vjet.eclipse.codeassist.keywords.CompletionConstants;
+import org.eclipse.vjet.eclipse.codeassist.keywords.CompletionContext;
+import org.eclipse.vjet.eclipse.core.IJSMethod;
+import org.eclipse.vjet.eclipse.core.IJSType;
+import org.eclipse.vjet.eclipse.core.IVjoSourceModule;
+import org.eclipse.vjet.eclipse.core.VjoNature;
+import org.eclipse.vjet.eclipse.internal.codeassist.select.JstNodeDLTKElementResolver;
+import org.eclipse.vjet.vjo.lib.TsLibLoader;
+import org.eclipse.vjet.vjo.meta.VjoKeywords;
+import org.eclipse.vjet.vjo.tool.codecompletion.CodeCompletionUtils;
+import org.eclipse.vjet.vjo.tool.codecompletion.StringUtils;
+import org.eclipse.vjet.vjo.tool.typespace.SourceTypeName;
+import org.eclipse.vjet.vjo.tool.typespace.TypeSpaceMgr;
 
 /**
  * This class contains utilities methods for code completion and selection
@@ -150,8 +155,8 @@ public class CodeassistUtils {
 	 * Returns the type declared in this compilation unit.
 	 * 
 	 * @param SourceModule
-	 * @param name -
-	 *            type name
+	 * @param name
+	 *            - type name
 	 * @return the type declared in this compilation unit
 	 */
 	public static IType getType(ISourceModule module, String name) {
@@ -173,10 +178,10 @@ public class CodeassistUtils {
 	}
 
 	/**
-	 * Find the IType based on the jstType and IScriptProject
-	 * The scene maybe:
-	 * 1. jstType is outer type
-	 * 2. jstType is inner type, DLTK lookup code can not take inner type correctly by type name.
+	 * Find the IType based on the jstType and IScriptProject The scene maybe:
+	 * 1. jstType is outer type 2. jstType is inner type, DLTK lookup code can
+	 * not take inner type correctly by type name.
+	 * 
 	 * @param scriptProject
 	 * @param jstType
 	 * @return
@@ -184,18 +189,18 @@ public class CodeassistUtils {
 	public static IType findType(ScriptProject scriptProject, IJstType jstType) {
 		IJstType outerType = CodeCompletionUtils.getOuterJstType(jstType);
 		if (outerType == jstType) {
-			IType type= findType(scriptProject, jstType.getName());
-			if(type!=null){
+			IType type = findType(scriptProject, jstType.getName());
+			if (type != null) {
 				return type;
-			}else{
+			} else {
 				// loop through alias names
 				String alias = jstType.getAlias();
 				return findType(scriptProject, alias);
 			}
 		} else {
 			String packageName = "";
-			if(outerType.getPackage()!=null){
-				packageName =outerType.getPackage().getName();
+			if (outerType.getPackage() != null) {
+				packageName = outerType.getPackage().getName();
 			}
 			String typeName = jstType.getName();
 			if (typeName.contains(packageName)) {
@@ -210,30 +215,29 @@ public class CodeassistUtils {
 			}
 		}
 
-
 	}
 
-
-//	private static String getNameFromSource(JstSource source) {
-//		if(source!=null){
-//			IBinding fileBinding = source.getBinding();
-//			if(fileBinding instanceof FileBinding){
-//				File file = ((FileBinding) fileBinding).getFile();
-//				return file.getPath().replace("/", ".");
-//			}
-//		}
-//		return null;
-//	}
-
+	// private static String getNameFromSource(JstSource source) {
+	// if(source!=null){
+	// IBinding fileBinding = source.getBinding();
+	// if(fileBinding instanceof FileBinding){
+	// File file = ((FileBinding) fileBinding).getFile();
+	// return file.getPath().replace("/", ".");
+	// }
+	// }
+	// return null;
+	// }
 
 	/**
 	 * Find IType from DLTK based on the package name and simple type name
+	 * 
 	 * @param scriptProject
 	 * @param typeName
 	 * @param packageName
 	 * @return
 	 */
-	public static IType findType(ScriptProject scriptProject, String typeName, String packageName) {
+	public static IType findType(ScriptProject scriptProject, String typeName,
+			String packageName) {
 		if (scriptProject == null || typeName == null || packageName == null)
 			return null;
 
@@ -251,7 +255,9 @@ public class CodeassistUtils {
 
 		// find type in current project
 		if (lookup != null) {
-			Answer answer = lookup.findType(typeName, packageName, false,  NameLookup.ACCEPT_ALL, true/*consider secondary types*/, true/*wait for indexes*/, false, null);
+			Answer answer = lookup.findType(typeName, packageName, false,
+					NameLookup.ACCEPT_ALL, true/* consider secondary types */,
+					true/* wait for indexes */, false, null);
 			if (answer != null) {
 				type = answer.type;
 			}
@@ -260,7 +266,8 @@ public class CodeassistUtils {
 		// find type in depends project
 		if (type == null) {
 			try {
-				type = findInDependsProjects(typeName, packageName, scriptProject);
+				type = findInDependsProjects(typeName, packageName,
+						scriptProject);
 			} catch (ModelException e) {
 				DLTKCore.error(e.toString(), e);
 			}
@@ -268,6 +275,7 @@ public class CodeassistUtils {
 
 		return type;
 	}
+
 	/**
 	 * Finds type within specified project by full type name.
 	 * 
@@ -297,7 +305,6 @@ public class CodeassistUtils {
 		} catch (ModelException e) {
 			e.printStackTrace();
 		}
-
 
 		// find type in depends project
 		if (type == null) {
@@ -383,8 +390,8 @@ public class CodeassistUtils {
 
 		// search types in native group by word
 		IGroup<IJstType> nativeTypes = TypeSpaceMgr.getInstance()
-				.getController().getJstTypeSpaceMgr().getTypeSpace().getGroup(
-						JstTypeSpaceMgr.JS_NATIVE_GRP);
+				.getController().getJstTypeSpaceMgr().getTypeSpace()
+				.getGroup(JstTypeSpaceMgr.JS_NATIVE_GRP);
 		for (IJstType jsttype2 : nativeTypes.getEntities().values()) {
 			String typeName = jsttype2.getName();
 			if (typeName.startsWith(word)) {
@@ -446,8 +453,9 @@ public class CodeassistUtils {
 									".*")) {
 								String imp = importDeclaration[j]
 										.getElementName().replace(".*", "");
-								type = lookup.findType(imp.concat(".").concat(
-										name), false, NameLookup.ACCEPT_ALL);
+								type = lookup.findType(
+										imp.concat(".").concat(name), false,
+										NameLookup.ACCEPT_ALL);
 								if (type != null) {
 									return type;
 								}
@@ -487,9 +495,8 @@ public class CodeassistUtils {
 		return type;
 	}
 
-	private static IType findInDependsProjects(String typeName, String packageName,
-			IScriptProject project) throws ModelException {
-
+	private static IType findInDependsProjects(String typeName,
+			String packageName, IScriptProject project) throws ModelException {
 
 		NameLookup lookup;
 		IType type = null;
@@ -541,9 +548,9 @@ public class CodeassistUtils {
 		return type;
 	}
 
-	private static IType findInDependsProjects(String typeName, String packageName,
-			IScriptProject project, IScriptProject dependentProject)throws ModelException {
-
+	private static IType findInDependsProjects(String typeName,
+			String packageName, IScriptProject project,
+			IScriptProject dependentProject) throws ModelException {
 
 		IType type = null;
 		NameLookup lookup;
@@ -563,7 +570,15 @@ public class CodeassistUtils {
 					lookup = ((ScriptProject) dependentProject)
 							.newNameLookup(DefaultWorkingCopyOwner.PRIMARY);
 
-					Answer answer = lookup.findType(typeName, packageName, false,  NameLookup.ACCEPT_ALL, true/*consider secondary types*/, true/*wait for indexes*/, false, null);
+					Answer answer = lookup.findType(typeName, packageName,
+							false, NameLookup.ACCEPT_ALL, true/*
+															 * consider
+															 * secondary types
+															 */, true/*
+																	 * wait for
+																	 * indexes
+																	 */, false,
+							null);
 					if (answer != null) {
 						type = answer.type;
 					}
@@ -578,6 +593,7 @@ public class CodeassistUtils {
 		return type;
 
 	}
+
 	/**
 	 * At first get the resolved buildpath for the main project. Looks up for
 	 * the type for each of buildpath entries.
@@ -849,8 +865,8 @@ public class CodeassistUtils {
 		if (jstType != null && dltkMethod != null) {
 			List<? extends IJstMethod> jstMethods = jstType.getMethods();
 			for (IJstMethod jstMethod : jstMethods) {
-				if (jstMethod.getName().getName().equals(
-						dltkMethod.getElementName())) {
+				if (jstMethod.getName().getName()
+						.equals(dltkMethod.getElementName())) {
 					// method name is OK, let's check return type
 					// IJSMethod jsMethod = (IJSMethod) method;
 					// continue with params
@@ -893,8 +909,9 @@ public class CodeassistUtils {
 				mtds.add(method);
 			}
 		}
-		return mtds.toArray(new IMethod[]{});
+		return mtds.toArray(new IMethod[] {});
 	}
+
 	public static IMethod findMethodBySignature(String methodName,
 			List<String> args, IType declareType) throws ModelException {
 		IMethod[] methods = declareType.getMethods();
@@ -902,26 +919,28 @@ public class CodeassistUtils {
 			if (method.getElementName().equals(methodName)) {
 				// method name is OK, let's check return type
 				IJSMethod jsMethod = (IJSMethod) method;
-//				shortcuted by huzhou@ebay.com as the dispatcher method doesn't have to match the parameter list of ast structure
-//				if the binding was correct, then the method should be F2/F3 enabled despite the parameter matching
+				// shortcuted by huzhou@ebay.com as the dispatcher method
+				// doesn't have to match the parameter list of ast structure
+				// if the binding was correct, then the method should be F2/F3
+				// enabled despite the parameter matching
 				return jsMethod;
-//				// continue with params
-//				String[] paramsTypes = jsMethod.getParameterTypes();
-//				// List<JstArg> args = jstMethod.getArgs();
-//				if (paramsTypes.length == args.size()) {
-//					boolean paramsOK = true;
-//					for (int i = 0; i < paramsTypes.length; i++) {
-//
-//						String argTypeName = args.get(i);
-//						if (!paramsTypes[i].equals(argTypeName)) {
-//							paramsOK = false;
-//							break;
-//						}
-//					}
-//					if (paramsOK) {
-//						return method;
-//					}
-//				}
+				// // continue with params
+				// String[] paramsTypes = jsMethod.getParameterTypes();
+				// // List<JstArg> args = jstMethod.getArgs();
+				// if (paramsTypes.length == args.size()) {
+				// boolean paramsOK = true;
+				// for (int i = 0; i < paramsTypes.length; i++) {
+				//
+				// String argTypeName = args.get(i);
+				// if (!paramsTypes[i].equals(argTypeName)) {
+				// paramsOK = false;
+				// break;
+				// }
+				// }
+				// if (paramsOK) {
+				// return method;
+				// }
+				// }
 			}
 		}
 
@@ -976,13 +995,13 @@ public class CodeassistUtils {
 	 *            jst source module
 	 * @return local variable if found otherwise null
 	 */
-	public static IModelElement[] getLocalVar(ISourceModule module, String name,
-			String type, JstSource source) {
+	public static IModelElement[] getLocalVar(ISourceModule module,
+			String name, String type, JstSource source) {
 
 		// find element by offset
 		IModelElement element = findLocalElement(
-				(org.eclipse.dltk.mod.core.ISourceModule) module, source
-						.getStartOffSet());
+				(org.eclipse.dltk.mod.core.ISourceModule) module,
+				source.getStartOffSet());
 
 		// get method of the element if element is field
 		if (element != null && element.getElementType() == IModelElement.FIELD) {
@@ -1012,22 +1031,21 @@ public class CodeassistUtils {
 					IVjoSourceModule sourceModule = (IVjoSourceModule) module;
 					ScriptFolder folder = (ScriptFolder) sourceModule
 							.getParent();
-					NativeVjoSourceModule m = createNativeModule(folder, jstType.getName());
+					NativeVjoSourceModule m = createNativeModule(folder,
+							jstType.getName());
 					return m != null ? new IModelElement[] { m }
-					: new IModelElement[0];
+							: new IModelElement[0];
 
 					// type = jstType.getName();
 				}
 			}
 			localVar = new VjoLocalVariable((ModelElement) element, name,
-					source.getStartOffSet(), source.getEndOffSet(), source
-							.getStartOffSet(), source.getEndOffSet(), type);
+					source.getStartOffSet(), source.getEndOffSet(),
+					source.getStartOffSet(), source.getEndOffSet(), type);
 		}
 
-
-
 		return localVar != null ? new IModelElement[] { localVar }
-		: new IModelElement[0];
+				: new IModelElement[0];
 	}
 
 	public static IModelElement findChild(String name, IModelElement parent) {
@@ -1080,7 +1098,8 @@ public class CodeassistUtils {
 				if (isNativeType(jstType) || isBinaryType(jstType)) {
 					modelElement.add(findNativeSourceType(jstType));
 				} else {
-					modelElement.add(findResourceType(module, jstType.getName()));
+					modelElement
+							.add(findResourceType(module, jstType.getName()));
 				}
 
 			} else if (expression instanceof JstIdentifier) {
@@ -1091,17 +1110,21 @@ public class CodeassistUtils {
 
 				// local var reference
 				if (modelElement == null) {
-					modelElement.addAll(Arrays.asList(getLocalVar(module, identifier.getName(),
-							OBJECT_TYPE, identifier.getSource())));
+					modelElement.addAll(Arrays.asList(getLocalVar(module,
+							identifier.getName(), OBJECT_TYPE,
+							identifier.getSource())));
 				}
 				if (modelElement == null) {
 					// TODO If the selected type is 'vjo', need to get more
 					// information for it. Maybe need to generate the temporary
 					// file.
 					String nativeTypeName = "vjo";
-					IJstType jstType = TypeSpaceMgr.getInstance()
-							.getController().getJstTypeSpaceMgr()
-							.getQueryExecutor().findType(
+					IJstType jstType = TypeSpaceMgr
+							.getInstance()
+							.getController()
+							.getJstTypeSpaceMgr()
+							.getQueryExecutor()
+							.findType(
 									new TypeName("VjoBaseLib", nativeTypeName));
 					// modelElement = findNativeElement(module, nativeTypeName);
 				}
@@ -1118,11 +1141,12 @@ public class CodeassistUtils {
 				if (type != null) {
 					typeName = type.getName();
 				}
-				modelElement.addAll(Arrays.asList(getLocalVar(module, jstVar.getName(), typeName,
-						jstVar.getSource())));
+				modelElement.addAll(Arrays.asList(getLocalVar(module,
+						jstVar.getName(), typeName, jstVar.getSource())));
 			} else if (expression instanceof JstMethod) {
 				// method declaration - no need for search using name lookup
-				modelElement.addAll(Arrays.asList(getMethod(module, (JstMethod) expression)));
+				modelElement.addAll(Arrays.asList(getMethod(module,
+						(JstMethod) expression)));
 			} else if (expression instanceof JstArg) {
 				JstArg arg = (JstArg) expression;
 				IJstType type = arg.getType();
@@ -1130,8 +1154,8 @@ public class CodeassistUtils {
 				if (type != null) {
 					typeName = type.getName();
 				}
-				modelElement.addAll(Arrays.asList(getLocalVar(module, arg.getName(), typeName, arg
-						.getSource())));
+				modelElement.addAll(Arrays.asList(getLocalVar(module,
+						arg.getName(), typeName, arg.getSource())));
 
 			} else if (expression instanceof FieldAccessExpr) {
 				FieldAccessExpr fieldAccExpr = (FieldAccessExpr) expression;
@@ -1146,7 +1170,8 @@ public class CodeassistUtils {
 					if (fieldType instanceof JstTypeRefType) {
 						fieldType = ((JstTypeRefType) fieldType).getType();
 					}
-					modelElement.add(findResourceType(module, fieldType.getName()));
+					modelElement.add(findResourceType(module,
+							fieldType.getName()));
 				} else {
 					modelElement.add(getModelElementByFieldAccessExpr(
 							fieldAccExpr, module));
@@ -1265,8 +1290,8 @@ public class CodeassistUtils {
 					String[] paramTypes = getParameterTypes(expr);
 					// fix, also support parameters
 					if (declareType instanceof IJSType) {
-						methodElement.addAll(Arrays.asList(getMethod(declareType,
-								(JstMethod) binding)));
+						methodElement.addAll(Arrays.asList(getMethod(
+								declareType, (JstMethod) binding)));
 
 						// native method exists always return false. a bug of
 						// Model Element?
@@ -1275,8 +1300,8 @@ public class CodeassistUtils {
 							// may be function d(int a), but called by d(),
 							// parameter is
 							// not passed.
-							methodElement.add(findMostMatchingMethod(declareType,
-									funcName, paramTypes));
+							methodElement.add(findMostMatchingMethod(
+									declareType, funcName, paramTypes));
 
 						}
 					} else {
@@ -1325,9 +1350,9 @@ public class CodeassistUtils {
 					if (declareType != null) {
 						// without method type, have to guess method type
 						String[] paramTypes = getParameterTypes(expr);
-						methodElement.add(findMethodBySignature(methodIdentifier
-								.toString(), Arrays.asList(paramTypes),
-								declareType));
+						methodElement.add(findMethodBySignature(
+								methodIdentifier.toString(),
+								Arrays.asList(paramTypes), declareType));
 					}
 
 					// Add by Oliver. 2009-06-11. A part of native type in
@@ -1348,7 +1373,7 @@ public class CodeassistUtils {
 
 		}
 
-		return methodElement.toArray(new IModelElement[]{});
+		return methodElement.toArray(new IModelElement[] {});
 
 	}
 
@@ -1722,35 +1747,37 @@ public class CodeassistUtils {
 	}
 
 	/**
-	 * Return the type name in back end Dsf style for Native type (has correspondent eclipse resource)
+	 * Return the type name in back end Dsf style for Native type (has
+	 * correspondent eclipse resource)
+	 * 
 	 * @param resource
 	 * @return
 	 */
 	public static SourceTypeName getTypeName(IResource resource) {
-		
+
 		URI locationURI = resource.getLocationURI();
-		if(locationURI.getScheme().equals("typespace")){
+		if (locationURI.getScheme().equals("typespace")) {
 			String groupName = locationURI.getHost();
 			String typeName = locationURI.getPath();
-				typeName = typeName.replace("/", ".");
-				typeName = typeName.substring(1,typeName.length());
-				typeName = typeName.substring(0, typeName.indexOf(".js"));
-				return new SourceTypeName(groupName, typeName);
+			typeName = typeName.replace("/", ".");
+			typeName = typeName.substring(1, typeName.length());
+			typeName = typeName.substring(0, typeName.indexOf(".js"));
+			return new SourceTypeName(groupName, typeName);
 		}
-		
+
 		String project = resource.getProject().getName();
 		List<IPath> sourceFolders = getSourceFolders(project);
-		String className = getClassName(sourceFolders, resource
-				.getProjectRelativePath());
+		String className = getClassName(sourceFolders,
+				resource.getProjectRelativePath());
 		SourceTypeName name = new SourceTypeName(project, className);
 		name.setAction(SourceTypeName.CHANGED);
 		return name;
 	}
-	
-	
-	
+
 	/**
-	 * Return the type name in back end Dsf style for Native type (has no correspondent eclipse resource)
+	 * Return the type name in back end Dsf style for Native type (has no
+	 * correspondent eclipse resource)
+	 * 
 	 * @param jstType
 	 * @return
 	 */
@@ -1970,7 +1997,6 @@ public class CodeassistUtils {
 		IVjoSourceModule sourceModule = (IVjoSourceModule) module;
 		ScriptFolder folder = (ScriptFolder) sourceModule.getParent();
 
-
 		return createNativeModule(folder, sourceModule.getElementName());
 	}
 
@@ -2030,8 +2056,9 @@ public class CodeassistUtils {
 
 		// if result is null then search resource in project.
 		if (result == null)
-			result = findResourceType((ISourceModule) ((VjoSourceType) type)
-					.getSourceModule(), name);
+			result = findResourceType(
+					(ISourceModule) ((VjoSourceType) type).getSourceModule(),
+					name);
 		return result;
 	}
 
@@ -2241,8 +2268,7 @@ public class CodeassistUtils {
 		JstPackage pack = jstType.getPackage();
 		if (pack == null) {
 			return false;
-		} 
-		else if(true){
+		} else if (true) {
 			return false;
 		}
 
@@ -2314,7 +2340,7 @@ public class CodeassistUtils {
 			for (int i = 0; i < elements.length; i++) {
 				IModelElement modelElement = elements[i];
 				if (modelElement instanceof IType) {
-					IType tType = (IType)modelElement;
+					IType tType = (IType) modelElement;
 					if (tType.getElementName().equals(simpleName)) {
 						return tType;
 					}
@@ -2567,7 +2593,7 @@ public class CodeassistUtils {
 		return defaultNativeScriptFolderMap.containsValue(parent);
 	}
 
-	//add by patrick
+	// add by patrick
 	// for jst node handling
 
 	/**
@@ -2618,6 +2644,121 @@ public class CodeassistUtils {
 
 		return null;
 	}
+
+	/**
+	 * Quick way to find methods which are nested
+	 * 
+	 * @param dltkType
+	 * @param jstMethod
+	 * @return
+	 * @throws ModelException
+	 */
+	public static IModelElement findDeclaringMethodChain(IType dltkType,
+			IJstNode jstMethod) throws ModelException {
+		// TODO Auto-generated method stub
+		Deque<String> dq = new ArrayDeque<String>();
+		while (jstMethod != null && !(jstMethod instanceof IJstType)) {
+			if (jstMethod instanceof JstMethod) {
+				dq.push(((JstMethod) jstMethod).getName().getName());
+				jstMethod = jstMethod.getParentNode();
+			} else {
+				jstMethod = jstMethod.getParentNode();
+			}
+		}
+
+		ModelElement elem = (ModelElement) dltkType;
+		Iterator<String> it = dq.iterator();
+		while (it.hasNext()) {
+
+			String string = it.next();
+
+			if (elem instanceof VjoSourceType) {
+				IMethod[] methods = dltkType.getMethods();
+				for (IMethod method : methods) {
+					if (method.getElementName().equals(string)) {
+						elem = (ModelElement) method;
+						break;
+
+					}
+				}
+			} else {
+				IModelElement[] children = elem.getChildren();
+				if (children.length == 0) {
+					return elem;
+				}
+				for (int i = 0; i < children.length; i++) {
+					if (IModelElement.METHOD == children[i].getElementType()
+							&& children[i].getElementName().equals(string)) {
+						elem = (JSSourceMethod) children[i];
+
+					}
+
+				}
+			}
+		}
+
+		return elem;
+	}
+
+	public static IModelElement findDeclaringObjectLiteralChain(
+			ModelElement startingBlock, IJstNode node) throws ModelException {
+		Deque<String> dq = new ArrayDeque<String>();
+		while (node != null && !(node instanceof IJstType)) {
+			if (node instanceof JstMethod && !(node instanceof JstProxyMethod)) {
+				break;
+			} else if (node instanceof JstProxyMethod) {
+				dq.push(((IJstMethod) node).getName().getName());
+				if(node.getParentNode() instanceof JstMethod){
+					node = node.getParentNode();
+				}
+				node = node.getParentNode();
+			} else if (node instanceof ObjLiteral) {
+
+				ObjLiteral objectLiteral = (ObjLiteral) node;
+				String objLitName = ((AssignExpr) objectLiteral.getParentNode())
+						.getLHS().toLHSText();
+				dq.push(objLitName);
+				node = node.getParentNode();
+			} else {
+				node = node.getParentNode();
+			}
+		}
+
+		Iterator<String> it = dq.iterator();
+		ModelElement element = startingBlock;
+		while (it.hasNext()) {
+
+			String string = it.next();
+
+			if (startingBlock instanceof VjoSourceType) {
+				// IMethod[] methods = startingBlock.getMethods();
+				// for (IMethod method : methods) {
+				// if (method.getElementName().equals(string)) {
+				// elem = (ModelElement) method;
+				// break;
+				//
+				// }
+				// }
+			} else {
+
+				IModelElement[] children = element.getChildren();
+				if (children.length == 0) {
+					return element;
+				}
+
+				for (int i = 0; i < children.length; i++) {
+					if (children[i].getElementName().equals(string)) {
+						element = ((ModelElement) children[i]);
+						break;
+
+					}
+				}
+			}
+		}
+
+		return element;
+	}
+
 	public static JstBlock findDeclaringBlock(IJstNode node) {
 		while (node != null && !(node instanceof IJstType)) {
 			if (node instanceof JstBlock)
@@ -2690,7 +2831,7 @@ public class CodeassistUtils {
 		return tName;
 	}
 
-	//for jst node to dltk model or reverse
+	// for jst node to dltk model or reverse
 	/**
 	 * Find the corresponding dltk type by the gvien jst type.
 	 * 
@@ -2698,11 +2839,11 @@ public class CodeassistUtils {
 	 * @return
 	 */
 	public static IType convert2DLTKType(IJstType type) {
-		if(type == null ){
+		if (type == null) {
 			return null;
 		}
 		IModelElement element = JstNodeDLTKElementResolver.convert(null, type)[0];
-		if(IModelElement.TYPE == element.getElementType()){
+		if (IModelElement.TYPE == element.getElementType()) {
 			return (IType) element;
 		}
 		return null;
@@ -2734,15 +2875,18 @@ public class CodeassistUtils {
 
 	/**
 	 * Check if the file is a js file
+	 * 
 	 * @param fileName
 	 * @return
 	 */
 	public static boolean isVjetFileName(String fileName) {
-		return !StringUtils.isBlankOrEmpty(fileName) && fileName.endsWith(SUFFIX_VJO);
+		return !StringUtils.isBlankOrEmpty(fileName)
+				&& fileName.endsWith(SUFFIX_VJO);
 	}
 
 	/**
 	 * Answer if the element is in project's build path
+	 * 
 	 * @param element
 	 * @return
 	 */
@@ -2758,22 +2902,78 @@ public class CodeassistUtils {
 		String defaultS = "void";
 		JstBlock block = method.getBlock();
 		if (block != null) {
-			List<BaseJstNode> list =  block.getChildren();
+			List<BaseJstNode> list = block.getChildren();
 			if (list != null && !list.isEmpty()) {
 				BaseJstNode node = list.get(list.size() - 1);
 				if (node instanceof RtnStmt) {
-					RtnStmt rs = (RtnStmt)node;
+					RtnStmt rs = (RtnStmt) node;
 					IExpr expr = rs.getExpression();
 					if (expr != null) {
 						IJstType type = expr.getResultType();
 						if (type != null) {
-							defaultS = CodeCompletionUtils.getAliasOrTypeName(method.getOwnerType(), type);
+							defaultS = CodeCompletionUtils.getAliasOrTypeName(
+									method.getOwnerType(), type);
 						}
 					}
 				}
 			}
 		}
 		return defaultS;
+	}
+
+	public static IModelElement findDeclaringObjectLiteralFieldChain(
+			ModelElement modelElement, IJstNode node) throws ModelException {
+		
+		Deque<String> dq = new ArrayDeque<String>();
+		while (node != null && !(node instanceof IJstType)) {
+			if (node instanceof JstMethod && !(node instanceof JstProxyMethod)) {
+				break;
+			} else if (node instanceof JstProperty) {
+				dq.push(((JstProperty) node).getName().getName());
+				node = node.getParentNode();
+			} else if (node instanceof JstObjectLiteralType) {
+				dq.push(((JstObjectLiteralType)node).getSimpleName());
+			} else if (node instanceof ObjLiteral) {
+
+				ObjLiteral objectLiteral = (ObjLiteral) node;
+				
+				if(objectLiteral.getParentNode() instanceof AssignExpr){
+					String objLitName = ((AssignExpr) objectLiteral.getParentNode())
+							.getLHS().toLHSText();
+					dq.push(objLitName);
+					
+				}
+				
+				node = node.getParentNode();
+			} else if(node instanceof NV){
+				dq.push(((NV)node).getName());
+				node = node.getParentNode();
+			} else {
+				node = node.getParentNode();
+			}
+		}
+
+		Iterator<String> it = dq.iterator();
+		while (it.hasNext()) {
+
+			String string = it.next();
+			
+		IModelElement[] children = modelElement.getChildren();
+		if(children.length==0){
+			return modelElement;
+		}
+		for (int i = 0; i < children.length; i++) {
+			if (IModelElement.FIELD == children[i].getElementType()
+					&& children[i].getElementName().equals(string)) {
+				modelElement = ((JSSourceField) children[i]);
+				break;
+				
+				
+			}
+		}
+		}
+		return modelElement;
+
 	}
 
 }

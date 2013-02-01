@@ -45,18 +45,6 @@ public class JstIdentifierTranslator extends DefaultNodeTranslator {
 		}
 		IJstNode binding = identifier.getJstBinding();
 		
-		if(binding instanceof JstProperty){
-			if(((JstProperty)binding).getParentNode() instanceof SynthOlType){
-				binding = identifier.getParentNode();
-				//CodeassistUtils.findDeclaringBlock(binding);
-				
-				JstBlock declaringBlock = CodeassistUtils.findDeclaringBlock(binding);
-				return declaringBlock;
-			
-			}
-			
-		}
-		
 
 		//check the identifer in local variable declarion site.
 		if((binding == null || binding instanceof IJstType) && CodeassistUtils.isLocalVarDeclaration(identifier)){

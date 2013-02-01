@@ -271,52 +271,29 @@ public class VjoSourceElementParser implements ISourceElementParser,
 	 */
 	private void processInitializer(IJstType type) {
 		JstBlock block = type.getInitBlock();
-//		List<IStmt> inits = type.getStaticInitializers();
 		if (block != null && block.getSource()!=null) {
-			// TODO fix source ref here
 			int start = block.getSource().getStartOffSet();
 			int end = block.getSource().getEndOffSet();
-			
-			
-			VarTable vars = block.getVarTable();
-			Map<String,IJstNode> varMap = null;
-			
-			
-			if(vars instanceof TopLevelVarTable){
-				varMap = ((TopLevelVarTable)vars).getSelfVarNodes();
-			}else{
-				varMap = vars.getVarNodes();
-			}
-			
-			if(varMap.isEmpty()){
-				return;
-			}
-			
 			fRequestor.enterInitializer(start, Modifiers.AccStatic);
-			
-//			for(Map.Entry<String,IJstNode> varz : varMap.entrySet()){
-//				String varName = varz.getKey();
-//				IJstNode node = varz.getValue();
-//				if(node instanceof JstIdentifier){
-//				
-//					IJstNode jstBinding = ((JstIdentifier) node).getJstBinding();
-//					if(jstBinding instanceof JstFuncType){
-//						processMethod(((JstFuncType)jstBinding).getFunction(), varName);
-//					}else{
-//						processIdentifier(((JstIdentifier) node).getType(), (JstIdentifier)node);
-//					}
-//				}
-//				else if(node instanceof JstMethod){
-//					processMethod((JstMethod)node, varName);
-//				}
-////				processLocalVarDecl(jstVars);
-//			}
-			
 			processStatements(block);
-			
-			
-			
 			fRequestor.exitInitializer(end);
+		}
+	}
+
+	private void processVarMap(Map<String, IJstNode> varMap) {
+		for(Map.Entry<String,IJstNode> varz : varMap.entrySet()){
+			String varName = varz.getKey();
+			IJstNode node = varz.getValue();
+			if(node instanceof JstIdentifier){
+			
+				IJstNode jstBinding = ((JstIdentifier) node).getJstBinding();
+				if(jstBinding instanceof JstFuncType){
+					processMethod(((JstFuncType)jstBinding).getFunction(), varName);
+				}
+			}
+			else if(node instanceof JstMethod){
+				processMethod((JstMethod)node, varName);
+			}
 		}
 	}
 
@@ -984,12 +961,35 @@ public class VjoSourceElementParser implements ISourceElementParser,
 	}
 
 	private void processStatements(JstBlock block) {
+		
 		if (block != null) {
+			
+			Map<String, IJstNode> varMap = getVarMap(block);
+			if(varMap!=null){
+				processVarMap(varMap);
+			}
 			List<IStmt> statements = block.getStmts();
 			for (IStmt statement : statements) {
 				processStatement(statement);
 			}
 		}
+	}
+
+	private Map<String, IJstNode> getVarMap(JstBlock block) {
+		VarTable vars = block.getVarTable();
+		Map<String,IJstNode> varMap = null;
+		
+		
+		if(vars instanceof TopLevelVarTable){
+			varMap = ((TopLevelVarTable)vars).getSelfVarNodes();
+		}else{
+			varMap = vars.getVarNodes();
+		}
+		
+		if(varMap.isEmpty()){
+			return null;
+		}
+		return varMap;
 	}
 
 	private void processStatement(IJstNode statement) {
@@ -1331,9 +1331,7 @@ public class VjoSourceElementParser implements ISourceElementParser,
 			
 		} else if (expression instanceof FuncExpr) {
 			
-			// TODO handl function expressions
-//			processExpression(((FuncExpr) expression).);
-//			processExpression(((FuncExpr) expression));
+				
 		}
 	}
 

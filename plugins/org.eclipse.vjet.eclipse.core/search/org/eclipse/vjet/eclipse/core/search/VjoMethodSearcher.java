@@ -11,11 +11,15 @@ package org.eclipse.vjet.eclipse.core.search;
 import java.util.Iterator;
 import java.util.List;
 
+import org.eclipse.vjet.dsf.jst.BaseJstNode;
 import org.eclipse.vjet.dsf.jst.IJstGlobalVar;
 import org.eclipse.vjet.dsf.jst.IJstMethod;
 import org.eclipse.vjet.dsf.jst.IJstNode;
 import org.eclipse.vjet.dsf.jst.IJstType;
 import org.eclipse.vjet.dsf.jst.JstSource;
+import org.eclipse.vjet.dsf.jst.declaration.JstMethod;
+import org.eclipse.vjet.dsf.jst.declaration.JstName;
+import org.eclipse.vjet.dsf.jstojava.translator.JstUtil;
 import org.eclipse.vjet.dsf.ts.method.MethodName;
 import org.eclipse.vjet.dsf.ts.type.TypeName;
 import org.eclipse.vjet.eclipse.codeassist.CodeassistUtils;
@@ -93,11 +97,27 @@ public class VjoMethodSearcher extends AbstractVjoElementSearcher {
 		IVjoSourceModule module = (IVjoSourceModule) method.getSourceModule();
 		IJstType jstType = TypeSpaceMgr.findType(module.getTypeName()
 				.groupName(), module.getTypeName().typeName());
-		String dltkTypeName = ((IType) method.getParent())
-				.getFullyQualifiedName(ENCLOSING_TYPE_SEPARATOR);
-
-		IJstMethod jstMethod = this.getJstMethod(jstType, dltkTypeName, method
-				.getElementName(), true);
+		IType type = CodeassistUtils.findType(jstType);
+		String dltkTypeName = type.getElementName();
+//		String dltkTypeName = ((IType) method.getParent())
+//				.getFullyQualifiedName(ENCLOSING_TYPE_SEPARATOR);
+		int offset;
+		IJstMethod jstMethod = null; 
+		try {
+			offset = method.getNameRange().getOffset();
+			BaseJstNode node = JstUtil.getLeafNode(jstType, offset, offset);
+			if(node!=null && node instanceof JstName){
+				jstMethod = (IJstMethod)node.getParentNode();
+			}
+		} catch (ModelException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+//		this.getJstMethod(jstType, dltkTypeName, method
+//				.getElementName(), true);
 		if (jstMethod == null)
 			return;
 
@@ -106,6 +126,8 @@ public class VjoMethodSearcher extends AbstractVjoElementSearcher {
 		// work out PropertyName and find referenced nodes from TypeSpaceMgr
 		String grouName = jstMethod.getOwnerType().getPackage().getGroupName();
 		String typeName = jstMethod.getOwnerType().getName();
+		// TODO how do we handle nested functions here?
+		
 		MethodName methodName = new MethodName(
 				new TypeName(grouName, typeName), method.getElementName());
 

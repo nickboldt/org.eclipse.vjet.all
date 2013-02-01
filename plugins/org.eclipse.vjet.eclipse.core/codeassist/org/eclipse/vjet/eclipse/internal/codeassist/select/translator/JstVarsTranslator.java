@@ -58,7 +58,10 @@ public class JstVarsTranslator extends DefaultNodeTranslator {
 			IJstMethod jstMethod = (JstMethod)declaringBlock;
 			if ( jstMethod!=null  ) {//get the first signature method
 				if(!jstMethod.getOverloaded().isEmpty()){
-					element = JstNodeDLTKElementResolver.convert(module, jstMethod.getOverloaded().get(0))[0];
+					IModelElement[] convert = JstNodeDLTKElementResolver.convert(module, jstMethod.getOverloaded().get(0));
+					if(convert!=null && convert.length>0){
+						element = convert[0];
+					}
 				}else{
 					IModelElement[] convert = JstNodeDLTKElementResolver.convert(module, jstMethod);
 					if(convert!=null && convert.length>0){

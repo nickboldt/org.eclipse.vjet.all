@@ -13,6 +13,7 @@ package org.eclipse.vjet.eclipse.internal.codeassist.select.translator;
 
 import java.util.HashMap;
 
+import org.eclipse.vjet.dsf.jst.IJstMethod;
 import org.eclipse.vjet.dsf.jst.IJstNode;
 import org.eclipse.vjet.dsf.jst.declaration.JstArg;
 import org.eclipse.vjet.dsf.jst.declaration.JstArray;
@@ -110,8 +111,11 @@ public class JstToDLTKNodeTranslator {
 		if (jstNode == null)
 			return null;
 
-		IJstNodeTranslator nodeTranslator = s_translators.get(jstNode
-				.getClass());
+		Class clazz = jstNode.getClass();
+		if(jstNode instanceof IJstMethod){
+			clazz = JstMethod.class;
+		}
+		IJstNodeTranslator nodeTranslator = s_translators.get(clazz);
 		if (nodeTranslator != null)
 			return nodeTranslator;
 
