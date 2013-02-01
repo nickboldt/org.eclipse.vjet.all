@@ -34,6 +34,7 @@ public class FormattingTests extends TestCase {
 	public static final String DELIMITER = TextUtilities
 			.getDefaultLineDelimiter(new Document());
 	protected static final String PREFIX = SingleCommentLine.SINGLE_COMMENT_PREFIX;
+	private static final String TAB_TAB = "\t";
 
 	/** tools used to set up document for formatting */
 	private static JavascriptTextTools fJavaScriptTextTools;
@@ -99,31 +100,31 @@ public class FormattingTests extends TestCase {
 				+ DELIMITER + "});";
 		String afterContents = "dojo.declare(\"myDojo.Test\", [], {"
 				+ DELIMITER
-				+ SPACE_TAB
+				+ TAB_TAB
 				+ PREFIX
 				+ "this is a really long comment that will have to be wrapped into multiple"
 				+ DELIMITER
-				+ SPACE_TAB
+				+ TAB_TAB
 				+ PREFIX
 				+ "lines because it is so very very long"
 				+ DELIMITER
-				+ SPACE_TAB
+				+ TAB_TAB
 				+ PREFIX
 				+ "this is a really long comment that will have to be wrapped into multiple"
 				+ DELIMITER
-				+ SPACE_TAB
+				+ TAB_TAB
 				+ PREFIX
 				+ "lines because it is so very very long"
 				+ DELIMITER
 				+ DELIMITER
-				+ SPACE_TAB
+				+ TAB_TAB
 				+ PREFIX
 				+ "this is a shorter comment"
 				+ DELIMITER
-				+ SPACE_TAB
+				+ TAB_TAB
 				+ "constructor : function() {"
 				+ DELIMITER
-				+ SPACE_TAB
+				+ TAB_TAB
 				+ "}"
 				+ DELIMITER
 				+ PREFIX
