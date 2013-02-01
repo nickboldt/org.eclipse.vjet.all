@@ -1200,6 +1200,16 @@ public class TranslateHelper {
 		private JstName jstRename;
 
 		public RenameableSynthJstProxyMethod(final IJstMethod targetMethod,
+				final JstName rename) {
+			super(targetMethod);
+
+			if (rename != null) {
+				jstRename = new JstName(rename.getName());
+				jstRename.setSource(rename.getSource());
+			}
+		}
+		
+		public RenameableSynthJstProxyMethod(final IJstMethod targetMethod,
 				final String rename) {
 			super(targetMethod);
 

@@ -37,6 +37,15 @@ public class SynthOlType extends JstType implements ISynthesized {
 		this.addExtend(JstCache.getInstance().getType("ObjLiteral"));
 	}
 	
+	public ObjLiteral getObjectLiteral(){
+		return m_ol;
+	}
+	
+	@Override
+	public JstType getOwnerType() {
+		return m_ol.getOwnerType();
+	}
+	
 	private synchronized void init() {
 		if (!m_init) {
 			m_init = true;
@@ -58,7 +67,11 @@ public class SynthOlType extends JstType implements ISynthesized {
 							type = defaultType;
 						}
 					}
-					this.addProperty(new JstProperty(type, nv.getName(), new JstModifiers().setPublic()));
+					JstName name = new JstName(nv.getName());
+					name.setSource(nv.getIdentifier().getSource());
+					JstProperty pty = new JstProperty(type, name, (JstIdentifier) null, new JstModifiers().setPublic());
+					
+					this.addProperty(pty);
 				}
 			}			
 		}

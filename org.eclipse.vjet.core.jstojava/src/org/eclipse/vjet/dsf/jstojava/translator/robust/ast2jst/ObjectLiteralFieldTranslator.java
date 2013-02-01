@@ -17,6 +17,7 @@ import org.eclipse.vjet.dsf.jst.JstCommentLocation;
 import org.eclipse.vjet.dsf.jst.JstSource;
 import org.eclipse.vjet.dsf.jst.declaration.JstFuncType;
 import org.eclipse.vjet.dsf.jst.declaration.JstMethod;
+import org.eclipse.vjet.dsf.jst.declaration.JstName;
 import org.eclipse.vjet.dsf.jst.expr.FuncExpr;
 import org.eclipse.vjet.dsf.jst.meta.IJsCommentMeta;
 import org.eclipse.vjet.dsf.jst.term.JstIdentifier;
@@ -94,8 +95,10 @@ public class ObjectLiteralFieldTranslator extends
 			final JstIdentifier id, IExpr value, NV nv) {
 		// added by huzhou@ebay.com to bind objectLiteral's methods early on
 		if (value instanceof FuncExpr) {
+			JstName name = new JstName(id.getName());
+			name.setSource(id.getSource());
 			final TranslateHelper.RenameableSynthJstProxyMethod mtdBinding = new TranslateHelper.RenameableSynthJstProxyMethod(
-					((FuncExpr) value).getFunc(), id.getName());
+					((FuncExpr) value).getFunc(), name);
 			id.setJstBinding(mtdBinding);
 			id.setType(new JstFuncType(mtdBinding));
 		}

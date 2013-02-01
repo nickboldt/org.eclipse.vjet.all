@@ -446,7 +446,7 @@ public class JstExpressionTypeLinkerHelper {
 					mtd = mtd == null ? attributorType.getMethod(attributeName,
 							!staticAttribute) : mtd;
 					if (mtd != null) {
-						bound = new RenameableSynthJstProxyMethod(mtd, null);
+						bound = new RenameableSynthJstProxyMethod(mtd, mtd.getName());
 
 						look4ActualBinding(resolver, mtd.getRtnType(),
 								groupInfo);
