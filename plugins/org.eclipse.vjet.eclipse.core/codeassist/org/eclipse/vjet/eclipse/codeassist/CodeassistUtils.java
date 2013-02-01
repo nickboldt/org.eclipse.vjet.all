@@ -1756,7 +1756,7 @@ public class CodeassistUtils {
 	public static SourceTypeName getTypeName(IResource resource) {
 
 		URI locationURI = resource.getLocationURI();
-		if (locationURI.getScheme().equals("typespace")) {
+		if (locationURI !=null && locationURI.getScheme().equals("typespace")) {
 			String groupName = locationURI.getHost();
 			String typeName = locationURI.getPath();
 			typeName = typeName.replace("/", ".");
