@@ -110,9 +110,8 @@ class ScriptExplorerActionGroup extends CompositeActionGroup {
 				new GenerateActionGroup(fPart, IContextMenuConstants.GROUP_SHOW),
 
 				// TODO Disable menus
-				// fRefactorActionGroup = new RefactorActionGroup(fPart),
-				new ImportActionGroup(fPart),
-				new BuildActionGroup(fPart),
+				fRefactorActionGroup = new RefactorActionGroup(fPart),
+				new ImportActionGroup(fPart), new BuildActionGroup(fPart),
 				// new ScriptSearchActionGroup(fPart),
 				new ProjectActionGroup(fPart),
 				fViewActionGroup = new ViewActionGroup(fPart.getRootMode(),
@@ -214,9 +213,7 @@ class ScriptExplorerActionGroup extends CompositeActionGroup {
 		menu.add(fToggleLinkingAction);
 
 		menu.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
-		menu
-				.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS
-						+ "-end"));//$NON-NLS-1$		
+		menu.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS + "-end"));//$NON-NLS-1$		
 	}
 
 	// ---- Context menu
@@ -308,12 +305,12 @@ class ScriptExplorerActionGroup extends CompositeActionGroup {
 					TreePath[] paths = ((ITreeSelection) selection)
 							.getPathsFor(element);
 					for (int i = 0; i < paths.length; i++) {
-						viewer.setExpandedState(paths[i], !viewer
-								.getExpandedState(paths[i]));
+						viewer.setExpandedState(paths[i],
+								!viewer.getExpandedState(paths[i]));
 					}
 				} else {
-					viewer.setExpandedState(element, !viewer
-							.getExpandedState(element));
+					viewer.setExpandedState(element,
+							!viewer.getExpandedState(element));
 				}
 			}
 		}
@@ -385,8 +382,8 @@ class ScriptExplorerActionGroup extends CompositeActionGroup {
 
 	private boolean doubleClickGoesInto() {
 		return PreferenceConstants.DOUBLE_CLICK_GOES_INTO.equals(DLTKUIPlugin
-				.getDefault().getPreferenceStore().getString(
-						PreferenceConstants.DOUBLE_CLICK));
+				.getDefault().getPreferenceStore()
+				.getString(PreferenceConstants.DOUBLE_CLICK));
 	}
 
 	public FrameAction getUpAction() {
