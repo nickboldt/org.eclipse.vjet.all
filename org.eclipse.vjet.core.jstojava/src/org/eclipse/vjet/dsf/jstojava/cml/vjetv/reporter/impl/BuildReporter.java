@@ -19,33 +19,42 @@ import org.eclipse.vjet.dsf.jstojava.cml.vjetv.util.FileOperator;
  */
 public class BuildReporter extends BaseReporter {
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.vjet.dsf.jstojava.cml.vjetv.reporter.impl.BaseReporter#printProblem(java.lang.StringBuffer,
-     *      org.eclipse.vjet.dsf.jsgen.shared.validation.vjo.VjoSemanticProblem)
-     */
-    @Override
-    protected void printProblem(StringBuffer message,
-            VjoSemanticProblem vjoSemanticProblem, String sources) {
-        StringBuffer sb = new StringBuffer(vjoSemanticProblem.type() + ":Line:"
-                + vjoSemanticProblem.getSourceLineNumber() + ": "
-                + vjoSemanticProblem.getMessage() + "; Code: ");
-        message.append(sb.toString());
-        final int point = sb.toString().length();
-        int start = vjoSemanticProblem.getSourceStart();
-        int end = vjoSemanticProblem.getSourceEnd();
-        int newStart = FileOperator.getNewStringPosition(sources, start);
-        String line = FileOperator.getSourceLineFromFile(sources, start,
-                end + 1);
-        String trimLine = line.trim();
-        message.append(trimLine + "\n");
-        for (int i = 0; i < point + start - newStart - (line.length() - trimLine.length()) + 1; i++) {
-            message.append(" ");
-        }
-        message.append("^\n");
-//        message.append("=====================================" +
-//        		"============================================" +
-//        		"============================================\n");
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.eclipse.vjet.dsf.jstojava.cml.vjetv.reporter.impl.BaseReporter#
+	 * printProblem(java.lang.StringBuffer,
+	 * org.eclipse.vjet.dsf.jsgen.shared.validation.vjo.VjoSemanticProblem)
+	 */
+	@Override
+	protected void printProblem(StringBuffer message,
+			VjoSemanticProblem vjoSemanticProblem, String sources) {
+		StringBuffer sb = new StringBuffer(vjoSemanticProblem.type() + ":Line:"
+				+ vjoSemanticProblem.getSourceLineNumber() + ": "
+				+ vjoSemanticProblem.getMessage() + "; Code: ");
+		message.append(sb.toString());
+		final int point = sb.toString().length();
+		int start = vjoSemanticProblem.getSourceStart();
+		int end = vjoSemanticProblem.getSourceEnd();
+
+		if (start < sources.length() && start>-1) {
+
+			int newStart = FileOperator.getNewStringPosition(sources, start);
+			String line = FileOperator.getSourceLineFromFile(sources, start,
+					end + 1);
+			String trimLine = line.trim();
+			message.append(trimLine + "\n");
+			for (int i = 0; i < point + start - newStart
+					- (line.length() - trimLine.length()) + 1; i++) {
+				message.append(" ");
+			}
+			message.append("^\n");
+		}else{
+			message.append("No message available");
+		}
+
+		// message.append("=====================================" +
+		// "============================================" +
+		// "============================================\n");
+	}
 }

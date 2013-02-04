@@ -102,23 +102,28 @@ public class JstParseController implements IJstParseController {
 		return parseAndResolve(groupName, fileName, source);		
 	}
 
-	public void resolve(IJstType type) {
-		m_resolver.resolve(type);
+	public IJstType resolve(IJstType type) {
+		return m_resolver.resolve(type).getType();
 	}
 	
-	public void resolve(String groupName, IJstType su) {
+	public IJstType resolve(String groupName, IJstType su) {
 		List<JstBlock> blocks = su.getJstBlockList();
-		addResolutionResultToSU(su, m_resolver.resolve(groupName, su));
+		ResolutionResult resolve = m_resolver.resolve(groupName, su);
+		addResolutionResultToSU(su, resolve);
 		if(blocks==null){
-			return;
+			return null;
 		}
 		
 		if(su.getJstBlockList()==null){
 			su.setJstBlockList(blocks);
 		}
 		for (JstBlock block : blocks) {
-			addResolutionResultToSU(su, m_resolver.resolve(null, block));			
+			ResolutionResult resolutionResult = m_resolver.resolve(null, block);
+			addResolutionResultToSU(su, resolutionResult);			
 		}
+		
+		return resolve.getType();
+		
 	}
 	
 	private void addResolutionResultToSU(IJstType su, ResolutionResult resolve) {
@@ -144,20 +149,22 @@ public class JstParseController implements IJstParseController {
 	}
 
 	
-	public void resolve(IJstProperty property) {
-		m_resolver.resolve(property);
+	public IJstType resolve(IJstProperty property) {
+		return m_resolver.resolve(property).getType();
 	}
 	
-	public void resolve(String groupName, IJstProperty property) {
-		m_resolver.resolve(groupName, property);
+	public IJstType resolve(String groupName, IJstProperty property) {
+		ResolutionResult rr = m_resolver.resolve(groupName, property);
+		return rr.getType();
 	}
 	
-	public void resolve(IJstMethod method) {
-		m_resolver.resolve(method);
+	public IJstType resolve(IJstMethod method) {
+		return m_resolver.resolve(method).getType();
 	}
 	
-	public void resolve(String groupName, IJstMethod method) {
-		m_resolver.resolve(groupName, method);
+	public IJstType resolve(String groupName, IJstMethod method) {
+		ResolutionResult rr = m_resolver.resolve(groupName, method);
+		return rr.getType();
 	}
 	
 	public void setRefResolver(IJstRefResolver resolver) {
@@ -172,8 +179,9 @@ public class JstParseController implements IJstParseController {
 		m_tsMgr = jstTSMgr;
 	}
 
-	public void resolve(IJstType type, IJstNode node) {
-		m_resolver.resolve(type, node);
+	public IJstType resolve(IJstType type, IJstNode node) {
+		ResolutionResult rr = m_resolver.resolve(type, node);
+		return rr.getType();
 	}
 
 	/**

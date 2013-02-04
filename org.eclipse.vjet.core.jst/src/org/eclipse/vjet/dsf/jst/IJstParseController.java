@@ -18,14 +18,14 @@ public interface IJstParseController {
 	public IJstType parse(String groupName, File sourceFile);
 	public IJstType parseAndResolve(String groupName, String fileName, String source);
 	public IJstType parseAndResolve(String groupName, File sourceFile);
-	public void resolve(IJstType type);
-	public void resolve(IJstProperty property);
-	public void resolve(IJstMethod method);
+	public IJstType resolve(IJstType type);
+	public IJstType resolve(IJstProperty property);
+	public IJstType resolve(IJstMethod method);
 	public JstTypeSpaceMgr getJstTypeSpaceMgr();
-	public void resolve(String groupName, IJstType type);
-	public void resolve(String groupName, IJstProperty property);
-	public void resolve(String groupName, IJstMethod method);
-	public void resolve(IJstType type, IJstNode node);
+	public IJstType resolve(String groupName, IJstType type);
+	public IJstType resolve(String groupName, IJstProperty property);
+	public IJstType resolve(String groupName, IJstMethod method);
+	public IJstType resolve(IJstType type, IJstNode node);
 	
 	public void setJstTSMgr(JstTypeSpaceMgr jstTSMgr);	
 }
