@@ -63,13 +63,15 @@ public class ObjectLiteralFieldTranslator extends
 
 //			List<String> comments = new ArrayList<String>();
 //			String comment =  m_ctx.getCommentCollector().getCommentNonMeta2(astObjectliteralField.sourceStart);
-			JstCommentLocation comment =  m_ctx.getCommentCollector().getCommentLocationNonMeta2(astObjectliteralField.sourceStart);
+			List<JstCommentLocation> comment =  m_ctx.getCommentCollector().getCommentLocationNonMeta(
+					astObjectliteralField.sourceStart(), m_ctx.getPreviousNodeSourceEnd());
+//			JstCommentLocation comment =  m_ctx.getCommentCollector().getCommentLocationNonMeta2(astObjectliteralField.sourceStart);
 //			if(comment!=null){
 //				comments.add(comment);
 //			}
 //			nv.setComments(comments)
-			if(comment!=null){
-				nv.addCommentLocation(comment);
+			if(comment!=null && comment.size()>0){
+				nv.setCommentLocations(comment);
 			}
 //			nv.setComments(m_ctx.getCommentCollector().getCommentNonMeta(
 //					astObjectliteralField.sourceStart()));
