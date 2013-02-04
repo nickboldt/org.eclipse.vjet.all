@@ -75,6 +75,7 @@ public class VJETVRunner implements IApplication {
             	 vjetvEntry.main(args);
             }
         } catch (Exception e) {
+        	e.printStackTrace();
         	 System.exit(1);
         }
         return null;
