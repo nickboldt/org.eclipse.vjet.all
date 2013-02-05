@@ -917,8 +917,9 @@ class JstExpressionTypeLinker implements IJstVisitor {
 		JstExpressionTypeLinkerHelper.tryDerivingAnonymousFunctionsFromReturn(
 				rtnStmt, enclosingMtd, this);
 		
-		
-		inferRtnType(rtnExpr, enclosingMtd);
+		if(enclosingMtd!=null){
+			inferRtnType(rtnExpr, enclosingMtd);
+		}
 
 	}
 
