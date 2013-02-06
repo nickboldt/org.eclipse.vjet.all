@@ -16,10 +16,13 @@ import org.eclipse.vjet.dsf.jsgen.shared.validation.vjo.VjoValidationRuntimeExce
 import org.eclipse.vjet.dsf.jsgen.shared.validation.vjo.semantic.validator.VjoSemanticValidatorRepo;
 import org.eclipse.vjet.dsf.jsgen.shared.validation.vjo.util.VjoValidationVisitorCtxUpdateUtil;
 import org.eclipse.vjet.dsf.jst.BaseJstNode;
+import org.eclipse.vjet.dsf.jst.IInferred;
 import org.eclipse.vjet.dsf.jst.IJstNode;
 import org.eclipse.vjet.dsf.jst.IJstRefType;
 import org.eclipse.vjet.dsf.jst.IJstType;
+import org.eclipse.vjet.dsf.jst.IJstTypeReference;
 import org.eclipse.vjet.dsf.jst.ISynthesized;
+import org.eclipse.vjet.dsf.jst.declaration.DefaultAnnotations;
 import org.eclipse.vjet.dsf.jst.declaration.JstAnnotation;
 import org.eclipse.vjet.dsf.jst.declaration.JstArg;
 import org.eclipse.vjet.dsf.jst.declaration.JstArray;
@@ -42,6 +45,7 @@ import org.eclipse.vjet.dsf.jst.declaration.JstProxyProperty;
 import org.eclipse.vjet.dsf.jst.declaration.JstRawBlock;
 import org.eclipse.vjet.dsf.jst.declaration.JstRefType;
 import org.eclipse.vjet.dsf.jst.declaration.JstType;
+import org.eclipse.vjet.dsf.jst.declaration.JstTypeRefType;
 import org.eclipse.vjet.dsf.jst.declaration.JstTypeReference;
 import org.eclipse.vjet.dsf.jst.declaration.JstTypeWithArgs;
 import org.eclipse.vjet.dsf.jst.declaration.JstVar;
@@ -167,7 +171,28 @@ public class VjoValidationVisitor implements IJstNodeVisitor {
 			IJstNode binding = identifier.getJstBinding();
 			IJstType type = identifier.getType();
 			
-			if (type != null) {
+			
+			if(type!=null && binding instanceof JstMethod){
+				// if the method returns a type and is factory function assume usage
+				JstMethod factoryFunc = (JstMethod)binding;
+				// if factory function binding and has typeconstructor annotation
+				if(factoryFunc.isFuncArgMetaExtensionEnabled() && factoryFunc.getAnnotation(DefaultAnnotations.CONSTRUCTOR.getName().getName())!=null){
+					IJstRefType typeref = null;
+					if(!(type instanceof IJstRefType)){
+						 typeref = new JstTypeRefType(type); 
+					}else{
+						typeref = (IJstRefType)type;
+					}
+					 typeref = new JstTypeRefType(type);
+					getCtx().addMustActivelyNeededTypes(
+							jstNode.getRootType(), typeref);
+					getCtx().addKnownActivelyNeededTypes(
+							jstNode.getRootType(), typeref);
+				}
+				
+			}else if (type != null) {
+				
+				
 				if (type instanceof IJstRefType) {
 					//binding to the type itself indicates a full type reference
 					if (binding == type) {

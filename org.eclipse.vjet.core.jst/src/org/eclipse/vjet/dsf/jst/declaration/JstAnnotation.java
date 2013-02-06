@@ -25,6 +25,31 @@ public class JstAnnotation extends BaseJstNode implements IJstAnnotation {
 	private JstName m_name;
 	private List<IExpr> m_values;
 	
+	public JstAnnotation(){
+	}
+	
+	public JstAnnotation(String name){
+		m_name = new JstName(name);
+	}
+	
+	public JstAnnotation(String name, IExpr ... values){
+		m_name = new JstName(name);
+		for (IExpr iExpr : values) {
+			m_values.add(iExpr);
+		}
+	}
+	
+	public JstAnnotation(JstName name){
+		m_name = name;
+	}
+	
+	public JstAnnotation(JstName name, IExpr ... values){
+		m_name = name;
+		for (IExpr iExpr : values) {
+			m_values.add(iExpr);
+		}
+	}
+	
 	public JstName getName() {
 		return m_name;
 	}

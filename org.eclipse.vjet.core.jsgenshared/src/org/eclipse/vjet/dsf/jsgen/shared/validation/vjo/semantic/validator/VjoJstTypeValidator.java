@@ -48,6 +48,7 @@ import org.eclipse.vjet.dsf.jst.IScriptProblem;
 import org.eclipse.vjet.dsf.jst.ISynthesized;
 import org.eclipse.vjet.dsf.jst.JstSource;
 import org.eclipse.vjet.dsf.jst.JstSource.IBinding;
+import org.eclipse.vjet.dsf.jst.declaration.DefaultAnnotations;
 import org.eclipse.vjet.dsf.jst.declaration.JstArg;
 import org.eclipse.vjet.dsf.jst.declaration.JstConstructor;
 import org.eclipse.vjet.dsf.jst.declaration.JstMethod;
@@ -516,15 +517,26 @@ public class VjoJstTypeValidator
 		collectInheritsSatisfiesFromSubTypes(jstType, inherits, satisfies);
 		
 		// satisfies are already in the import list
-		final List<IJstType> activeNeeds = new ArrayList<IJstType>(jstType.getImports());
+		final List<IJstType> activeNeeds = new ArrayList<IJstType>();
 		
 		//traverse the jstType to collect needed types that are TypeRefType or constructor
-		final Set<IJstRefType> mustActivelyNeeded = ctx.getMustActivelyNeededTypes(jstType);
+		final Set<IJstRefType> mustActivelyNeeded = new HashSet<IJstRefType>();
+		mustActivelyNeeded.addAll(ctx.getMustActivelyNeededTypes(jstType));
 		final Set<IJstType> dereferencedNeededTypes = new HashSet<IJstType>(mustActivelyNeeded.size());
 		
 		final Set<IJstType> eligibleNeededTypes = new HashSet<IJstType>();
 		eligibleNeededTypes.addAll(inherits);
 		eligibleNeededTypes.addAll(satisfies);
+
+		for(IJstType imports : jstType.getImports()){
+			// alternate class names should use parent class as class to resolve to
+			if(imports.getAnnotation(DefaultAnnotations.ALTERNATE_CLASS_NAME.getName().getName())!=null){
+				activeNeeds.add(imports.getExtend());
+			}else{
+				activeNeeds.add(imports);
+			}
+		}
+		
 		for(IJstType active : activeNeeds){
 			eligibleNeededTypes.addAll(getInnerOuterTypes(active));
 		}
@@ -584,10 +596,10 @@ public class VjoJstTypeValidator
 			if (checkTypeInList(satisfies, activeNeedsType) || 
 				checkTypeInList(inherits, activeNeedsType) || dereferencedNeededTypes.contains(activeNeedsType)) {
 				continue;
-			}
-			else if (!activeNeedsType.isFakeType()) {
+			}else if (!activeNeedsType.isFakeType()) {
 				unusedActiveNeedsTypes.add(activeNeedsType.getName());
 			}
+			
 		}
 		
 		if (!unusedActiveNeedsTypes.isEmpty()) {		
@@ -608,6 +620,8 @@ public class VjoJstTypeValidator
 			checkAndReportMissingParamTypeUpperBound(jstType, ctx, listParamTypes);
 		}
 	}
+
+
 
 	private List<IJstType> getInnerOuterTypes(final IJstType jstType) {
 		final List<IJstType> innerOuterTypes = new LinkedList<IJstType>();
