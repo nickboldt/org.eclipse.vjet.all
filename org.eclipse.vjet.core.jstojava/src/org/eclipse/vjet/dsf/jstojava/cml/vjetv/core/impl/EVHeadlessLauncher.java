@@ -269,8 +269,15 @@ public class EVHeadlessLauncher implements IHeadLessLauncher {
 						+ "============================================"
 						+ "============================================>\n");
 
+		// if verbose emit the names of files which are about to validated
+		if(conf.isVerbose()){
+			for (File file : jsFiles) {
+				System.out.println(file);
+			}
+		}
 		// parse
 
+		// TODO handle issues with runtime
 		List<IJstType> types = new ArrayList<IJstType>();
 		for (Iterator<File> iterator = jsFiles.iterator(); iterator.hasNext();) {
 			++i;
