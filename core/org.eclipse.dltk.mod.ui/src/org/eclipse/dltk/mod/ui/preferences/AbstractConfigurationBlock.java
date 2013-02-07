@@ -125,8 +125,8 @@ public abstract class AbstractConfigurationBlock implements
 						fIsBeingManaged = false;
 					}
 					if (fLastOpenKey != null && fDialogSettingsStore != null)
-						fDialogSettingsStore.setValue(fLastOpenKey, source
-								.getText());
+						fDialogSettingsStore.setValue(fLastOpenKey,
+								source.getText());
 				} else {
 					if (!fIsBeingManaged && fLastOpenKey != null
 							&& fDialogSettingsStore != null)
@@ -180,8 +180,8 @@ public abstract class AbstractConfigurationBlock implements
 		 * composite within that, to ensure that expanding the sections will
 		 * always have enough space, unless there already is a
 		 * <code>ScrolledComposite</code> along the parent chain of
-		 * <code>parent</code>, in which case a normal <code>Composite</code>
-		 * is created.
+		 * <code>parent</code>, in which case a normal <code>Composite</code> is
+		 * created.
 		 * <p>
 		 * The receiver keeps a reference to the inner body composite, so that
 		 * new sections can be added via <code>createSection</code>.
@@ -267,8 +267,8 @@ public abstract class AbstractConfigurationBlock implements
 
 		public void widgetSelected(SelectionEvent e) {
 			Button button = (Button) e.widget;
-			fStore.setValue((String) fCheckBoxes.get(button), button
-					.getSelection());
+			fStore.setValue((String) fCheckBoxes.get(button),
+					button.getSelection());
 		}
 	};
 
@@ -470,10 +470,10 @@ public abstract class AbstractConfigurationBlock implements
 	}
 
 	/**
-	 * Returns an array of size 2: - first element is of type <code>Label</code> -
-	 * second element is of type <code>Text</code> Use
-	 * <code>getLabelControl</code> and <code>getTextControl</code> to get
-	 * the 2 controls.
+	 * Returns an array of size 2: - first element is of type <code>Label</code>
+	 * - second element is of type <code>Text</code> Use
+	 * <code>getLabelControl</code> and <code>getTextControl</code> to get the 2
+	 * controls.
 	 * 
 	 * @param composite
 	 *            the parent composite
@@ -486,8 +486,7 @@ public abstract class AbstractConfigurationBlock implements
 	 * @param indentation
 	 *            the field's indentation
 	 * @param isNumber
-	 *            <code>true</code> iff this text field is used to edit a
-	 *            number
+	 *            <code>true</code> iff this text field is used to edit a number
 	 * @return the controls added
 	 */
 	protected Control[] addLabelledTextField(Composite composite, String label,
@@ -660,23 +659,18 @@ public abstract class AbstractConfigurationBlock implements
 	private IStatus validatePositiveNumber(String number) {
 		StatusInfo status = new StatusInfo();
 		if (number.length() == 0) {
-			status
-					.setError(PreferencesMessages.DLTKEditorPreferencePage_empty_input);
+			status.setError(PreferencesMessages.DLTKEditorPreferencePage_empty_input);
 		} else {
 			try {
 				int value = Integer.parseInt(number);
 				if (value < 0)
-					status
-							.setError(Messages
-									.format(
-											PreferencesMessages.DLTKEditorPreferencePage_invalid_input,
-											number));
+					status.setError(Messages
+							.format(PreferencesMessages.DLTKEditorPreferencePage_invalid_input,
+									number));
 			} catch (NumberFormatException e) {
-				status
-						.setError(Messages
-								.format(
-										PreferencesMessages.DLTKEditorPreferencePage_invalid_input,
-										number));
+				status.setError(Messages
+						.format(PreferencesMessages.DLTKEditorPreferencePage_invalid_input,
+								number));
 			}
 		}
 		return status;
