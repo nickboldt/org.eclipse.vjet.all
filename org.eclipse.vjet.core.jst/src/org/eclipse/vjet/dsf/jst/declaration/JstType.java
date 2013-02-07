@@ -3021,6 +3021,9 @@ public class JstType extends BaseJstNode implements IJstType {
 	public Map<String, ? extends IJstType> getFullyQualifiedImportsMap() {
 		Map<String, IJstType> map = new LinkedHashMap<String, IJstType>();
 		synchronized (this) {
+			if(m_fullyQualifiedImports==null){
+				m_fullyQualifiedImports = new LinkedHashMap<String,IJstTypeReference>();
+			}
 			for (Map.Entry<String, IJstTypeReference> me: m_fullyQualifiedImports.entrySet()) {
 				map.put(me.getKey(), me.getValue().getReferencedType());
 			}
