@@ -20,6 +20,11 @@ public class SingleCommentLine extends CommentLine {
 
 	/** Line prefix for single line comments */
 	public static final String SINGLE_COMMENT_PREFIX= "// "; //$NON-NLS-1$
+	
+
+	/** Prefix of VJO special comment lines */
+	protected static final String VJO_COMMENT_FORMAT_START_PREFIX_LEFT= "<"; //$NON-NLS-1$
+	protected static final String VJO_COMMENT_FORMAT_START_PREFIX_RIGHT= ">"; //$NON-NLS-1$
 
 	/** NLS tag prefix */
 	private static final String NLS_TAG_PREFIX= "//$NON-NLS-"; //$NON-NLS-1$

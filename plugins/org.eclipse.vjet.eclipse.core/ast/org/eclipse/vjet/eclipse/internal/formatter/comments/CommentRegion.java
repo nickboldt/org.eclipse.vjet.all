@@ -159,29 +159,59 @@ public class CommentRegion extends Position implements IHtmlTagDelimiters, IBord
 
 	/**
 	 * Formats the comment region with the given indentation level.
-	 *
-	 * @param indentationLevel the indentation level
+	 * 
+	 * @param indentationLevel
+	 *            the indentation level
 	 * @return the resulting text edit of the formatting process
 	 * @since 3.1
 	 */
 	public final TextEdit format(int indentationLevel, boolean returnEdit) {
-		final String probe= getText(0, CommentLine.NON_FORMAT_START_PREFIX.length());
-		if (!probe.startsWith(CommentLine.NON_FORMAT_START_PREFIX)) {
+		final String probe = getText(0,
+				CommentLine.NON_FORMAT_START_PREFIX.length());
+		// check :
+		// 1. Doc comment prefix
+		// 2. VJO special comment prefix
+		// if true, do not split the comment line
 
-			int margin= this.preferences.comment_line_length;
-			String indentation= computeIndentation(indentationLevel);
-			margin= Math.max(COMMENT_PREFIX_LENGTH + 1, margin - stringToLength(indentation) - COMMENT_PREFIX_LENGTH);
-
-			tokenizeRegion();
-			markRegion();
-			wrapRegion(margin);
-			formatRegion(indentation, margin);
+		if (!(probe.startsWith(CommentLine.NON_FORMAT_START_PREFIX))) {
+			int margin = this.preferences.comment_line_length;
+			String indentation = computeIndentation(indentationLevel);
+			if  (!isVjoSpeicalPrifix(indentation)) {
+				margin = Math.max(COMMENT_PREFIX_LENGTH + 1, margin
+						- stringToLength(indentation) - COMMENT_PREFIX_LENGTH);
+				tokenizeRegion();
+				markRegion();
+				wrapRegion(margin);
+				formatRegion(indentation, margin);
+			}
 
 		}
 		if (returnEdit) {
 			return this.scribe.getRootEdit();
 		}
 		return null;
+	}
+
+	/**
+	 * @param indentation 
+	 * @return if it is vjo special comment
+	 */
+	private boolean isVjoSpeicalPrifix(String indentation) {
+		String temp = SingleCommentLine.SINGLE_COMMENT_PREFIX.trim();
+		String probe = getText(0,
+				temp.length());
+		if (!temp.equals(probe)) {
+			return false;
+		}
+		probe = getText(temp.length(),
+				getLength() - temp.length() - stringToLength(indentation));
+		if (probe != null) {
+			probe = probe.trim();
+		} else {
+			return false;
+		}
+		return probe.startsWith(SingleCommentLine.VJO_COMMENT_FORMAT_START_PREFIX_LEFT)
+				|| probe.startsWith(SingleCommentLine.VJO_COMMENT_FORMAT_START_PREFIX_RIGHT);
 	}
 
 	/**
