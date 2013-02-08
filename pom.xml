@@ -5,7 +5,7 @@
 	<groupId>org.eclipse.vjet</groupId>
 	<artifactId>vjet-parent</artifactId>
 	<name>VJET Parent</name>
-	<version>0.9.0-SNAPSHOT</version>
+	<version>0.9.1</version>
 	<packaging>pom</packaging>
 	<url>http://eclipse.org/vjet</url>
 
@@ -15,6 +15,14 @@
 		<vjet-version>0.9.0-SNAPSHOT</vjet-version>
 		<signer-input-directory>/home/data/httpd/download-staging.priv/webtools</signer-input-directory>
 		<download-publish-path>/home/data/httpd/download.eclipse.org/vjet/updates-nightly</download-publish-path>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<!-- Sonar -->
+		<sonar.language>java</sonar.language>
+		<sonar.core.codeCoveragePlugin>jacoco</sonar.core.codeCoveragePlugin>
+		<sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
+		<sonar.jacoco.reportPath>${project.basedir}/../target/jacoco.exec</sonar.jacoco.reportPath>
+		<sonar.surefire.reportsPath>../${project.artifactId}.tests/target/surefire-reports/</sonar.surefire.reportsPath>
+		<sonar.skippedModules>plugin.tests</sonar.skippedModules>
 	</properties>
 
 
@@ -100,7 +108,22 @@
 					</environments>
 				</configuration>
 			</plugin>
-
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.5.3.201107060350</version>
+				<configuration>
+					<includes>example.*</includes>
+					<destFile>${project.basedir}/../target/jacoco.exec</destFile>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 
 		</plugins>
 		<pluginManagement>
