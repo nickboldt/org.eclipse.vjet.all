@@ -16,12 +16,12 @@ Contributors:
 	<parent>
       <groupId>org.eclipse.vjet.eclipse.features</groupId>
       <artifactId>features-parent</artifactId>
-      <version>0.9.0-SNAPSHOT</version>
+      <version>0.9.1</version>
 	</parent>
 
     <groupId>org.eclipse.vjet.eclipse.features</groupId>
    	<artifactId>org.eclipse.vjet.codegen</artifactId>
-	<version>0.9.0-SNAPSHOT</version>
+	<version>0.9.1</version>
 	<packaging>eclipse-feature</packaging>
 	<name>VJET: CodeGen (Incubation)</name>
 </project>

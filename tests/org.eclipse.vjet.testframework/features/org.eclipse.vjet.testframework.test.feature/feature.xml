@@ -2,7 +2,7 @@
 <feature
       id="org.eclipse.vjet.testframework.test.feature"
       label="Test Framework Test Feature (Incubation)"
-      version="0.9.0.qualifier"
+      version="0.9.1"
       provider-name="Eclipse.org">
 
    <description url="http://www.example.com/description">
