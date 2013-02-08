@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: VJET VSF: JsRef (Incubation)
 Bundle-SymbolicName: org.eclipse.vjet.vsf.jsref
-Bundle-Version: 0.9.0.qualifier
+Bundle-Version: 0.9.1
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Require-Bundle: org.eclipse.vjet.core.util;bundle-version="0.9.0";visibility:=reexport,
  org.eclipse.vjet.web.html;bundle-version="0.9.0";visibility:=reexport,
