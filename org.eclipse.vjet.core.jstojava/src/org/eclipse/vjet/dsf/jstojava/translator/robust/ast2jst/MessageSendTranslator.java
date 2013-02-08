@@ -69,6 +69,8 @@ public class MessageSendTranslator extends
 					} else {
 						prev = args[i - 1].sourceEnd();
 					}
+					m_ctx.setPreviousNodeSourceEnd(prev);
+					
 					if (i + 1 < len) {
 						next = args[i + 1].sourceStart();
 					} else {
