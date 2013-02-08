@@ -17,6 +17,7 @@ import org.eclipse.vjet.dsf.jsgen.shared.validation.vjo.semantic.validator.VjoSe
 import org.eclipse.vjet.dsf.jsgen.shared.validation.vjo.util.VjoValidationVisitorCtxUpdateUtil;
 import org.eclipse.vjet.dsf.jst.BaseJstNode;
 import org.eclipse.vjet.dsf.jst.IInferred;
+import org.eclipse.vjet.dsf.jst.IJstAnnotation;
 import org.eclipse.vjet.dsf.jst.IJstNode;
 import org.eclipse.vjet.dsf.jst.IJstRefType;
 import org.eclipse.vjet.dsf.jst.IJstType;
@@ -27,6 +28,7 @@ import org.eclipse.vjet.dsf.jst.declaration.JstAnnotation;
 import org.eclipse.vjet.dsf.jst.declaration.JstArg;
 import org.eclipse.vjet.dsf.jst.declaration.JstArray;
 import org.eclipse.vjet.dsf.jst.declaration.JstBlock;
+import org.eclipse.vjet.dsf.jst.declaration.JstCache;
 import org.eclipse.vjet.dsf.jst.declaration.JstConstructor;
 import org.eclipse.vjet.dsf.jst.declaration.JstDoc;
 import org.eclipse.vjet.dsf.jst.declaration.JstFunctionRefType;
@@ -104,6 +106,7 @@ import org.eclipse.vjet.dsf.jst.term.NV;
 import org.eclipse.vjet.dsf.jst.term.ObjLiteral;
 import org.eclipse.vjet.dsf.jst.term.RegexpLiteral;
 import org.eclipse.vjet.dsf.jst.term.SimpleLiteral;
+import org.eclipse.vjet.dsf.jst.token.IExpr;
 import org.eclipse.vjet.dsf.jst.traversal.IJstNodeVisitor;
 import org.eclipse.vjet.dsf.logger.Logger;
 
@@ -171,6 +174,25 @@ public class VjoValidationVisitor implements IJstNodeVisitor {
 			IJstNode binding = identifier.getJstBinding();
 			IJstType type = identifier.getType();
 			
+			IJstAnnotation impliedUsage = identifier.getAnnotation(DefaultAnnotations.IMPLIED_USAGE_OF_TYPE);
+			if(type==null && impliedUsage!=null){
+				List<IExpr> values = impliedUsage.values();
+				if(values.size()>0){
+					IExpr node = values.get(0);
+					if(node instanceof SimpleLiteral){
+						SimpleLiteral impliedtypelit = (SimpleLiteral)node;
+						JstType impliedtype = JstCache.getInstance().getType(impliedtypelit.toExprText().replace('\"', ' ').trim());
+						if(impliedtype!=null){
+							JstTypeRefType typeref = new JstTypeRefType(impliedtype);
+							getCtx().addMustActivelyNeededTypes(
+									jstNode.getRootType(), typeref);
+							getCtx().addKnownActivelyNeededTypes(
+									jstNode.getRootType(), typeref);
+						}
+					}
+				}
+				
+			}
 			
 			if(type!=null && binding instanceof JstMethod){
 				// if the method returns a type and is factory function assume usage

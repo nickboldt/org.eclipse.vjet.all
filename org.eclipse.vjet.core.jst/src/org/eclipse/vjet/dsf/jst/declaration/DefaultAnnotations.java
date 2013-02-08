@@ -14,4 +14,11 @@ public interface DefaultAnnotations {
 	 */
 	static final JstAnnotation CONSTRUCTOR  = new JstAnnotation("@Constructor");
 	
+	/**
+	 * In an object literal usage of a class may be implied by a name when this happens
+	 * the JstAnnotation will have this name and the child of the JstAnnotation node will have the instance of the type
+	 * that identifier is implying usage.
+	 */
+	static final String IMPLIED_USAGE_OF_TYPE = "@ImpliedUsageOfType";
+	
 }
