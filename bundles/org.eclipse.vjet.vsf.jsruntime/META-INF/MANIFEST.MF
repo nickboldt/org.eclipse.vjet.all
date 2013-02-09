@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: VJET VSF: Jsconverters (Incubation)
 Bundle-SymbolicName: org.eclipse.vjet.vsf.jsruntime
-Bundle-Version: 0.9.1
+Bundle-Version: 0.10.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Require-Bundle: org.eclipse.vjet.web.kernel,
  org.eclipse.vjet.web.html,

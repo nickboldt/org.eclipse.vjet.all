@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: VJET VSF: Resource Common (Incubation)
 Bundle-SymbolicName: org.eclipse.vjet.vsf.resource
-Bundle-Version: 0.9.1
+Bundle-Version: 0.10.0.qualifier
 Require-Bundle: org.eclipse.vjet.web.kernel;visibility:=reexport
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6

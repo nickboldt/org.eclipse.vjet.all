@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: VJET VSF: Common Converter
 Bundle-SymbolicName: org.eclipse.vjet.vsf.common.converter
-Bundle-Version: 0.9.1
+Bundle-Version: 0.10.0.qualifier
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.vjet.core.util
 Bundle-ActivationPolicy: lazy

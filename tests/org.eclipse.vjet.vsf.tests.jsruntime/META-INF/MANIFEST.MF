@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Jsruntime (Incubation)
 Bundle-SymbolicName: org.eclipse.vjet.vsf.tests.jsruntime
-Bundle-Version: 0.9.1
+Bundle-Version: 0.10.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Require-Bundle: org.junit4;bundle-version="4.8.1",
  org.eclipse.vjet.vsf.jsref,
