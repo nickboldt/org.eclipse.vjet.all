@@ -4,13 +4,13 @@ Bundle-Name: VJET VSF: Jsconverters (Incubation)
 Bundle-SymbolicName: org.eclipse.vjet.vsf.jsruntime
 Bundle-Version: 0.9.1
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Require-Bundle: org.eclipse.vjet.web.kernel;bundle-version="0.9.0",
- org.eclipse.vjet.web.html;bundle-version="0.9.0",
- org.eclipse.vjet.vsf.resource.js;bundle-version="0.9.0",
- org.eclipse.vjet.vsf.spec;bundle-version="0.9.0",
- org.eclipse.vjet.vsf.common.converter;bundle-version="0.9.0",
- org.eclipse.vjet.rt.jsonserializer;bundle-version="0.9.0",
- org.eclipse.vjet.vsf.serializer;bundle-version="0.9.0"
+Require-Bundle: org.eclipse.vjet.web.kernel,
+ org.eclipse.vjet.web.html,
+ org.eclipse.vjet.vsf.resource.js,
+ org.eclipse.vjet.vsf.spec,
+ org.eclipse.vjet.vsf.common.converter,
+ org.eclipse.vjet.rt.jsonserializer,
+ org.eclipse.vjet.vsf.serializer
 Export-Package: org.eclipse.vjet.vsf.jsruntime,
  org.eclipse.vjet.vsf.jsruntime.component,
  org.eclipse.vjet.vsf.jsruntime.compregistry,
