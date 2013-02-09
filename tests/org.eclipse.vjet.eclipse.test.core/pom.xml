@@ -10,13 +10,13 @@
 	<parent>
 		<groupId>org.eclipse.vjet.eclipse.tests</groupId>
 		<artifactId>test-parent</artifactId>
-		<version>0.9.1</version>
+		<version>0.10.0-SNAPSHOT</version>
 	</parent>
 
 	<groupId>org.eclipse.vjet.eclipse.tests</groupId>
 	<artifactId>org.eclipse.vjet.eclipse.test.core</artifactId>
 	<packaging>eclipse-test-plugin</packaging>
-	<version>0.9.1</version>
+	<version>0.10.0-SNAPSHOT</version>
 	<name>VJET Test: Eclipse Core Tests (Incubation)</name>
 
 	<profiles>

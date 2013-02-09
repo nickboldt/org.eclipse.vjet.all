@@ -13,7 +13,7 @@ Contributors:
 <feature
       id="org.eclipse.vjet.extmod.dltk.core"
       label="%featureName"
-      version="0.9.1"
+      version="0.10.0.qualifier"
       provider-name="%providerName">
 
    <description url="http://www.eclipse.org/dltk">
@@ -32,63 +32,63 @@ Contributors:
          id="org.eclipse.dltk.mod.core"
          download-size="0"
          install-size="0"
-         version="0.9.1"
+         version="0.10.0.qualifier"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.dltk.mod.ui"
          download-size="0"
          install-size="0"
-         version="0.9.1"
+         version="0.10.0.qualifier"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.dltk.mod.debug"
          download-size="0"
          install-size="0"
-         version="0.9.1"
+         version="0.10.0.qualifier"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.dltk.mod.debug.ui"
          download-size="0"
          install-size="0"
-         version="0.9.1"
+         version="0.10.0.qualifier"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.dltk.mod.launching"
          download-size="0"
          install-size="0"
-         version="0.9.1"
+         version="0.10.0.qualifier"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.dltk.mod.console"
          download-size="0"
          install-size="0"
-         version="0.9.1"
+         version="0.10.0.qualifier"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.dltk.mod.console.ui"
          download-size="0"
          install-size="0"
-         version="0.9.1"
+         version="0.10.0.qualifier"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.dltk.mod.validators.core"
          download-size="0"
          install-size="0"
-         version="0.9.1"
+         version="0.10.0.qualifier"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.dltk.mod.formatter"
          download-size="0"
          install-size="0"
-         version="0.9.1"
+         version="0.10.0.qualifier"
          unpack="false"/>
 
    <plugin

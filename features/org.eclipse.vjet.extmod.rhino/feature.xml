@@ -4,7 +4,7 @@
 <feature
       id="org.eclipse.vjet.extmod.rhino"
       label="VJET Modified Rhino Features"
-      version="0.9.1"
+      version="0.10.0.qualifier"
       provider-name="eclipse.org">
 
    <description url="http://www.example.com/description">
