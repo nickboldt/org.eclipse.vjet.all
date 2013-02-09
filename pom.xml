@@ -5,14 +5,14 @@
 	<groupId>org.eclipse.vjet</groupId>
 	<artifactId>vjet-parent</artifactId>
 	<name>VJET Parent</name>
-	<version>0.9.1</version>
+	<version>0.10.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<url>http://eclipse.org/vjet</url>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<tycho-version>0.15.0</tycho-version>
-		<vjet-version>0.9.1</vjet-version>
+		<vjet-version>0.10.0.SNAPSHOT</vjet-version>
 		<signer-input-directory>/home/data/httpd/download-staging.priv/webtools</signer-input-directory>
 		<download-publish-path>/home/data/httpd/download.eclipse.org/vjet/updates-nightly</download-publish-path>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
