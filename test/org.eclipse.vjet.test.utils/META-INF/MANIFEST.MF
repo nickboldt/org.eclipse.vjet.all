@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: VJET Core Test Utils
 Bundle-SymbolicName: org.eclipse.vjet.test.utils;singleton:=true
-Bundle-Version: 0.9.1
+Bundle-Version: 0.10.0.qualifier
 Export-Package: org.eclipse.vjet.dsf.test.utils,
  org.eclipse.vjet.dsf.test.utils.vjo
 Require-Bundle: org.eclipse.jdt.core,

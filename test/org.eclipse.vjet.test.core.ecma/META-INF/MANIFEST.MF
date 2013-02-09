@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Ecma
 Bundle-SymbolicName: org.eclipse.vjet.test.core.ecma
-Bundle-Version: 0.9.1
+Bundle-Version: 0.10.0.qualifier
 Require-Bundle: org.junit4;bundle-version="4.8.1",
  org.eclipse.vjet.core.jst,
  org.eclipse.vjet.core.jstojava,

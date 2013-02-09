@@ -1,12 +1,12 @@
 <JavaToJst><Controller method="TargetedTranslation"><DependencyPhase><Task type="org.eclipse.vjet.dsf.javatojs.tests.data.custom.ForceFullyQualified" mode="Dependency,Declaration" thread="1">
  <Dependents/>
- <Time start="11:16:51:044" end="11:16:51:063" duration="19"/>
+ <Time start="13:14:49:542" end="13:14:49:566" duration="24"/>
 </Task></DependencyPhase><DeclarationPhase><Task type="org.eclipse.vjet.dsf.javatojs.tests.data.custom.StaticMembers" mode="Dependency,Declaration" thread="1">
  <Dependents/>
- <Time start="11:16:51:066" end="11:16:51:067" duration="1"/>
+ <Time start="13:14:49:568" end="13:14:49:569" duration="1"/>
 </Task></DeclarationPhase><DeclarationPhase><Task type="org.eclipse.vjet.dsf.javatojs.tests.data.custom.SuperStaticMembers" mode="Dependency,Declaration" thread="1">
  <Dependents/>
- <Time start="11:16:51:069" end="11:16:51:069" duration="0"/>
+ <Time start="13:14:49:571" end="13:14:49:571" duration="0"/>
 </Task></DeclarationPhase><ImplementationPhase><Task type="org.eclipse.vjet.dsf.javatojs.tests.data.custom.ForceFullyQualified" mode="Dependency,Declaration,Impl" thread="1">
- <Time start="11:16:51:070" end="11:16:51:088" duration="18"/>
-</Task></ImplementationPhase><Time start="11:16:51:039" end="11:16:51:099" duration="60"/></Controller></JavaToJst>
+ <Time start="13:14:49:572" end="13:14:49:589" duration="17"/>
+</Task></ImplementationPhase><Time start="13:14:49:536" end="13:14:49:593" duration="57"/></Controller></JavaToJst>
