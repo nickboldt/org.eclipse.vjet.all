@@ -18,6 +18,7 @@ import org.eclipse.vjet.dsf.jst.declaration.JstFactory;
 import org.eclipse.vjet.dsf.jst.declaration.JstType;
 import org.eclipse.vjet.dsf.jst.declaration.JstVars;
 import org.eclipse.vjet.dsf.jst.expr.AssignExpr;
+import org.eclipse.vjet.dsf.jst.expr.ConditionalExpr;
 import org.eclipse.vjet.dsf.jst.expr.JstInitializer;
 import org.eclipse.vjet.dsf.jst.expr.ListExpr;
 import org.eclipse.vjet.dsf.jst.stmt.ForStmt;
@@ -25,6 +26,7 @@ import org.eclipse.vjet.dsf.jst.token.IExpr;
 import org.eclipse.vjet.dsf.jst.token.IStmt;
 import org.eclipse.vjet.dsf.jstojava.translator.TranslateHelper;
 import org.eclipse.mod.wst.jsdt.core.ast.IASTNode;
+import org.eclipse.mod.wst.jsdt.internal.compiler.ast.ConditionalExpression;
 import org.eclipse.mod.wst.jsdt.internal.compiler.ast.ForStatement;
 import org.eclipse.mod.wst.jsdt.internal.compiler.ast.Statement;
 
@@ -146,7 +148,17 @@ public class ForStatementTranslator extends
 		if (!statement.isEmptyBlock()) {
 			Object obj = getTranslatorAndTranslate(statement.action, forStmt.getBody());
 			if(!(obj instanceof JstBlock)){
-				forStmt.getBody().addStmt((IStmt)obj);
+				if(obj instanceof IStmt){
+					forStmt.getBody().addStmt((IStmt)obj);
+				}else if(obj instanceof ConditionalExpr){
+					// TODO test this case
+					forStmt.getBody().addChild((ConditionalExpr)obj);
+					
+				}
+				
+				// TODO determine what other conditions need to be looked at
+				// org.eclipse.vjet.dsf.jst.expr.ConditionalExpr was returned in one case
+				
 			}
 		}
 		forStmt.setSource(TranslateHelper.getSource(statement, m_ctx.getSourceUtil()));

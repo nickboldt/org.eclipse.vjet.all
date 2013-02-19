@@ -10,6 +10,7 @@ package org.eclipse.vjet.dsf.jstojava.translator.robust.ast2jst;
 
 import org.eclipse.vjet.dsf.jsgen.shared.ids.ScopeIds;
 import org.eclipse.vjet.dsf.jst.declaration.JstBlock;
+import org.eclipse.vjet.dsf.jst.expr.ConditionalExpr;
 import org.eclipse.vjet.dsf.jst.stmt.WhileStmt;
 import org.eclipse.vjet.dsf.jst.token.IExpr;
 import org.eclipse.vjet.dsf.jst.token.IStmt;
@@ -43,7 +44,14 @@ public class WhileStatementTranslator extends
 		if (!statement.isEmptyBlock()) {
 			Object obj = getTranslatorAndTranslate(statement.action, whileStmt.getBody());
 			if(!(obj instanceof JstBlock)){
-				whileStmt.getBody().addStmt((IStmt)obj);
+				if(obj instanceof IStmt){
+					whileStmt.getBody().addStmt((IStmt)obj);
+				}else if(obj instanceof ConditionalExpr){
+					// TODO test this case
+					whileStmt.getBody().addChild((ConditionalExpr)obj);
+					
+				}
+				// TODO what to do when  org.eclipse.vjet.dsf.jst.expr.ConditionalExpr
 			}
 		}
 		whileStmt.setSource(TranslateHelper.getSource(statement, m_ctx.getSourceUtil()));
