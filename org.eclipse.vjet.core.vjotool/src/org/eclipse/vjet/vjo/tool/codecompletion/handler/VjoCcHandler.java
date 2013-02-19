@@ -281,7 +281,19 @@ public class VjoCcHandler implements IVjoCcHandler {
 				MtdInvocationExpr mtd = (MtdInvocationExpr) completion
 						.getRealParent();
 				// TODO problem when this is jst arg not jstmethod
-				JstMethod method = (JstMethod)mtd.getMethod();
+				
+				JstMethod method =null;
+						
+				if(mtd.getMethod() instanceof JstMethod){
+					method = (JstMethod)mtd.getMethod();
+					
+				}else if(mtd.getMethod() instanceof JstIdentifier){
+					JstIdentifier id  = (JstIdentifier)mtd.getMethod();
+					if(id.getJstBinding() instanceof JstMethod){
+						method = (JstMethod)id.getJstBinding();
+					}
+				}
+				
 				if(method!=null){
 					IJstType type = method.getOwnerType();
 
