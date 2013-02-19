@@ -37,9 +37,9 @@ public class Version extends VjoValidationBaseTester {
     @Before
     public void setUp() {
         expectProblems.clear();
-        expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 44, 0));
+        expectProblems.add(createNewProblem2(VarProbIds.LooseVarDecl, 55, 0));
         expectProblems
-                .add(createNewProblem(TypeProbIds.UnusedActiveNeeds, 1, 0));
+                .add(createNewProblem2(TypeProbIds.UnusedActiveNeeds, 11, 0));
     }
 
     @Test

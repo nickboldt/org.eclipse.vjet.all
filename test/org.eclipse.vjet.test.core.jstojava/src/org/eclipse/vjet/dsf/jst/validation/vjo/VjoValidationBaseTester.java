@@ -280,6 +280,7 @@ public abstract class VjoValidationBaseTester {
     /**
      * Get a new {@link VjoSemanticProblem} object
      * 
+     * adds 10 for copy right
      * @param problemId {@link JstProblemId}
      * @param lineNumber int
      * @param colNumber int
@@ -292,6 +293,11 @@ public abstract class VjoValidationBaseTester {
                 0, 0, lineNumber, colNumber, null);
     }
 
+    public VjoSemanticProblem createNewProblem2(JstProblemId problemId,
+            int lineNumber, int colNumber) {
+        return new VjoSemanticProblem(null, problemId, "Test Error Msg", null,
+                0, 0, lineNumber, colNumber, null);
+    }
     /**
      * Get expect problem ids
      * 

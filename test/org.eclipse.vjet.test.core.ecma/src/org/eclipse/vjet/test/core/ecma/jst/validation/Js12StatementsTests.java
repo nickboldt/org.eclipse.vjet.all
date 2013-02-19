@@ -39,9 +39,9 @@ public class Js12StatementsTests extends VjoValidationBaseTester {
     //@Description("Test DSF project, To validate false positive ")
     public void testJs12StatementsTests() {
     	expectProblems.add(createNewProblem(
-                MethodProbIds.UnreachableStmt, 474, 0));
+                MethodProbIds.UnreachableStmt, 475, 0));
     	expectProblems.add(createNewProblem(
-                MethodProbIds.UnreachableStmt, 502, 0));
+                MethodProbIds.UnreachableStmt, 503, 0));
     	
         assertProblemEquals(expectProblems, getVjoSemanticProblem(
                 "vjet.dsf.jslang.feature.tests.", "Js12StatementsTests.js", this

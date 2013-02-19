@@ -37,23 +37,23 @@ public class HTMLandDomEx42 extends VjoValidationBaseTester {
     @Before
     public void setUp() {
         expectProblems.clear();
-        expectProblems
-                .add(createNewProblem(FieldProbIds.UndefinedField, 17, 0));
-        expectProblems.add(createNewProblem(MethodProbIds.ShouldReturnValue,
-                13, 0));
-        expectProblems
-                .add(createNewProblem(FieldProbIds.UndefinedField, 22, 0));
-        expectProblems.add(createNewProblem(MethodProbIds.UndefinedMethod, 16,
+        expectProblems.add(createNewProblem2(MethodProbIds.ShouldReturnValue,
+                24, 0));
+        expectProblems.add(createNewProblem2(MethodProbIds.UndefinedMethod, 26,
                 0));
-        expectProblems.add(createNewProblem(
-                MethodProbIds.WrongNumberOfArguments, 19, 0));
+        expectProblems.add(createNewProblem2(
+                MethodProbIds.WrongNumberOfArguments, 29, 0));
         expectProblems
-                .add(createNewProblem(FieldProbIds.UndefinedField, 21, 0));
+                .add(createNewProblem2(FieldProbIds.UndefinedField, 32, 0));
         expectProblems
-                .add(createNewProblem(FieldProbIds.UndefinedField, 16, 0));
-        expectProblems.add(createNewProblem(FieldProbIds.UndefinedField, 9, 0));
+                .add(createNewProblem2(FieldProbIds.UndefinedField, 27, 0));
+        expectProblems.add(createNewProblem2(FieldProbIds.UndefinedField, 31, 0));
         expectProblems
-                .add(createNewProblem(FieldProbIds.UndefinedField, 18, 0));
+                .add(createNewProblem2(FieldProbIds.UndefinedField, 29, 0));
+        expectProblems
+        .add(createNewProblem2(FieldProbIds.UndefinedField, 20, 0));
+        expectProblems
+        .add(createNewProblem2(FieldProbIds.UndefinedField, 26, 0));
     }
 
     @Test
@@ -64,6 +64,6 @@ public class HTMLandDomEx42 extends VjoValidationBaseTester {
                 VjoValidationBaseTester.VJLIB_FOLDER,
                 "dox.ebay.vjoPro.vjoPro4javadev.samples.vjlib.",
                 "HTMLandDomEx42.js", this.getClass());
-        assertProblemEquals(expectProblems, problems);
+		assertProblemEquals(expectProblems, problems);
     }
 }

@@ -49,16 +49,16 @@ public class Js15ArrayTests extends VjoValidationBaseTester {
         expectProblems.add(createNewProblem(MethodProbIds.ParameterMismatch,
                 1159+headersize, 0));
         expectProblems.add(createNewProblem(
-                MethodProbIds.WrongNumberOfArguments, 1350+headersize, 0));
-        expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 1575+headersize, 0));
+                MethodProbIds.WrongNumberOfArguments, 1377, 0));
+        expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 1602, 0));
         expectProblems.add(createNewProblem(MethodProbIds.UndefinedFunction,
-                1715+headersize, 0));
+                1742, 0));
         expectProblems.add(createNewProblem(MethodProbIds.UndefinedFunction,
-                1735+headersize, 0));
+                1762, 0));
         expectProblems.add(createNewProblem(MethodProbIds.UndefinedFunction,
-                1739+headersize, 0));
+                1766, 0));
         expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt,
-                2087+headersize, 0));
+                2114, 0));
         expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 1434+headersize, 0));
         
         expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt, 1993+headersize,

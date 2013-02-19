@@ -38,7 +38,7 @@ public class Ecma2LexicalConventionsTests extends VjoValidationBaseTester {
         expectProblems.clear();
         expectProblems.add(createNewProblem(
                 MethodProbIds.WrongNumberOfArguments, 82, 0));
-        expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 108, 0));
+        expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 109, 0));
         expectProblems.add(createNewProblem(
                 MethodProbIds.WrongNumberOfArguments, 113, 0));
         expectProblems.add(createNewProblem(

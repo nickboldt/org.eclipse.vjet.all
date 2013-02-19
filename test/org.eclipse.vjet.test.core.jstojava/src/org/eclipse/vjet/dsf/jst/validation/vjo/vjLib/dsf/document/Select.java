@@ -37,10 +37,10 @@ public class Select extends VjoValidationBaseTester {
     @Before
     public void setUp() {
         expectProblems.clear();
-        expectProblems.add(createNewProblem(MethodProbIds.ShouldReturnValue,
-                46, 0));
-        expectProblems.add(createNewProblem(FieldProbIds.FieldInitializationDependsOnUnintializedTypes,
-                3, 0));
+        expectProblems.add(createNewProblem2(MethodProbIds.ShouldReturnValue,
+                57, 0));
+        expectProblems.add(createNewProblem2(FieldProbIds.FieldInitializationDependsOnUnintializedTypes,
+                14, 0));
     }
 
     @Test

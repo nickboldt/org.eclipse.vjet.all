@@ -35,10 +35,10 @@ public class Ecma2FunctionObjectsTests extends VjoValidationBaseTester {
     @Before
     public void setUp() {
         expectProblems.clear();
-        expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 61, 0));
         expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 62, 0));
-        expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 87, 0));
+        expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 63, 0));
         expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 88, 0));
+        expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 89, 0));
     }
 
     @Test

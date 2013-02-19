@@ -36,8 +36,8 @@ public class Js15ScopeTests extends VjoValidationBaseTester {
     public void setUp() {
         expectProblems.clear();
         expectProblems
-                .add(createNewProblem(FieldProbIds.UndefinedField, 1033, 0));
-        expectProblems.add(createNewProblem(FieldProbIds.UndefinedField, 1072,
+                .add(createNewProblem(FieldProbIds.UndefinedField, 1034, 0));
+        expectProblems.add(createNewProblem(FieldProbIds.UndefinedField, 1073,
                 0));
     }
 

@@ -37,10 +37,10 @@ public class Person extends VjoValidationBaseTester {
     public void setUp() {
         expectProblems.clear();
         expectProblems
-                .add(createNewProblem(FieldProbIds.UndefinedField, 10, 0));
+                .add(createNewProblem2(FieldProbIds.UndefinedField, 20, 0));
         expectProblems
-                .add(createNewProblem(FieldProbIds.UndefinedField, 11, 0));
-        expectProblems.add(createNewProblem(FieldProbIds.UndefinedField, 9, 0));
+                .add(createNewProblem2(FieldProbIds.UndefinedField, 21, 0));
+        expectProblems.add(createNewProblem2(FieldProbIds.UndefinedField, 22, 0));
     }
 
     @Test

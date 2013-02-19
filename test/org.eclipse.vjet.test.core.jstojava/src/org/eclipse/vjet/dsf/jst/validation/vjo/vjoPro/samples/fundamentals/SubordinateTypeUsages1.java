@@ -36,8 +36,8 @@ public class SubordinateTypeUsages1 extends VjoValidationBaseTester {
     @Before
     public void setUp() {
         expectProblems.clear();
-        expectProblems.add(createNewProblem(MethodProbIds.UndefinedFunction,
-                16, 0));
+        expectProblems.add(createNewProblem2(MethodProbIds.UndefinedFunction,
+                27, 0));
     }
 
     @Test

@@ -41,8 +41,8 @@ public class JavaProxySample extends VjoValidationBaseTester {
         expectProblems.add(createNewProblem(VjoSyntaxProbIds.RedundantImport,
                 2, 0));
         expectProblems
-                .add(createNewProblem(FieldProbIds.AmbiguousField, 31, 0));
-        expectProblems.add(createNewProblem(VarProbIds.UndefinedName, 74, 0));
+                .add(createNewProblem2(FieldProbIds.AmbiguousField, 42, 0));
+        expectProblems.add(createNewProblem2(VarProbIds.UndefinedName, 84, 0));
     }
 
     @Test

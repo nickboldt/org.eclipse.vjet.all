@@ -38,11 +38,11 @@ public class ElementUIx extends VjoValidationBaseTester {
     @Before
     public void setUp() {
         expectProblems.clear();
-        expectProblems.add(createNewProblem(VarProbIds.UndefinedName, 175, 0));
-        expectProblems.add(createNewProblem(MethodProbIds.ShouldReturnValue,
-                179, 0));
-        expectProblems.add(createNewProblem(FieldProbIds.FieldInitializationDependsOnUnintializedTypes,
-                3, 0));
+        expectProblems.add(createNewProblem2(VarProbIds.UndefinedName, 185, 0));
+        expectProblems.add(createNewProblem2(MethodProbIds.ShouldReturnValue,
+                190, 0));
+        expectProblems.add(createNewProblem2(FieldProbIds.FieldInitializationDependsOnUnintializedTypes,
+                14, 0));
     }
 
     @Test

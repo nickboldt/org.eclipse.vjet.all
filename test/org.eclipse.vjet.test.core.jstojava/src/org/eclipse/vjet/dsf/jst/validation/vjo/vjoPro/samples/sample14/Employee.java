@@ -36,8 +36,8 @@ public class Employee extends VjoValidationBaseTester {
     @Before
     public void setUp() {
         expectProblems.clear();
-        expectProblems.add(createNewProblem(
-                TypeProbIds.IncompatibleTypesInEqualityOperator, 6, 0));
+        expectProblems.add(createNewProblem2(
+                TypeProbIds.IncompatibleTypesInEqualityOperator, 17, 0));
     }
 
     @Test

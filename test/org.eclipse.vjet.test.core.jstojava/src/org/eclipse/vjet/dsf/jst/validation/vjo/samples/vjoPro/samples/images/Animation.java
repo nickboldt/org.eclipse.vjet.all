@@ -37,20 +37,20 @@ public class Animation extends VjoValidationBaseTester {
     public void setUp() {
         expectProblems.clear();
         expectProblems
-                .add(createNewProblem(FieldProbIds.UndefinedField, 13, 0));
+                .add(createNewProblem2(FieldProbIds.UndefinedField, 24, 0));
         expectProblems
-                .add(createNewProblem(FieldProbIds.UndefinedField, 31, 0));
+                .add(createNewProblem2(FieldProbIds.UndefinedField, 41, 0));
         expectProblems
-                .add(createNewProblem(FieldProbIds.UndefinedField, 16, 0));
+                .add(createNewProblem2(FieldProbIds.UndefinedField, 26, 0));
         expectProblems
-                .add(createNewProblem(FieldProbIds.UndefinedField, 28, 0));
+                .add(createNewProblem2(FieldProbIds.UndefinedField, 38, 0));
         expectProblems
-                .add(createNewProblem(FieldProbIds.UndefinedField, 31, 0));
+                .add(createNewProblem2(FieldProbIds.UndefinedField, 41, 0));
         expectProblems
-                .add(createNewProblem(FieldProbIds.UndefinedField, 17, 0));
+                .add(createNewProblem2(FieldProbIds.UndefinedField, 27, 0));
         expectProblems
-                .add(createNewProblem(FieldProbIds.UndefinedField, 11, 0));
-//        expectProblems.add(createNewProblem(TypeProbIds.TypeMismatch, 31, 0));
+                .add(createNewProblem2(FieldProbIds.UndefinedField, 22, 0));
+//        expectProblems.add(createNewProblem2(TypeProbIds.TypeMismatch, 31, 0));
     }
 
     @Test

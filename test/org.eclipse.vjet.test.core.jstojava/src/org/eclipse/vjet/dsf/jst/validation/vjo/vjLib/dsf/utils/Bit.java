@@ -37,9 +37,9 @@ public class Bit extends VjoValidationBaseTester {
     @Before
     public void setUp() {
         expectProblems.clear();
-        expectProblems.add(createNewProblem(FieldProbIds.FieldInitializationDependsOnUnintializedTypes,
-                3, 0));
-        expectProblems.add(createNewProblem(TypeProbIds.TypeMismatch, 56, 0));
+        expectProblems.add(createNewProblem2(FieldProbIds.FieldInitializationDependsOnUnintializedTypes,
+                14, 0));
+        expectProblems.add(createNewProblem2(TypeProbIds.TypeMismatch, 67, 0));
     }
 
     @Test

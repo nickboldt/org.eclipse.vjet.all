@@ -36,7 +36,7 @@ public class OverloadedConstructor extends VjoValidationBaseTester {
     @Before
     public void setUp() {
         expectProblems.clear();
-        expectProblems.add(createNewProblem(TypeProbIds.TypeMismatch, 53, 0));
+        expectProblems.add(createNewProblem2(TypeProbIds.TypeMismatch, 64, 0));
     }
 
     @Test

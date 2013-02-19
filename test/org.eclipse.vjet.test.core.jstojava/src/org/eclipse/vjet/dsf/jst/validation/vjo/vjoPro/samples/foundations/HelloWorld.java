@@ -37,8 +37,8 @@ import org.junit.Test;
     @Before
     public void setUp(){
         expectProblems.clear();
-        expectProblems.add(createNewProblem(VarProbIds.UndefinedName, 9, 0));
-        expectProblems.add(createNewProblem(MethodProbIds.VoidMethodReturnsValue, 5, 0));
+        expectProblems.add(createNewProblem2(VarProbIds.UndefinedName, 20, 0));
+        expectProblems.add(createNewProblem2(MethodProbIds.VoidMethodReturnsValue, 16, 0));
     }   
  
     // Bug : http://quickbugs.arch.ebay.com/show_bug.cgi?id=6238

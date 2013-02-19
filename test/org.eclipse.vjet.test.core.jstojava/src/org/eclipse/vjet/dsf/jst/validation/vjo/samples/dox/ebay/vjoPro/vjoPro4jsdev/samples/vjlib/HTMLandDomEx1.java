@@ -36,7 +36,7 @@ public class HTMLandDomEx1 extends VjoValidationBaseTester {
     @Before
     public void setUp() {
         expectProblems.clear();
-        expectProblems.add(createNewProblem(MethodProbIds.ShouldReturnValue, 5,
+        expectProblems.add(createNewProblem2(MethodProbIds.ShouldReturnValue, 16,
                 0));
     }
 

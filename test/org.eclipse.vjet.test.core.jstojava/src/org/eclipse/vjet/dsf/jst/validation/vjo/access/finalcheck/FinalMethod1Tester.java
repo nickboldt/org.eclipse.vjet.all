@@ -36,7 +36,7 @@ public class FinalMethod1Tester extends VjoValidationBaseTester {
     @Before
     public void setUp() {
         expectProblems.clear();
-        expectProblems.add(createNewProblem(MethodProbIds.OverrideSuperFinalMethod, 5, 0));
+        expectProblems.add(createNewProblem2(MethodProbIds.OverrideSuperFinalMethod, 16, 0));
     }
 
     @Test

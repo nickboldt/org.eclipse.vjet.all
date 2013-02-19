@@ -46,7 +46,7 @@ public class Logger extends VjoValidationBaseTester {
         expectProblems.clear();
         //this.levelObj isn't defined properly
         expectProblems
-                .add(createNewProblem(FieldProbIds.UndefinedField, 127, 0));
+                .add(createNewProblem2(FieldProbIds.UndefinedField, 138, 0));
     }
 
     @Test

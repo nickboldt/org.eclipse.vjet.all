@@ -35,9 +35,9 @@ public class RegExTests extends VjoValidationBaseTester {
     @Before
     public void setUp() {
         expectProblems.clear();
-        expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 42, 0));
         expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 43, 0));
         expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 44, 0));
+        expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 45, 0));
     }
 
     @Test

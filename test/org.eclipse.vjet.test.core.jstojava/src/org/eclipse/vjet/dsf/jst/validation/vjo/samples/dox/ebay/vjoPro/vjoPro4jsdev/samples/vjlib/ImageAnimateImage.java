@@ -36,20 +36,20 @@ public class ImageAnimateImage extends VjoValidationBaseTester {
     @Before
     public void setUp() {
         expectProblems.clear();
-        expectProblems.add(createNewProblem(FieldProbIds.UndefinedField, 9, 0));
+        expectProblems.add(createNewProblem2(FieldProbIds.UndefinedField, 20, 0));
         expectProblems
-                .add(createNewProblem(FieldProbIds.UndefinedField, 14, 0));
+                .add(createNewProblem2(FieldProbIds.UndefinedField, 24, 0));
         expectProblems
-                .add(createNewProblem(FieldProbIds.UndefinedField, 26, 0));
+                .add(createNewProblem2(FieldProbIds.UndefinedField, 36, 0));
         expectProblems
-                .add(createNewProblem(FieldProbIds.UndefinedField, 15, 0));
-//        expectProblems.add(createNewProblem(TypeProbIds.TypeMismatch, 26, 0));
+                .add(createNewProblem2(FieldProbIds.UndefinedField, 25, 0));
+//        expectProblems.add(createNewProblem2(TypeProbIds.TypeMismatch, 26, 0));
         expectProblems
-                .add(createNewProblem(FieldProbIds.UndefinedField, 23, 0));
+                .add(createNewProblem2(FieldProbIds.UndefinedField, 33, 0));
         expectProblems
-                .add(createNewProblem(FieldProbIds.UndefinedField, 26, 0));
+                .add(createNewProblem2(FieldProbIds.UndefinedField, 36, 0));
         expectProblems
-                .add(createNewProblem(FieldProbIds.UndefinedField, 11, 0));
+                .add(createNewProblem2(FieldProbIds.UndefinedField, 22, 0));
     }
 
     @Test

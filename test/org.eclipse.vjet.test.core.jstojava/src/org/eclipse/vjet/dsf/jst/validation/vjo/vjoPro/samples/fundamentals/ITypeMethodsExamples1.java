@@ -36,10 +36,10 @@ public class ITypeMethodsExamples1 extends VjoValidationBaseTester {
     @Before
     public void setUp() {
         expectProblems.clear();
-        expectProblems.add(createNewProblem(
-                TypeProbIds.IllegalModifierForInterface, 3, 0));
-        expectProblems.add(createNewProblem(
-                TypeProbIds.IllegalModifierForInterface, 6, 0));
+        expectProblems.add(createNewProblem2(
+                TypeProbIds.IllegalModifierForInterface, 14, 0));
+        expectProblems.add(createNewProblem2(
+                TypeProbIds.IllegalModifierForInterface, 17, 0));
     }
 
     @Test

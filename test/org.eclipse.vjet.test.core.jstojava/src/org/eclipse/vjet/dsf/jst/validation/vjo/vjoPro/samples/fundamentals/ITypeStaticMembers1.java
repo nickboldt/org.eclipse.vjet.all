@@ -36,8 +36,8 @@ public class ITypeStaticMembers1 extends VjoValidationBaseTester {
     @Before
     public void setUp() {
         expectProblems.clear();
-        expectProblems.add(createNewProblem(
-                VjoSyntaxProbIds.ITypeAllowsOnlyPublicModifier, 6, 0));
+        expectProblems.add(createNewProblem2(
+                VjoSyntaxProbIds.ITypeAllowsOnlyPublicModifier,17, 0));
     }
 
     @Test

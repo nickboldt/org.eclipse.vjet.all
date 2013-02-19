@@ -29,7 +29,7 @@ public class MType extends VjoValidationBaseTester {
     @Before
     public void setUp() {
         expectProblems.clear();
-        expectProblems.add(createNewProblem(VjoSyntaxProbIds.MissingEndType, 0,
+        expectProblems.add(createNewProblem2(VjoSyntaxProbIds.MissingEndType, 11,
                 0));
     }
 

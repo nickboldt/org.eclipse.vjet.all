@@ -38,10 +38,10 @@ public class Handler extends VjoValidationBaseTester {
     public void setUp() {
         expectProblems.clear();
         expectProblems
-                .add(createNewProblem(FieldProbIds.UndefinedField, 22, 0));
+                .add(createNewProblem2(FieldProbIds.UndefinedField, 33, 0));
         expectProblems
-                .add(createNewProblem(FieldProbIds.UndefinedField, 31, 0));
-        expectProblems.add(createNewProblem(MethodProbIds.UndefinedMethod, 44,
+                .add(createNewProblem2(FieldProbIds.UndefinedField, 42, 0));
+        expectProblems.add(createNewProblem2(MethodProbIds.UndefinedMethod, 54,
                 0));
     }
 

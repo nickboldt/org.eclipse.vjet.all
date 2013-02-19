@@ -38,14 +38,14 @@ public class AlphaNumeric extends VjoValidationBaseTester {
     @Before
     public void setUp() {
         expectProblems.clear();
-        expectProblems.add(createNewProblem(
-                VjoSyntaxProbIds.TypeUnknownNotInTypeSpace, 2, 0));
-        expectProblems.add(createNewProblem(MethodProbIds.UndefinedMethod, 74,
+        expectProblems.add(createNewProblem2(
+                VjoSyntaxProbIds.TypeUnknownNotInTypeSpace, 13, 0));
+        expectProblems.add(createNewProblem2(MethodProbIds.UndefinedMethod, 84,
                 0));
-        expectProblems.add(createNewProblem(
-                VjoSyntaxProbIds.TypeUnknownNotInTypeSpace, 2, 0));
+        expectProblems.add(createNewProblem2(
+                VjoSyntaxProbIds.TypeUnknownNotInTypeSpace, 12, 0));
         expectProblems
-                .add(createNewProblem(TypeProbIds.UnusedActiveNeeds, 1, 0));
+                .add(createNewProblem2(TypeProbIds.UnusedActiveNeeds, 11, 0));
     }
 
     @Test

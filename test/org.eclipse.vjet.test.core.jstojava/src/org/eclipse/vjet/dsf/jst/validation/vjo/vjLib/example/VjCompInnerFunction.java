@@ -37,7 +37,7 @@ public class VjCompInnerFunction extends VjoValidationBaseTester {
     public void setUp() {
         expectProblems.clear();
         expectProblems
-                .add(createNewProblem(FieldProbIds.UndefinedField, 10, 0));
+                .add(createNewProblem2(FieldProbIds.UndefinedField, 21, 0));
     }
 
     @Test

@@ -36,9 +36,9 @@ public class PassingProxiedJSMethod extends VjoValidationBaseTester {
     @Before
     public void setUp() {
         expectProblems.clear();
-        expectProblems.add(createNewProblem(
-                TypeProbIds.IncompatibleTypesInEqualityOperator, 15, 0));
-        expectProblems.add(createNewProblem(TypeProbIds.TypeMismatch, 6, 0));
+        expectProblems.add(createNewProblem2(
+                TypeProbIds.IncompatibleTypesInEqualityOperator, 26, 0));
+        expectProblems.add(createNewProblem2(TypeProbIds.TypeMismatch, 17, 0));
     }
 
     @Test

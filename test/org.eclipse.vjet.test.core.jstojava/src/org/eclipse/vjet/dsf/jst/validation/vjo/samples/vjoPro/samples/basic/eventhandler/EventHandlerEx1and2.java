@@ -36,9 +36,9 @@ public class EventHandlerEx1and2 extends VjoValidationBaseTester {
     @Before
     public void setUp() {
         expectProblems.clear();
-        expectProblems.add(createNewProblem(FieldProbIds.UndefinedField, 9, 0));
+        expectProblems.add(createNewProblem2(FieldProbIds.UndefinedField, 20, 0));
         expectProblems
-                .add(createNewProblem(FieldProbIds.UndefinedField, 20, 0));
+                .add(createNewProblem2(FieldProbIds.UndefinedField, 30, 0));
     }
 
     @Test

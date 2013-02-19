@@ -36,24 +36,24 @@ public class Ecma3ExceptionsTests extends VjoValidationBaseTester {
     @Before
     public void setUp() {
         expectProblems.clear();
-        expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt, 665, 0));
         expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt, 666, 0));
-        expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt, 671, 0));
+        expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt, 667, 0));
+        expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt, 672, 0));
         expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt, 689, 0));
         expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt, 696, 0));
         expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt, 705, 0));
 
    
-        expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt, 828, 0));
         expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt, 829, 0));
         expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt, 830, 0));
-        expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt, 835, 0));
+        expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt, 831, 0));
+        expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt, 836, 0));
         
         expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt, 842, 0));
         expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt, 849, 0));
         expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt, 858, 0));
-        expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 885, 0));
-        expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 899, 0));
+        expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 886, 0));
+        expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 900, 0));
     }
 
     @Test

@@ -36,8 +36,8 @@ public class Employee extends VjoValidationBaseTester {
     @Before
     public void setUp() {
         expectProblems.clear();
-        expectProblems.add(createNewProblem(
-                MethodProbIds.VoidMethodReturnsValue, 26, 0));
+        expectProblems.add(createNewProblem2(
+                MethodProbIds.VoidMethodReturnsValue, 37, 0));
     }
 
     @Test

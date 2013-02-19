@@ -40,29 +40,29 @@ public class ConsoleHandler extends VjoValidationBaseTester {
     @Before
     public void setUp() {
         expectProblems.clear();
-        expectProblems.add(createNewProblem(TypeProbIds.UnusedActiveNeeds,
-        		1, 0));
-        expectProblems.add(createNewProblem(VjoSyntaxProbIds.RedundantImport,
-                2, 0));
-        expectProblems.add(createNewProblem(
-                VjoSyntaxProbIds.TypeUnknownNotInTypeSpace, 3, 0));
-//        expectProblems.add(createNewProblem(FieldProbIds.FieldInitializationDependsOnUnintializedTypes,
+        expectProblems.add(createNewProblem2(TypeProbIds.UnusedActiveNeeds,
+        		11, 0));
+        expectProblems.add(createNewProblem2(VjoSyntaxProbIds.RedundantImport,
+                12, 0));
+        expectProblems.add(createNewProblem2(
+                VjoSyntaxProbIds.TypeUnknownNotInTypeSpace, 13, 0));
+//        expectProblems.add(createNewProblem2(FieldProbIds.FieldInitializationDependsOnUnintializedTypes,
 //                7, 0));
-        expectProblems.add(createNewProblem(FieldProbIds.FieldInitializationDependsOnUnintializedTypes,
-                8, 0));
-        expectProblems.add(createNewProblem(VarProbIds.UndefinedName, 8, 0));
+        expectProblems.add(createNewProblem2(FieldProbIds.FieldInitializationDependsOnUnintializedTypes,
+                19, 0));
+        expectProblems.add(createNewProblem2(VarProbIds.UndefinedName, 18, 0));
         expectProblems
-                .add(createNewProblem(FieldProbIds.UndefinedField, 69, 0));
+                .add(createNewProblem2(FieldProbIds.UndefinedField, 80, 0));
         expectProblems
-                .add(createNewProblem(FieldProbIds.UndefinedField, 85, 0));
+                .add(createNewProblem2(FieldProbIds.UndefinedField, 95, 0));
 //        expectProblems
-//                .add(createNewProblem(FieldProbIds.UndefinedField, 86, 0));
+//                .add(createNewProblem2(FieldProbIds.UndefinedField, 86, 0));
         expectProblems
-                .add(createNewProblem(FieldProbIds.UndefinedField, 88, 0));
+                .add(createNewProblem2(FieldProbIds.UndefinedField, 98, 0));
         expectProblems
-                .add(createNewProblem(FieldProbIds.UndefinedField, 104, 0));
+                .add(createNewProblem2(FieldProbIds.UndefinedField, 115, 0));
         expectProblems
-        		.add(createNewProblem(MethodProbIds.VoidMethodReturnsValue, 44, 0));
+        		.add(createNewProblem2(MethodProbIds.VoidMethodReturnsValue, 55, 0));
     }
 
     @Test

@@ -36,7 +36,7 @@ public class CodeSnippetConstructors1 extends VjoValidationBaseTester {
     @Before
     public void setUp() {
         expectProblems.clear();
-        expectProblems.add(createNewProblem(TypeProbIds.TypeMismatch, 21, 0));
+        expectProblems.add(createNewProblem2(TypeProbIds.TypeMismatch, 32, 0));
     }
 
     @Test

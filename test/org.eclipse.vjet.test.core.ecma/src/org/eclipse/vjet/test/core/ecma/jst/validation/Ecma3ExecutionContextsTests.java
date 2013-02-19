@@ -36,7 +36,7 @@ public class Ecma3ExecutionContextsTests extends VjoValidationBaseTester {
     public void setUp() {
         expectProblems.clear();
         expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt, 258, 0));
-        expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt, 510, 0));
+        expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt, 511, 0));
     }
 
     @Test

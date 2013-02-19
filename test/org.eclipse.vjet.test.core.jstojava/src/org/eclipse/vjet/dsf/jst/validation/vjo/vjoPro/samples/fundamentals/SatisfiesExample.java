@@ -36,8 +36,8 @@ public class SatisfiesExample extends VjoValidationBaseTester {
     @Before
     public void setUp() {
         expectProblems.clear();
-        expectProblems.add(createNewProblem(MethodProbIds.ShouldReturnValue,
-                21, 0));
+        expectProblems.add(createNewProblem2(MethodProbIds.ShouldReturnValue,
+                32, 0));
     }
 
     @Test

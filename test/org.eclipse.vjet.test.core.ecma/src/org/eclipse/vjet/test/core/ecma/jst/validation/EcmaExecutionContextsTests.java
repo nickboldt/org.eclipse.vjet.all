@@ -51,7 +51,7 @@ public class EcmaExecutionContextsTests extends VjoValidationBaseTester {
         expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 840+headersize, 0));
         expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 920+headersize, 0));
         expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 1189+headersize, 0));
-        expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 1322+headersize, 0));
+        expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 1323+headersize, 0));
     }
 
     @Test

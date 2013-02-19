@@ -41,20 +41,20 @@ public class JsOnlyEx2 extends VjoValidationBaseTester {
         // expectProblems.add(createNewProblem(VarProbIds.UndefinedName,19, 0));
         // expectProblems.add(createNewProblem(MethodProbIds.UndefinedMethod,
         // 19, 0));
-        expectProblems.add(createNewProblem(
-                VjoSyntaxProbIds.TypeUnknownMissingImport, 13, 0));
-        // expectProblems.add(createNewProblem(VjoSyntaxProbIds.TypeUnknownMissingImport,
+        expectProblems.add(createNewProblem2(
+                VjoSyntaxProbIds.TypeUnknownMissingImport, 23, 0));
+        // expectProblems.add(createNewProblem2(VjoSyntaxProbIds.TypeUnknownMissingImport,
         // 19, 0));
-        // expectProblems.add(createNewProblem(VarProbIds.UndefinedName,27, 0));
-        // expectProblems.add(createNewProblem(VarProbIds.UndefinedName,14, 0));
-        expectProblems.add(createNewProblem(TypeProbIds.UnusedActiveNeeds, 1,0));
-        expectProblems.add(createNewProblem(VarProbIds.UndefinedName, 14,0));
-        expectProblems.add(createNewProblem(VarProbIds.UndefinedName, 27,0));
+        // expectProblems.add(createNewProblem2(VarProbIds.UndefinedName,27, 0));
+        // expectProblems.add(createNewProblem2(VarProbIds.UndefinedName,14, 0));
+        expectProblems.add(createNewProblem2(TypeProbIds.UnusedActiveNeeds, 11,0));
+        expectProblems.add(createNewProblem2(VarProbIds.UndefinedName, 25,0));
+        expectProblems.add(createNewProblem2(VarProbIds.UndefinedName, 38,0));
         
         
-        expectProblems.add(createNewProblem(
-                VjoSyntaxProbIds.TypeUnknownNotInTypeSpace, 2, 0));
-        expectProblems.add(createNewProblem(VarProbIds.UndefinedName, 17, 0));
+        expectProblems.add(createNewProblem2(
+                VjoSyntaxProbIds.TypeUnknownNotInTypeSpace, 12, 0));
+        expectProblems.add(createNewProblem2(VarProbIds.UndefinedName, 27, 0));
      
     }
 

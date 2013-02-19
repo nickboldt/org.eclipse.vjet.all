@@ -36,8 +36,8 @@ public class InterfaceWithSubType extends VjoValidationBaseTester {
     @Before
     public void setUp() {
         expectProblems.clear();
-        expectProblems.add(createNewProblem(
-                TypeProbIds.IllegalModifierForInterface, 14, 0));
+        expectProblems.add(createNewProblem2(
+                TypeProbIds.IllegalModifierForInterface, 25, 0));
         expectProblems
                 .add(createNewProblem(TypeProbIds.UnusedActiveNeeds, 1, 0));
     }

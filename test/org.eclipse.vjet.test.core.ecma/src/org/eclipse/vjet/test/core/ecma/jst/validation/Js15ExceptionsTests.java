@@ -42,19 +42,19 @@ public class Js15ExceptionsTests extends VjoValidationBaseTester {
                 MethodProbIds.WrongNumberOfArguments, 271+headersize, 0));
         expectProblems.add(createNewProblem(MethodProbIds.ParameterMismatch,
                 1002+headersize, 0));
-        expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt, 61+headersize, 0));
-        expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt, 99+headersize, 0));
-        expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt, 558+headersize, 0));
-        expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt, 559+headersize, 0));
-        expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt, 560+headersize, 0));
-        expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt, 561+headersize, 0));
-        expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt, 562+headersize, 0));
-        expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt, 563+headersize, 0));
-        expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt, 564+headersize, 0));
-        expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt, 574+headersize, 0));
-        expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt, 616+headersize, 0));
-        expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt, 1059+headersize, 0));
-        expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt, 1104+headersize, 0));
+        expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt, 88, 0));
+        expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt, 126, 0));
+        expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt, 591, 0));
+        expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt, 601, 0));
+        expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt, 585, 0));
+        expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt, 586, 0));
+        expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt, 587, 0));
+        expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt, 588, 0));
+        expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt, 589, 0));
+        expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt, 590, 0));
+        expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt, 643, 0));
+        expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt, 1086, 0));
+        expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt, 1131, 0));
 
     }
 

@@ -36,7 +36,7 @@ public class Ecma3ArrayTests extends VjoValidationBaseTester {
     public void setUp() {
         expectProblems.clear();
         expectProblems.add(createNewProblem(
-        		TypeProbIds.IncompatibleTypesInEqualityOperator, 235, 0));
+        		TypeProbIds.IncompatibleTypesInEqualityOperator, 236, 0));
     }
 
     @Test

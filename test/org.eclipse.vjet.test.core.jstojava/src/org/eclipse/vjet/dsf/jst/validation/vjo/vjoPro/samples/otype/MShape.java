@@ -39,12 +39,12 @@ public class MShape extends VjoValidationBaseTester {
     public void setUp() {
         expectProblems.clear();
         expectProblems
-                .add(createNewProblem(TypeProbIds.UnusedActiveNeeds, 1, 0));
-        expectProblems.add(createNewProblem(MethodProbIds.ShouldReturnValue,
-                15, 0));
+                .add(createNewProblem2(TypeProbIds.UnusedActiveNeeds, 11, 0));
+        expectProblems.add(createNewProblem2(MethodProbIds.ShouldReturnValue,
+                26, 0));
         expectProblems
-                .add(createNewProblem(FieldProbIds.UndefinedField, 16, 0));
-        expectProblems.add(createNewProblem(TypeProbIds.TypeMismatch, 9, 0));
+                .add(createNewProblem2(FieldProbIds.UndefinedField, 27, 0));
+        expectProblems.add(createNewProblem2(TypeProbIds.TypeMismatch, 20, 0));
     }
 
     @Test

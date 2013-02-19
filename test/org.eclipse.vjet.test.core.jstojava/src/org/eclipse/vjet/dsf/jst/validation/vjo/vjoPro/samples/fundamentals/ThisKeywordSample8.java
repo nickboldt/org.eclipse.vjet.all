@@ -36,8 +36,8 @@ public class ThisKeywordSample8 extends VjoValidationBaseTester {
     @Before
     public void setUp() {
         expectProblems.clear();
-        expectProblems.add(createNewProblem(MethodProbIds.ShouldReturnValue,
-                19, 0));
+        expectProblems.add(createNewProblem2(MethodProbIds.ShouldReturnValue,
+                30, 0));
     }
 
     @Test

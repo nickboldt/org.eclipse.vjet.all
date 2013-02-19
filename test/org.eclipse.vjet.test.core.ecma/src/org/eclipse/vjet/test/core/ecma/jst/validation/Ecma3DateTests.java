@@ -63,8 +63,8 @@ public class Ecma3DateTests extends VjoValidationBaseTester {
                 0));
         expectProblems.add(createNewProblem(MethodProbIds.UndefinedMethod, 871,
                 0));
-        expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 961, 0));
         expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 962, 0));
+        expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 963, 0));
         
 
     }

@@ -44,7 +44,7 @@ public class Employee2 extends VjoValidationBaseTester {
     //@Description("To test VjoPro project false positive")
     public void testEmployee2() {
 //        expectProblems.add(createNewProblem(TypeProbIds.MixinExpectsMustBeSatisfied, 1, 0));
-        expectProblems.add(createNewProblem(MethodProbIds.ShouldReturnValue,26,0));
+        expectProblems.add(createNewProblem2(MethodProbIds.ShouldReturnValue,37,0));
         List<VjoSemanticProblem> problems = getVjoSemanticProblem(
                 "vjoPro.samples.mtype.", "Employee2.js", this.getClass());
         assertProblemEquals(expectProblems, problems);
@@ -55,9 +55,9 @@ public class Employee2 extends VjoValidationBaseTester {
     //@Description("To test VjoPro project false positive")
     public void testEmployee8() {
         expectProblems.clear();
-        expectProblems.add(createNewProblem(FieldProbIds.AmbiguousField, 3, 0));
-        expectProblems.add(createNewProblem(MethodProbIds.AmbiguousMethod, 6, 0));
-        expectProblems.add(createNewProblem(MethodProbIds.AmbiguousMethod, 13, 0));
+        expectProblems.add(createNewProblem2(FieldProbIds.AmbiguousField, 14, 0));
+        expectProblems.add(createNewProblem2(MethodProbIds.AmbiguousMethod, 17, 0));
+        expectProblems.add(createNewProblem2(MethodProbIds.AmbiguousMethod, 24, 0));
         List<VjoSemanticProblem> problems = getVjoSemanticProblem(
                 "vjoPro.samples.mtype.", "Employee8.js", this.getClass());
         assertProblemEquals(expectProblems, problems);

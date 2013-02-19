@@ -36,10 +36,10 @@ public class HTMLandDomEx1 extends VjoValidationBaseTester {
     @Before
     public void setUp() {
         expectProblems.clear();
-        expectProblems.add(createNewProblem(MethodProbIds.UndefinedMethod, 12,
+        expectProblems.add(createNewProblem2(MethodProbIds.UndefinedMethod, 22,
                 0));
-        expectProblems.add(createNewProblem(MethodProbIds.ShouldReturnValue,
-                10, 0));
+        expectProblems.add(createNewProblem2(MethodProbIds.ShouldReturnValue,
+                21, 0));
     }
 
     @Test

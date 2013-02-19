@@ -37,16 +37,16 @@ public class DedupServiceHandler extends VjoValidationBaseTester {
     @Before
     public void setUp() {
         expectProblems.clear();
-        expectProblems.add(createNewProblem(
-                VjoSyntaxProbIds.TypeUnknownNotInTypeSpace, 2, 0));
-        expectProblems.add(createNewProblem(
-                VjoSyntaxProbIds.TypeUnknownNotInTypeSpace, 2, 0));
-        expectProblems.add(createNewProblem(VjoSyntaxProbIds.RedundantImport,
-                3, 0));
-        expectProblems.add(createNewProblem(VjoSyntaxProbIds.RedundantImport,
-                4, 0));
+        expectProblems.add(createNewProblem2(
+                VjoSyntaxProbIds.TypeUnknownNotInTypeSpace, 12, 0));
+        expectProblems.add(createNewProblem2(
+                VjoSyntaxProbIds.TypeUnknownNotInTypeSpace, 13, 0));
+        expectProblems.add(createNewProblem2(VjoSyntaxProbIds.RedundantImport,
+                14, 0));
+        expectProblems.add(createNewProblem2(VjoSyntaxProbIds.RedundantImport,
+                15, 0));
         expectProblems
-                .add(createNewProblem(TypeProbIds.UnusedActiveNeeds, 1, 0));
+                .add(createNewProblem2(TypeProbIds.UnusedActiveNeeds, 11, 0));
     }
 
     @Test

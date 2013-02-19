@@ -37,9 +37,9 @@ public class Validation3273Tester extends VjoValidationBaseTester {
     @Before
     public void setUp() {
         expectProblems.clear();
-        expectProblems.add(createNewProblem(FieldProbIds.UndefinedField, 7, 0));
-        expectProblems.add(createNewProblem(
-                TypeProbIds.ClassBetterStartsWithCapitalLetter, 1, 0));
+        expectProblems.add(createNewProblem2(FieldProbIds.UndefinedField, 18, 0));
+        expectProblems.add(createNewProblem2(
+                TypeProbIds.ClassBetterStartsWithCapitalLetter, 11, 0));
     }
 
     @Test

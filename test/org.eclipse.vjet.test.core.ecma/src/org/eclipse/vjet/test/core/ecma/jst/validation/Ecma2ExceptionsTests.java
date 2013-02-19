@@ -37,7 +37,7 @@ public class Ecma2ExceptionsTests extends VjoValidationBaseTester {
     @Before
     public void setUp() {
         expectProblems.clear();
-        int headersize = 36;
+        int headersize = 37;
 		expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 310+headersize, 0));
         expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 311+headersize, 0));
 //        treated as an implicity constructor call
@@ -46,7 +46,7 @@ public class Ecma2ExceptionsTests extends VjoValidationBaseTester {
         expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 347+headersize, 0));
         expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 348+headersize, 0));
         expectProblems.add(createNewProblem(MethodProbIds.UndefinedMethod,
-        		352+headersize, 0));
+        		351+headersize, 0));
         expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 383+headersize, 0));
         expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 384+headersize, 0));
         expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 387+headersize, 0));
@@ -73,7 +73,7 @@ public class Ecma2ExceptionsTests extends VjoValidationBaseTester {
         expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 761+headersize, 0));
         expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 809+headersize, 0));
         expectProblems.add(createNewProblem(MethodProbIds.UndefinedMethod,
-        		900+headersize, 0));
+        		899+headersize, 0));
         expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 984+headersize, 0));
 
         // Line 1361 result = (void 0).valueOf(); should be clear with SDC

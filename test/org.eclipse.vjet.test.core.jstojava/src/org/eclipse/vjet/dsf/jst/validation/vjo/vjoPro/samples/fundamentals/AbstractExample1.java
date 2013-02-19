@@ -37,9 +37,9 @@ public class AbstractExample1 extends VjoValidationBaseTester {
     @Before
     public void setUp() {
         expectProblems.clear();
-        expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 20, 0));
-        expectProblems.add(createNewProblem(
-                TypeProbIds.IllegalModifierForClass, 1, 0));
+        expectProblems.add(createNewProblem2(VarProbIds.LooseVarDecl, 31, 0));
+        expectProblems.add(createNewProblem2(
+                TypeProbIds.IllegalModifierForClass, 11, 0));
     }
 
     @Test

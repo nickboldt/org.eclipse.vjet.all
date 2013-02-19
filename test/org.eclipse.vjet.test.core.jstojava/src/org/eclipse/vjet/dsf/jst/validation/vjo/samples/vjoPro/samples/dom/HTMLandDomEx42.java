@@ -37,22 +37,22 @@ public class HTMLandDomEx42 extends VjoValidationBaseTester {
     @Before
     public void setUp() {
         expectProblems.clear();
-        expectProblems.add(createNewProblem(MethodProbIds.ShouldReturnValue,
-                21, 0));
-        expectProblems.add(createNewProblem(
-                MethodProbIds.WrongNumberOfArguments, 27, 0));
+        expectProblems.add(createNewProblem2(MethodProbIds.ShouldReturnValue,
+                32, 0));
+        expectProblems.add(createNewProblem2(
+                MethodProbIds.WrongNumberOfArguments, 37, 0));
         expectProblems
-                .add(createNewProblem(FieldProbIds.UndefinedField, 25, 0));
+                .add(createNewProblem2(FieldProbIds.UndefinedField, 35, 0));
         expectProblems
-                .add(createNewProblem(FieldProbIds.UndefinedField, 30, 0));
+                .add(createNewProblem2(FieldProbIds.UndefinedField, 40, 0));
         expectProblems
-                .add(createNewProblem(FieldProbIds.UndefinedField, 26, 0));
+                .add(createNewProblem2(FieldProbIds.UndefinedField, 37, 0));
         expectProblems
-                .add(createNewProblem(FieldProbIds.UndefinedField, 29, 0));
+                .add(createNewProblem2(FieldProbIds.UndefinedField, 39, 0));
         expectProblems
-                .add(createNewProblem(FieldProbIds.UndefinedField, 12, 0));
+                .add(createNewProblem2(FieldProbIds.UndefinedField, 23, 0));
         expectProblems
-                .add(createNewProblem(FieldProbIds.UndefinedField, 24, 0));
+                .add(createNewProblem2(FieldProbIds.UndefinedField, 34, 0));
     }
 
     @Test

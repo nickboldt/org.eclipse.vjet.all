@@ -37,22 +37,22 @@ public class Wrap extends VjoValidationBaseTester {
     @Before
     public void setUp() {
         expectProblems.clear();
-        expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 9, 0));
-        expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 10, 0));
-        expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 11, 0));
-        expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 12, 0));
-        expectProblems.add(createNewProblem(VarProbIds.UndefinedName, 12, 0));
-        expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 13, 0));
-        expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 14, 0));
-        expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 15, 0));
-        expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 16, 0));
-        expectProblems.add(createNewProblem(VarProbIds.UndefinedName, 22, 0));
-        expectProblems.add(createNewProblem(VarProbIds.UndefinedName, 27, 0));
+        expectProblems.add(createNewProblem2(VarProbIds.LooseVarDecl, 20, 0));
+        expectProblems.add(createNewProblem2(VarProbIds.LooseVarDecl, 21, 0));
+        expectProblems.add(createNewProblem2(VarProbIds.LooseVarDecl, 22, 0));
+        expectProblems.add(createNewProblem2(VarProbIds.LooseVarDecl, 23, 0));
+        expectProblems.add(createNewProblem2(VarProbIds.UndefinedName, 22, 0));
+        expectProblems.add(createNewProblem2(VarProbIds.LooseVarDecl, 24, 0));
+        expectProblems.add(createNewProblem2(VarProbIds.LooseVarDecl, 25, 0));
+        expectProblems.add(createNewProblem2(VarProbIds.LooseVarDecl, 26, 0));
+        expectProblems.add(createNewProblem2(VarProbIds.LooseVarDecl, 27, 0));
+        expectProblems.add(createNewProblem2(VarProbIds.UndefinedName, 33, 0));
+        expectProblems.add(createNewProblem2(VarProbIds.UndefinedName, 38, 0));
         expectProblems
-                .add(createNewProblem(FieldProbIds.UndefinedField, 53, 0));
-//        expectProblems.add(createNewProblem(MethodProbIds.UndefinedMethod, 67,
+                .add(createNewProblem2(FieldProbIds.UndefinedField, 63, 0));
+//        expectProblems.add(createNewProblem2(MethodProbIds.UndefinedMethod, 67,
 //                0));
-//        expectProblems.add(createNewProblem(MethodProbIds.UndefinedMethod, 76,
+//        expectProblems.add(createNewProblem2(MethodProbIds.UndefinedMethod, 76,
 //                0));
     }
 

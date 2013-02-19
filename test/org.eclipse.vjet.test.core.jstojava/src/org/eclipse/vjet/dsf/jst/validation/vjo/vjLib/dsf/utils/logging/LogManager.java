@@ -37,22 +37,22 @@ public class LogManager extends VjoValidationBaseTester {
     @Before
     public void setUp() {
         expectProblems.clear();
-        expectProblems.add(createNewProblem(FieldProbIds.FieldInitializationDependsOnUnintializedTypes,
-                9, 0));
-        expectProblems.add(createNewProblem(FieldProbIds.FieldInitializationDependsOnUnintializedTypes,
-                10, 0));
-        expectProblems.add(createNewProblem(FieldProbIds.FieldInitializationDependsOnUnintializedTypes,
-                11, 0));
-        expectProblems.add(createNewProblem(FieldProbIds.FieldInitializationDependsOnUnintializedTypes,
-                12, 0));
+        expectProblems.add(createNewProblem2(FieldProbIds.FieldInitializationDependsOnUnintializedTypes,
+                20, 0));
+        expectProblems.add(createNewProblem2(FieldProbIds.FieldInitializationDependsOnUnintializedTypes,
+                21, 0));
+        expectProblems.add(createNewProblem2(FieldProbIds.FieldInitializationDependsOnUnintializedTypes,
+                22, 0));
+        expectProblems.add(createNewProblem2(FieldProbIds.FieldInitializationDependsOnUnintializedTypes,
+                23, 0));
         expectProblems
-                .add(createNewProblem(FieldProbIds.UndefinedField, 264, 0));
-        expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt, 326,
+                .add(createNewProblem2(FieldProbIds.UndefinedField, 275, 0));
+        expectProblems.add(createNewProblem2(MethodProbIds.UnreachableStmt, 337,
                 0));
-        expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt, 338,
+        expectProblems.add(createNewProblem2(MethodProbIds.UnreachableStmt, 349,
                 0));
-        expectProblems.add(createNewProblem(FieldProbIds.FieldInitializationDependsOnUnintializedTypes,
-                353, 0));
+        expectProblems.add(createNewProblem2(FieldProbIds.FieldInitializationDependsOnUnintializedTypes,
+                364, 0));
         // ML 10.27 variable defined no type in for statement will not thrown
         // error now.
     }

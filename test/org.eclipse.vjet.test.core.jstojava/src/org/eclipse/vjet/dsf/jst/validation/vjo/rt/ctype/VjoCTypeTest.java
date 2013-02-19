@@ -110,7 +110,7 @@ public class VjoCTypeTest extends VjoValidationBaseTester{
 	//@Description("Test every VJET JS must end with endType() section")
 	public void testBadCType5() throws Exception {
 		expectProblems.clear();
-		expectProblems.add(createNewProblem(VjoSyntaxProbIds.MissingEndType,0, 0));
+		expectProblems.add(createNewProblem2(VjoSyntaxProbIds.MissingEndType,11, 0));
 		actualProblems = getVjoSemanticProblem("org.eclipse.vjet.dsf.jst.validation.vjo.rt.ctype.", "BadCType5.js", this.getClass());
 		assertProblemEquals(expectProblems, actualProblems);
 	}

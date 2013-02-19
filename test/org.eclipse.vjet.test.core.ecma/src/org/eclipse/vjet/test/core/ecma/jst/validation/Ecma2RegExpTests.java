@@ -34,16 +34,16 @@ public class Ecma2RegExpTests extends VjoValidationBaseTester {
     @Before
     public void setUp() {
         expectProblems.clear();
-        expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 851, 0));
-        expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 855, 0));
-        expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 863, 0));
-        expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 867, 0));
-        expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 882, 0));
-        expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 886, 0));
-        expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 890, 0));
-        expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 859, 0));
-        expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 898, 0));
-        expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 894, 0));
+        expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 852, 0));
+        expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 856, 0));
+        expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 864, 0));
+        expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 868, 0));
+        expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 883, 0));
+        expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 887, 0));
+        expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 891, 0));
+        expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 860, 0));
+        expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 899, 0));
+        expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 895, 0));
         expectProblems.add(createNewProblem(VarProbIds.UndefinedName, 1032,
                 0));
     }

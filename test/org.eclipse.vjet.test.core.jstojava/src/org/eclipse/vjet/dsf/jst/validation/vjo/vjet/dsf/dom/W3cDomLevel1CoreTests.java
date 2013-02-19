@@ -36,7 +36,7 @@ public class W3cDomLevel1CoreTests extends VjoValidationBaseTester {
     @Before
     public void setUp() {
         expectProblems.clear();
-        expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 36, 0));
+        expectProblems.add(createNewProblem2(VarProbIds.LooseVarDecl, 47, 0));
     }
 
     @Test

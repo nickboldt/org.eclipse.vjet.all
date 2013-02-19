@@ -2203,8 +2203,8 @@ public class VjoValidationBugFixTests extends VjoValidationBaseTester {
     public void testEndTypeError() throws Exception {
         final List<VjoSemanticProblem> expectedProblems = new ArrayList<VjoSemanticProblem>(
                 0);
-        expectedProblems.add(createNewProblem(VjoSyntaxProbIds.MissingEndType,
-                0, 0));
+        expectedProblems.add(createNewProblem2(VjoSyntaxProbIds.MissingEndType,
+                11, 0));
 
         final List<VjoSemanticProblem> actualProblems = getVjoSemanticProblem(
                 "org.eclipse.vjet.dsf.jst.validation.vjo.BugFixes.", "Bug4628.js", this
@@ -2220,8 +2220,8 @@ public class VjoValidationBugFixTests extends VjoValidationBaseTester {
     public void testEndTypeErrorExtn() throws Exception {
         final List<VjoSemanticProblem> expectedProblems = new ArrayList<VjoSemanticProblem>(
                 0);
-        expectedProblems.add(createNewProblem(VjoSyntaxProbIds.MissingEndType,
-                0, 0));
+        expectedProblems.add(createNewProblem2(VjoSyntaxProbIds.MissingEndType,
+                11, 0));
 
         final List<VjoSemanticProblem> actualProblems = getVjoSemanticProblem(
                 "org.eclipse.vjet.dsf.jst.validation.vjo.BugFixes.", "Bug4667.js", this
@@ -2292,9 +2292,9 @@ public class VjoValidationBugFixTests extends VjoValidationBaseTester {
         final List<VjoSemanticProblem> expectedProblems = new ArrayList<VjoSemanticProblem>(
                 0);
         expectedProblems
-                .add(createNewProblem(FieldProbIds.UndefinedField, 0, 0));
-        expectedProblems.add(createNewProblem(
-                VjoSyntaxProbIds.IncorrectVjoSyntax, 0, 0));
+                .add(createNewProblem2(FieldProbIds.UndefinedField, 11, 0));
+        expectedProblems.add(createNewProblem2(
+                VjoSyntaxProbIds.IncorrectVjoSyntax, 11, 0));
 
         final List<VjoSemanticProblem> actualProblems = getVjoSemanticProblem(
                 "org.eclipse.vjet.dsf.jst.validation.vjo.BugFixes.", "Bug4667Extn.js",
@@ -2310,9 +2310,9 @@ public class VjoValidationBugFixTests extends VjoValidationBaseTester {
         final List<VjoSemanticProblem> expectedProblems = new ArrayList<VjoSemanticProblem>(
                 0);
         expectedProblems
-                .add(createNewProblem(FieldProbIds.UndefinedField, 0, 0));
-        expectedProblems.add(createNewProblem(
-                VjoSyntaxProbIds.IncorrectVjoSyntax, 0, 0));
+                .add(createNewProblem2(FieldProbIds.UndefinedField, 11, 0));
+        expectedProblems.add(createNewProblem2(
+                VjoSyntaxProbIds.IncorrectVjoSyntax, 11, 0));
 
         final List<VjoSemanticProblem> actualProblems = getVjoSemanticProblem(
                 "org.eclipse.vjet.dsf.jst.validation.vjo.BugFixes.",

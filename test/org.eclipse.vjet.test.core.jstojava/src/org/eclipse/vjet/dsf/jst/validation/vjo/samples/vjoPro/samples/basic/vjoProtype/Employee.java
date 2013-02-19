@@ -38,15 +38,15 @@ public class Employee extends VjoValidationBaseTester {
     public void setUp() {
         expectProblems.clear();
         expectProblems
-                .add(createNewProblem(FieldProbIds.UndefinedField, 13, 0));
-        expectProblems.add(createNewProblem(
-                MethodProbIds.WrongNumberOfArguments, 13, 0));
+                .add(createNewProblem2(FieldProbIds.UndefinedField, 24, 0));
+        expectProblems.add(createNewProblem2(
+                MethodProbIds.WrongNumberOfArguments, 23, 0));
         expectProblems
-                .add(createNewProblem(FieldProbIds.UndefinedField, 23, 0));
-        // expectProblems.add(createNewProblem(TypeProbIds.TypeMismatch, 31,
+                .add(createNewProblem2(FieldProbIds.UndefinedField, 34, 0));
+        // expectProblems.add(createNewProblem2(TypeProbIds.TypeMismatch, 31,
         // 0));
         expectProblems
-                .add(createNewProblem(FieldProbIds.UndefinedField, 32, 0));
+                .add(createNewProblem2(FieldProbIds.UndefinedField, 42, 0));
     }
 
     @Test

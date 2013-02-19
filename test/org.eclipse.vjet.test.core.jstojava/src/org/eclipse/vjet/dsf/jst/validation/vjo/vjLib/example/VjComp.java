@@ -38,17 +38,17 @@ public class VjComp extends VjoValidationBaseTester {
     public void setUp() {
         expectProblems.clear();
         expectProblems
-                .add(createNewProblem(FieldProbIds.UndefinedField, 66, 0));
+                .add(createNewProblem2(FieldProbIds.UndefinedField, 77, 0));
         expectProblems
-                .add(createNewProblem(FieldProbIds.UndefinedField, 65, 0));
+                .add(createNewProblem2(FieldProbIds.UndefinedField, 76, 0));
         expectProblems
-                .add(createNewProblem(FieldProbIds.UndefinedField, 68, 0));
+                .add(createNewProblem2(FieldProbIds.UndefinedField, 79, 0));
         expectProblems
-                .add(createNewProblem(FieldProbIds.UndefinedField, 28, 0));
+                .add(createNewProblem2(FieldProbIds.UndefinedField, 39, 0));
         expectProblems
-                .add(createNewProblem(FieldProbIds.UndefinedField, 67, 0));
+                .add(createNewProblem2(FieldProbIds.UndefinedField, 78, 0));
         expectProblems
-                .add(createNewProblem(TypeProbIds.UnusedActiveNeeds, 1, 0));
+                .add(createNewProblem2(TypeProbIds.UnusedActiveNeeds, 11, 0));
     }
 
     @Test

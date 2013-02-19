@@ -36,7 +36,7 @@ public class Formatter extends VjoValidationBaseTester {
     @Before
     public void setUp() {
         expectProblems.clear();
-        expectProblems.add(createNewProblem(FieldProbIds.UndefinedField, 3, 0));
+        expectProblems.add(createNewProblem2(FieldProbIds.UndefinedField, 14, 0));
     }
 
     @Test

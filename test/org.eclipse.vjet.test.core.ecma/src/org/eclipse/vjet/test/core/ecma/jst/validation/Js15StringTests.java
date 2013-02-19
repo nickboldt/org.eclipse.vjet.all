@@ -40,7 +40,7 @@ public class Js15StringTests extends VjoValidationBaseTester {
         expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt, 157,
                 0));
         
-        expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt, 181,
+        expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt, 182,
                 0));
     }
 

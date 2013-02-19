@@ -38,10 +38,10 @@ public class Sample1 extends VjoValidationBaseTester {
     public void setUp() {
         expectProblems.clear();
         expectProblems
-                .add(createNewProblem(FieldProbIds.UndefinedField, 20, 0));
+                .add(createNewProblem2(FieldProbIds.UndefinedField, 30, 0));
         expectProblems
-                .add(createNewProblem(FieldProbIds.UndefinedField, 20, 0));
-        expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 25, 0));
+                .add(createNewProblem2(FieldProbIds.UndefinedField, 30, 0));
+        expectProblems.add(createNewProblem2(VarProbIds.LooseVarDecl, 36, 0));
     }
 
     @Test

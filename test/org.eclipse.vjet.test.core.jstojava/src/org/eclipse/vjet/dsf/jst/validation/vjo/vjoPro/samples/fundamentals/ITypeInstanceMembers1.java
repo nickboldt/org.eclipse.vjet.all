@@ -36,18 +36,18 @@ public class ITypeInstanceMembers1 extends VjoValidationBaseTester {
     @Before
     public void setUp() {
         expectProblems.clear();
-        expectProblems.add(createNewProblem(
-                VjoSyntaxProbIds.ITypeAllowsOnlyPublicModifier, 2, 0));
-        expectProblems.add(createNewProblem(
-                VjoSyntaxProbIds.ITypeAllowsOnlyPublicModifier, 6, 0));
-        expectProblems.add(createNewProblem(
-                VjoSyntaxProbIds.ITypeWithInstanceProperty, 3, 0));
-        expectProblems.add(createNewProblem(
-                VjoSyntaxProbIds.ITypeWithInstanceProperty, 6, 0));
-        expectProblems.add(createNewProblem(
-                VjoSyntaxProbIds.ITypeWithInstanceProperty, 2, 0));
-        expectProblems.add(createNewProblem(
-                VjoSyntaxProbIds.ITypeWithInstanceProperty, 5, 0));
+        expectProblems.add(createNewProblem2(
+                VjoSyntaxProbIds.ITypeAllowsOnlyPublicModifier, 13, 0));
+        expectProblems.add(createNewProblem2(
+                VjoSyntaxProbIds.ITypeAllowsOnlyPublicModifier, 17, 0));
+        expectProblems.add(createNewProblem2(
+                VjoSyntaxProbIds.ITypeWithInstanceProperty, 14, 0));
+        expectProblems.add(createNewProblem2(
+                VjoSyntaxProbIds.ITypeWithInstanceProperty, 17, 0));
+        expectProblems.add(createNewProblem2(
+                VjoSyntaxProbIds.ITypeWithInstanceProperty, 13, 0));
+        expectProblems.add(createNewProblem2(
+                VjoSyntaxProbIds.ITypeWithInstanceProperty, 16, 0));
     }
 
     @Test

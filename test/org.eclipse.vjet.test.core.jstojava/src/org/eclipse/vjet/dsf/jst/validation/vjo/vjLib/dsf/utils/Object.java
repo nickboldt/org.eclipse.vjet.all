@@ -37,11 +37,11 @@ public class Object extends VjoValidationBaseTester {
     @Before
     public void setUp() {
         expectProblems.clear();
-        expectProblems.add(createNewProblem(
-                VjoSyntaxProbIds.TypeUnknownMissingImport, 16, 0));
+        expectProblems.add(createNewProblem2(
+                VjoSyntaxProbIds.TypeUnknownMissingImport, 27, 0));
         // expectProblems.add(createNewProblem(VjoSyntaxProbIds.TypeUnknownMissingImport,
         // 17, 0));
-        expectProblems.add(createNewProblem(TypeProbIds.TypeMismatch, 25, 0));
+        expectProblems.add(createNewProblem2(TypeProbIds.TypeMismatch, 36, 0));
 
     }
 

@@ -36,11 +36,11 @@ public class ValidationB490Tester extends VjoValidationBaseTester {
     @Before
     public void setUp() {
         expectProblems.clear();
-        expectProblems.add(createNewProblem(MethodProbIds.AmbiguousMethod, 10,
+        expectProblems.add(createNewProblem2(MethodProbIds.AmbiguousMethod, 21,
                 0));
-        expectProblems.add(createNewProblem(MethodProbIds.AmbiguousMethod, 13,
+        expectProblems.add(createNewProblem2(MethodProbIds.AmbiguousMethod, 24,
                 0));
-        expectProblems.add(createNewProblem(MethodProbIds.AmbiguousMethod, 16,
+        expectProblems.add(createNewProblem2(MethodProbIds.AmbiguousMethod, 27,
                 0));
     }
 

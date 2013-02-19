@@ -38,7 +38,7 @@ public class Ecma3ObjectTests extends VjoValidationBaseTester {
         expectProblems.clear();
         expectProblems.add(createNewProblem(
                 MethodProbIds.WrongNumberOfArguments, 758, 0));
-        expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 843, 0));
+        expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 844, 0));
     }
 
     @Test

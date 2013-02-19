@@ -36,7 +36,7 @@ public class Formx extends VjoValidationBaseTester {
     @Before
     public void setUp() {
         expectProblems.clear();
-        expectProblems.add(createNewProblem(TypeProbIds.TypeMismatch, 17, 0));
+        expectProblems.add(createNewProblem2(TypeProbIds.TypeMismatch, 28, 0));
     }
 
     @Test

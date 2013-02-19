@@ -37,10 +37,10 @@ public class MessageHandler extends VjoValidationBaseTester {
     @Before
     public void setUp() {
         expectProblems.clear();
-        expectProblems.add(createNewProblem(VjoSyntaxProbIds.RedundantImport,
-                3, 0));
-        expectProblems.add(createNewProblem(FieldProbIds.FieldInitializationDependsOnUnintializedTypes,
-                5, 0));
+        expectProblems.add(createNewProblem2(VjoSyntaxProbIds.RedundantImport,
+                13, 0));
+        expectProblems.add(createNewProblem2(FieldProbIds.FieldInitializationDependsOnUnintializedTypes,
+                16, 0));
     }
 
     @Test

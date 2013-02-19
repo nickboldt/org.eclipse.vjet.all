@@ -51,7 +51,7 @@ public class Ecma3OperatorsTests extends VjoValidationBaseTester {
         // bugfix by roy, redeclared local with same type, tolerated
         // expectProblems.add(createNewProblem(VarProbIds.RedefinedLocal, 205,
         // 0));
-        expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 339, 0));
+        expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 340, 0));
     }
 
     @Test

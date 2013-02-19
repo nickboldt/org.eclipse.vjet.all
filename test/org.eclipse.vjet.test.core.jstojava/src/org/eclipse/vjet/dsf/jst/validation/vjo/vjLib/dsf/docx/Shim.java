@@ -36,8 +36,8 @@ public class Shim extends VjoValidationBaseTester {
     @Before
     public void setUp() {
         expectProblems.clear();
-        expectProblems.add(createNewProblem(MethodProbIds.ShouldReturnValue,
-                16, 0));
+        expectProblems.add(createNewProblem2(MethodProbIds.ShouldReturnValue,
+                27, 0));
 //        expectProblems.add(createNewProblem(
 //                TypeProbIds.IncompatibleTypesInEqualityOperator, 27, 0));
 //        expectProblems.add(createNewProblem(

@@ -36,14 +36,14 @@ public class Ecma2instanceofTests extends VjoValidationBaseTester {
     @Before
     public void setUp() {
         expectProblems.clear();
-        expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 155, 0));
+        expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 156, 0));
         expectProblems.add(createNewProblem(
                 MethodProbIds.WrongNumberOfArguments, 159, 0));
         expectProblems.add(createNewProblem(
                 MethodProbIds.WrongNumberOfArguments, 171, 0));
         expectProblems.add(createNewProblem(
                 MethodProbIds.WrongNumberOfArguments, 178, 0));
-        expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 220, 0));
+        expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 221, 0));
     }
 
     @Test

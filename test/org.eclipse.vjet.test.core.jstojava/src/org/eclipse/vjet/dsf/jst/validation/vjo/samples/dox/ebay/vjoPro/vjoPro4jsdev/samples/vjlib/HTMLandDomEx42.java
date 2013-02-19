@@ -37,16 +37,16 @@ public class HTMLandDomEx42 extends VjoValidationBaseTester {
     @Before
     public void setUp() {
         expectProblems.clear();
-        expectProblems.add(createNewProblem(
-                MethodProbIds.WrongNumberOfArguments, 18, 0));
-        expectProblems.add(createNewProblem(MethodProbIds.ShouldReturnValue,
-                12, 0));
+        expectProblems.add(createNewProblem2(
+                MethodProbIds.WrongNumberOfArguments, 28, 0));
+        expectProblems.add(createNewProblem2(MethodProbIds.ShouldReturnValue,
+                23, 0));
         expectProblems
-                .add(createNewProblem(FieldProbIds.UndefinedField, 21, 0));
+                .add(createNewProblem2(FieldProbIds.UndefinedField, 31, 0));
         expectProblems
-                .add(createNewProblem(FieldProbIds.UndefinedField, 17, 0));
+                .add(createNewProblem2(FieldProbIds.UndefinedField, 28, 0));
         expectProblems
-                .add(createNewProblem(FieldProbIds.UndefinedField, 20, 0));
+                .add(createNewProblem2(FieldProbIds.UndefinedField, 30, 0));
     }
 
     @Test

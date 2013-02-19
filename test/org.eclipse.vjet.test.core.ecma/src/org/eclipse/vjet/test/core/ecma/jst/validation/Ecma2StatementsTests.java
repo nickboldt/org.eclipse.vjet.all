@@ -37,12 +37,12 @@ public class Ecma2StatementsTests extends VjoValidationBaseTester {
         expectProblems.clear();
         // bugfix by roy, redeclared local with same type, tolerated
 
-        expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 577, 0));
         expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 578, 0));
-        expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 581, 0));
+        expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 579, 0));
         expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 582, 0));
         expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 583, 0));
         expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 584, 0));
+        expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 585, 0));
     }
 
     @Test
