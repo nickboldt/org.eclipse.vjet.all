@@ -16,6 +16,7 @@ import org.eclipse.vjet.dsf.jst.JstSource;
 import org.eclipse.vjet.dsf.jst.declaration.JstType;
 import org.eclipse.vjet.dsf.jst.meta.IJsCommentMeta;
 import org.eclipse.vjet.dsf.jstojava.translator.BaseTranslator;
+import org.eclipse.vjet.dsf.jstojava.translator.IFindTypeSupport;
 import org.eclipse.vjet.dsf.jstojava.translator.TranslateCtx;
 import org.eclipse.vjet.dsf.jstojava.translator.TranslateHelper;
 import org.eclipse.vjet.dsf.jstojava.translator.robust.completion.JstCommentUtil;
@@ -85,7 +86,7 @@ abstract class BaseRobustTranslator implements IRobustTranslator {
 		m_ctx = ctx;
 	}
 
-	protected JstSource createSource(JstSourceUtil util, int start, int end, String decl) {
+	protected JstSource createSource(IFindTypeSupport.ILineInfoProvider util, int start, int end, String decl) {
 		return TranslateHelper.createJstSource(util, decl.length(), start, end);
 	}
 

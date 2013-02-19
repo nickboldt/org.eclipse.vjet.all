@@ -226,9 +226,13 @@ public class VjoParser implements IJstParser {
 				cfg.setSkiptImplementation(true);
 				cfg.setSkipJsExtSyntaxArgs(true);
 				TranslateCtx ctx2 = new TranslateCtx(cfg);
+				
 //				ctx2.setCreatedCompletion(true);
 				ctx2.setCompletionPos(ctx.getCompletionPos());
+				ctx2.setLineEndings(ctx.getLineEndings());
+				ctx2.setLineProvider(ctx.getLineInfoProvider());
 				ctx2.setAST(ctx.getAST());
+				
 				blocks.add(BlockTranslator.createJstBlock(ctx2, elem));
 				for(JstCompletion cmp : ctx2.getJstErrors()){
 					if(cmp.inScope(ScopeIds.METHOD_CALL)){

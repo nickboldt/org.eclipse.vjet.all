@@ -27,6 +27,11 @@ public interface IFindTypeSupport {
 	
 	ErrorReporter getErrorReporter();
 	
+	/**
+	 * List of line endings used for position <-> line number and column calculation
+	 */
+	int[] getLineEndings();
+	
 	interface ILineInfoProvider {
 		int line(int beginOffset);
 		int col(int beginOffset);

@@ -12,6 +12,7 @@ import java.util.Stack;
 
 import org.eclipse.vjet.dsf.jst.declaration.JstType;
 import org.eclipse.vjet.dsf.jstojava.translator.BaseTranslator;
+import org.eclipse.vjet.dsf.jstojava.translator.IFindTypeSupport;
 import org.eclipse.vjet.dsf.jstojava.translator.TranslateCtx;
 import org.eclipse.vjet.dsf.jstojava.translator.TranslateHelper;
 import org.eclipse.vjet.dsf.jstojava.translator.robust.completion.JstKeywordCompletion;
@@ -31,7 +32,7 @@ class RootRobustTranslator extends BaseRobustTranslator {
 	}
 
 
-	private static void createRootCompletion(JstType jst, int end, JstSourceUtil util) {
+	private static void createRootCompletion(JstType jst, int end, IFindTypeSupport.ILineInfoProvider util) {
 
 		JstKeywordCompletion vjoKeyword = new JstKeywordCompletion(jst,
 				new String[] { VjoKeywords.VJO });

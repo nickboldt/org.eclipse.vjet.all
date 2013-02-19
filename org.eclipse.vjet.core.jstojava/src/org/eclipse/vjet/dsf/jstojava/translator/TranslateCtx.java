@@ -56,15 +56,16 @@ public class TranslateCtx implements IFindTypeSupport{
 	private String group;
 	private ErrorReporter m_errorReporter;
 	private List<JstCompletion> m_syntaxErrors;
-	private JstSourceUtil m_sourceUtil;
+	private ILineInfoProvider m_sourceUtil;
 	private TranslateConfig m_config;
 	
 	private List<JstBlock> m_listBlocks = null; // JstBlock list in IScriptUnit
 	private Map<IJstType, JstFunctionRefType> m_functionRefReplacement;
 	private ISectionTranslatorProvider m_sectionTranslatorProvider;
 	private String m_scopeForGlobals = null;
-	private JstSourceUtil m_lineProvider;
+	private ILineInfoProvider m_lineProvider;
 	private List<JstCompletion> m_getBlockCompletions;
+	private int[] m_lineEndings;
 
 	public TranslateCtx() {
 		m_config = new TranslateConfig();
@@ -280,18 +281,20 @@ public class TranslateCtx implements IFindTypeSupport{
 		return m_syntaxErrors;
 	}
 
-	/**
-	 * added because AST parser doesn't provide line number or column for tokens
-	 * only offset values
-	 * 
-	 * @return
-	 */
-	public JstSourceUtil getSourceUtil() {
+//	/**
+//	 * added because AST parser doesn't provide line number or column for tokens
+//	 * only offset values
+//	 * 
+//	 * @return
+//	 */
+	public IFindTypeSupport.ILineInfoProvider getSourceUtil() {
 		if (m_sourceUtil == null && getAST()!=null) {
-			m_sourceUtil = new JstSourceUtil(getOriginalSource());
+			m_sourceUtil = getLineInfoProvider();
 		}
 		return m_sourceUtil;
 	}
+	
+	
 
 	public boolean isSkipJsExtSyntaxArgs(){
 		return m_config.isSkipJsExtSyntaxArgs();
@@ -395,7 +398,7 @@ public class TranslateCtx implements IFindTypeSupport{
 	@Override
 	public ILineInfoProvider getLineInfoProvider() {
 		if(m_lineProvider==null){
-			m_lineProvider = new JstSourceUtil(getOriginalSource());
+			m_lineProvider = new JstSourceUtil(getLineEndings(), m_ast.sourceStart,m_ast.sourceEnd);
 		}
 		return m_lineProvider;
 	
@@ -456,7 +459,27 @@ public class TranslateCtx implements IFindTypeSupport{
 		}
 		return m_getBlockCompletions;
 	}
+	@Override
+	public int[] getLineEndings() {
+		if(m_lineEndings==null){
+			m_lineEndings= m_ast.compilationResult.lineSeparatorPositions;
+			 int[] copyFrom = m_ast.compilationResult.lineSeparatorPositions;
+		      int[] copyTo = new int[copyFrom.length+1];
+		      System.arraycopy(copyFrom, 0, copyTo, 0, copyTo.length-1);
+		      copyTo[copyTo.length-1] = m_ast.sourceEnd;
+			
+			m_lineEndings = copyTo;
+		}
+		return m_lineEndings;
+	}
+	public void setLineProvider(ILineInfoProvider lineInfoProvider) {
+		m_lineProvider = lineInfoProvider;
+	}
 
+	public void setLineEndings(int[] lineEndings){
+		m_lineEndings = lineEndings;
+	}
+	
 	
 	
 }

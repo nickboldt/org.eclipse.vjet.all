@@ -115,6 +115,12 @@ public class OTypeResolverRegistry {
 						// TODO Auto-generated method stub
 						return null;
 					}
+
+					@Override
+					public int[] getLineEndings() {
+						// TODO Auto-generated method stub
+						return null;
+					}
 				};
 				;
 				;

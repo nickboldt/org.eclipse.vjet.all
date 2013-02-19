@@ -20,6 +20,7 @@ import org.eclipse.vjet.dsf.jst.JstCommentLocation;
 import org.eclipse.vjet.dsf.jst.meta.IJsCommentMeta;
 import org.eclipse.vjet.dsf.jst.meta.IJsCommentMeta.DIRECTION;
 import org.eclipse.vjet.dsf.jstojava.report.ErrorReporter;
+import org.eclipse.vjet.dsf.jstojava.translator.IFindTypeSupport;
 import org.eclipse.vjet.dsf.jstojava.translator.robust.JstSourceUtil;
 import org.eclipse.mod.wst.jsdt.internal.compiler.ast.CompilationUnitDeclaration;
 
@@ -81,7 +82,7 @@ public class CommentCollector  {
 	}
 	
 
-	public void handle(CompilationUnitDeclaration ast, ErrorReporter reporter, JstSourceUtil jstSourceUtil) {
+	public void handle(CompilationUnitDeclaration ast, ErrorReporter reporter, IFindTypeSupport.ILineInfoProvider jstSourceUtil) {
 		commentOffsets = ast.comments;
 		if (commentOffsets == null || commentOffsets.length == 0) {
 			return;

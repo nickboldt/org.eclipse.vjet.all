@@ -89,7 +89,14 @@ public class FunctionParamsMetaMapping {
 		public IJstMethod getMethod() {
 			return TranslateHelper.MethodTranslateHelper
 				.createJstSynthesizedMethod(m_metaList,
-					new BaseFindTypeSupport(), "_fn_");
+					new BaseFindTypeSupport() {
+						
+						@Override
+						public int[] getLineEndings() {
+							// TODO Auto-generated method stub
+							return null;
+						}
+					}, "_fn_");
 		}
 	}
 }

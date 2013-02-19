@@ -16,6 +16,24 @@ import java.util.List;
 import java.util.StringTokenizer;
 import java.util.regex.Pattern;
 
+import org.eclipse.mod.wst.jsdt.core.ast.IASTNode;
+import org.eclipse.mod.wst.jsdt.core.ast.IAbstractVariableDeclaration;
+import org.eclipse.mod.wst.jsdt.core.ast.IArgument;
+import org.eclipse.mod.wst.jsdt.core.ast.IExpression;
+import org.eclipse.mod.wst.jsdt.core.ast.IProgramElement;
+import org.eclipse.mod.wst.jsdt.core.ast.IStatement;
+import org.eclipse.mod.wst.jsdt.internal.compiler.ast.AbstractVariableDeclaration;
+import org.eclipse.mod.wst.jsdt.internal.compiler.ast.EmptyExpression;
+import org.eclipse.mod.wst.jsdt.internal.compiler.ast.Expression;
+import org.eclipse.mod.wst.jsdt.internal.compiler.ast.FieldReference;
+import org.eclipse.mod.wst.jsdt.internal.compiler.ast.FunctionExpression;
+import org.eclipse.mod.wst.jsdt.internal.compiler.ast.Literal;
+import org.eclipse.mod.wst.jsdt.internal.compiler.ast.MessageSend;
+import org.eclipse.mod.wst.jsdt.internal.compiler.ast.MethodDeclaration;
+import org.eclipse.mod.wst.jsdt.internal.compiler.ast.NullLiteral;
+import org.eclipse.mod.wst.jsdt.internal.compiler.ast.SingleNameReference;
+import org.eclipse.mod.wst.jsdt.internal.compiler.ast.Statement;
+import org.eclipse.mod.wst.jsdt.internal.compiler.ast.UndefinedLiteral;
 import org.eclipse.vjet.dsf.jsgen.shared.ids.ScopeIds;
 import org.eclipse.vjet.dsf.jsgen.shared.validation.common.ScopeId;
 import org.eclipse.vjet.dsf.jst.BaseJstNode;
@@ -60,13 +78,13 @@ import org.eclipse.vjet.dsf.jst.declaration.SynthJstProxyProp;
 import org.eclipse.vjet.dsf.jst.expr.BoolExpr;
 import org.eclipse.vjet.dsf.jst.expr.CastExpr;
 import org.eclipse.vjet.dsf.jst.expr.FuncExpr;
+import org.eclipse.vjet.dsf.jst.meta.ArgType;
 import org.eclipse.vjet.dsf.jst.meta.IJsCommentMeta;
 import org.eclipse.vjet.dsf.jst.meta.JsAnnotation;
+import org.eclipse.vjet.dsf.jst.meta.JsAnnotation.JsAnnotationType;
 import org.eclipse.vjet.dsf.jst.meta.JsCommentMetaNode;
 import org.eclipse.vjet.dsf.jst.meta.JsType;
 import org.eclipse.vjet.dsf.jst.meta.JsTypingMeta;
-import org.eclipse.vjet.dsf.jst.meta.JsAnnotation.JsAnnotationType;
-import org.eclipse.vjet.dsf.jst.meta.ArgType;
 import org.eclipse.vjet.dsf.jst.stmt.BlockStmt;
 import org.eclipse.vjet.dsf.jst.stmt.ExprStmt;
 import org.eclipse.vjet.dsf.jst.term.JstIdentifier;
@@ -84,31 +102,12 @@ import org.eclipse.vjet.dsf.jstojava.parser.comments.JsVariantType;
 import org.eclipse.vjet.dsf.jstojava.parser.comments.ParseException;
 import org.eclipse.vjet.dsf.jstojava.parser.comments.VjComment;
 import org.eclipse.vjet.dsf.jstojava.translator.robust.JstSourceUtil;
-import org.eclipse.vjet.dsf.jstojava.translator.robust.JstSourceUtil.LineInfo;
 import org.eclipse.vjet.dsf.jstojava.translator.robust.ast2jst.ArgumentTranslator;
 import org.eclipse.vjet.dsf.jstojava.translator.robust.ast2jst.BaseAst2JstTranslator;
 import org.eclipse.vjet.dsf.jstojava.translator.robust.ast2jst.FunctionExpressionTranslator;
 import org.eclipse.vjet.dsf.jstojava.translator.robust.ast2jst.OverloadInfo;
 import org.eclipse.vjet.dsf.jstojava.translator.robust.ast2jst.TranslatorFactory;
 import org.eclipse.vjet.vjo.meta.VjoKeywords;
-import org.eclipse.mod.wst.jsdt.core.ast.IASTNode;
-import org.eclipse.mod.wst.jsdt.core.ast.IAbstractVariableDeclaration;
-import org.eclipse.mod.wst.jsdt.core.ast.IArgument;
-import org.eclipse.mod.wst.jsdt.core.ast.IExpression;
-import org.eclipse.mod.wst.jsdt.core.ast.IProgramElement;
-import org.eclipse.mod.wst.jsdt.core.ast.IStatement;
-import org.eclipse.mod.wst.jsdt.internal.compiler.ast.AbstractVariableDeclaration;
-import org.eclipse.mod.wst.jsdt.internal.compiler.ast.EmptyExpression;
-import org.eclipse.mod.wst.jsdt.internal.compiler.ast.Expression;
-import org.eclipse.mod.wst.jsdt.internal.compiler.ast.FieldReference;
-import org.eclipse.mod.wst.jsdt.internal.compiler.ast.FunctionExpression;
-import org.eclipse.mod.wst.jsdt.internal.compiler.ast.Literal;
-import org.eclipse.mod.wst.jsdt.internal.compiler.ast.MessageSend;
-import org.eclipse.mod.wst.jsdt.internal.compiler.ast.MethodDeclaration;
-import org.eclipse.mod.wst.jsdt.internal.compiler.ast.NullLiteral;
-import org.eclipse.mod.wst.jsdt.internal.compiler.ast.SingleNameReference;
-import org.eclipse.mod.wst.jsdt.internal.compiler.ast.Statement;
-import org.eclipse.mod.wst.jsdt.internal.compiler.ast.UndefinedLiteral;
 
 public class TranslateHelper {
 
@@ -248,13 +247,13 @@ public class TranslateHelper {
 	}
 
 	public static void addSourceInfo(IASTNode field, BaseJstNode jstType,
-			JstSourceUtil util) {
+			IFindTypeSupport.ILineInfoProvider util) {
 		JstSource source = getSource(field, util);
 		jstType.setSource(source);
 	}
 
 	public static JstSource getMethodSource(char[] originalSource,
-			JstSourceUtil util, int sourceStart, int sourceEnd, int length) {
+			IFindTypeSupport.ILineInfoProvider util, int sourceStart, int sourceEnd, int length) {
 		// TODO when would this ever happen?
 		if (originalSource == null) {
 			return TranslateHelper.createJstSource(util, sourceEnd
@@ -1938,9 +1937,9 @@ public class TranslateHelper {
 	public static JstSource createJstSource(JstSourceUtil util, int length,
 			int startOffset, int endOffset) {
 
-		LineInfo info = util.lineInfo(startOffset);
-
-		return new JstSource(JstSource.JS, info.line(), info.colStart(),
+		int line = util.line(startOffset);
+		int col = util.col(startOffset);
+		return new JstSource(JstSource.JS, line, col,
 				length, startOffset, endOffset);
 
 	}

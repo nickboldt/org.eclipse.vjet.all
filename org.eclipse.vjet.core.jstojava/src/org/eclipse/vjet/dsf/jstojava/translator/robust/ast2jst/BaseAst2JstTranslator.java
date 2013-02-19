@@ -23,6 +23,7 @@ import org.eclipse.vjet.dsf.jst.BaseJstNode;
 import org.eclipse.vjet.dsf.jst.JstSource;
 import org.eclipse.vjet.dsf.jst.declaration.JstObjectLiteralType;
 import org.eclipse.vjet.dsf.jst.meta.IJsCommentMeta;
+import org.eclipse.vjet.dsf.jstojava.translator.IFindTypeSupport;
 import org.eclipse.vjet.dsf.jstojava.translator.TranslateCtx;
 import org.eclipse.vjet.dsf.jstojava.translator.TranslateHelper;
 import org.eclipse.vjet.dsf.jstojava.translator.robust.JstSourceUtil;
@@ -153,7 +154,7 @@ public abstract class BaseAst2JstTranslator<T extends IASTNode, E> {
 	}
 	
 
-	public static JstSource createSource(int start, int end, JstSourceUtil util) {
+	public static JstSource createSource(int start, int end, IFindTypeSupport.ILineInfoProvider util) {
 		return TranslateHelper.createJstSource(util, end - start, start, end);
 	}
 

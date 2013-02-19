@@ -29,7 +29,7 @@ import org.eclipse.vjet.dsf.jstojava.translator.robust.JstSourceUtil;
  * 
  *
  */
-public class BaseFindTypeSupport implements IFindTypeSupport {
+public abstract class BaseFindTypeSupport implements IFindTypeSupport {
 
 	public static final ErrorReporter NO_ERROR_REPORTER = new ErrorReporter(){
 
@@ -132,11 +132,12 @@ public class BaseFindTypeSupport implements IFindTypeSupport {
 	public ILineInfoProvider getLineInfoProvider() {
 		if(m_lineInfoProvider == null
 				&& getOriginalSource() != null){
-			m_lineInfoProvider = new JstSourceUtil(getOriginalSource());
+			m_lineInfoProvider = new JstSourceUtil(getLineEndings(), 0, m_originalSource.length);
 		}
 		return m_lineInfoProvider;
 	}
 	
+
 	public BaseFindTypeSupport setLineInfoProvider(final ILineInfoProvider li){
 		m_lineInfoProvider = li;
 		return this;
@@ -151,6 +152,8 @@ public class BaseFindTypeSupport implements IFindTypeSupport {
 		m_originalSource = source;
 		return this;
 	}
+	
+	
 	
 //	@Override
 //	public Map<String, IJstType> getSymbol2TypeMap() {

@@ -100,6 +100,12 @@ public class TypeResolverRegistry {
 						// TODO Auto-generated method stub
 						return null;
 					}
+
+					@Override
+					public int[] getLineEndings() {
+						// TODO Auto-generated method stub
+						return null;
+					}
 				};;;
 				return TranslateHelper.findType(findSupport, typingMeta, commentMeta);
 				

@@ -11,6 +11,7 @@ package org.eclipse.vjet.dsf.jstojava.translator.robust.ast2jst;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.mod.wst.jsdt.internal.compiler.ast.LocalDeclaration;
 import org.eclipse.vjet.dsf.jsgen.shared.validation.vjo.util.JstBindingUtil;
 import org.eclipse.vjet.dsf.jst.BaseJstNode;
 import org.eclipse.vjet.dsf.jst.IJstMethod;
@@ -29,10 +30,8 @@ import org.eclipse.vjet.dsf.jst.meta.IJsCommentMeta;
 import org.eclipse.vjet.dsf.jst.term.JstIdentifier;
 import org.eclipse.vjet.dsf.jst.token.IExpr;
 import org.eclipse.vjet.dsf.jstojava.parser.comments.CommentCollector;
+import org.eclipse.vjet.dsf.jstojava.translator.IFindTypeSupport;
 import org.eclipse.vjet.dsf.jstojava.translator.TranslateHelper;
-import org.eclipse.vjet.dsf.jstojava.translator.robust.JstSourceUtil;
-import org.eclipse.vjet.dsf.jstojava.translator.robust.JstSourceUtil.LineInfo;
-import org.eclipse.mod.wst.jsdt.internal.compiler.ast.LocalDeclaration;
 
 public class LocalDeclarationTranslator extends
 		BaseAst2JstTranslator<LocalDeclaration, JstVars> {
@@ -182,9 +181,10 @@ public class LocalDeclarationTranslator extends
 		return statement.declarationSourceEnd;
 	}
 	
-	private static JstSource getStatementSource(LocalDeclaration statement, JstSourceUtil util) {
-		LineInfo info = util.lineInfo(statement.declarationSourceStart);
-		return new JstSource(JstSource.JS, info.line(), info.colStart(), findSourceEnd(statement)
+	private static JstSource getStatementSource(LocalDeclaration statement, IFindTypeSupport.ILineInfoProvider util) {
+		int line = util.line(statement.declarationSourceStart);
+		int col = util.col(statement.declarationSourceStart);
+		return new JstSource(JstSource.JS, line, col, findSourceEnd(statement)
 				- statement.declarationSourceStart + 1, statement.declarationSourceStart, findSourceEnd(statement));
 	}
 }

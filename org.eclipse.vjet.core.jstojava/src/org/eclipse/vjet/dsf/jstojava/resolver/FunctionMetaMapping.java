@@ -109,7 +109,15 @@ public class FunctionMetaMapping implements IFunctionMetaMapping {
 		public IJstMethod getMethod() {
 			return TranslateHelper.MethodTranslateHelper
 				.createJstSynthesizedMethod(m_metaList,
-					new BaseFindTypeSupport(), "_fn_");
+						// TODO do we need this?
+					new BaseFindTypeSupport() {
+						
+						@Override
+						public int[] getLineEndings() {
+							// TODO Auto-generated method stub
+							return null;
+						}
+					}, "_fn_");
 		}
 	}
 

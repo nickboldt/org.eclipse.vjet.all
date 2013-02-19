@@ -56,11 +56,13 @@ public class SyntaxTreeFactory2 {
 			char[] source, String filename, String encoding) {
 
 		CompilerOptions options = new CompilerOptions(settings);
+		
 		ProblemReporter problemReporter = new ProblemReporter(
 				DefaultErrorHandlingPolicies.exitAfterAllProblems(), options,
 				new DefaultProblemFactory(Locale.getDefault()));
 		CommentRecorderParser parser = new CommentRecorderParser(
 				problemReporter, true);
+		parser.scanner.recordLineSeparator = true;
 		ICompilationUnit sourceUnit = new CompilationUnit(source, filename,
 				encoding);
 		CompilationResult compilationUnitResult = new CompilationResult(

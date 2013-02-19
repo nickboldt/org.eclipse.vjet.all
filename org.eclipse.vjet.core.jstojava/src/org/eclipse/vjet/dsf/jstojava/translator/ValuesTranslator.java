@@ -59,7 +59,7 @@ public class ValuesTranslator extends BasePropsProtosTranslator {
 		return property;
 	}
 	
-	public static JstSource createSource(int start, int end, JstSourceUtil util) {
+	public static JstSource createSource(int start, int end, IFindTypeSupport.ILineInfoProvider util) {
 		return TranslateHelper.createJstSource(util, end - start, start, end);
 	}
 
