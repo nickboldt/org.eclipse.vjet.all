@@ -1958,7 +1958,7 @@ public class CodeFormatterVisitor extends ASTVisitor {
 			int token;
 			while ((token = this.localScanner.getNextToken()) != TerminalTokens.TokenNameEOF) {
 				switch(token) {
-					case TerminalTokens.TokenNameCOMMA ://90
+					case 90 ://90
 						return true;
 					case TerminalTokens.TokenNameCOMMENT_BLOCK :
 					case TerminalTokens.TokenNameCOMMENT_JAVADOC :
