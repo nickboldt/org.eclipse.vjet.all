@@ -2715,10 +2715,12 @@ public class CodeassistUtils {
 			} else if (node instanceof ObjLiteral) {
 
 				ObjLiteral objectLiteral = (ObjLiteral) node;
-				String objLitName = ((AssignExpr) objectLiteral.getParentNode())
-						.getLHS().toLHSText();
-				dq.push(objLitName);
-				node = node.getParentNode();
+				if(objectLiteral.getParentNode() instanceof AssignExpr){
+					String objLitName = ((AssignExpr) objectLiteral.getParentNode())
+							.getLHS().toLHSText();
+					dq.push(objLitName);
+					node = node.getParentNode();
+				}
 			} else {
 				node = node.getParentNode();
 			}
