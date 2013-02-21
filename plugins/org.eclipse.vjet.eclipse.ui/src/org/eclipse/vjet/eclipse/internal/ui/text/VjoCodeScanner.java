@@ -33,6 +33,7 @@ import org.eclipse.vjet.dsf.jst.JstSource;
 import org.eclipse.vjet.dsf.jst.declaration.JstBlock;
 import org.eclipse.vjet.dsf.jst.declaration.JstMethod;
 import org.eclipse.vjet.dsf.jst.declaration.JstPackage;
+import org.eclipse.vjet.dsf.jst.declaration.JstType;
 import org.eclipse.vjet.dsf.jst.reserved.JsCoreKeywords;
 import org.eclipse.vjet.dsf.jst.term.JstIdentifier;
 import org.eclipse.vjet.eclipse.core.VjetPlugin;
@@ -270,9 +271,10 @@ public class VjoCodeScanner extends JavascriptCodeScanner {
 		
 		String groupName = null;
 		String typeName = null;
+		IJstType jstType = null;
 		if(m_module instanceof VjoSourceModule){
 			VjoSourceModule module = ((VjoSourceModule) m_module);
-			IJstType jstType = module.getJstType();
+			 jstType = module.getJstType();
 			if(jstType==null){
 				return;
 			}
@@ -288,12 +290,15 @@ public class VjoCodeScanner extends JavascriptCodeScanner {
 			
 		}
 	
-		VjoParserToJstAndIType parser = new VjoParserToJstAndIType();
-		if(VjetPlugin.TRACE_PARSER){
-			System.out.println("parsing for " + getClass().getName());
-		}
-		IJstType scriptUnit = parser.parse(groupName, typeName, content);
-		List<JstIdentifier> identifiers = getJstIdentifierFromScriptUnit(scriptUnit);
+//		if(jstType == null){
+//			VjoParserToJstAndIType parser = new VjoParserToJstAndIType();
+//			if(VjetPlugin.TRACE_PARSER){
+//				System.out.println("parsing for " + getClass().getName());
+//			}
+//			jstType = parser.parse(groupName, typeName, content);
+//		}
+		List<JstIdentifier> identifiers = getJstIdentifierFromScriptUnit(jstType);
+		
 		if (identifiers.isEmpty()) {
 			return;
 		}
