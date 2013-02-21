@@ -595,7 +595,7 @@ public abstract class VjoSourceModulePage extends NewContainerWizardPage {
 							m, objects));
 				}
 				
-				if (currPackageRoot != null) {
+				if (currPackageRoot != null && currPackageRoot.getResource() instanceof IFolder) {
 					IFolder folder = (IFolder) currPackageRoot.getResource();
 					
 					String errorMessage = getErrroMessageOfTypeIsInWorkSpace(
