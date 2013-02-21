@@ -638,13 +638,13 @@ public class VjoCcHandler implements IVjoCcHandler {
 			return "";
 		}
 		token = token.trim();
-		if (token.indexOf("\n") > 0) {
+		if (token.indexOf("\n") > -1) {
 			token = token.substring(token.lastIndexOf("\n") + 1);
 		}
-		if (token.indexOf("\t") > 0) {
+		if (token.indexOf("\t") > -1) {
 			token = token.substring(token.lastIndexOf("\t") + 1);
 		}
-		if (token.indexOf(".") > 0) {
+		if (token.indexOf(".") > -1) {
 			// this case is a bug for JstCompletion, when document.a\n abc, the
 			// token will be document.a, should be a, seems the \n can not be
 			// taken care correctly.

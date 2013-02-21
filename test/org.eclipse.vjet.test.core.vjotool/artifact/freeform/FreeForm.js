@@ -9,3 +9,17 @@
  *     eBay Inc. - initial API and implementation
  *******************************************************************************/
 Date(<<1>>)
+
+
+//> Object foo()
+function foo(){
+	return {};
+}
+
+foo().unwatch(prop)
+	.unwatch(prop)
+  .unwatch(prop)
+ .unwatch(prop)
+.<<2>>
+
+
