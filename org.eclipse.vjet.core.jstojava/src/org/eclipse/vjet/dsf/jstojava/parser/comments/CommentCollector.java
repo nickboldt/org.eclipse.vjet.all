@@ -266,7 +266,7 @@ public class CommentCollector  {
 					}
 					
 					
-				} else if (key > exprEnd && key < nextStart
+				} else if (key > exprEnd && key <= nextStart
 						&& meta.getDirection().equals(DIRECTION.BACK)) {
 					if(ignoreUnsed) {
 						comments.add(meta);

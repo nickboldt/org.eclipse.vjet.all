@@ -13,6 +13,7 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
+  JsJstTests.class,
   VjoJstTests.class,
   JSTToolableAPITesting.class,
   VjoSelectionTests.class,
