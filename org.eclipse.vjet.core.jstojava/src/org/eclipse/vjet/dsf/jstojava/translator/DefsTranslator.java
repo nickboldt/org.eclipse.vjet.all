@@ -113,7 +113,7 @@ public class DefsTranslator extends BasePropsProtosTranslator {
 		if (value != null) {
 
 			if (value instanceof ObjLiteral) {
-				processObjLiteralDef(jstType, field.getName(),
+				processObjLiteralDef(jstType, field,
 						(ObjLiteral) value);
 			} else if (value instanceof FuncExpr) {
 				processFunctionDef(jstType, ((FuncExpr) value).getFunc());
@@ -123,12 +123,12 @@ public class DefsTranslator extends BasePropsProtosTranslator {
 				IJstType fnType = JstCache.getInstance().getType("Function");
 				if (fnType != null && fnType.equals(type)) {
 
-					processFunction(jstType, field.getName(),
+					processFunction(jstType, field,
 							(FieldAccessExpr) value, field);
 
 				}
 			} else if (value instanceof BaseJstNode) {
-				processObjLiteralDef(jstType, field.getName(),
+				processObjLiteralDef(jstType, field,
 						(BaseJstNode) value, field);
 			}
 
@@ -138,9 +138,10 @@ public class DefsTranslator extends BasePropsProtosTranslator {
 
 	// take the object literal and construct
 	// JstObjLiteralType
-	private void processObjLiteralDef(JstType jstType, String name,
+	private void processObjLiteralDef(JstType jstType, NV parentField,
 			ObjLiteral value) {
 
+		String name = parentField.getName();
 		JstObjectLiteralType otype = (JstObjectLiteralType) jstType
 				.getOType(name);
 
@@ -150,7 +151,9 @@ public class DefsTranslator extends BasePropsProtosTranslator {
 		otype.setPackage(new JstPackage(jstType.getName()));
 		// TODO add source info
 		JstCache.getInstance().addOType(otype);
-		jstType.addProperty(new JstProperty(otype, name));
+		JstProperty parentPRop = new JstProperty(otype, name);
+		parentPRop.getName().setSource(parentField.getIdentifier().getSource());
+		jstType.addProperty(parentPRop);
 		for (int i = 0; i < value.getNVs().size(); i++) {
 			NV field = value.getNVs().get(i);
 
@@ -164,37 +167,37 @@ public class DefsTranslator extends BasePropsProtosTranslator {
 		jstType.addOType(otype);
 	}
 
-	private void processObjLiteralDef(JstType jstType, String name,
+	private void processObjLiteralDef(JstType jstType, NV field2,
 			BaseJstNode value, NV field) {
 		if (value instanceof FieldAccessExpr) {
 			FieldAccessExpr fieldAccessExpr = (FieldAccessExpr) value;
 			IJstType type = fieldAccessExpr.getType();
 			IJstType fnType = JstCache.getInstance().getType("Function");
 			if (fnType != null && fnType.equals(type)) {
-				processFunction(jstType, name, fieldAccessExpr, field);
+				processFunction(jstType, field2, fieldAccessExpr, field);
 			}
 		} else {
-			JstObjectLiteralType otype = new JstObjectLiteralType(name);
+			JstObjectLiteralType otype = new JstObjectLiteralType(field2.getName());
 			otype.setPackage(new JstPackage(jstType.getName()));
 			// TODO add source info
 			JstCache.getInstance().addOType(otype);
-			jstType.addProperty(new JstProperty(otype, name));
+			jstType.addProperty(new JstProperty(otype, field2.getName()));
 
 			jstType.addOType(otype);
 		}
 	}
 
-	private void processFunction(JstType jstType, String name,
+	private void processFunction(JstType jstType, NV field2,
 			FieldAccessExpr fieldAccessExpr, NV nv) {
 		List<IJsCommentMeta> commentMeta = TranslateHelper
 				.findMetaFromExpr(fieldAccessExpr);
 		
 		
-		
 		if (commentMeta != null) {
 			JstMethod meth = (JstMethod) TranslateHelper.MethodTranslateHelper
-					.createJstSynthesizedMethod(commentMeta, m_ctx, name);
+					.createJstSynthesizedMethod(commentMeta, m_ctx, field2.getName());
 
+			meth.getName().setSource(field2.getIdentifier().getSource());
 		
 			meth.setSource(nv.getSource());
 			processFunctionDef(jstType, meth);
@@ -272,6 +275,7 @@ public class DefsTranslator extends BasePropsProtosTranslator {
 
 			JstProperty jstProperty = new JstProperty(jstType, nv.getName(),
 					value, new JstModifiers().setPublic());
+			jstProperty.getName().setSource(nv.getIdentifier().getSource());
 			jstProperty.setSource(nv.getSource());
 
 		
