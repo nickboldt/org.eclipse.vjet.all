@@ -32,6 +32,7 @@ import org.eclipse.vjet.dsf.jst.declaration.JstArray;
 import org.eclipse.vjet.dsf.jst.declaration.JstAttributedType;
 import org.eclipse.vjet.dsf.jst.declaration.JstDeferredType;
 import org.eclipse.vjet.dsf.jst.declaration.JstFuncType;
+import org.eclipse.vjet.dsf.jst.declaration.JstFunctionRefType;
 import org.eclipse.vjet.dsf.jst.declaration.JstMethod;
 import org.eclipse.vjet.dsf.jst.declaration.JstMixedType;
 import org.eclipse.vjet.dsf.jst.declaration.JstObjectLiteralType;
@@ -133,6 +134,34 @@ public abstract class VjoSemanticValidator implements
 			return unknownType;// = ((JstArray)unknownType).getComponentType();
 		}
 		
+		if(unknownType instanceof JstFunctionRefType){
+			return VjoConstants.ARBITARY;// resolved
+		}
+		
+		if(unknownType instanceof JstObjectLiteralType){
+			return VjoConstants.ARBITARY;// resolved
+		}
+		
+		
+		if(unknownType instanceof JstAttributedType){
+			final IJstType typeSpacedUnknownType = ctx.getTypeSpaceType(((JstAttributedType) unknownType).getAttributorType());
+			// contains attribute?
+			
+			if(typeSpacedUnknownType==null){
+				return null;
+			}
+			if(typeSpacedUnknownType.getName().equals("Global")){
+				return unknownType;
+			}
+			
+			if(((JstAttributedType) unknownType).getJstBinding() ==null){
+				return null;
+			}
+			return unknownType;
+			
+//			return null;
+		}
+
 		// TODO should otype really require needs? disable for now
 //		if (unknownType instanceof IJstOType && unknownType.getParentNode() != null){
 //			unknownType = unknownType.getParentNode().getOwnerType();
@@ -168,6 +197,8 @@ public abstract class VjoSemanticValidator implements
 			return unknownType;
 		}
 		//End of Added
+		
+	
 		
 		//dependencies types
 		final String unknownTypeName = unknownPackage != null && "this.vj$".equals(unknownPackage.getName()) ? unknownType.getSimpleName() : unknownType.getName();

@@ -16,14 +16,14 @@ props({
 /**
 * Hitches a method to a specified JS object.
 *
-* @param {JsObj} control
+* @param {Object} control
 *        the reference of the JS object
 * @param {String} method
 *        the name of the method
-* @return {JsObj}
+* @return {Object}
 *        the reference of the wrapped method
 */
-//> public JsObj hitch(::Object,String);
+//> public Function hitch(::Object,String);
 hitch : function(poControl, psMethod) {
 var fcn;
 if(typeof psMethod == "string")

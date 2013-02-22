@@ -26,7 +26,9 @@ import org.eclipse.vjet.dsf.jst.ProblemSeverity;
 import org.eclipse.vjet.dsf.jst.ResolutionResult;
 import org.eclipse.vjet.dsf.jst.declaration.JstAttributedType;
 import org.eclipse.vjet.dsf.jst.declaration.JstFuncType;
+import org.eclipse.vjet.dsf.jst.declaration.JstGlobalFunc;
 import org.eclipse.vjet.dsf.jst.declaration.JstGlobalProp;
+import org.eclipse.vjet.dsf.jst.declaration.JstMethod;
 import org.eclipse.vjet.dsf.jst.declaration.JstSynthesizedProperty;
 import org.eclipse.vjet.dsf.jst.declaration.JstType;
 import org.eclipse.vjet.dsf.jst.ts.JstTypeSpaceMgr;
@@ -97,7 +99,8 @@ public class JstExpressionBindingResolver implements IJstRefResolver {
 					if (!error) {
 						for (IJstGlobalVar gvar : type.getGlobalVars()) {
 							final String groupName = type.getPackage().getGroupName();
-							final IJstNode globalBinding = JstExpressionTypeLinkerHelper.look4ActualBinding(this, gvar.getType(), new GroupInfo(groupName, null));
+							GroupInfo groupInfo = new GroupInfo(groupName, null);
+							final IJstNode globalBinding = JstExpressionTypeLinkerHelper.look4ActualBinding(this, gvar.getType(), groupInfo);
 							
 							if(gvar.getType() instanceof JstAttributedType){
 								if(!gvar.isFunc()){
@@ -113,6 +116,12 @@ public class JstExpressionBindingResolver implements IJstRefResolver {
 												
 										}
 									}
+								}else{
+									JstMethod method= (JstMethod)((JstGlobalFunc)gvar.getFunction()).getMethod();
+									JstExpressionTypeLinkerHelper.fixMethodTypeRef(this, method, type, groupInfo);
+									
+									
+									
 								}
 							}
 							

@@ -49,6 +49,7 @@ public class Object extends VjoValidationBaseTester {
     //@Category( { P3, FAST, UNIT })
     //@Description("Test Vjo vj lib project, To validate false positive ")
     public void testObject() {
+    	 expectProblems.clear();
         List<VjoSemanticProblem> problems = getVjoSemanticProblem(
                 VjoValidationBaseTester.VJLIB_FOLDER, "vjoPro.dsf.utils.",
                 "Object.js", this.getClass());

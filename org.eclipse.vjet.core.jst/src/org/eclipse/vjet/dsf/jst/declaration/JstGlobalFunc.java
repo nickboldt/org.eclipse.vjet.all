@@ -30,6 +30,10 @@ public class JstGlobalFunc extends BaseJstNode implements IJstGlobalFunc {
 		addChild(method);
 	}
 	
+	public IJstMethod getMethod(){
+		return m_method;
+	}
+	
 	@Override
 	public List<JstArg> getArgs() {
 		return m_method.getArgs();
