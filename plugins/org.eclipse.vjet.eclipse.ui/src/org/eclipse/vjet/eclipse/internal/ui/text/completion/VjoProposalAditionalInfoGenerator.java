@@ -75,7 +75,7 @@ public class VjoProposalAditionalInfoGenerator {
 			method = (IJstMethod) node;
 		}
 		String briefInfo = "";
-		if (property != null  && 
+		if (property != null  && property.getOwnerType()!=null &&
 				isBindingOk(property.getOwnerType().getSource()) &&
 				property.getCommentLocations() != null && 
 				!node.getCommentLocations().isEmpty()) {
