@@ -144,6 +144,7 @@ public abstract class VjoSemanticValidator implements
 		
 		
 		if(unknownType instanceof JstAttributedType){
+
 			final IJstType typeSpacedUnknownType = ctx.getTypeSpaceType(((JstAttributedType) unknownType).getAttributorType());
 			// contains attribute?
 			
@@ -159,7 +160,6 @@ public abstract class VjoSemanticValidator implements
 			}
 			return unknownType;
 			
-//			return null;
 		}
 
 		// TODO should otype really require needs? disable for now
