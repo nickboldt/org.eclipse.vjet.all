@@ -636,7 +636,10 @@ public class VjoOLFieldTranslator extends
 						astObjectliteralField.initializer,
 						metaArr, m_ctx, simpleName), m_ctx);
 					
-				if (metaArr != null && metaArr.size() > 1 && meth.getArgs().size() == 0){
+				if(meth==null){
+					return null;
+				}
+				if (metaArr != null && metaArr.size() > 1 &&  meth.getArgs()!=null && meth.getArgs().size() == 0){
 					IJsCommentMeta meta = getLongestArgList(metaArr);
 					List<JsParam> params = TranslateHelper.getParams(meta);
 					if (params != null) {
@@ -650,9 +653,7 @@ public class VjoOLFieldTranslator extends
 					}
 				}					
 				
-				if(meth==null){
-					return null;
-				}
+				
 				
 				meth.setBlock(null); // no real block
 				if(m_ctx.getCurrentScope().equals(ScopeIds.GLOBAL)){
