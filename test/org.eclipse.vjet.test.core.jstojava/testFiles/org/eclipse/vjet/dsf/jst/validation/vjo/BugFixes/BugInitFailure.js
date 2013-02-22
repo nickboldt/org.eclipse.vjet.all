@@ -10,16 +10,18 @@
  *******************************************************************************/
 vjo.ctype("org.eclipse.vjet.dsf.jst.validation.vjo.BugFixes.BugInitFailure")
 .protos({
-	validProp: 1,
-	invalidProp: this.validProp,
-	invalidProp2: this.vj$.BugInitFailure.validProp1
+	sValidProp: 1
+//	sValidProp1: this.sValidProp,
 })
 .props({
 	validProp1: 2,
-	invalidProp3: new this.vj$.BugInitFailure(),
+	
 	validProp2: new Date(),
 	validProp3: new Array(1),
 	validProp4: new Date().getTime(),
-	validProp5: document.createElement('span')
+	validProp5: document.createElement('span'),
+	validProp6: this.vj$.type,
+	validProp6a: this.vj$.BugInitFailure,
+	validProp7: new this.vj$.BugInitFailure()
 })
 .endType();

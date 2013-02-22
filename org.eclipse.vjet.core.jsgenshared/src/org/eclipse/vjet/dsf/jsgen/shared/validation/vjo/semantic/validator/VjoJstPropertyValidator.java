@@ -10,6 +10,7 @@ package org.eclipse.vjet.dsf.jsgen.shared.validation.vjo.semantic.validator;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.vjet.dsf.jsgen.shared.validation.vjo.VjoSemanticValidator;
 import org.eclipse.vjet.dsf.jsgen.shared.validation.vjo.VjoValidationCtx;
@@ -233,15 +234,17 @@ public class VjoJstPropertyValidator extends VjoSemanticValidator implements
 
 		// depth-1st
 		for (IExpr subExpr : subExprs) {
-			if (!validatePropertyExprInitialization(ctx, property, subExpr)) {
+			
+			if (!validatePropertyExprInitialization(ctx, property, subExpr)) { // recurse
 				return false;
 			}
 		}
 
 		// check if expr's value type is ready to use
 		// actually, only js native types could be used here
+		
 		final IJstType propertyExprResultType = propertyExpr.getResultType();
-		if (!isNative(propertyExprResultType) || propertyExprResultType == null) {
+		if ((!isNative(propertyExprResultType) && !isVj$Type(propertyExprResultType) && !isDefiningTypeRef(propertyExprResultType,ctx.getJstTypeNames())) ) {
 
 			// if(ctx.getUninitializedTypes().contains(propertyExprResultType)
 			// || propertyExprResultType == null){
@@ -261,6 +264,27 @@ public class VjoJstPropertyValidator extends VjoSemanticValidator implements
 		}
 
 		return true;
+	}
+
+	private boolean isVj$Type(IJstType propertyExprResultType) {
+		if(propertyExprResultType !=null && propertyExprResultType.getName().endsWith("Vj$Type")){
+			return true;
+		}
+		return false;
+	}
+
+	private boolean isDefiningTypeRef(IJstType propertyExprResultType,
+			Set<String> jstTypeNames) {
+		if(propertyExprResultType==null){
+			return true;
+		}
+		String typeName = propertyExprResultType.getName();
+		for (String type : jstTypeNames) {
+			if(typeName.endsWith(type)){
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private boolean isNative(IJstType propertyExprResultType) {

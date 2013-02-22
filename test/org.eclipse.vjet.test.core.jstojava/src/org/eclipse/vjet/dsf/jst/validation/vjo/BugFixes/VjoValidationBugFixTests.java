@@ -1990,15 +1990,7 @@ public class VjoValidationBugFixTests extends VjoValidationBaseTester {
     public void testBugInitFailure() throws Exception {
         final List<VjoSemanticProblem> expectedProblems = new ArrayList<VjoSemanticProblem>(
                 0);
-        expectedProblems.add(createNewProblem(
-                FieldProbIds.FieldInitializationDependsOnUnintializedTypes, 4,
-                0));
-        expectedProblems.add(createNewProblem(
-                FieldProbIds.FieldInitializationDependsOnUnintializedTypes, 5,
-                0));
-        expectedProblems.add(createNewProblem(
-                FieldProbIds.FieldInitializationDependsOnUnintializedTypes, 9,
-                0));
+
 
         final List<VjoSemanticProblem> actualProblems = getVjoSemanticProblem(
                 "org.eclipse.vjet.dsf.jst.validation.vjo.BugFixes.",
