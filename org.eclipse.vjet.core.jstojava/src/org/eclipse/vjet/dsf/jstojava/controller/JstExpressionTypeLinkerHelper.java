@@ -2965,13 +2965,39 @@ public class JstExpressionTypeLinkerHelper {
 		if (f1 == null || f2 == null) {
 			return false;
 		}
+		
+		if(f1.getOverloaded().size() == f2.getOverloaded().size() && f1.getOverloaded().size()>0){
+			
+			boolean equal= true;
+			for (int i = 0; i < f1.getOverloaded().size(); i++) {
+				IJstMethod f1ovld = f1.getOverloaded().get(i);
+				IJstMethod f2ovld = f2.getOverloaded().get(i);
+				if(!isEqualMethodArgs(f1ovld, f2ovld)){
+					equal = false;
+				
+			}
+			}
+				
+			return equal;
+			
+		}
+		else{
+		
+			return isEqualMethodArgs(f1, f2);
+		}
+
+
+		
+	}
+
+	private static boolean isEqualMethodArgs(final IJstMethod f1,
+			final IJstMethod f2) {
 		if (!f1.getRtnType().toString().equals(f2.getRtnType().toString())) {
 			return false;
 		}
 		if (!f1.getArgs().toString().equals(f2.getArgs().toString())) {
 			return false;
 		}
-
 		return true;
 	}
 
