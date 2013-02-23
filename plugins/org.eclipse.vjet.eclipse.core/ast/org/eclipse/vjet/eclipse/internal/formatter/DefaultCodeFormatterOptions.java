@@ -1985,7 +1985,7 @@ public class DefaultCodeFormatterOptions {
 		this.comment_indent_parameter_description = true;
 		this.comment_indent_root_tags = true;
 		this.comment_insert_empty_line_before_root_tags = true;
-		this.comment_insert_new_line_for_parameter = true;
+		this.comment_insert_new_line_for_parameter = false;
 		this.comment_line_length = 80;
 		this.continuation_indentation = 2;
 		this.continuation_indentation_for_array_initializer = 2;
@@ -2251,7 +2251,7 @@ public class DefaultCodeFormatterOptions {
 		this.comment_indent_parameter_description = true;
 		this.comment_indent_root_tags = true;
 		this.comment_insert_empty_line_before_root_tags = true;
-		this.comment_insert_new_line_for_parameter = true;
+		this.comment_insert_new_line_for_parameter = false;
 		this.comment_line_length = 80;
 		this.continuation_indentation = 2;
 		this.continuation_indentation_for_array_initializer = 2;
