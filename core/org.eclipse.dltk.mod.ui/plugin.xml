@@ -712,8 +712,8 @@
 		</menuContribution>
 	</extension>
 	
-<!--TODO Disable menus-->
- <!--extension
+
+ <extension
        point="org.eclipse.ui.actionSets">
         <actionSet
             label="%ScriptCodingActionSet.label"
@@ -735,7 +735,7 @@
                id="org.eclipse.dltk.mod.ui.actions.Rename">
        </action>
       </actionSet>
- </extension-->
+ </extension>
    <extension
          point="org.eclipse.ui.actionSets">
       <actionSet
