@@ -19,7 +19,7 @@ vjo.ctype('syntax.declare.innerType.Anonymous2')
 
 	//>public void foo() 
 	foo : function(){
-		 var anon = vjo.make( this.vj$.Anonymous2, 'AnonymousType') // vjo.make()
+		 var anon = vjo.make( this.vj$.Anonymous2, 'syntax.declare.innerType.Anonymous2') // vjo.make()
 		 .protos({
 		 getAnonTypeProp : function () {
 			 this.s1 = "VV";

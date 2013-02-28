@@ -483,6 +483,7 @@ for (AHtmlType htmlType : iter) {
 		add(org.eclipse.vjet.dsf.jsnative.global.Arguments.class);
 		add(org.eclipse.vjet.dsf.jsnative.global.RegExp.class);
 		add(org.eclipse.vjet.dsf.jsnative.global.ObjLiteral.class);
+		add(org.eclipse.vjet.dsf.jsnative.global.Undefined.class);
 	}
 
 }

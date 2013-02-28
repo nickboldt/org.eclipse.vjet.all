@@ -990,7 +990,7 @@ public class VjoOLFieldTranslator extends
 		
 		
 		boolean isTypeInferred = true;
-		String type = "Object";
+		String type = "Undefined";
 		JsTypingMeta jsTyping = null;
 		if (meta != null) {
 			jsTyping = meta.getTyping();

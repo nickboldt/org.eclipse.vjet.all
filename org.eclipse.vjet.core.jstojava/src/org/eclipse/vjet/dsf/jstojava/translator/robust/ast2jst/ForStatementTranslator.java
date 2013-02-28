@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.vjet.dsf.jsgen.shared.ids.ScopeIds;
+import org.eclipse.vjet.dsf.jst.declaration.JstAttributedType;
 import org.eclipse.vjet.dsf.jst.declaration.JstBlock;
 import org.eclipse.vjet.dsf.jst.declaration.JstCache;
 import org.eclipse.vjet.dsf.jst.declaration.JstFactory;
@@ -54,39 +55,36 @@ public class ForStatementTranslator extends
 				&& statement.initializations.length > 0) {
 			Statement[] inits = statement.initializations;
 			List<AssignExpr> list = new ArrayList<AssignExpr>();
+			List<JstVars> multipleVars = new ArrayList<JstVars>();
 			boolean isLocalDeclaration = false;
 			JstVars jstVars = null;
+			
+			
+			
+			
 			for (Statement initializer : inits) {
 				if (initializer.getASTType() == IASTNode.LOCAL_DECLARATION) {
 					isLocalDeclaration = true;
 				}
 				final Object translated = getTranslatorAndTranslate(initializer, forStmt);
-				if (translated instanceof JstVars) {
-					List<AssignExpr> initializers = ((JstVars) translated)
-							.getAssignments();
-					for (AssignExpr jstInitializer : initializers) {
-						list.add(jstInitializer);
-					}
+				if(translated instanceof JstVars[] ){
 					
-					if(jstVars == null){
-						jstVars = (JstVars)translated;
-					}
-					else{
-						for(AssignExpr assignExpr: ((JstVars)translated).getAssignments()){
-							jstVars.addAssignment(assignExpr);
+					
+					JstVars[] multiVars = (JstVars[])translated;
+						for (JstVars jstVars2 : multiVars) {
+							multipleVars.add(jstVars2);
 						}
-					}
+					
+				}
+				else if (translated instanceof JstVars) {
+					multipleVars.add((JstVars)translated);
 				} else if (translated instanceof AssignExpr) {
 					AssignExpr assignExpr = (AssignExpr) translated;
 					// JstInitializer init = new JstInitializer(assignExpr
 					// .getLHS(), assignExpr.getExpr());
 					list.add(assignExpr);
 				} else if(translated instanceof ListExpr){
-					JstType obj =JstCache.getInstance().getType("Object");
-					if(obj==null){
-						obj = JstFactory.getInstance().createJstType(
-								"Object", true);
-					}
+					JstType obj =JstCache.getInstance().getType("Undefined");
 					jstVars = new JstVars(obj);
 					
 					ListExpr listExpr = (ListExpr)translated;
@@ -106,22 +104,18 @@ public class ForStatementTranslator extends
 
 			}
 			if (isLocalDeclaration) { // initializer is a local declaration: for (var i = 0;;;)
-				if(jstVars == null){
-					JstType obj =JstCache.getInstance().getType("Object");
-					if(obj==null){
-						obj = JstFactory.getInstance().createJstType(
-								"Object", true);
-					}
-					final JstVars vars = 
-						new JstVars(obj);
-					for (AssignExpr assignExpr : list) {
-						vars.addAssignment(assignExpr);
-					}
-					
-					jstVars = vars;
-				}
 				
-				forStmt.setInitializer(jstVars);
+				JstVars primaryVar = multipleVars.get(0);
+				
+				if(multipleVars.size()>1){
+					for (int i =1 ; i<multipleVars.size();i++) {
+						primaryVar.addChild(multipleVars.get(i));
+						
+					}
+				}
+				forStmt.setInitializer(primaryVar);
+				
+				//forStmt.setInitializer(jstVars);
 			} else { // initializer is assignment: for (i = 0;;;)
 				JstInitializer jstInitializer = null;
 				for (AssignExpr assignExpr : list) {
@@ -163,4 +157,15 @@ public class ForStatementTranslator extends
 		}
 		forStmt.setSource(TranslateHelper.getSource(statement, m_ctx.getSourceUtil()));
 	}
+
+//	private JstVars processVars(List<JstVars> list, JstVars jstVars,
+//			final Object translated) {
+//	
+//		List<AssignExpr> initializers =jstVars.getAssignments();
+//		for (AssignExpr jstInitializer : initializers) {
+//			list.add(jstInitializer);
+//		}
+//		
+//		return jstVars;
+//	}
 }

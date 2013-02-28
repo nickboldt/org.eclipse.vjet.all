@@ -42,19 +42,8 @@ public class Js15ExceptionsTests extends VjoValidationBaseTester {
                 MethodProbIds.WrongNumberOfArguments, 271+headersize, 0));
         expectProblems.add(createNewProblem(MethodProbIds.ParameterMismatch,
                 1002+headersize, 0));
-        expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt, 88, 0));
-        expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt, 126, 0));
-        expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt, 591, 0));
-        expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt, 601, 0));
-        expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt, 585, 0));
-        expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt, 586, 0));
-        expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt, 587, 0));
-        expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt, 588, 0));
-        expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt, 589, 0));
-        expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt, 590, 0));
-        expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt, 643, 0));
+
         expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt, 1086, 0));
-        expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt, 1131, 0));
 
     }
 

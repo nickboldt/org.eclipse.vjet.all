@@ -13,6 +13,7 @@ package org.eclipse.vjet.dsf.jst.validation.vjo.jsnative;
 
 import java.util.List;
 
+import org.eclipse.vjet.dsf.jsgen.shared.ids.FieldProbIds;
 import org.eclipse.vjet.dsf.jsgen.shared.ids.MethodProbIds;
 import org.eclipse.vjet.dsf.jsgen.shared.validation.vjo.VjoSemanticProblem;
 import org.eclipse.vjet.dsf.jst.validation.vjo.VjoValidationBaseTester;
@@ -42,6 +43,8 @@ public class VjoJsNativeTest extends VjoValidationBaseTester {
     //@Description("Test JS special codes ")
     public void testJsSpecial() throws Exception {
         expectProblems.clear();
+        expectProblems.add(createNewProblem2(FieldProbIds.UndefinedField, 59, 0));
+        expectProblems.add(createNewProblem2(MethodProbIds.UndefinedMethod, 60, 0));
         actualProblems = getVjoSemanticProblem(
                 "org.eclipse.vjet.dsf.jst.validation.vjo.jsnative.", "JsSpecial.js",
                 this.getClass());

@@ -87,9 +87,9 @@ public class VjoCcParameterHintAdvisor extends AbstractVjoCcAdvisor implements
 		}
 		IJstMethod method = (IJstMethod) node;
 		IJstType calledType = method.getOwnerType();
-		if (calledType == null) {
-			return false;
-		}
+//		if (calledType == null) {
+//			return false;
+//		}
 		int[] levels = CodeCompletionUtils.getGeneralFieldCallLevel(
 				callingType, calledType);
 		List<? extends IJstMethod> overloads = JstTypeHelper.getSignatureMethods(method);

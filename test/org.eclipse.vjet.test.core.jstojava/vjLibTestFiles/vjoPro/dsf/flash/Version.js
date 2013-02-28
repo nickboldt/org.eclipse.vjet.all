@@ -49,15 +49,16 @@ v = 3;
 t.rw(true,v);
 return v;
 },
+//> public Object? fn(boolean,Number)
 rw:function(write,value){
 var t = this, n = t.vj$, C = n.VjCookieJar, B = n.Bit;
 //40,41,42,43,44 bits in ebay.sbf are used to store flash version
-cl = C.readCookie("ebay","sbf");
+cl = C.readCookie("ebay","sbf");//<<String
 if(!write){
 return B.getMulti(cl,40,5);
 }else if(write){
 //storing cookielet value as 1 in case of zero
-value=(value==0)?1:value;
+value=(value==0)?1:value; //<Number
 C.writeCookielet("ebay","sbf",B.setMulti(cl, 40, 5, value));
 }
 }

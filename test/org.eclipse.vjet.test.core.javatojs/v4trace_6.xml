@@ -1,12 +1,12 @@
 <JavaToJst><Controller method="TargetedTranslation"><DependencyPhase><Task type="org.eclipse.vjet.dsf.javatojs.tests.data.structure.NestedTypes" mode="Dependency,Declaration" thread="1">
  <Dependents/>
- <Time start="13:13:57:944" end="13:13:57:952" duration="8"/>
-</Task></DependencyPhase><DeclarationPhase><Task type="org.eclipse.vjet.dsf.javatojs.tests.data.Super" mode="Dependency,Declaration" thread="26">
+ <Time start="10:29:27:917" end="10:29:27:932" duration="15"/>
+</Task></DependencyPhase><DeclarationPhase><Task type="org.eclipse.vjet.dsf.javatojs.tests.data.Super" mode="Dependency,Declaration" thread="24">
  <Dependents/>
- <Time start="13:13:57:960" end="13:13:57:961" duration="1"/>
-</Task><Task type="org.eclipse.vjet.dsf.javatojs.tests.data.structure.Methods" mode="Dependency,Declaration" thread="24">
+ <Time start="10:29:27:940" end="10:29:27:943" duration="3"/>
+</Task><Task type="org.eclipse.vjet.dsf.javatojs.tests.data.structure.Methods" mode="Dependency,Declaration" thread="26">
  <Dependents/>
- <Time start="13:13:57:960" end="13:13:57:966" duration="6"/>
+ <Time start="10:29:27:940" end="10:29:27:949" duration="9"/>
 </Task></DeclarationPhase><ImplementationPhase><Task type="org.eclipse.vjet.dsf.javatojs.tests.data.structure.NestedTypes" mode="Dependency,Declaration,Impl" thread="1">
- <Time start="13:13:57:973" end="13:13:58:049" duration="76"/>
-</Task></ImplementationPhase><Time start="13:13:57:933" end="13:13:58:058" duration="125"/></Controller></JavaToJst>
+ <Time start="10:29:27:951" end="10:29:28:044" duration="93"/>
+</Task></ImplementationPhase><Time start="10:29:27:905" end="10:29:28:054" duration="149"/></Controller></JavaToJst>

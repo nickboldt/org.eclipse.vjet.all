@@ -35,7 +35,7 @@ vjo.ctype('org.eclipse.vjet.dsf.jst.validation.vjo.mtdinvocation.ParamTypeAsFunc
 		});
 		
 		this.foo(100, function(x){
-			var i = x;//<Date
+			var i = x;//<<Date
 			return i;
 		});
 		

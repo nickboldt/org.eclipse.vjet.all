@@ -1,14 +1,12 @@
 /*******************************************************************************
- * Copyright (c) 2012 eBay Inc. and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *     eBay Inc. - initial API and implementation
- *******************************************************************************/
-vjo.ctype("vjoPro.dsf.utils.logging.ConsoleHandler")
+ * Copyright (c) 2012 eBay Inc. and others. All rights reserved. This program
+ * and the accompanying materials are made available under the terms of the
+ * Eclipse Public License v1.0 which accompanies this distribution, and is
+ * available at http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors: eBay Inc. - initial API and implementation
+ ******************************************************************************/
+vjo.ctype("vjoPro.dsf.utils.logging.ConsoleHandler") //<dynamic
 .needs("vjoPro.dsf.utils.logging.Handler")
 .needs("vjoPro.dsf.EventDispatcher")
 .needs("vjoPro.dsf.window.utils.VjWindowUtils")
@@ -61,9 +59,10 @@ t.ED.addEventListener(document.body, 'mouseup',		t.endDrag,			t);
 t.ED.addEventListener(document.body, 'mousemove', 	t.doDrag, 			t);
 },
 
+//> boolean? fn(MouseEvent e)
 beginDrag: function(e){
 var t = this,
-handle = e.target || e.srcElement;
+handle = e.target || e.srcElement; 
 while (handle !== document.body && handle !== t.bar) {
 handle = handle.parentNode;
 }
@@ -79,7 +78,7 @@ return false;
 endDrag: function(){
 this.movable = false;
 },
-
+//> boolean? fn(MouseEvent e)
 doDrag: function(e) {
 var t = this;
 if (t.movable) {

@@ -20,7 +20,7 @@ return 'Util - doIt';
 
 value : 'Util', //< public String
 
-//public void contructs(String val)
+//>public contructs(String val)
 constructs : function(val)
 {
 this.value = val;

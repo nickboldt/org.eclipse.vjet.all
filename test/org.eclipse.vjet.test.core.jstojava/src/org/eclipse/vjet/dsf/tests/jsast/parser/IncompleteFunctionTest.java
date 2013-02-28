@@ -63,7 +63,7 @@ public class IncompleteFunctionTest implements ICommentConstants {
 	//@Category({P1, UNIT, FAST})
 	//@Description("verify syntax problems")
 	public void verifyFunctionBody() {
-		assertEquals(3, jstUnit.getProblems().size());
+		assertEquals(0, jstUnit.getProblems().size());
 	}
 	
 	@After

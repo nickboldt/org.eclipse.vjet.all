@@ -14,6 +14,7 @@ package org.eclipse.vjet.test.core.ecma.jst.validation;
 
 import java.util.List;
 
+import org.eclipse.vjet.dsf.jsgen.shared.ids.FieldProbIds;
 import org.eclipse.vjet.dsf.jsgen.shared.ids.MethodProbIds;
 import org.eclipse.vjet.dsf.jsgen.shared.ids.TypeProbIds;
 import org.eclipse.vjet.dsf.jsgen.shared.ids.VarProbIds;
@@ -72,6 +73,7 @@ public class Ecma2ExceptionsTests extends VjoValidationBaseTester {
                 MethodProbIds.WrongNumberOfArguments, 678+headersize, 0));
         expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 761+headersize, 0));
         expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 809+headersize, 0));
+    
         expectProblems.add(createNewProblem(MethodProbIds.UndefinedMethod,
         		899+headersize, 0));
         expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 984+headersize, 0));
@@ -97,7 +99,7 @@ public class Ecma2ExceptionsTests extends VjoValidationBaseTester {
         expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 4854+headersize, 0));
         expectProblems.add(createNewProblem(TypeProbIds.IncompatibleTypesInEqualityOperator,
         		4855+headersize, 0));
-        
+        expectProblems.add(createNewProblem(TypeProbIds.IncompatibleTypesInEqualityOperator, 4350, 0));
         //for new Math error added, no constructor is defined for Math type
         
         

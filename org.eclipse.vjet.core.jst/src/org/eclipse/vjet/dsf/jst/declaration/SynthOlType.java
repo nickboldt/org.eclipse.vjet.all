@@ -34,6 +34,7 @@ public class SynthOlType extends JstType implements ISynthesized {
 	
 	public SynthOlType(ObjLiteral ol) {
 		m_ol = ol;
+		getModifiers().setDynamic();
 		this.addExtend(JstCache.getInstance().getType("ObjLiteral"));
 	}
 	
@@ -248,4 +249,6 @@ public class SynthOlType extends JstType implements ISynthesized {
 		}
 		
 	}
+	
+	
 }

@@ -25,10 +25,25 @@ import org.eclipse.vjet.dsf.jst.JstCommentLocation;
 import org.eclipse.vjet.dsf.jst.util.JstCommentHelper;
 import org.eclipse.vjet.dsf.jstojava.parser.VjoParser;
 import org.eclipse.vjet.dsf.jstojava.translator.TranslateCtx;
+import org.eclipse.vjet.vjo.lib.IResourceResolver;
+import org.eclipse.vjet.vjo.lib.LibManager;
+import org.junit.Before;
 import org.junit.Test;
 
 public class SimpleJsDocTests {
 
+	@Before
+	public void setUp() {
+		IResourceResolver jstLibResolver = org.eclipse.vjet.dsf.jstojava.test.utils.JstLibResolver
+				.getInstance()
+				.setSdkEnvironment(
+						new org.eclipse.vjet.dsf.jstojava.test.utils.VJetSdkEnvironment(
+								new String[0], "DefaultSdk"));
+
+		LibManager.getInstance().setResourceResolver(jstLibResolver);
+		
+	}
+	
 	@Test
 	//@Category({P1, UNIT, FAST})
 	//@Description("AST Recovery tests with and without errors")

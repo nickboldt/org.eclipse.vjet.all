@@ -8,7 +8,7 @@
  * Contributors:
  *     eBay Inc. - initial API and implementation
  *******************************************************************************/
-vjo.ctype("org.eclipse.vjet.dsf.jst.validation.vjo.BugFixes.Bug5720")
+vjo.ctype("org.eclipse.vjet.dsf.jst.validation.vjo.BugFixes.Bug5720") //<dynamic
 .props({
 		
 	BigO:function (data)

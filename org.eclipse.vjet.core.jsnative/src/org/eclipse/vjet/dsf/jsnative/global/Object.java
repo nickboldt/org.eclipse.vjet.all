@@ -11,6 +11,7 @@ package org.eclipse.vjet.dsf.jsnative.global;
 import org.eclipse.vjet.dsf.jsnative.anno.BrowserSupport;
 import org.eclipse.vjet.dsf.jsnative.anno.BrowserType;
 import org.eclipse.vjet.dsf.jsnative.anno.Constructor;
+import org.eclipse.vjet.dsf.jsnative.anno.Dynamic;
 import org.eclipse.vjet.dsf.jsnative.anno.Function;
 import org.eclipse.vjet.dsf.jsnative.anno.JsSupport;
 import org.eclipse.vjet.dsf.jsnative.anno.JsVersion;
@@ -31,7 +32,7 @@ public interface Object extends IWillBeScriptable {
 	/**
 	 * Specifies the function that creates a constructor of an object.
 	 */
-	@Property Object getConstructor();
+	@Property org.eclipse.vjet.dsf.jsnative.global.Function getConstructor();
 	
 	/**
 	 * Allows a function to be defined that will be executed 

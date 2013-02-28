@@ -44,23 +44,21 @@ public class TraceLogger extends VjoValidationBaseTester {
         expectProblems.clear();
         expectProblems
                 .add(createNewProblem(TypeProbIds.UnusedActiveNeeds, 1, 0));
-        expectProblems.add(createNewProblem(
-                MethodProbIds.WrongNumberOfArguments, 1, 0));
         expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 14, 0));
-        expectProblems
-                .add(createNewProblem(FieldProbIds.UndefinedField, 32, 0));
-        expectProblems
-                .add(createNewProblem(FieldProbIds.UndefinedField, 37, 0));
-        expectProblems
-                .add(createNewProblem(FieldProbIds.UndefinedField, 37, 0));
-        expectProblems.add(createNewProblem(
-                VjoSyntaxProbIds.TypeUnknownMissingImport, 41, 0));
-        expectProblems
-                .add(createNewProblem(FieldProbIds.UndefinedField, 42, 0));
-        expectProblems
-                .add(createNewProblem(FieldProbIds.UndefinedField, 61, 0));
-        expectProblems
-                .add(createNewProblem(FieldProbIds.UndefinedField, 65, 0));
+//        expectProblems
+//                .add(createNewProblem(FieldProbIds.UndefinedField, 32, 0));
+//        expectProblems
+//                .add(createNewProblem(FieldProbIds.UndefinedField, 37, 0));
+//        expectProblems
+//                .add(createNewProblem(FieldProbIds.UndefinedField, 37, 0));
+//        expectProblems.add(createNewProblem(
+//                VjoSyntaxProbIds.TypeUnknownMissingImport, 41, 0));
+//        expectProblems
+//                .add(createNewProblem(FieldProbIds.UndefinedField, 42, 0));
+//        expectProblems
+//                .add(createNewProblem(FieldProbIds.UndefinedField, 61, 0));
+//        expectProblems
+//                .add(createNewProblem(FieldProbIds.UndefinedField, 65, 0));
         expectProblems
                 .add(createNewProblem(FieldProbIds.NotVisibleField, 69, 0));
     }

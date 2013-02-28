@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.vjet.dsf.common.Z;
 import org.eclipse.vjet.dsf.jst.IJstAnnotation;
 import org.eclipse.vjet.dsf.jst.IJstDoc;
 import org.eclipse.vjet.dsf.jst.IJstGlobalVar;
@@ -719,5 +720,15 @@ public class JstExtendedType implements IJstType {
 		
 	}
 	
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append(Z.fmt("target type: ",m_targetType));
+		if(m_extendedTypes!=null){
+			sb.append(Z.fmt("extended type: ",m_extendedTypes));
+		}
+		return sb.toString();
+		
+	}
 
 }

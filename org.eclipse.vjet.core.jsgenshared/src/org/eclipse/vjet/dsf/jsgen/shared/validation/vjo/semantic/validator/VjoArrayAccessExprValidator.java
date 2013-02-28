@@ -20,6 +20,7 @@ import org.eclipse.vjet.dsf.jsgen.shared.validation.vjo.visitor.IVjoValidationPo
 import org.eclipse.vjet.dsf.jsgen.shared.validation.vjo.visitor.IVjoValidationVisitorEvent;
 import org.eclipse.vjet.dsf.jst.IJstNode;
 import org.eclipse.vjet.dsf.jst.IJstType;
+import org.eclipse.vjet.dsf.jst.declaration.JstInferredType;
 import org.eclipse.vjet.dsf.jst.expr.ArrayAccessExpr;
 import org.eclipse.vjet.dsf.jst.token.IExpr;
 
@@ -74,11 +75,17 @@ public class VjoArrayAccessExprValidator
 			arguments[0] = arrayIndex != null ? arrayIndex.toExprText() : "NULL";
 			arguments[1] = expr.toExprText();
 			
+		
+			
 			if(arrayIndex != null){
-				final IJstType indexValue = arrayIndex.getResultType();
+				IJstType indexValue = arrayIndex.getResultType();
+				if(indexValue instanceof JstInferredType){
+					indexValue = ((JstInferredType) indexValue).getType();
+				}
 				if(indexValue != null){
 					if(!TypeCheckUtil.isNumber(indexValue) && 
-							!TypeCheckUtil.isString(indexValue)){
+							!TypeCheckUtil.isString(indexValue) &&
+							!TypeCheckUtil.isUndefined(indexValue)){
 						final BaseVjoSemanticRuleCtx arrayIndexShouldBeIntTypeRuleCtx = new BaseVjoSemanticRuleCtx(expr, groupId, arguments);
 						satisfyRule(ctx, VjoSemanticRuleRepo.getInstance().ARRAY_INDEX_SHOULD_BE_INT_OR_STRING_TYPE, arrayIndexShouldBeIntTypeRuleCtx);
 					}

@@ -41,28 +41,28 @@ public class ConsoleHandler extends VjoValidationBaseTester {
     public void setUp() {
         expectProblems.clear();
         expectProblems.add(createNewProblem2(TypeProbIds.UnusedActiveNeeds,
-        		11, 0));
+        		9, 0));
         expectProblems.add(createNewProblem2(VjoSyntaxProbIds.RedundantImport,
-                12, 0));
+                10, 0));
         expectProblems.add(createNewProblem2(
-                VjoSyntaxProbIds.TypeUnknownNotInTypeSpace, 13, 0));
+                VjoSyntaxProbIds.TypeUnknownNotInTypeSpace, 11, 0));
 //        expectProblems.add(createNewProblem2(FieldProbIds.FieldInitializationDependsOnUnintializedTypes,
 //                7, 0));
         expectProblems.add(createNewProblem2(FieldProbIds.FieldInitializationDependsOnUnintializedTypes,
-                19, 0));
-        expectProblems.add(createNewProblem2(VarProbIds.UndefinedName, 18, 0));
-        expectProblems
-                .add(createNewProblem2(FieldProbIds.UndefinedField, 80, 0));
-        expectProblems
-                .add(createNewProblem2(FieldProbIds.UndefinedField, 95, 0));
+                17, 0));
+        expectProblems.add(createNewProblem2(VarProbIds.UndefinedName, 16, 0));
+//        expectProblems
+//                .add(createNewProblem2(FieldProbIds.UndefinedField, 79, 0));
+//        expectProblems
+//                .add(createNewProblem2(FieldProbIds.UndefinedField, 94, 0));
 //        expectProblems
 //                .add(createNewProblem2(FieldProbIds.UndefinedField, 86, 0));
+//        expectProblems
+//                .add(createNewProblem2(FieldProbIds.UndefinedField, 97, 0));
+//        expectProblems
+//                .add(createNewProblem2(FieldProbIds.UndefinedField, 114, 0));
         expectProblems
-                .add(createNewProblem2(FieldProbIds.UndefinedField, 98, 0));
-        expectProblems
-                .add(createNewProblem2(FieldProbIds.UndefinedField, 115, 0));
-        expectProblems
-        		.add(createNewProblem2(MethodProbIds.VoidMethodReturnsValue, 55, 0));
+        		.add(createNewProblem2(MethodProbIds.VoidMethodReturnsValue, 53, 0));
     }
 
     @Test

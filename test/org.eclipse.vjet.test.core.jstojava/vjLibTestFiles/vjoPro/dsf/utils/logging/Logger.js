@@ -8,7 +8,7 @@
  * Contributors:
  *     eBay Inc. - initial API and implementation
  *******************************************************************************/
-vjo.ctype("vjoPro.dsf.utils.logging.Logger")
+vjo.ctype("vjoPro.dsf.utils.logging.Logger") //< dynamic
 .needs("vjoPro.dsf.utils.logging.Level","L")
 .needs("vjoPro.dsf.utils.logging.LogRecord","LR")
 .needs("vjoPro.dsf.utils.logging.LogManager")

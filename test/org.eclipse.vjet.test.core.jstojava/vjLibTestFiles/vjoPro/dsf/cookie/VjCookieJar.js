@@ -306,7 +306,7 @@ this.writeCookie(psCookie,psVal,this.getExpDate(piDays));
 *        an expired date of the cookie
 * @see #writeMultiLineCookie
 */
-//> public void writeCookielet(String,String,String,String,String);
+//> public void writeCookielet(String,String,Object,String?,String?);
 writeCookielet : function (psCookie,psCookielet,psVal,psExp,psContExp) {
 //@param		pSec - secured? (optional)
 if (psCookie && psCookielet){

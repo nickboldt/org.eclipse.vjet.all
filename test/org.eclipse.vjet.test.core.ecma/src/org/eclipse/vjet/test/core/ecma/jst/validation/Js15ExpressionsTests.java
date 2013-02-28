@@ -14,6 +14,7 @@ package org.eclipse.vjet.test.core.ecma.jst.validation;
 
 import java.util.List;
 
+import org.eclipse.vjet.dsf.jsgen.shared.ids.FieldProbIds;
 import org.eclipse.vjet.dsf.jsgen.shared.ids.MethodProbIds;
 import org.eclipse.vjet.dsf.jsgen.shared.validation.vjo.VjoSemanticProblem;
 import org.junit.Before;
@@ -37,6 +38,10 @@ public class Js15ExpressionsTests extends VjoValidationBaseTester {
         expectProblems.clear();
         expectProblems.add(createNewProblem(
                 MethodProbIds.WrongNumberOfArguments, 75, 0));
+        // prototype add on that are not known
+        expectProblems.add(createNewProblem(FieldProbIds.UndefinedField, 218, 0));
+        expectProblems.add(createNewProblem(FieldProbIds.UndefinedField, 296, 0));
+        expectProblems.add(createNewProblem(FieldProbIds.UndefinedField, 374, 0));
     }
 
     @Test

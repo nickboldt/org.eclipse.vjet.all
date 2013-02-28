@@ -80,7 +80,7 @@ os[i] = null;
 }
 },
 
-//> private Object get(String);
+//> private HTMLSelectElement get(String);
 get : function(poSelect){
 var e = poSelect;
 if(typeof(poSelect)=="string"){

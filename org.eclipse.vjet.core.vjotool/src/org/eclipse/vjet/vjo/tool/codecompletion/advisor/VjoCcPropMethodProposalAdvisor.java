@@ -17,8 +17,10 @@ import org.eclipse.vjet.dsf.jst.IJstOType;
 import org.eclipse.vjet.dsf.jst.IJstProperty;
 import org.eclipse.vjet.dsf.jst.IJstType;
 import org.eclipse.vjet.dsf.jst.declaration.JstAttributedType;
+import org.eclipse.vjet.dsf.jst.declaration.JstFuncType;
 import org.eclipse.vjet.dsf.jst.declaration.JstMixedType;
 import org.eclipse.vjet.dsf.jst.declaration.JstObjectLiteralType;
+import org.eclipse.vjet.dsf.jst.declaration.JstProxyType;
 import org.eclipse.vjet.dsf.jst.util.JstTypeHelper;
 import org.eclipse.vjet.vjo.tool.codecompletion.CodeCompletionUtils;
 import org.eclipse.vjet.vjo.tool.codecompletion.IVjoCcAdvisor;
@@ -61,6 +63,12 @@ public class VjoCcPropMethodProposalAdvisor extends AbstractVjoCcAdvisor
 		IJstType tempCalledType = calledType;
 		int[] levels = getCallLevel(callingType, calledType);
 		List<String> tempString = new ArrayList<String>();
+		// TODO test with other jst proxy types // fixing JstFuncType for now 
+		// any function reference is defined by JstFuncType
+		if(calledType instanceof JstFuncType){
+			calledType = ((JstFuncType) calledType).getType();
+		}
+		
 		List<? extends IJstMethod> methods = JstTypeHelper.getSignatureMethods(calledType, false, false);
 		Iterator<? extends IJstMethod> it = methods.iterator();
 		while (it.hasNext()) {

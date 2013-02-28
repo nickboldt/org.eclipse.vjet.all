@@ -14,6 +14,7 @@ import java.util.List;
 import org.eclipse.vjet.dsf.jsgen.shared.validation.vjo.VjoValidationCtx;
 import org.eclipse.vjet.dsf.jsgen.shared.validation.vjo.semantic.rules.VjoSemanticRuleRepo;
 import org.eclipse.vjet.dsf.jsgen.shared.validation.vjo.semantic.rules.rulectx.BaseVjoSemanticRuleCtx;
+import org.eclipse.vjet.dsf.jsgen.shared.validation.vjo.semantic.rules.util.TypeCheckUtil;
 import org.eclipse.vjet.dsf.jsgen.shared.validation.vjo.visitor.IVjoValidationPostAllChildrenListener;
 import org.eclipse.vjet.dsf.jsgen.shared.validation.vjo.visitor.IVjoValidationVisitorEvent;
 import org.eclipse.vjet.dsf.jst.IInferred;
@@ -97,9 +98,9 @@ public class VjoObjCreationExprValidator
 			final IJstNode mtdBinding) {
 		if(bindingType == null 
 				|| bindingType instanceof IInferred 
-				|| "Object".equals(bindingType.getName()) 
-				|| "type::Object".equals(bindingType.getName())) {
-			// skip validation if result type is Object or type::Object
+				|| "Undefined".equals(bindingType.getName()) 
+				|| "type::Undefined".equals(bindingType.getName())) {
+			// skip validation if result type is Undefined or type::Undefined
 			return;
 		}
 		else if("vjo.Enum".equals(identifier.toExprText())){
@@ -222,7 +223,7 @@ public class VjoObjCreationExprValidator
 					return;
 				} 
 			}
-			else{
+			else if(!TypeCheckUtil.isUndefined(bindingType)){
 				BaseVjoSemanticRuleCtx ruleCtx = new BaseVjoSemanticRuleCtx(expr, ctx.getGroupId(), new String[]{bindingType.getName(), expr.toExprText()});
 				satisfyRule(ctx, VjoSemanticRuleRepo.getInstance().CLASS_SHOULD_BE_INSTANTIATABLE, ruleCtx);
 				return;

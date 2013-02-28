@@ -14,6 +14,7 @@ package org.eclipse.vjet.test.core.ecma.jst.validation;
 
 import java.util.List;
 
+import org.eclipse.vjet.dsf.jsgen.shared.ids.FieldProbIds;
 import org.eclipse.vjet.dsf.jsgen.shared.ids.MethodProbIds;
 import org.eclipse.vjet.dsf.jsgen.shared.ids.VarProbIds;
 import org.eclipse.vjet.dsf.jsgen.shared.validation.vjo.VjoSemanticProblem;
@@ -36,24 +37,14 @@ public class Ecma3ExceptionsTests extends VjoValidationBaseTester {
     @Before
     public void setUp() {
         expectProblems.clear();
-        expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt, 666, 0));
-        expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt, 667, 0));
-        expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt, 672, 0));
-        expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt, 689, 0));
-        expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt, 696, 0));
-        expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt, 705, 0));
-
-   
-        expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt, 829, 0));
-        expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt, 830, 0));
-        expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt, 831, 0));
-        expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt, 836, 0));
         
-        expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt, 842, 0));
-        expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt, 849, 0));
-        expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt, 858, 0));
         expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 886, 0));
         expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 900, 0));
+        // prototype extensions which are unknown
+        expectProblems.add(createNewProblem(FieldProbIds.UndefinedField, 629, 0));
+        expectProblems.add(createNewProblem(FieldProbIds.UndefinedField, 755, 0));
+        expectProblems.add(createNewProblem(FieldProbIds.UndefinedField, 767, 0));
+        expectProblems.add(createNewProblem(FieldProbIds.UndefinedField, 743, 0));
     }
 
     @Test

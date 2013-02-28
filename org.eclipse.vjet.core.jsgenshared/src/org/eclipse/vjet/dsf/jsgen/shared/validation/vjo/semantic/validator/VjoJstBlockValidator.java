@@ -34,7 +34,9 @@ import org.eclipse.vjet.dsf.jst.declaration.JstMethod;
 import org.eclipse.vjet.dsf.jst.declaration.JstType;
 import org.eclipse.vjet.dsf.jst.expr.JstArrayInitializer;
 import org.eclipse.vjet.dsf.jst.expr.MtdInvocationExpr;
+import org.eclipse.vjet.dsf.jst.stmt.CatchStmt;
 import org.eclipse.vjet.dsf.jst.stmt.SwitchStmt;
+import org.eclipse.vjet.dsf.jst.stmt.TryStmt;
 import org.eclipse.vjet.dsf.jst.term.ArrayLiteral;
 import org.eclipse.vjet.dsf.jst.term.JstIdentifier;
 import org.eclipse.vjet.dsf.jst.term.SimpleLiteral;
@@ -168,7 +170,7 @@ public class VjoJstBlockValidator
 						final BaseVjoSemanticRuleCtx ruleCtx = new BaseVjoSemanticRuleCtx(stmt, ctx.getGroupId(), new String[]{method.getName().getName(), stmt.toStmtText()});
 						satisfyRule(ctx, VjoSemanticRuleRepo.getInstance().STMT_SHOULD_BE_REACHABLE, ruleCtx);
 					}
-					if(child == stmt){
+					if(child == stmt && !(child instanceof TryStmt)){
 						unreachable = true;
 					}
 				}

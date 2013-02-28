@@ -14,6 +14,7 @@ package org.eclipse.vjet.test.core.ecma.jst.validation;
 
 import java.util.List;
 
+import org.eclipse.vjet.dsf.jsgen.shared.ids.FieldProbIds;
 import org.eclipse.vjet.dsf.jsgen.shared.validation.vjo.VjoSemanticProblem;
 import org.junit.Before;
 import org.junit.Test;
@@ -34,6 +35,19 @@ public class Js13InheritTests extends VjoValidationBaseTester {
     @Before
     public void setUp() {
         expectProblems.clear();
+        // this test is for inheritance by modifing the prototype chain
+        // we don't support this with 0.10 vjet default. 
+        // an extension can be added to support prototype class system
+        
+        expectProblems.add(createNewProblem(FieldProbIds.UndefinedField, 407, 0));
+        expectProblems.add(createNewProblem(FieldProbIds.UndefinedField, 419, 0));
+        expectProblems.add(createNewProblem(FieldProbIds.UndefinedField, 577, 0));
+        expectProblems.add(createNewProblem(FieldProbIds.UndefinedField, 584, 0));
+        expectProblems.add(createNewProblem(FieldProbIds.UndefinedField, 820, 0));
+        expectProblems.add(createNewProblem(FieldProbIds.UndefinedField, 908, 0));
+        expectProblems.add(createNewProblem(FieldProbIds.UndefinedField, 987, 0));
+        expectProblems.add(createNewProblem(FieldProbIds.UndefinedField, 988, 0));
+        expectProblems.add(createNewProblem(FieldProbIds.UndefinedField, 990, 0));
     }
 
     @Test

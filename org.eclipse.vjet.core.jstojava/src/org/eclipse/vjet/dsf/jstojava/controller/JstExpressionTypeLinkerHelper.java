@@ -1656,13 +1656,19 @@ public class JstExpressionTypeLinkerHelper {
 		final Set<OverloadBestMatchCandidate> filteredOverloads = new HashSet<OverloadBestMatchCandidate>();
 		for (Map.Entry<IJstMethod, List<JstArg>> scoreEntry : validOverloads2ParamsMap
 				.entrySet()) {
+			// if arg types match exactly
+		
 			final IJstMethod key = scoreEntry.getKey();
 			final List<JstArg> value = scoreEntry.getValue();
-			if (key.getArgs().size() < value.size()) {// number dosn't match
-				filteredOverloads.add(new OverloadBestMatchCandidate(key,
-						value, arguments));
-			} else {
+//			if (key.getArgs().size() < value.size()) {// number dosn't match
+//				filteredOverloads.add(new OverloadBestMatchCandidate(key,
+//						value, arguments));
+//			} else {
+			if(paramsMatch(key.getArgs(),value)){
 				scoreSortedOverloads.add(new OverloadBestMatchCandidate(key,
+						value, arguments));
+			}else{
+				filteredOverloads.add(new OverloadBestMatchCandidate(key,
 						value, arguments));
 			}
 		}
@@ -1674,6 +1680,17 @@ public class JstExpressionTypeLinkerHelper {
 		}
 
 		return scoreSortedOverloads.iterator().next().getMethod();
+	}
+
+	private static boolean paramsMatch(List<JstArg> args, List<JstArg> args2) {
+		int count = 0;
+		boolean argsMatch = false;
+		for(JstArg a:args){
+			if(a.getType().equals(args2.get(count).getType())){
+				argsMatch = true;
+			}
+		}
+		return argsMatch;
 	}
 
 	private static List<JstArg> paddingParams(final List<JstArg> params,
@@ -1693,7 +1710,7 @@ public class JstExpressionTypeLinkerHelper {
 
 		final JstArg paddingParam = lastParam != null && lastParam.isVariable() ? new JstArg(
 				lastParam.getType(), "proxy", true) : new JstArg(JstCache
-				.getInstance().getType("Object"), "proxy", false);
+				.getInstance().getType("Undefined"), "proxy", false);
 		for (int i = paramsLength; i < argumentsLength; i++) {
 			paddingParams.add(paddingParam);
 		}
@@ -1842,8 +1859,10 @@ public class JstExpressionTypeLinkerHelper {
 			final boolean override, final GroupInfo groupInfo) {
 		if (override || identifier.getJstBinding() == null) {
 			identifier.setJstBinding(bound);
-			setExprType(resolver, identifier, symbolType, groupInfo);
-			addToSymbolMap(scope, name, new LinkerSymbolInfo(name, symbolType,
+			IJstType varType = JstExpressionTypeLinkerHelper.getVarType(
+					resolver, identifier.getJstBinding() );
+			setExprType(resolver, identifier, varType, groupInfo);
+			addToSymbolMap(scope, name, new LinkerSymbolInfo(name, varType,
 					bound, null));
 		}
 	}
@@ -2017,7 +2036,9 @@ public class JstExpressionTypeLinkerHelper {
 		}
 
 		bindMtdInvocations(resolver, revisitor, mie, mtd, groupInfo);
-		setExprType(resolver, mie, type, groupInfo);
+		if(mie.getResultType()==null){
+			setExprType(resolver, mie, type, groupInfo);
+		}
 	}
 
 	/**
@@ -3305,6 +3326,10 @@ public class JstExpressionTypeLinkerHelper {
 	 */
 
 	public static boolean isStaticRef(IJstType qualifierType) {
+		if(qualifierType instanceof JstInferredType){
+			qualifierType = ((JstInferredType) qualifierType).getType();
+		}
+		
 		boolean isStatic = qualifierType instanceof IJstRefType
 				|| qualifierType.isFType();
 		return isStatic;
@@ -3317,9 +3342,13 @@ public class JstExpressionTypeLinkerHelper {
 	 * @param type
 	 */
 	public static void setExprType(final JstExpressionBindingResolver resolver,
-			final IExpr expr, final IJstType type, final GroupInfo groupInfo) {
+			final IExpr expr,  IJstType type, final GroupInfo groupInfo) {
 		// modification by huzhou to stop resolving of JstAttributedType in
 		// linker
+		if(expr.toExprText().equals("undefined")){
+			type = SimpleLiteral.getUndefinedLiteral().getResultType();
+		}
+		
 		IJstType realType = type instanceof JstAttributedType
 				|| type instanceof JstFuncType ? type : getBindedJstType(type);
 
@@ -3377,8 +3406,10 @@ public class JstExpressionTypeLinkerHelper {
 		if (type == null) {
 			return null;
 		}
+		
+		
 		// bugfix for otype using attributed presentation
-		else if (type instanceof JstMixedType) {
+		 if (type instanceof JstMixedType) {
 			for(IJstType mixedType: ((JstMixedType)type).getMixedTypes()){
 				IJstType x = getCorrectType(resolver, mixedType, groupInfo);
 
@@ -3756,7 +3787,8 @@ public class JstExpressionTypeLinkerHelper {
 				break;
 			}
 		}
-
+//  TODO methods/properties added to anon class are not added to newType
+		// making anon class dynamic for now
 		if (qualifier != null && mtdId != null) {
 			if (VjoKeywords.VJO.equals(qualifier.toExprText())
 					&& VjoKeywords.MAKE.equals(mtdId.toExprText())) {
@@ -3769,8 +3801,10 @@ public class JstExpressionTypeLinkerHelper {
 								typeName);
 						if (parentType != null) {
 							IJstType newType = JstTypeHelper.make(parentType);
+							newType.getModifiers().setDynamic();
 							return newType;
 						}
+						// should we make this Undefined ?
 					} else if (arg2 instanceof FieldAccessExpr) {
 						IJstType resultType = ((FieldAccessExpr) arg2)
 								.getResultType();
@@ -3778,6 +3812,7 @@ public class JstExpressionTypeLinkerHelper {
 							IJstType newType = JstTypeHelper
 									.make(((IJstRefType) resultType)
 											.getReferencedNode());
+							newType.getModifiers().setDynamic();
 							return newType;
 						}
 					}
@@ -3997,5 +4032,10 @@ public class JstExpressionTypeLinkerHelper {
 			return m_method.hashCode() + m_parameters.hashCode()
 					+ m_arguments.hashCode();
 		}
+	}
+
+	public static IJstType getNativeUndefinedType(
+			JstExpressionBindingResolver resolver) {
+		return getNativeTypeFromTS(resolver, "Undefined");
 	}
 }

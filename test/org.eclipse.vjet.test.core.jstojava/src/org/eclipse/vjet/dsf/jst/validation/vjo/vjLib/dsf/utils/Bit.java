@@ -15,6 +15,7 @@ package org.eclipse.vjet.dsf.jst.validation.vjo.vjLib.dsf.utils;
 import java.util.List;
 
 import org.eclipse.vjet.dsf.jsgen.shared.ids.FieldProbIds;
+import org.eclipse.vjet.dsf.jsgen.shared.ids.MethodProbIds;
 import org.eclipse.vjet.dsf.jsgen.shared.ids.TypeProbIds;
 import org.eclipse.vjet.dsf.jsgen.shared.validation.vjo.VjoSemanticProblem;
 import org.eclipse.vjet.dsf.jst.validation.vjo.VjoValidationBaseTester;
@@ -39,6 +40,7 @@ public class Bit extends VjoValidationBaseTester {
         expectProblems.clear();
         expectProblems.add(createNewProblem2(FieldProbIds.FieldInitializationDependsOnUnintializedTypes,
                 14, 0));
+        expectProblems.add(createNewProblem2(MethodProbIds.ParameterMismatch, 65, 0));
         expectProblems.add(createNewProblem2(TypeProbIds.TypeMismatch, 67, 0));
     }
 

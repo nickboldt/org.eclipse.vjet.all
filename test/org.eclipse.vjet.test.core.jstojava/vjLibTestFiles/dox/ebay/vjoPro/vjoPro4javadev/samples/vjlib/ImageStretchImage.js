@@ -9,7 +9,7 @@
  *     eBay Inc. - initial API and implementation
  *******************************************************************************/
 vjo.ctype("dox.ebay.vjoPro.vjoPro4javadev.samples.vjlib.ImageStretchImage")
-.needs("vjoPro.dsf.document.Element")
+.needs("vjoPro.dsf.Element")
 .props({
 
 //> public void preload(String psImageUrl)
@@ -23,7 +23,7 @@ img.src = psImageUrl;
 //> public void resize(String psId, int  piWidth, int piHeight)
 resize:function(psId, piWidth, piHeight){
 if (document.images){// object detection
-var e = vjoPro.dsf.document.Element.get(psId);
+var e = vjoPro.dsf.Element.get(psId);
 if (e){
 // set size, client bug workaround
 e.width = e.width;

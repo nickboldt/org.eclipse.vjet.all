@@ -23,7 +23,7 @@ props({
 * @return {Object}
 *        the reference of the wrapped method
 */
-//> public Function hitch(::Object,String);
+//> public Function hitch(::Object,{Function|String});
 hitch : function(poControl, psMethod) {
 var fcn;
 if(typeof psMethod == "string")

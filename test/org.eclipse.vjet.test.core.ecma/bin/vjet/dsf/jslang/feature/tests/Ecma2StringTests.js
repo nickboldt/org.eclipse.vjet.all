@@ -79,7 +79,7 @@ test_match__001 : function() {
 var SECTION = "match__001";
 var VERSION = "ECMA_2";
 var TITLE   = "String.prototype.match( regexp )";
-var s = null;//<Object
+var s = null;//<String
 
 var lim = null;//<Object
 
@@ -189,7 +189,7 @@ test_match__002 : function() {
 var SECTION = "match__002";
 var VERSION = "ECMA_2";
 var TITLE   = "String.prototype.match( regexp )";
-var s = null;//<Object
+var s = null;//<String
 
 var lim = null;//<Object
 
@@ -359,7 +359,7 @@ test_match__003 : function() {
 var SECTION = "match__003";
 var VERSION = "ECMA_2";
 var TITLE   = "String.prototype.match( regexp )";
-var s = null;//<Object
+var s = null;//<String
 
 var lim = null;//<Object
 
@@ -495,7 +495,7 @@ test_match__004 : function() {
 var SECTION = "match__004";
 var VERSION = "ECMA_2";
 var TITLE   = "String.prototype.match( regexp )";
-var s = null;//<Object
+var s = null;//<int
 
 var lim = null;//<Object
 
@@ -762,10 +762,10 @@ test_split__002 : function() {
 var SECTION = "split__002";
 var VERSION = "ECMA_2";
 var TITLE   = "String.prototype.split( regexp, [,limit] )";
-var s = null;//<Object
+var s = null;//<String
 var lim = null;//<Object
 var re = null;//Object
-var z = null;//<Object
+var z = null;
 var split_1 = null;
 var split_2 = null;
 var a = null;

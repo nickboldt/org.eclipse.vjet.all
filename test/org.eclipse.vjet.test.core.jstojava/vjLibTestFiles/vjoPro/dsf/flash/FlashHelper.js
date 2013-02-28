@@ -17,7 +17,7 @@ vjo.ctype("vjoPro.dsf.flash.FlashHelper")
 * @param {java.util.HashMap} cfg
 *        the config parameters of the flash object
 */
-//> public void addFlash(Object);
+//> public void addFlash();
 addFlash : function (pCfg) {
 var origTitle = window.title;
 var so = new this.vj$.SWFObject(pCfg.url, "flash_" + pCfg.containerName,  pCfg.width, pCfg.height, pCfg.minVersion, pCfg.bgcolor, false);//<SWFObject

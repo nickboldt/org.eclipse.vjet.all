@@ -13,11 +13,13 @@ import java.util.List;
 import java.util.Stack;
 
 import org.eclipse.vjet.dsf.jst.IJstNode;
+import org.eclipse.vjet.dsf.jst.IJstProperty;
 import org.eclipse.vjet.dsf.jst.declaration.JstBlock;
 import org.eclipse.vjet.dsf.jst.declaration.JstMethod;
 import org.eclipse.vjet.dsf.jst.declaration.JstType;
 import org.eclipse.vjet.dsf.jst.declaration.TopLevelJstBlock;
 import org.eclipse.vjet.dsf.jst.expr.FuncExpr;
+import org.eclipse.vjet.dsf.jst.term.ObjLiteral;
 import org.eclipse.vjet.dsf.jst.traversal.IJstVisitor;
 
 public class JstExpressionTypeLinkerTraversal<T extends IJstNode> {
@@ -82,12 +84,13 @@ public class JstExpressionTypeLinkerTraversal<T extends IJstNode> {
 	}
 
 	private static boolean doesRequireDeferVisit(final IJstNode node) {
-		return node instanceof JstMethod
-				&& node.getParentNode() instanceof FuncExpr;
+		return (node instanceof JstMethod
+				&& node.getParentNode() instanceof FuncExpr) ;
 	}
 
 	private static boolean doesIntroNewScope(final IJstNode node) {
 		return node instanceof TopLevelJstBlock //floating js
+			||	node instanceof ObjLiteral
 			|| (node instanceof JstBlock && 
 					(node.getParentNode() instanceof JstMethod /*normal method*/
 							|| node.getParentNode() instanceof JstType) /*init block*/);

@@ -45,14 +45,14 @@ public class LogManager extends VjoValidationBaseTester {
                 22, 0));
         expectProblems.add(createNewProblem2(FieldProbIds.FieldInitializationDependsOnUnintializedTypes,
                 23, 0));
-        expectProblems
-                .add(createNewProblem2(FieldProbIds.UndefinedField, 275, 0));
-        expectProblems.add(createNewProblem2(MethodProbIds.UnreachableStmt, 337,
-                0));
-        expectProblems.add(createNewProblem2(MethodProbIds.UnreachableStmt, 349,
-                0));
+        expectProblems.add(createNewProblem2(MethodProbIds.NotVisibleMethod, 135, 0));
+        expectProblems.add(createNewProblem2(MethodProbIds.NotVisibleMethod, 208, 0));
+        expectProblems.add(createNewProblem2(MethodProbIds.NotVisibleMethod, 357, 0));
+        
+      
+       
         expectProblems.add(createNewProblem2(FieldProbIds.FieldInitializationDependsOnUnintializedTypes,
-                364, 0));
+                365, 0));
         // ML 10.27 variable defined no type in for statement will not thrown
         // error now.
     }

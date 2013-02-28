@@ -8,7 +8,7 @@
  * Contributors:
  *     eBay Inc. - initial API and implementation
  *******************************************************************************/
-vjo.ctype("vjoPro.dsf.utils.jstrace.TraceLogger","T1")
+vjo.ctype("vjoPro.dsf.utils.jstrace.TraceLogger")//<dynamic
 .needs("vjoPro.dsf.utils.logging.Level","L")
 .needs("vjoPro.dsf.utils.logging.Logger","LG")
 .needs("vjoPro.dsf.utils.logging.LogManager")
@@ -47,7 +47,7 @@ setProperty: function(name, value){
 		this.props[this.props.length] = [name, value];
 	}
 },
-//>public void log(T1)
+//>public void log(TraceLogger)
 log: function(traceLog){
 	var lr = new this.vj$.LR(this.L.INFO, "");
 	lr.setParameters([traceLog]);
@@ -74,7 +74,7 @@ this.logMsg(this.beforeMsgId, traceLog);
 logMsgAft: function(traceLog){
 this.logMsg(this.afterMsgId, traceLog);
 },
-
+//>public void fn(String,Object)
 logMsg : function(svcId, traceLog){
 var lr = new this.vj$.LR(this.vj$.L.INFO, "");//<LR
 lr.setMsgId(svcId);

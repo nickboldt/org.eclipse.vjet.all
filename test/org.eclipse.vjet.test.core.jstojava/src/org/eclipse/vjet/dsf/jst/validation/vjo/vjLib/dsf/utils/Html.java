@@ -14,6 +14,7 @@ package org.eclipse.vjet.dsf.jst.validation.vjo.vjLib.dsf.utils;
 
 import java.util.List;
 
+import org.eclipse.vjet.dsf.jsgen.shared.ids.MethodProbIds;
 import org.eclipse.vjet.dsf.jsgen.shared.ids.TypeProbIds;
 import org.eclipse.vjet.dsf.jsgen.shared.ids.VjoSyntaxProbIds;
 import org.eclipse.vjet.dsf.jsgen.shared.validation.vjo.VjoSemanticProblem;
@@ -39,6 +40,7 @@ public class Html extends VjoValidationBaseTester {
         expectProblems.clear();
         expectProblems.add(createNewProblem(
                 VjoSyntaxProbIds.TypeUnknownNotInTypeSpace, 2, 0));
+        expectProblems.add(createNewProblem2(MethodProbIds.UndefinedMethod, 26, 0));
         expectProblems
                 .add(createNewProblem(TypeProbIds.UnusedActiveNeeds, 1, 0));
     }

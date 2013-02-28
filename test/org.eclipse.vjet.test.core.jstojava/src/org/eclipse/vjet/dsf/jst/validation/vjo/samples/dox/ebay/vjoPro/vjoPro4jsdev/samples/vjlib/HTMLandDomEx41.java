@@ -40,6 +40,8 @@ public class HTMLandDomEx41 extends VjoValidationBaseTester {
         expectProblems.add(createNewProblem2(FieldProbIds.UndefinedField, 17, 0));
         expectProblems.add(createNewProblem2(MethodProbIds.ShouldReturnValue,
                 21, 0));
+        expectProblems.add(createNewProblem2(MethodProbIds.UndefinedMethod,
+                23, 0));
         expectProblems
                 .add(createNewProblem2(FieldProbIds.UndefinedField, 23, 0));
     }

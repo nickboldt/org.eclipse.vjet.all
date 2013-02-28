@@ -223,17 +223,17 @@ public class TypeRobustTranslator extends CompletionsFilteredRobustTranslator
 				currentType.addProperty(baseProp);
 
 				//TODO - Do we need to filter this for instance inner?
-				/*
-				if (!isInstanceInner) {
-					//prototype property
-					JstSynthesizedProperty protoProp = 
-						new JstSynthesizedProperty(JstCache.getInstance().getType("Object"), 
-								"prototype", null, new JstModifiers());
-					protoProp.getModifiers().setPublic().setStatic(true);
-					protoProp.setParent(currentType);
-					currentType.addProperty(protoProp);
-				}
-				*/
+				
+//				if (!isInstanceInner) {
+//					//prototype property
+//					JstSynthesizedProperty protoProp = 
+//						new JstSynthesizedProperty(currentType, 
+//								"prototype");
+//					protoProp.getModifiers().setPublic().setStatic(true);
+//					protoProp.setParent(currentType);
+//					currentType.addProperty(protoProp);
+//				}
+				
 			}
 		} else {
 			JstSynthesizedProperty clazzProp = 

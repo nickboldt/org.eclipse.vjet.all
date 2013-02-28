@@ -18,7 +18,7 @@ vjo.ctype("vjoPro.dsf.service.DedupServiceHandler")
 .satisfies("vjoPro.dsf.common.IJsReqHandler")
 .protos({
 
-messages:null,//<String[]
+messages:null,//<Object[]
 oComparable:null,//<IDedupComparable
 //> public void constructs(vjoPro.dsf.common.IDedupComparable);
 constructs : function (comparable) {

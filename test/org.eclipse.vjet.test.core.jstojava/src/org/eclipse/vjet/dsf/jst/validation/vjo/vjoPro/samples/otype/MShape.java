@@ -14,9 +14,6 @@ package org.eclipse.vjet.dsf.jst.validation.vjo.vjoPro.samples.otype;
 
 import java.util.List;
 
-import org.eclipse.vjet.dsf.jsgen.shared.ids.FieldProbIds;
-import org.eclipse.vjet.dsf.jsgen.shared.ids.MethodProbIds;
-import org.eclipse.vjet.dsf.jsgen.shared.ids.TypeProbIds;
 import org.eclipse.vjet.dsf.jsgen.shared.validation.vjo.VjoSemanticProblem;
 import org.eclipse.vjet.dsf.jst.validation.vjo.VjoValidationBaseTester;
 import org.junit.Before;
@@ -38,19 +35,14 @@ public class MShape extends VjoValidationBaseTester {
     @Before
     public void setUp() {
         expectProblems.clear();
-        expectProblems
-                .add(createNewProblem2(TypeProbIds.UnusedActiveNeeds, 11, 0));
-        expectProblems.add(createNewProblem2(MethodProbIds.ShouldReturnValue,
-                26, 0));
-        expectProblems
-                .add(createNewProblem2(FieldProbIds.UndefinedField, 27, 0));
-        expectProblems.add(createNewProblem2(TypeProbIds.TypeMismatch, 20, 0));
+        
     }
 
     @Test
     //@Category( { P3, FAST, UNIT })
     //@Description("To test VjoPro project false positive")
     public void testMShape() {
+    	
         List<VjoSemanticProblem> problems = getVjoSemanticProblem(
                 "vjoPro.samples.otype.", "MShape.js", this.getClass());
         assertProblemEquals(expectProblems, problems);

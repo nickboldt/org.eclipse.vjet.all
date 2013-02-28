@@ -47,6 +47,10 @@ public class TypeCheckUtil {
 	public static IJstType getObjectNativeType() {
 		return JstCache.getInstance().getType("Object");
 	}
+	
+	public static IJstType getUndefinedNativeType() {
+		return JstCache.getInstance().getType("Undefined");
+	}
 
 	public static boolean equals(final IJstType one, final IJstType two) {
 		if (one == null || two == null) {
@@ -342,7 +346,7 @@ public class TypeCheckUtil {
 						if (JstWildcardType.DEFAULT_NAME.equals(oneArgType2
 								.getName())) {
 							oneArgType2 = JstCache.getInstance().getType(
-									"Object");
+									"Undefined");
 						}
 						if (((JstWildcardType) oneArgType).isLowerBound()
 								&& isSuperType(twoArgType2, oneArgType2)) {
@@ -493,6 +497,9 @@ public class TypeCheckUtil {
 		if (isObject(assignTo)) {
 			return true;
 		}
+		if(isUndefined(assignTo)){
+			return true;
+		}
 		if (assignTo instanceof IJstRefType && assignTo.isFType()) {
 			assignTo = ((IJstRefType) assignTo).getReferencedNode();
 		}
@@ -595,6 +602,7 @@ public class TypeCheckUtil {
 			return checkObjLiteral.booleanValue();
 		}
 
+		
 		// bugfix when both type are null
 		if (toType == fromType) {
 			return true;
@@ -607,9 +615,8 @@ public class TypeCheckUtil {
 				|| VjoConstants.ARBITARY.equals(fromType)) {
 			return true;
 		} else if (VjoConstants.NULL.equals(fromType)
-				|| VjoConstants.UNDEFINED.equals(fromType)
-				|| VjoConstants.NULL.equals(toType)
-				|| VjoConstants.UNDEFINED.equals(toType)) {
+				||"Undefined".equals(fromType.getName())
+				|| VjoConstants.NULL.equals(toType)) {
 			return true;
 		}
 
@@ -626,8 +633,9 @@ public class TypeCheckUtil {
 				return false;
 			}
 			// End of modified
-			return true;
-		} else if (assignToTransformed != null) {
+//			return true;
+		}
+		if (assignToTransformed != null) {
 			return isAssignableJsNativeType(assignToTransformed,
 					assignFromTransformed);
 		} else {
@@ -957,6 +965,20 @@ public class TypeCheckUtil {
 		if (exprValue != null) {
 			if (!equals(VjoConstants.NativeTypes.getObjectJstType(),
 					toJsNativeType(exprValue))) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+	
+	public static boolean isUndefined(IJstType exprValue) {
+//		if (isArbitary(exprValue)) {
+//			return true;
+//		}
+
+		if (exprValue != null) {
+			if (!exprValue.getName().equals(getUndefinedNativeType().getName())) {
 				return false;
 			}
 		}

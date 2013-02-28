@@ -38,8 +38,6 @@ public class DedupServiceHandler extends VjoValidationBaseTester {
     public void setUp() {
         expectProblems.clear();
         expectProblems.add(createNewProblem2(
-                VjoSyntaxProbIds.TypeUnknownNotInTypeSpace, 12, 0));
-        expectProblems.add(createNewProblem2(
                 VjoSyntaxProbIds.TypeUnknownNotInTypeSpace, 13, 0));
         expectProblems.add(createNewProblem2(VjoSyntaxProbIds.RedundantImport,
                 14, 0));

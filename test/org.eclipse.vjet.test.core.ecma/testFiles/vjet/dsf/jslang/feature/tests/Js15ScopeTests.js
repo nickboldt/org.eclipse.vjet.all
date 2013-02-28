@@ -34,7 +34,7 @@
  * the terms of any one of the MPL, the GPL or the LGPL.
  *
  * ***** END LICENSE BLOCK ***** */
-vjo.ctype("vjet.dsf.jslang.feature.tests.Js15ScopeTests")
+vjo.ctype("vjet.dsf.jslang.feature.tests.Js15ScopeTests") //<dynamic
 .inherits("vjet.dsf.jslang.feature.tests.BaseTest")
 .protos({
 

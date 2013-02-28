@@ -26,7 +26,7 @@ emp.doIt1();
 empid : 0, //< public int
 deptid : 0, //< public int
 
-//public void contructs(int id)
+//>public void contructs(int id,int dptid)
 constructs : function(id, dptid)
 {
 this.empid = id;

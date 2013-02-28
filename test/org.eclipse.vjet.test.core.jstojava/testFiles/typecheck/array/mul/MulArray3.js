@@ -16,7 +16,7 @@ vjo.ctype('typecheck.array.mul.MulArray3') //< public
 //> public void multiDimentionalArray()
 multiDimentionalArray:function(){
 	
-    var ma = [[[1,2],[2,3,5,5]],[][[2,3,2][2,3,2]]];//<int[][]
+    var ma = [[[1,2],[2,3,5,5]],[],[[2,3,2][2,3,2]]];//<int[][]
 }
 })
 .endType();

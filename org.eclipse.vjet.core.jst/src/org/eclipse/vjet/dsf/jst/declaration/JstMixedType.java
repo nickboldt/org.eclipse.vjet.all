@@ -15,57 +15,66 @@ import org.eclipse.vjet.dsf.jst.IJstType;
 public class JstMixedType extends JstTypeMixer {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	public JstMixedType(List<IJstType> types) {
 		super("_object_");
 		this.addExtend(JstCache.getInstance().getType("Object"));
 		m_types = types;
 	}
-	
+
 	public List<IJstType> getMixedTypes() {
 		return m_types;
 	}
-	
+
 	public JstModifiers getModifiers() {
-		if(m_types==null){
+		if (m_types == null) {
 			return super.getModifiers();
 		}
-		
-		
+
 		JstModifiers modifiers = new JstModifiers();
-		
-		for(IJstType t : getMixedTypes()){
+
+		for (IJstType t : getMixedTypes()) {
 			modifiers.merge(t.getModifiers().getFlags());
 		}
 		return modifiers;
 	}
-	
+
 	@Override
-	public String getSimpleName(){
+	public String getSimpleName() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("[");
+
 		boolean isFirst = true;
-		for (IJstType t : m_types) {
-			if (!isFirst) {
-				sb.append("+");
+		if (m_types != null) {
+			sb.append("[");
+			for (IJstType t : m_types) {
+				if (!isFirst) {
+					sb.append("+");
+				}
+				if(t!=null){
+				sb.append(t.getSimpleName());
+				
+				}
+				isFirst = false;
 			}
-			sb.append(t.getSimpleName());
-			isFirst = false;
+
+			sb.append("]");
 		}
-		sb.append("]");
 		return sb.toString();
 	}
-	
+
 	@Override
-	public String getName(){
+	public String getName() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("[");
 		boolean isFirst = true;
 		for (IJstType t : m_types) {
+			if(t!=null){
 			if (!isFirst) {
 				sb.append("+");
 			}
 			sb.append(t.getName());
+			}
+			
 			isFirst = false;
 		}
 		sb.append("]");

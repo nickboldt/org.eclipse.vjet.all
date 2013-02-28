@@ -45,8 +45,8 @@ public class Logger extends VjoValidationBaseTester {
        
         expectProblems.clear();
         //this.levelObj isn't defined properly
-        expectProblems
-                .add(createNewProblem2(FieldProbIds.UndefinedField, 138, 0));
+//        expectProblems // type is dynamic this warning will not be produced
+//                .add(createNewProblem2(FieldProbIds.UndefinedField, 138, 0));
     }
 
     @Test

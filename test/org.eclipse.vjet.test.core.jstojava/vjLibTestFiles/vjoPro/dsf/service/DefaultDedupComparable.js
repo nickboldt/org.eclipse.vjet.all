@@ -8,6 +8,7 @@
  * Contributors:
  *     eBay Inc. - initial API and implementation
  *******************************************************************************/
+//<needs(vjoPro.dsf.Message)
 vjo.ctype("vjoPro.dsf.service.DefaultDedupComparable")
 .needs("vjoPro.dsf.common.IDedupComparable")
 .satisfies("vjoPro.dsf.common.IDedupComparable")
@@ -21,7 +22,7 @@ shouldTrack : function (pMessage) {
 return true;
 },
 
-//> public boolean isDedup(Object,Object);
+//> public boolean isDedup(Message,Message);
 isDedup : function (pCurrentMessage, pMessage) {
 var currentServiceId = pCurrentMessage.svcId;
 var serviceId = pMessage.svcId;

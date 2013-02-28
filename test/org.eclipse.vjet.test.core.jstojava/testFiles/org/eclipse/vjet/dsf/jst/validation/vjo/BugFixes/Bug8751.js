@@ -13,14 +13,14 @@ vjo.ctype("org.eclipse.vjet.dsf.jst.validation.vjo.BugFixes.Bug8751")
         //>public void func() 
         func : function(){
                 var n = {0:"a",                 
-                         1:"b"}; //<String      
+                         1:"b"/*<String*/ };  
 
                 var $$ = 0; //< Number           
 
                 var base = "ABC"; //< String    
 
                 var c = {"px" : 233,
-                         "char" : 26}; //< String    
+                         "char" : 26/*<int*/ };   
         }
 })
 .endType();

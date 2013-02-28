@@ -9,6 +9,7 @@
 package org.eclipse.vjet.dsf.jst.term;
 
 import org.eclipse.vjet.dsf.jsnative.global.Number;
+import org.eclipse.vjet.dsf.jsnative.global.Undefined;
 import org.eclipse.vjet.dsf.jst.IJstType;
 import org.eclipse.vjet.dsf.jst.declaration.JstCache;
 import org.eclipse.vjet.dsf.jst.declaration.JstType;
@@ -183,7 +184,7 @@ public final class SimpleLiteral extends JstLiteral {
 	}
 	
 	public static SimpleLiteral getUndefinedLiteral() {
-		return new SimpleLiteral(null, null, "undefined");
+		return new SimpleLiteral(null, getJsType(Undefined.class), "undefined");
 	}
 	
 	private static JstType getJsType(Class<?> jsnative){

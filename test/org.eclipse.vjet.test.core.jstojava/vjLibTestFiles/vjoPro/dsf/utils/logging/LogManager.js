@@ -8,7 +8,7 @@
  * Contributors:
  *     eBay Inc. - initial API and implementation
  *******************************************************************************/
-vjo.ctype("vjoPro.dsf.utils.logging.LogManager")
+vjo.ctype("vjoPro.dsf.utils.logging.LogManager") //<dynamic
 .needs("vjoPro.dsf.utils.logging.LogNode")
 .needs("vjoPro.dsf.utils.logging.Level","Level")
 .needs("vjoPro.dsf.utils.logging.DefaultConfig")
@@ -303,6 +303,7 @@ getProperty: function(name) {
 return this.props[name];
 },
 
+//> public String fn(String,String?)
 getStringProperty: function(name, defaultValue) {
 var val = this.getProperty(name);
 if (!val) {

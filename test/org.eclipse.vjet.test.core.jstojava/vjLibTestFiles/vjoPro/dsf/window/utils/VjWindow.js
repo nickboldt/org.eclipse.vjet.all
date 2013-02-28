@@ -80,7 +80,7 @@ window.alert(pMessage);
 * @param {Object} message
 *        A message object to be shown in the dialog box
 */
-//> public boolean confirm(Object);
+//> public boolean confirm(String);
 confirm : function(pMessage) {
 return window.confirm(pMessage);
 }

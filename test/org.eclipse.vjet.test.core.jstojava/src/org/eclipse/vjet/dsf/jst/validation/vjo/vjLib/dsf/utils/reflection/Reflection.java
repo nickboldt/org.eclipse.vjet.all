@@ -14,6 +14,7 @@ package org.eclipse.vjet.dsf.jst.validation.vjo.vjLib.dsf.utils.reflection;
 
 import java.util.List;
 
+import org.eclipse.vjet.dsf.jsgen.shared.ids.FieldProbIds;
 import org.eclipse.vjet.dsf.jsgen.shared.validation.vjo.VjoSemanticProblem;
 import org.eclipse.vjet.dsf.jst.validation.vjo.VjoValidationBaseTester;
 import org.junit.Before;
@@ -35,6 +36,7 @@ public class Reflection extends VjoValidationBaseTester {
     @Before
     public void setUp() {
         expectProblems.clear();
+        expectProblems.add(createNewProblem2(FieldProbIds.UndefinedField, 276, 0));
     }
 
     @Test

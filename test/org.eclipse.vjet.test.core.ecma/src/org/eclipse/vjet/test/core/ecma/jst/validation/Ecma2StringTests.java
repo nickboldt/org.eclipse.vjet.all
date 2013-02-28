@@ -13,6 +13,7 @@ package org.eclipse.vjet.test.core.ecma.jst.validation;
 
 import java.util.List;
 
+import org.eclipse.vjet.dsf.jsgen.shared.ids.FieldProbIds;
 import org.eclipse.vjet.dsf.jsgen.shared.validation.vjo.VjoSemanticProblem;
 import org.junit.Before;
 import org.junit.Test;
@@ -33,6 +34,9 @@ public class Ecma2StringTests extends VjoValidationBaseTester {
     @Before
     public void setUp() {
         expectProblems.clear();
+        // prototype properties which are not known will give warning
+        expectProblems.add(createNewProblem(FieldProbIds.UndefinedField, 513, 0));
+        expectProblems.add(createNewProblem(FieldProbIds.UndefinedField, 805, 0));
     }
 
     @Test

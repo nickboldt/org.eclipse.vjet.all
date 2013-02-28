@@ -9,10 +9,10 @@
  *     eBay Inc. - initial API and implementation
  *******************************************************************************/
 vjo.ctype('vjoPro.samples.jsonly.JsOnlyEx2') //< public
-.needs(['vjoPro.Registry','vjoPro.dsf.document.Element',
+.needs(['vjoPro.Registry','vjoPro.dsf.Element',
 'vjoPro.samples.classes.log.Log'])
 .props({
-model:null,//<Object
+model:null,
 /**
 * @return void
 * @access public
@@ -39,7 +39,7 @@ vjoPro.Registry.get('logger').log('anchor '+index+' clicked');
 };
 },
 changeFrame : function (evt) {
-var oElem = vjoPro.dsf.document.Element;
+var oElem = vjoPro.dsf.Element;
 //evt is a dsf Event, since we used add to wire it up,
 //as opposed to addEventListener which would return the
 //native browser event

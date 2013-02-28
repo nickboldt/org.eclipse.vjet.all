@@ -29,6 +29,13 @@ public abstract class JstTypeMixer extends JstType {
 		super(name);
 	}
 	
+	
+	
+	@Override
+	public JstModifiers getModifiers() {
+		return new JstModifiers().setDynamic().setPublic();
+	}
+	
 	@Override
 	public List<IJstProperty> getAllPossibleProperties(boolean isStatic, boolean recursive) {
 		if (isStatic) {
@@ -138,7 +145,7 @@ public abstract class JstTypeMixer extends JstType {
 
 	@Override
 	public IJstProperty getInstanceProperty(String name) {
-		return getInstanceProperty(name, false);
+		return getInstanceProperty(name, true);
 	}
 
 	@Override

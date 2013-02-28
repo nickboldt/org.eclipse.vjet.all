@@ -36,7 +36,7 @@ public class XMLDomTests extends VjoValidationBaseTester {
     @Before
     public void setUp() {
         expectProblems.clear();
-        expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 81, 0));
+        expectProblems.add(createNewProblem2(VarProbIds.LooseVarDecl, 92, 0));
     }
 
     @Test

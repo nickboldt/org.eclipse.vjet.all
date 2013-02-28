@@ -22,9 +22,13 @@ import org.eclipse.vjet.dsf.jsgen.shared.validation.vjo.visitor.IVjoValidationPo
 import org.eclipse.vjet.dsf.jsgen.shared.validation.vjo.visitor.IVjoValidationVisitorEvent;
 import org.eclipse.vjet.dsf.jst.IInferred;
 import org.eclipse.vjet.dsf.jst.IJstNode;
+import org.eclipse.vjet.dsf.jst.IJstProperty;
 import org.eclipse.vjet.dsf.jst.IJstRefType;
 import org.eclipse.vjet.dsf.jst.IJstType;
+import org.eclipse.vjet.dsf.jst.declaration.JstCache;
 import org.eclipse.vjet.dsf.jst.declaration.JstConstructor;
+import org.eclipse.vjet.dsf.jst.declaration.JstDeferredType;
+import org.eclipse.vjet.dsf.jst.declaration.JstInferredType;
 import org.eclipse.vjet.dsf.jst.declaration.JstMethod;
 import org.eclipse.vjet.dsf.jst.declaration.JstMixedType;
 import org.eclipse.vjet.dsf.jst.declaration.JstObjectLiteralType;
@@ -73,13 +77,25 @@ public class VjoFieldAccessExprValidator
 			return; //skip validation
 		}
 		
+		
+		// when type is mixed type how does this work before?
+		boolean inferred = false;
+		if(qualifierType instanceof JstInferredType){
+			qualifierType = ((JstInferredType) qualifierType).getType();
+			inferred = true;
+		}
+		
 		final JstIdentifier id = expr.getName();
 		final IJstType fieldType = id.getResultType();
 		final String fieldName = id.getName();
 		VjoSemanticRuleRepo ruleRepo = VjoSemanticRuleRepo.getInstance();
 		
 		if (fieldType == null) { 
-			if (!"Object".equals(qualifierType.getName()) 
+			
+			if (
+					!(inferred && ("Object".equals(qualifierType.getName()) || "Function".equals(qualifierType.getName()) ) ) &&
+					!"Undefined".equals(qualifierType.getName()) 
+					&& !"Undefined[]".equals(qualifierType.getName()) 
 					&& !"ERROR_UNDEFINED_TYPE".equals(qualifierType.getName())
 					&& !isDynamicType(qualifierType)) {
 				
@@ -133,9 +149,10 @@ public class VjoFieldAccessExprValidator
 					"ObjLiteral".equals(qualifierType.getSimpleName())){
 					return; //OK ???
 				}
-				if (qualifierType instanceof IInferred) {
-					return; //no error for unknown property for inferred type
-				}
+				
+				
+				
+				
 				
 				//PROPERTY_SHOULD_BE_DEFINED
 				if(!ctx.getMissingImportTypes().contains(qualifierType)){
@@ -164,8 +181,8 @@ public class VjoFieldAccessExprValidator
 		
 		IJstNode fieldBinding = id.getJstBinding();
 		if (fieldBinding != null 
-				&& fieldBinding instanceof JstProperty) {
-			final JstProperty property = (JstProperty)fieldBinding;
+				&& fieldBinding instanceof IJstProperty) {
+			final IJstProperty property = (IJstProperty)fieldBinding;
 			final IJstType callerType = expr.getOwnerType();
 			final IJstType fieldOwnerType = (qualifierType instanceof IJstRefType) ?
 					((IJstRefType)qualifierType).getReferencedNode() : qualifierType;

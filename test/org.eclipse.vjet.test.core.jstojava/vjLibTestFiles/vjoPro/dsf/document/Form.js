@@ -140,7 +140,7 @@ getAttr : function(psName, psAttrName) {
 var f = this.get(psName);//<HTMLFormElement
 var v = null; //<String
 if(f)
-v = eval("f." + psAttrName.toLowerCase());
+v = eval("f." + psAttrName.toLowerCase()); //<<String
 return v;
 }
 })

@@ -1693,45 +1693,56 @@ public class TranslateHelper {
 					astStatement, ctx);
 			translator.setParent(jstBlock);
 			Object result = translator.translate(astStatement);
-
-			if (result instanceof BaseJstNode) {
-				BaseJstNode baseNode = (BaseJstNode) result;
-				if (baseNode.getSource() == null) {
-					baseNode.setSource(TranslateHelper.getSource(astStatement,
-							ctx.getSourceUtil()));
+			if(result instanceof BaseJstNode[]){
+				for (BaseJstNode node : (BaseJstNode[])result) {
+					handleResult(jstBlock, ctx, astStatement, node);
 				}
-				// Adding js annotations to Jst. //rbhogi
-				createJsAnnotations(result, astStatement, ctx);
+			}else{
+				handleResult(jstBlock, ctx, astStatement, result);
 			}
-			if (result instanceof IStmt) {
-				jstBlock.addStmt((IStmt) result);
-			} else if (result instanceof IExpr) {
-				if (result instanceof JstIdentifier) {
-					JstIdentifier id = (JstIdentifier) result;
-
-					List<IJsCommentMeta> metaList = ctx.getCommentCollector()
-							.getCommentMeta(id.getSource().getStartOffSet(),
-									id.getSource().getEndOffSet(),
-									ctx.getPreviousNodeSourceEnd(),
-									ctx.getNextNodeSourceStart());
-					attachMeta(id, metaList, ctx);
-				}
-				jstBlock.addStmt(new ExprStmt((IExpr) result));
-			} else if (result instanceof FakeJstWithStmt) {
-				for (IStmt statement : ((FakeJstWithStmt) result)
-						.getStatements()) {
-					jstBlock.addStmt(statement);
-				}
-			} else if (result instanceof JstMethod) {
-				jstBlock.addStmt(new ExprStmt(new FuncExpr((JstMethod) result)));
-			} else if (result instanceof JstBlock) {
-				jstBlock.addStmt(new BlockStmt((JstBlock) result));
-			} else if (result instanceof BaseJstNode) {
-				BaseJstNode node = (BaseJstNode) result;
-				node.setParent(jstBlock);
-			}
-			ctx.setPreviousNodeSourceEnd(astStatement.sourceEnd());
+			
 		}
+	}
+
+	private static void handleResult(JstBlock jstBlock, TranslateCtx ctx,
+			IStatement astStatement, Object result) {
+		if (result instanceof BaseJstNode) {
+			BaseJstNode baseNode = (BaseJstNode) result;
+			if (baseNode.getSource() == null) {
+				baseNode.setSource(TranslateHelper.getSource(astStatement,
+						ctx.getSourceUtil()));
+			}
+			// Adding js annotations to Jst. //rbhogi
+			createJsAnnotations(result, astStatement, ctx);
+		}
+		if (result instanceof IStmt) {
+			jstBlock.addStmt((IStmt) result);
+		} else if (result instanceof IExpr) {
+			if (result instanceof JstIdentifier) {
+				JstIdentifier id = (JstIdentifier) result;
+
+				List<IJsCommentMeta> metaList = ctx.getCommentCollector()
+						.getCommentMeta(id.getSource().getStartOffSet(),
+								id.getSource().getEndOffSet(),
+								ctx.getPreviousNodeSourceEnd(),
+								ctx.getNextNodeSourceStart());
+				attachMeta(id, metaList, ctx);
+			}
+			jstBlock.addStmt(new ExprStmt((IExpr) result));
+		} else if (result instanceof FakeJstWithStmt) {
+			for (IStmt statement : ((FakeJstWithStmt) result)
+					.getStatements()) {
+				jstBlock.addStmt(statement);
+			}
+		} else if (result instanceof JstMethod) {
+			jstBlock.addStmt(new ExprStmt(new FuncExpr((JstMethod) result)));
+		} else if (result instanceof JstBlock) {
+			jstBlock.addStmt(new BlockStmt((JstBlock) result));
+		} else if (result instanceof BaseJstNode) {
+			BaseJstNode node = (BaseJstNode) result;
+			node.setParent(jstBlock);
+		}
+		ctx.setPreviousNodeSourceEnd(astStatement.sourceEnd());
 	}
 
 	private static void createJsAnnotations(Object result,
@@ -1894,7 +1905,7 @@ public class TranslateHelper {
 		if (types.isEmpty()) {
 			// IJstType argType = TranslateHelper.findType(ctx, "Object"); --
 			// Should get from JstCache
-			IJstType argType = JstCache.getInstance().getType("Object");
+			IJstType argType = JstCache.getInstance().getType("Undefined");
 
 			JstTypeReference reference = TranslateHelper.createRef(argType,
 					source);
@@ -2619,22 +2630,23 @@ public class TranslateHelper {
 								// bugfix by huzhou@ebay.com as translating type
 								// could be null in case of floating javascript
 								// editing
-								final IJstType translatingType = ctx
-										.getCurrentType();
-								ctx.getErrorReporter()
-										.error("Cannot translate function meta: "
-												+ originalMeta
-												+ " to function declaration "
-												+ " in "
-												+ FunctionExpressionTranslator.class,
-												translatingType != null ? translatingType
-														.getName()
-														: "unknown type",
-												originalMeta.getBeginOffset(),
-												originalMeta.getEndOffset(), 0,
-												0);
+								filteredFuncMetas
+								.addAll(expandFuncMetas4Params(originalMeta));
+//								final IJstType translatingType = furtherAttemptedType
+//								ctx.getErrorReporter()
+//										.error("Cannot translate function meta: "
+//												+ originalMeta
+//												+ " to function declaration "
+//												+ " in "
+//												+ FunctionExpressionTranslator.class,
+//												translatingType != null ? translatingType
+//														.getName()
+//														: "unknown type",
+//												originalMeta.getBeginOffset(),
+//												originalMeta.getEndOffset(), 0,
+//												0);
 							}
-							if (furtherAttemptedType instanceof JstAttributedType) {
+							else if (furtherAttemptedType instanceof JstAttributedType) {
 								filteredFuncMetas
 										.add(new PotentialAttributedTypeMeta(
 												originalMeta,
@@ -3151,7 +3163,7 @@ public class TranslateHelper {
 			}
 
 			final JstSynthesizedMethod jstMethod = new JstSynthesizedMethod(
-					methodName, new JstModifiers(), null);
+					methodName, new JstModifiers(), (JstArg[])null);
 			if (meta != null) {
 				// handle modifier
 				TranslateHelper.setModifiersFromMeta(meta,

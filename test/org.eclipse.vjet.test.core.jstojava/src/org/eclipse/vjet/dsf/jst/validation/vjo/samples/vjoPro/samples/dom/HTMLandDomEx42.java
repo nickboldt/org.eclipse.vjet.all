@@ -40,19 +40,21 @@ public class HTMLandDomEx42 extends VjoValidationBaseTester {
         expectProblems.add(createNewProblem2(MethodProbIds.ShouldReturnValue,
                 32, 0));
         expectProblems.add(createNewProblem2(
-                MethodProbIds.WrongNumberOfArguments, 37, 0));
+                MethodProbIds.WrongNumberOfArguments, 38, 0));
         expectProblems
-                .add(createNewProblem2(FieldProbIds.UndefinedField, 35, 0));
+                .add(createNewProblem2(FieldProbIds.UndefinedField, 36, 0));
         expectProblems
                 .add(createNewProblem2(FieldProbIds.UndefinedField, 40, 0));
         expectProblems
-                .add(createNewProblem2(FieldProbIds.UndefinedField, 37, 0));
-        expectProblems
-                .add(createNewProblem2(FieldProbIds.UndefinedField, 39, 0));
+        .add(createNewProblem2(FieldProbIds.UndefinedField, 38, 0));
+
         expectProblems
                 .add(createNewProblem2(FieldProbIds.UndefinedField, 23, 0));
+
         expectProblems
-                .add(createNewProblem2(FieldProbIds.UndefinedField, 34, 0));
+        .add(createNewProblem2(FieldProbIds.UndefinedField, 35, 0));
+        expectProblems
+        .add(createNewProblem2(FieldProbIds.UndefinedField, 41, 0));
     }
 
     @Test

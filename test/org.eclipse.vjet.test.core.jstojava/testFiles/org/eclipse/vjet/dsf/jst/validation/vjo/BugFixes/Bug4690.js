@@ -24,7 +24,7 @@ vjo.ctype('org.eclipse.vjet.dsf.jst.validation.vjo.BugFixes.Bug4690') //< public
 
 
   },
-  //>public void doIt2(Object)
+  //>public void doIt2(Undefined)
   doIt2:function(o){
         o.r = "test";
   }

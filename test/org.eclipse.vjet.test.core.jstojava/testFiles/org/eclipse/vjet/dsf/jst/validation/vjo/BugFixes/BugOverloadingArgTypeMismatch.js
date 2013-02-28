@@ -16,7 +16,7 @@ vjo.ctype('org.eclipse.vjet.dsf.jst.validation.vjo.BugFixes.BugOverloadingArgTyp
 	foo: function(arg){
 		var b = null;//<boolean
 		if(typeof(arg) == 'string' && (arg == 'true' || arg == 'false')){
-			b = eval(arg);
+			b = eval(arg);//<<boolean
 		}
 		else if(typeof arg == 'boolean'){
 			b = arg;

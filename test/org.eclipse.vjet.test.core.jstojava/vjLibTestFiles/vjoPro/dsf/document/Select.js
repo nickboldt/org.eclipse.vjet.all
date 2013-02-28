@@ -9,9 +9,9 @@
  *     eBay Inc. - initial API and implementation
  *******************************************************************************/
 vjo.ctype("vjoPro.dsf.document.Select")
-.needs("vjoPro.dsf.document.Element")
+.needs("vjoPro.dsf.Element")
 .props({
-E : vjoPro.dsf.document.Element,
+E : vjoPro.dsf.Element,
 
 /**
 * Adds a new option to a select list.
@@ -27,7 +27,7 @@ E : vjoPro.dsf.document.Element,
 *        <code>&lt;option&gt;text&lt;/option&gt;</code>
 *
 */
-//> public void addOption(Object,String,String);
+//> public void addOption({String|Object},String,String);
 addOption : function(poSelect, psVal, psText) {
 var t = this, e = t.get(poSelect), o, os;
 if(e)
@@ -79,7 +79,7 @@ os[i] = null;
 }
 },
 
-//> private Object get(String);
+//> private HTMLElement get({String|Object});
 get : function(poSelect){
 var e = poSelect;
 if(typeof(poSelect)=="string"){

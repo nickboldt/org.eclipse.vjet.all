@@ -22,8 +22,8 @@ vjo.ctype('vjoPro.Test')
 		var E = {};
 
 		// good cases
-		x.oImg = E.getId() || null;
-		var x = E.getId() || null;
+		x.oImg = this.E.getId() || null; //<<HTMLImageElement
+		var x = this.E.getId() || null;
 		var y = p || null;
 		
 		// negative cases

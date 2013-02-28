@@ -230,7 +230,7 @@ public class JstTypeHelper {
 
 				// missing actual type argument, default to Object
 				if (paramTypeList != null && !paramTypeList.isEmpty()) {
-					return JstCache.getInstance().getType("Object");
+					return JstCache.getInstance().getType("Undefined");
 				}
 			}
 		}

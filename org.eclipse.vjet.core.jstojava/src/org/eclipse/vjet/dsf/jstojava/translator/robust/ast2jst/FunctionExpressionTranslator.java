@@ -42,7 +42,6 @@ public class FunctionExpressionTranslator extends
 	 return doTranslate(astFunctionExpression, null);
 	}
 	
-	
 	protected FuncExpr doTranslate(FunctionExpression astFunctionExpression, String name) {
 		
 		List<IJsCommentMeta> metaArr = getCommentMeta(astFunctionExpression);

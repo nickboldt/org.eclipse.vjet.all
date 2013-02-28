@@ -47,6 +47,7 @@ import org.eclipse.vjet.dsf.jst.declaration.JstCache;
 import org.eclipse.vjet.dsf.jst.declaration.JstConstructor;
 import org.eclipse.vjet.dsf.jst.declaration.JstFuncType;
 import org.eclipse.vjet.dsf.jst.declaration.JstFunctionRefType;
+import org.eclipse.vjet.dsf.jst.declaration.JstInferredType;
 import org.eclipse.vjet.dsf.jst.declaration.JstMethod;
 import org.eclipse.vjet.dsf.jst.declaration.JstMixedType;
 import org.eclipse.vjet.dsf.jst.declaration.JstObjectLiteralType;
@@ -153,11 +154,14 @@ public class VjoMtdInvocationExprValidator
 		}
 		
 		if(qualifier != null){
-			final IJstType qualifierType = qualifier.getResultType();				
+			IJstType qualifierType = qualifier.getResultType();				
 			if(qualifierType == null){
 				//couldn't do further validations
 				return;
-			}		
+			}	
+			if(qualifierType instanceof JstInferredType){
+				qualifierType = ((JstInferredType)qualifierType).getType();
+			}
 				
 			if(identifier != null && identifier instanceof JstIdentifier){
 				JstIdentifier mtdIdentifier = (JstIdentifier)identifier;
@@ -182,9 +186,7 @@ public class VjoMtdInvocationExprValidator
 				}
 				
 				if (mtdBinding == null) {
-					if (qualifierType instanceof IInferred) {
-						return; //no error for unknown method for inferred type
-					}
+
 					
 					if (!"Object".equals(qualifierType.getName()) 
 							&& !"ERROR_UNDEFINED_TYPE".equals(qualifierType.getName())
@@ -302,7 +304,7 @@ public class VjoMtdInvocationExprValidator
 		}
 		//End of added, bugfix by huzhou as JstExtendedType could be from Function/Object
 		if (resultType != null &&
-				("Function".equals(resultType.getName()) || "Object".equals(resultType.getName()))){
+				("Function".equals(resultType.getName()) || "Undefined".equals(resultType.getName()))){
 			return true;
 		}
 		

@@ -26,7 +26,7 @@ vjo.ctype('syntax.declare.innerType.Anonymous4')
 
 	//>public void foo() 
 	foo : function(){
-		 var anon = vjo.make( this.vj$.Anonymous4, 'AnonymousType') // vjo.make()
+		 var anon = vjo.make( this.vj$.Anonymous4, 'syntax.declare.innerType.Anonymous4') // vjo.make()
 		 .protos({
 		
 		 innerInstanceProperties : "DD",//<String

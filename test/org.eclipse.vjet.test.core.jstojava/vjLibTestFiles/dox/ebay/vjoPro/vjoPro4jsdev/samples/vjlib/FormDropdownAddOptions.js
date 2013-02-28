@@ -10,6 +10,7 @@
  *******************************************************************************/
 vjo.ctype("dox.ebay.vjoPro.vjoPro4jsdev.samples.vjlib.FormDropdownAddOptions")
 .needs("vjoPro.dsf.document.Select")
+.needs("vjoPro.dsf.Element")
 .props({
 //> public boolean addToSelect(String psId, String psValId)
 addToSelect:function(psId, psValId){

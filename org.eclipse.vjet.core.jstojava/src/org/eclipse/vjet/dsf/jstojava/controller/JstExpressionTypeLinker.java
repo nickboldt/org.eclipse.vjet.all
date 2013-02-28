@@ -191,11 +191,11 @@ class JstExpressionTypeLinker implements IJstVisitor {
 	 * visit the node in prior to the visits of its children nodes
 	 */
 	public void preVisit(IJstNode node) {
-		final IJstType object = JstCache.getInstance().getType("Object"); // get
+		final IJstType undefinedObj = JstCache.getInstance().getType("Undefined"); // get
 																			// global
 
 		if (m_currentType == null) {
-			m_scopeStack.push(new ScopeFrame(object, false)); // scope unknown
+			m_scopeStack.push(new ScopeFrame(undefinedObj, false)); // scope unknown
 			return;
 		}
 
@@ -217,24 +217,41 @@ class JstExpressionTypeLinker implements IJstVisitor {
 		if (node instanceof IJstMethod) { // methods in props or protos
 
 			IJstMethod mtd = (IJstMethod) node;
-			if (mtd.getParentNode() != m_currentType) {
-				m_scopeStack.push(new ScopeFrame(object, false)); // scope
-																	// unknown
-			}
+//			if (mtd.getParentNode() != m_currentType) {
+//				m_scopeStack.push(new ScopeFrame(object, false)); // scope
+//																	// unknown
+//			}
 			// by huzhou@ebay.com pushing unknown scope for ftype#_invoke_
-			else if (m_currentType != null && m_currentType.isFType()
+//			else 
+				if (m_currentType != null && m_currentType.isFType()
 					&& mtd.getName() != null
 					&& "_invoke_".equals(mtd.getName().getName())) {
-				m_scopeStack.push(new ScopeFrame(object, false));
+					final IJstType jstobject = JstCache.getInstance().getType("Object"); // get
+					// global
+				m_scopeStack.push(new ScopeFrame(jstobject, false));
 			} else {
-				IJstType ownerType = mtd.getOwnerType();
-
-				if (mtd.isStatic()) { // static scope
-					m_scopeStack.push(new ScopeFrame(JstTypeHelper
-							.getJstTypeRefType(ownerType), true, mtd));
-				} else {
-					m_scopeStack.push(new ScopeFrame(ownerType, false, mtd));
+				
+				if(mtd.getParentNode() instanceof JstType){
+					
+					if( mtd.isStatic()){
+						m_scopeStack.push(new ScopeFrame(JstTypeHelper
+								.getJstTypeRefType((JstType)mtd.getParentNode()),true));
+					}else{
+						m_scopeStack.push(new ScopeFrame((JstType)mtd.getParentNode(),false));
+					}
+				}else if(!(mtd.getParentNode().getParentNode() instanceof NV)){
+					final IJstType functionType = JstCache.getInstance().getType("Undefined"); 
+					m_scopeStack.push(new ScopeFrame(functionType, false, node));
 				}
+				
+//				IJstType ownerType = mtd.getOwnerType();
+//
+//				if (mtd.isStatic()) { // static scope
+//					m_scopeStack.push(new ScopeFrame(JstTypeHelper
+//							.getJstTypeRefType(ownerType), true, mtd));
+//				} else {
+//					m_scopeStack.push(new ScopeFrame(ownerType, false, mtd));
+//				}
 			}
 		} else if (node instanceof JstBlock
 				&& node.getParentNode() == m_currentType) { // inits block
@@ -243,12 +260,15 @@ class JstExpressionTypeLinker implements IJstVisitor {
 		}
 		// visit with expr in prior to its body
 		else if (node instanceof WithStmt) {
-			m_scopeStack.push(new ScopeFrame(object, false)); // scope unknown
+			m_scopeStack.push(new ScopeFrame(undefinedObj, false)); // scope unknown
 		}
 		// push new scope for catch statement, inherits current scope
 		else if (node instanceof CatchStmt) {
 			getCurrentScopeFrame().pushCatchVar(
 					((CatchStmt) node).getException());
+		}else if (node instanceof ObjLiteral){
+			m_scopeStack.push(new ScopeFrame(((ObjLiteral) node).getResultType(), false, node));
+//			m_currentType = ((ObjLiteral) node).getResultType();
 		}
 	}
 
@@ -678,6 +698,10 @@ class JstExpressionTypeLinker implements IJstVisitor {
 	private IJstType resolveThisIdentifier(JstIdentifier identifier) {
 		IJstType currentType = getCurrentScopeFrame().getCurrentType();
 
+		if(currentType.isFakeType()){
+			currentType = JstCache.getInstance().getType("Undefined");
+		}
+		
 		if (getCurrentScopeFrame().getNode() != null
 				&& getCurrentScopeFrame().getNode() instanceof IJstMethod) {
 			IJstMethod mtd = (IJstMethod) getCurrentScopeFrame().getNode();
@@ -794,9 +818,18 @@ class JstExpressionTypeLinker implements IJstVisitor {
 			postVisitAssignExpr((AssignExpr) node);
 		} else if (node instanceof JstProxyIdentifier) {
 			postVisitJstProxyIdentifier((JstProxyIdentifier) node);
-		} else if (node instanceof IJstMethod
-				|| node instanceof WithStmt
-				|| (node instanceof JstBlock && node.getParentNode() == m_currentType)) {
+		} else if(node instanceof IJstMethod){
+			if(node.getParentNode() instanceof IJstType 
+					|| !(node.getParentNode().getParentNode() instanceof NV)
+					){
+				m_scopeStack.pop();
+			}
+		} else if (
+				
+				node instanceof WithStmt
+				|| node instanceof ObjLiteral
+				|| (node instanceof JstBlock && node.getParentNode() == m_currentType)) 
+				{
 			if (!m_scopeStack.isEmpty()) {
 				m_scopeStack.pop();
 			}
@@ -928,9 +961,13 @@ class JstExpressionTypeLinker implements IJstVisitor {
 			return;
 		}
 		IJstType inferType = rtnExpr.getResultType();
+		
 		JstMethod jstMethod = (JstMethod) enclosingMtd;
 		if (enclosingMtd.getRtnType() == null) {
-			
+			// we don't know what type so bind to undefined
+			if(inferType!=null && inferType.equals(JstExpressionTypeLinkerHelper.getNativeObjectJstType(this.m_resolver))){
+				inferType = JstExpressionTypeLinkerHelper.getNativeUndefinedType(this.m_resolver);
+			}
 			if (inferType != null && !(inferType instanceof JstInferredType)) {
 				jstMethod.setReturnOptional(true);
 				jstMethod.setRtnType(new JstInferredType(
@@ -972,7 +1009,7 @@ class JstExpressionTypeLinker implements IJstVisitor {
 	 */
 	private void postVisitJstArrayInitializer(final JstArrayInitializer array) {
 		final IJstType objectType = JstExpressionTypeLinkerHelper
-				.getNativeObjectJstType(m_resolver);
+				.getNativeUndefinedType(m_resolver);
 		IJstType arrType = array.getResultType();
 		if (array.getResultType() == null) {
 			IJstType candidateComponentType = null;
@@ -1053,14 +1090,32 @@ class JstExpressionTypeLinker implements IJstVisitor {
 			final IExpr right = expr.getRight();
 			if (left != null && right != null) {
 				final IJstType inferredResultType = expr.getResultType();
-				final JstDeferredType deferredType = new JstDeferredType(
-						inferredResultType != null ? inferredResultType
-								: JstExpressionTypeLinkerHelper
-										.getNativeObjectJstType(m_resolver));
-				deferredType.addCandidateType(left.getResultType());
-				deferredType.addCandidateType(right.getResultType());
-				JstExpressionTypeLinkerHelper.updateResultType(expr,
-						deferredType);
+				
+//				final JstDeferredType deferredType = new JstDeferredType(
+//						inferredResultType != null ? inferredResultType
+//								: JstExpressionTypeLinkerHelper
+//										.getNativeObjectJstType(m_resolver));
+				List<IJstType> mixedTypes = new ArrayList<IJstType>();
+				IJstType leftResultType = left.getResultType();
+				if(leftResultType!=null){
+					mixedTypes.add(leftResultType);
+				}
+				IJstType rightResultType = right.getResultType();
+				if(rightResultType!=null){
+					mixedTypes.add(rightResultType);
+				}
+				if(mixedTypes.size()>0){
+					JstMixedType mixedType = new JstMixedType(mixedTypes);
+					JstExpressionTypeLinkerHelper.updateResultType(expr,
+							mixedType);
+				}else{
+					final JstDeferredType deferredType = new JstDeferredType(
+							inferredResultType != null ? inferredResultType
+									: JstExpressionTypeLinkerHelper
+											.getNativeObjectJstType(m_resolver));
+					JstExpressionTypeLinkerHelper.updateResultType(expr,
+							deferredType);
+				}
 			}
 		} else {
 			final IJstType numType = JstExpressionTypeLinkerHelper
@@ -1132,12 +1187,20 @@ class JstExpressionTypeLinker implements IJstVisitor {
 	private void postVisitJstProperty(JstProperty pty) {
 		if (pty.getType() instanceof JstInferredType) {
 			JstInferredType type = (JstInferredType) pty.getType();
-			if ("Object".equals(type.getType().getName())) {
+			if ("Undefined".equals(type.getType().getName())) {
 				if (pty.getInitializer() != null) {
 					IExpr initializer = pty.getInitializer();
 					if (initializer.getResultType() != null) {
-						pty.setType(new JstInferredType(initializer
-								.getResultType()));
+						
+						if(initializer.getResultType() instanceof IJstRefType){
+							pty.setType(new JstInferredRefType((IJstRefType)initializer
+									.getResultType()));
+						}else{
+							pty.setType(new JstInferredType(initializer
+									.getResultType()));
+						}
+						
+						
 					}
 				} else if (pty.getValue() != null
 						&& pty.getValue() instanceof JstLiteral) {
@@ -1671,8 +1734,16 @@ class JstExpressionTypeLinker implements IJstVisitor {
 			fieldName = fieldId.getName();
 			IJstProperty pty = JstExpressionTypeLinkerHelper.getProperty(
 					qualifierType, fieldName, isStatic);
-
+			
+			
+			
 			if (pty != null) {
+				if(pty.getType().getName().equals("Object") && fieldName.equals("prototype")){
+					if(qualifierType instanceof IJstRefType){
+						qualifierType = ((IJstRefType) qualifierType).getReferencedNode();
+						pty = new JstProperty(qualifierType, fieldName, pty.getModifiers());
+					}
+				}
 				JstExpressionTypeLinkerHelper.bindFieldAccessExpr(m_resolver,
 						pty, qualifierType, fae, m_groupInfo);
 				return;
@@ -1875,7 +1946,7 @@ class JstExpressionTypeLinker implements IJstVisitor {
 				handleGlobalVarBinding(identifier, assignExpr, rhsExpr, false);
 				if (identifier.getType() == null) {
 					identifier
-							.setType(JstCache.getInstance().getType("Object"));
+							.setType(JstCache.getInstance().getType("Undefined"));
 				}
 			}
 		}
@@ -1894,7 +1965,7 @@ class JstExpressionTypeLinker implements IJstVisitor {
 			IJstType rhsType = rhsExpr.getResultType();
 			if (rhsType == null) {
 				rhsType = new JstInferredType(JstCache.getInstance().getType(
-						"Object"));
+						"Undefined"));
 			} else if (rhsType instanceof JstInferredType) {
 				rhsType = ((JstInferredType) rhsType).getType();
 			}
@@ -2020,6 +2091,24 @@ class JstExpressionTypeLinker implements IJstVisitor {
 	}
 
 	private static boolean isSameType(IJstType t1, IJstType t2) {
+		
+		if(t1 instanceof JstMixedType && t2 instanceof JstMixedType){
+			List<IJstType> mixedTypes1 = ((JstMixedType)t1).getMixedTypes();
+			List<IJstType> mixedTypes2 = ((JstMixedType)t2).getMixedTypes();
+			
+			
+			boolean hasSameMixedTypes = false;
+			for (IJstType type : mixedTypes1) {
+				if(mixedTypes2.contains(type)){
+					hasSameMixedTypes = true;
+				}else{
+					return false;
+				}
+			}
+			return hasSameMixedTypes;
+			
+		}
+		
 		return t1.getName().equals(t2.getName());
 	}
 

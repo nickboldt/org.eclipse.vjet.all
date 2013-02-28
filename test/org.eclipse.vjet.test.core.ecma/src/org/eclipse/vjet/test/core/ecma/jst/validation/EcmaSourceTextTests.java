@@ -14,6 +14,7 @@ package org.eclipse.vjet.test.core.ecma.jst.validation;
 
 import java.util.List;
 
+import org.eclipse.vjet.dsf.jsgen.shared.ids.FieldProbIds;
 import org.eclipse.vjet.dsf.jsgen.shared.validation.vjo.VjoSemanticProblem;
 import org.junit.Before;
 import org.junit.Test;
@@ -34,6 +35,9 @@ public class EcmaSourceTextTests extends VjoValidationBaseTester {
     @Before
     public void setUp() {
         expectProblems.clear();
+        // this.TestCase returns void via vjetdoc so warnings are ok here
+        expectProblems.add(createNewProblem(FieldProbIds.UndefinedField, 204, 0));
+        expectProblems.add(createNewProblem(FieldProbIds.UndefinedField, 212, 0));
         // bugfix by roy, redeclared local with same type, tolerated
         // expectProblems.add(createNewProblem(VarProbIds.RedefinedLocal, 174,
         // 0));

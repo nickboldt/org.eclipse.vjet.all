@@ -23,7 +23,7 @@ vjo.ctype("vjoPro.dsf.document.Shim")
 * @return {Object}
 *        the reference of the newly created iframe shim
 */
-//> public Object add(Object, int, int);
+//> public Object add(HTMLElement, int, int);
 add : function(poNode, piHPadding, piVPadding) {
 var f, p="px",w,h,s;
 if(this.check())
@@ -60,7 +60,7 @@ return null;
 * @param {Object}
 *        the iframe that will be removed
 */
-//> public void remove(Object, Object);
+//> public void remove(Object, HTMLIFrameElement);
 remove : function(poDiv,poIframe) {
 if(this.check())
 {

@@ -62,7 +62,8 @@ public class VjoPrefixExprValidator
 			final IJstType exprValue = expr.getResultType();
 			if(exprValue != null){
 				if(!TypeCheckUtil.isBoolean(exprValue)
-						&& !TypeCheckUtil.isNumber(exprValue)){
+						&& !TypeCheckUtil.isNumber(exprValue) 
+						&& !TypeCheckUtil.isUndefined(exprValue)){
 					final BaseVjoSemanticRuleCtx ruleCtx = 
 						new BaseVjoSemanticRuleCtx(prefixExpr, 
 								ctx.getGroupId(), new String[]{expr.toExprText(), prefixExpr.toExprText()});
@@ -80,7 +81,7 @@ public class VjoPrefixExprValidator
 				|| Operator.COMPLEMENT.equals(op)){
 			//allow number
 			final IJstType exprValue = expr.getResultType();
-			if(!TypeCheckUtil.isNumber(exprValue)){
+			if(!TypeCheckUtil.isNumber(exprValue) && !TypeCheckUtil.isUndefined(exprValue)){
 				final BaseVjoSemanticRuleCtx ruleCtx = 
 					new BaseVjoSemanticRuleCtx(
 							prefixExpr, 

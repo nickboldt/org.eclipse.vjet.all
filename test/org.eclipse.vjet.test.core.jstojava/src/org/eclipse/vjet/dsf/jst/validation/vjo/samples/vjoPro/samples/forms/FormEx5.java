@@ -14,8 +14,6 @@ package org.eclipse.vjet.dsf.jst.validation.vjo.samples.vjoPro.samples.forms;
 
 import java.util.List;
 
-import org.eclipse.vjet.dsf.jsgen.shared.ids.MethodProbIds;
-import org.eclipse.vjet.dsf.jsgen.shared.ids.TypeProbIds;
 import org.eclipse.vjet.dsf.jsgen.shared.validation.vjo.VjoSemanticProblem;
 import org.eclipse.vjet.dsf.jst.validation.vjo.VjoValidationBaseTester;
 import org.junit.Before;
@@ -37,12 +35,7 @@ public class FormEx5 extends VjoValidationBaseTester {
     @Before
     public void setUp() {
         expectProblems.clear();
-        expectProblems.add(createNewProblem(MethodProbIds.UndefinedMethod, 13,
-                0));
-        expectProblems.add(createNewProblem(MethodProbIds.UndefinedMethod, 14,
-                0));
-        expectProblems.add(createNewProblem(TypeProbIds.InactiveNeedsInUse, 1,
-                0));
+      
     }
 
     @Test

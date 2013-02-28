@@ -14,6 +14,7 @@ package org.eclipse.vjet.test.core.ecma.jst.validation;
 
 import java.util.List;
 
+import org.eclipse.vjet.dsf.jsgen.shared.ids.TypeProbIds;
 import org.eclipse.vjet.dsf.jsgen.shared.validation.vjo.VjoSemanticProblem;
 import org.junit.Before;
 import org.junit.Test;
@@ -34,6 +35,8 @@ public class Ecma3ExtensionsTests extends VjoValidationBaseTester {
     @Before
     public void setUp() {
         expectProblems.clear();
+        // new (delete y) is where we get this error
+        expectProblems.add(createNewProblem(TypeProbIds.InvalidClassInstantiation, 1081, 0));
     }
 
     @Test

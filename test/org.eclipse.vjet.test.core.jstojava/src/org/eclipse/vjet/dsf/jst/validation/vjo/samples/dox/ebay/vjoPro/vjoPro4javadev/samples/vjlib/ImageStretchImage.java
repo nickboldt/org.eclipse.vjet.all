@@ -36,8 +36,7 @@ public class ImageStretchImage extends VjoValidationBaseTester {
     @Before
     public void setUp() {
         expectProblems.clear();
-        expectProblems.add(createNewProblem(MethodProbIds.UndefinedMethod, 16,
-                0));
+      
     }
 
     @Test

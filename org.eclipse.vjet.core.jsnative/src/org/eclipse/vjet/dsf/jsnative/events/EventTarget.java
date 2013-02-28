@@ -13,6 +13,7 @@ import org.eclipse.vjet.dsf.jsnative.anno.BrowserSupport;
 import org.eclipse.vjet.dsf.jsnative.anno.BrowserType;
 import org.eclipse.vjet.dsf.jsnative.anno.DOMSupport;
 import org.eclipse.vjet.dsf.jsnative.anno.DomLevel;
+import org.eclipse.vjet.dsf.jsnative.anno.Dynamic;
 import org.eclipse.vjet.dsf.jsnative.anno.Function;
 import org.eclipse.vjet.dsf.jsnative.anno.JstExclude;
 import org.eclipse.vjet.dsf.jsnative.anno.MType;
@@ -23,6 +24,7 @@ import org.mozilla.mod.javascript.IWillBeScriptable;
  */
 @DOMSupport(DomLevel.THREE)
 @MType
+@Dynamic
 public interface EventTarget extends IWillBeScriptable {
 	
 	@DOMSupport(DomLevel.TWO)

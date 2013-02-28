@@ -36,8 +36,8 @@ public class DefaultDedupComparable extends VjoValidationBaseTester {
     @Before
     public void setUp() {
         expectProblems.clear();
-        expectProblems.add(createNewProblem(VjoSyntaxProbIds.RedundantImport,
-                2, 0));
+        expectProblems.add(createNewProblem2(VjoSyntaxProbIds.RedundantImport,
+                13, 0));
     }
 
     @Test

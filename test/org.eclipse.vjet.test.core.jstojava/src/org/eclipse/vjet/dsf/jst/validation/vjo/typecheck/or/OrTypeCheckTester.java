@@ -14,6 +14,7 @@ package org.eclipse.vjet.dsf.jst.validation.vjo.typecheck.or;
 
 import java.util.List;
 
+import org.eclipse.vjet.dsf.jsgen.shared.ids.MethodProbIds;
 import org.eclipse.vjet.dsf.jsgen.shared.ids.TypeProbIds;
 import org.eclipse.vjet.dsf.jsgen.shared.validation.vjo.VjoSemanticProblem;
 import org.eclipse.vjet.dsf.jst.validation.vjo.VjoValidationBaseTester;
@@ -44,11 +45,11 @@ public class OrTypeCheckTester extends VjoValidationBaseTester {
     //@Description("Test or expression and type matching")
     public void testCompartibleType1() {
     	//assignment
-    	expectProblems.add(createNewProblem(TypeProbIds.IncompatibleTypesInEqualityOperator, 14, 0));
+    	expectProblems.add(createNewProblem2(TypeProbIds.IncompatibleTypesInEqualityOperator, 24, 0));
     	//return
-    	expectProblems.add(createNewProblem(TypeProbIds.IncompatibleTypesInEqualityOperator, 17, 0));
+    	expectProblems.add(createNewProblem2(MethodProbIds.ParameterMismatch, 30, 0));
     	//method call
-    	expectProblems.add(createNewProblem(TypeProbIds.IncompatibleTypesInEqualityOperator, 20, 0));
+    	expectProblems.add(createNewProblem2(TypeProbIds.TypeMismatch, 27, 0));
         
         List<VjoSemanticProblem> problems = getVjoSemanticProblem(
                 "OrTypeCheck.js", this.getClass());

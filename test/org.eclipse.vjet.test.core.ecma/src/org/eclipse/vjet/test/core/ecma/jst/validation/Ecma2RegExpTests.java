@@ -13,6 +13,8 @@ package org.eclipse.vjet.test.core.ecma.jst.validation;
 
 import java.util.List;
 
+import org.eclipse.vjet.dsf.jsgen.shared.ids.FieldProbIds;
+import org.eclipse.vjet.dsf.jsgen.shared.ids.MethodProbIds;
 import org.eclipse.vjet.dsf.jsgen.shared.ids.VarProbIds;
 import org.eclipse.vjet.dsf.jsgen.shared.validation.vjo.VjoSemanticProblem;
 import org.junit.Before;
@@ -46,6 +48,10 @@ public class Ecma2RegExpTests extends VjoValidationBaseTester {
         expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 895, 0));
         expectProblems.add(createNewProblem(VarProbIds.UndefinedName, 1032,
                 0));
+        expectProblems.add(createNewProblem(FieldProbIds.UndefinedField,75,0));
+        expectProblems.add(createNewProblem(MethodProbIds.UndefinedMethod,82,0));
+        expectProblems.add(createNewProblem(FieldProbIds.UndefinedField,325,0));
+        expectProblems.add(createNewProblem(MethodProbIds.UndefinedMethod,332,0));
     }
 
     @Test

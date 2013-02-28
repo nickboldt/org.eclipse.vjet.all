@@ -14,6 +14,8 @@ package org.eclipse.vjet.test.core.ecma.jst.validation;
 
 import java.util.List;
 
+import org.eclipse.vjet.dsf.jsgen.shared.ids.FieldProbIds;
+import org.eclipse.vjet.dsf.jsgen.shared.ids.MethodProbIds;
 import org.eclipse.vjet.dsf.jsgen.shared.ids.TypeProbIds;
 import org.eclipse.vjet.dsf.jsgen.shared.validation.vjo.VjoSemanticProblem;
 import org.junit.Before;
@@ -37,6 +39,8 @@ public class Ecma3ArrayTests extends VjoValidationBaseTester {
         expectProblems.clear();
         expectProblems.add(createNewProblem(
         		TypeProbIds.IncompatibleTypesInEqualityOperator, 236, 0));
+        expectProblems.add(createNewProblem(MethodProbIds.UndefinedMethod, 103, 0));
+        expectProblems.add(createNewProblem(FieldProbIds.UndefinedField, 701, 0));
     }
 
     @Test

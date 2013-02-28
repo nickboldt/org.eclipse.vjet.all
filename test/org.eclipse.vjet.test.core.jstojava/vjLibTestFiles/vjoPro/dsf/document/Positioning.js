@@ -53,7 +53,7 @@ return rv;
 * @return {int}
 *        the number of pixels of the element's offset to the left
 */
-//> public int getOffsetLeft(Object);
+//> public int getOffsetLeft(HTMLElement);
 getOffsetLeft : function(poElem) {
 var e = poElem;
 var l = 0;//<Number
@@ -74,7 +74,7 @@ return l;
 * @return {int}
 *        the number of pixels of the element's offset to the top
 */
-//> public int getOffsetTop(Object);
+//> public int getOffsetTop(HTMLElement);
 getOffsetTop : function(poElem)	{
 var e = poElem;
 var t = 0;//<Number

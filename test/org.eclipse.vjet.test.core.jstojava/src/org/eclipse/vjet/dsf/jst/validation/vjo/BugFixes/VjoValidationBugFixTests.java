@@ -695,6 +695,7 @@ public class VjoValidationBugFixTests extends VjoValidationBaseTester {
     public void testBug5349Error() throws Exception {
         final List<VjoSemanticProblem> expectedProblems = new ArrayList<VjoSemanticProblem>(
                 0);
+        expectedProblems.add(createNewProblem2(FieldProbIds.UndefinedField, 16, 0));
         final List<VjoSemanticProblem> actualProblems = getVjoSemanticProblem(
                 "org.eclipse.vjet.dsf.jst.validation.vjo.BugFixes.", "Bug5349.js", this
                         .getClass());
@@ -2533,7 +2534,6 @@ public class VjoValidationBugFixTests extends VjoValidationBaseTester {
     public void testUnexistProp() throws Exception {
         expectProblems.clear();
         expectProblems.add(createNewProblem(FieldProbIds.UndefinedField, 7, 0));
-        expectProblems.add(createNewProblem(FieldProbIds.UndefinedField, 9, 0));
         final List<VjoSemanticProblem> actualProblems = getVjoSemanticProblem(
                 "org.eclipse.vjet.dsf.jst.validation.vjo.BugFixes.", "Bug7715.js", this
                         .getClass());

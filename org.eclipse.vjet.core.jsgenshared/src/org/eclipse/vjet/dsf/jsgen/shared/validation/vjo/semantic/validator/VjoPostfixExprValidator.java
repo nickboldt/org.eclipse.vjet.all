@@ -60,7 +60,7 @@ public class VjoPostfixExprValidator
 			
 			final IJstType exprValue = expr.getResultType();
 			if(exprValue != null){
-				if(!TypeCheckUtil.isNumber(exprValue)){
+				if(!TypeCheckUtil.isNumber(exprValue) && !TypeCheckUtil.isUndefined(exprValue)){
 					final BaseVjoSemanticRuleCtx ruleCtx = 
 						new BaseVjoSemanticRuleCtx(postfixExpr, 
 								ctx.getGroupId(), new String[]{expr.toExprText(), postfixExpr.toExprText()});

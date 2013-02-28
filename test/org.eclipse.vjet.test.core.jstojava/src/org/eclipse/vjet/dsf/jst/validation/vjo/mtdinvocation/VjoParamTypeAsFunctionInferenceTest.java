@@ -35,19 +35,17 @@ public class VjoParamTypeAsFunctionInferenceTest extends VjoValidationBaseTester
 		expectProblems.clear();
 		expectProblems
 			.add(createNewProblem(TypeProbIds.IncompatibleTypesInEqualityOperator, 23, 0));
-		expectProblems
-			.add(createNewProblem(TypeProbIds.TypeMismatch, 24, 0));
-		expectProblems
-			.add(createNewProblem(TypeProbIds.TypeMismatch, 29, 0));
+		
 		expectProblems
 			.add(createNewProblem(TypeProbIds.IncompatibleTypesInEqualityOperator, 33, 0));
-		expectProblems
-			.add(createNewProblem(TypeProbIds.TypeMismatch, 34, 0));
+		expectProblems.add(createNewProblem2(TypeProbIds.TypeMismatch, 34, 0));
+		
 		expectProblems
 			.add(createNewProblem(MethodProbIds.ParameterMismatch, 37, 0));
 		expectProblems
 			.add(createNewProblem(MethodProbIds.ShouldReturnValue, 37, 0));
-
+		expectProblems.add(createNewProblem2(TypeProbIds.TypeMismatch, 39, 0));
+		expectProblems.add(createNewProblem2(TypeProbIds.TypeMismatch, 44, 0));
 		actualProblems = getVjoSemanticProblem(
 				"org.eclipse.vjet.dsf.jst.validation.vjo.mtdinvocation.",
 				"ParamTypeAsFunctionInference.js", this.getClass());

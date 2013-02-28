@@ -32,6 +32,10 @@ public class JstFuncType extends JstProxyType {
 	public JstFuncType(final IJstMethod function) {
 		super(JstCache.getInstance().getType("Function", true));
 		
+		if(function instanceof JstMethod){
+			((JstMethod) function).setParent(this);
+		}
+		
 		assert function != null;
 
 		m_function = function;

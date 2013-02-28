@@ -14,6 +14,7 @@ import org.eclipse.vjet.dsf.jsnative.anno.BrowserSupport;
 import org.eclipse.vjet.dsf.jsnative.anno.BrowserType;
 import org.eclipse.vjet.dsf.jsnative.anno.DOMSupport;
 import org.eclipse.vjet.dsf.jsnative.anno.DomLevel;
+import org.eclipse.vjet.dsf.jsnative.anno.Dynamic;
 import org.eclipse.vjet.dsf.jsnative.anno.Function;
 import org.eclipse.vjet.dsf.jsnative.anno.JsArray;
 import org.eclipse.vjet.dsf.jsnative.anno.JsMetatype;
@@ -34,6 +35,7 @@ import org.mozilla.mod.javascript.IWillBeScriptable;
 @DOMSupport(DomLevel.ONE)
 @BrowserSupport({BrowserType.IE_6P, BrowserType.FIREFOX_1P, BrowserType.OPERA_7P, BrowserType.SAFARI_3P})
 @JsMetatype
+@Dynamic
 public interface Node extends IWillBeScriptable {
 	
 	// NodeType

@@ -8,14 +8,14 @@
  * Contributors:
  *     eBay Inc. - initial API and implementation
  *******************************************************************************/
-vjo.ctype("vjoPro.dsf.utils.JsLoader")
+vjo.ctype("vjoPro.dsf.utils.JsLoader") //<dynamic
 .props({
 	queue : [],
 	pending : null,
 	//> public void load(String psUrl, Object poCallback, Object poScope)
 	load : function(psUrl,poCallback, poScope) {
 		var request = {url : psUrl, callback : poCallback, scope : poScope}, head, stag;
-		var t = this; //<type::JsLoader
+		var t = this; //<<type::JsLoader
 		if(t.pending){
 			t.queue.push(request);
 			return;
@@ -46,7 +46,7 @@ vjo.ctype("vjoPro.dsf.utils.JsLoader")
 		t.pending = null;
 		if(t.queue.length > 0)
 		{
-			var request = this.queue.shift();
+			var request = this.queue.shift(); //<Undefined
 			t.load(request.url, request.callback, request.scope);
 		}
 	}

@@ -13,6 +13,7 @@ package org.eclipse.vjet.dsf.jst.validation.vjo.rt.ftype;
 
 import java.util.List;
 
+import org.eclipse.vjet.dsf.jsgen.shared.ids.FieldProbIds;
 import org.eclipse.vjet.dsf.jsgen.shared.ids.MethodProbIds;
 import org.eclipse.vjet.dsf.jsgen.shared.ids.TypeProbIds;
 import org.eclipse.vjet.dsf.jsgen.shared.ids.VjoSyntaxProbIds;
@@ -33,6 +34,7 @@ public class VjoFTypeTest extends VjoValidationBaseTester{
 	//@Description("Test validation error for non existing type usage and redundant needs")
 	public void testFType() throws Exception {
 		expectProblems.clear();
+		expectProblems.add(createNewProblem2(FieldProbIds.UndefinedField, 14, 0));
 		actualProblems = getVjoSemanticProblem("org.eclipse.vjet.dsf.jst.validation.vjo.rt.ftype.", "FType.js", this.getClass());
 		assertProblemEquals(expectProblems, actualProblems);
 	}

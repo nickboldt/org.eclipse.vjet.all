@@ -43,8 +43,6 @@ public class FormDropdownAddOptions extends VjoValidationBaseTester {
     @Before
     public void setUp() {
         expectProblems.clear();
-        expectProblems.add(createNewProblem(VarProbIds.UndefinedName, 6, 0));
-        expectProblems.add(createNewProblem(VarProbIds.UndefinedName, 7, 0));
     }
 
     @Test

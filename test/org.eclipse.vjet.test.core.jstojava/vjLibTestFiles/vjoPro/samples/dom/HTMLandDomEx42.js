@@ -9,7 +9,7 @@
  *     eBay Inc. - initial API and implementation
  *******************************************************************************/
 vjo.ctype('vjoPro.samples.dom.HTMLandDomEx42') //< public
-.needs(['vjoPro.dsf.document.Element','vjoPro.dsf.document.Shim'])
+.needs(['vjoPro.dsf.document.Element','vjoPro.dsf.document.Shim']).needs('vjoPro.dsf.Element',"Elem")
 .protos({
 
 /**
@@ -30,8 +30,9 @@ this.sId = psId;
 */
 //> public boolean showLayer()
 showLayer:function(){
-var E = vjoPro.dsf.document.Element;
-E.toggleVisibility(this.sId);
+var E = vjoPro.dsf.Element;
+var E2 = vjoPro.dsf.document.Element;
+E2.toggleVisibility(this.sId);
 var oDiv = E.get(this.sId);
 if (oDiv.bIsVisible) {
 this.iframeShim = vjoPro.dsf.document.Shim.add(oDiv);

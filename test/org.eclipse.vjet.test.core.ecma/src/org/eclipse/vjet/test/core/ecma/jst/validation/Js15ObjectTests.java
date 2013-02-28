@@ -71,46 +71,48 @@ public class Js15ObjectTests extends VjoValidationBaseTester {
 		expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl,
 				521 + headersize, 0));
 		expectProblems.add(createNewProblem(VarProbIds.UndefinedName, 585, 0));
+//		expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt,
+//				395 + headersize, 0));
+//		expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt,
+//				397 + headersize, 0));
+//		expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt,
+//				399 + headersize, 0));
+//		expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt,
+//				400 + headersize, 0));
+//		expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt,
+//				401 + headersize, 0));
+//		expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt,
+//				402 + headersize, 0));
+//		expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt,
+//				409 + headersize, 0));
+//		expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt,
+//				411 + headersize, 0));
+//		expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt,
+//				413 + headersize, 0));
+//		expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt,
+//				414 + headersize, 0));
+//		expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt,
+//				415 + headersize, 0));
+//		expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt,
+//				416 + headersize, 0));
+//		expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt,
+//				423 + headersize, 0));
+//		expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt,
+//				425 + headersize, 0));
+//		expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt,
+//				427 + headersize, 0));
+//		expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt,
+//				438 + headersize, 0));
+//		expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt,
+//				444 + headersize, 0));
+//		expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt,
+//				525 + headersize, 0));
 		expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt,
-				395 + headersize, 0));
+				804, 0));
 		expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt,
-				397 + headersize, 0));
+				819, 0));
 		expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt,
-				399 + headersize, 0));
-		expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt,
-				400 + headersize, 0));
-		expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt,
-				401 + headersize, 0));
-		expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt,
-				402 + headersize, 0));
-		expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt,
-				409 + headersize, 0));
-		expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt,
-				411 + headersize, 0));
-		expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt,
-				413 + headersize, 0));
-		expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt,
-				414 + headersize, 0));
-		expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt,
-				415 + headersize, 0));
-		expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt,
-				416 + headersize, 0));
-		expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt,
-				423 + headersize, 0));
-		expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt,
-				425 + headersize, 0));
-		expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt,
-				427 + headersize, 0));
-		expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt,
-				438 + headersize, 0));
-		expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt,
-				444 + headersize, 0));
-		expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt,
-				525 + headersize, 0));
-		expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt,
-				777 + headersize, 0));
-		expectProblems.add(createNewProblem(MethodProbIds.UnreachableStmt,
-				792 + headersize, 0));
+				552, 0));
 
 	}
 

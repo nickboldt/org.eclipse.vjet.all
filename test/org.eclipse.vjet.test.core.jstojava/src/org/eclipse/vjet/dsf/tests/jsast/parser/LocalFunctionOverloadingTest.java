@@ -90,9 +90,10 @@ public class LocalFunctionOverloadingTest implements ICommentConstants {
 						assertNotNull(identifier);
 						assertNotNull(identifier.getJstBinding());
 						assertTrue(identifier.getJstBinding() instanceof JstMethod);
-						if(!"f2".equals(identifier.getName())){
-							assertFalse(identifier.getJstBinding() instanceof JstSynthesizedMethod);
-						}
+						// switched over to syntheized method when doing var refactor
+//						if(!"f2".equals(identifier.getName())){
+//							assertFalse(identifier.getJstBinding() instanceof JstSynthesizedMethod);
+//						}
 						
 						final JstMethod method = (JstMethod)identifier.getJstBinding();
 						assertTrue(method.isDispatcher());

@@ -57,7 +57,7 @@ t.logTimer = window.setInterval(function(){t.post2Remote();}, 5000);
 }
 },
 
-//> HTMLIFrameElement getIfrmDoc()
+//> HTMLDocument getIfrmDoc()
 getIfrmDoc: function(){
 var t = this,
 ifrmDoc;

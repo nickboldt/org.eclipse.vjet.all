@@ -15,6 +15,7 @@ package org.eclipse.vjet.dsf.jst.validation.vjo.samples.dox.ebay.vjoPro.vjoPro4j
 import java.util.List;
 
 import org.eclipse.vjet.dsf.jsgen.shared.ids.FieldProbIds;
+import org.eclipse.vjet.dsf.jsgen.shared.ids.MethodProbIds;
 import org.eclipse.vjet.dsf.jsgen.shared.validation.vjo.VjoSemanticProblem;
 import org.eclipse.vjet.dsf.jst.validation.vjo.VjoValidationBaseTester;
 import org.junit.Before;
@@ -51,6 +52,12 @@ public class HTMLandDomEx5 extends VjoValidationBaseTester {
                 .add(createNewProblem2(FieldProbIds.UndefinedField, 25, 0));
         expectProblems
                 .add(createNewProblem2(FieldProbIds.UndefinedField, 26, 0));
+        expectProblems.add(createNewProblem2(MethodProbIds.UndefinedMethod, 25, 0));
+        expectProblems.add(createNewProblem2(MethodProbIds.UndefinedMethod, 26, 0));
+        expectProblems.add(createNewProblem2(MethodProbIds.UndefinedMethod, 27, 0));
+        expectProblems.add(createNewProblem2(MethodProbIds.UndefinedMethod, 33, 0));
+        expectProblems.add(createNewProblem2(MethodProbIds.UndefinedMethod, 34, 0));
+        expectProblems.add(createNewProblem2(MethodProbIds.UndefinedMethod, 35, 0));
 
     }
 

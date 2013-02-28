@@ -36,7 +36,7 @@ will contain that single root tag. If the root tag has a namespace
 prefix, the second argument must specify the URL that identifies the
 namespace.
 */
-//private Document newDocument(String,String)
+//> Document newDocument(String,String)
 newDocument : function(rootTagName, namespaceURL) {
 if (!rootTagName) rootTagName = "";
 if (!namespaceURL) namespaceURL = "";
@@ -88,6 +88,7 @@ return doc;
 },
 
 getData:function(){
+	
 return testsuite = {
 name: 'Your browser',
 tests: [

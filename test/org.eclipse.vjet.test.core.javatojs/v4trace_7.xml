@@ -1,26 +1,26 @@
-<JavaToJst><Package name="file:/Users/earlyster/gitrepos/org-eclipse-vjet/core/test/org.eclipse.vjet.test.core.javatojs/src/org/eclipse/vjet/dsf/javatojs/tests/cli/data/"><Controller method="OnDemandTranslation"><DependencyPhase><Task type="org.eclipse.vjet.dsf.javatojs.tests.cli.data.Boo" mode="Dependency,Declaration" thread="1">
+<JavaToJst><Package name="file:/Users/earlyster/Documents/org.eclipse.vjet/org.eclipse.vjet.all/core/test/org.eclipse.vjet.test.core.javatojs/src/org/eclipse/vjet/dsf/javatojs/tests/cli/data/"><Controller method="OnDemandTranslation"><DependencyPhase><Task type="org.eclipse.vjet.dsf.javatojs.tests.cli.data.Boo" mode="Dependency,Declaration" thread="1">
  <Dependents/>
- <Time start="16:15:46:245" end="16:15:46:253" duration="8"/>
+ <Time start="10:20:40:232" end="10:20:40:233" duration="1"/>
 </Task><Task type="org.eclipse.vjet.dsf.javatojs.tests.cli.data.Goo" mode="Dependency,Declaration" thread="1">
  <Dependents/>
- <Time start="16:15:46:259" end="16:15:46:259" duration="0"/>
+ <Time start="10:20:40:240" end="10:20:40:240" duration="0"/>
 </Task><Task type="org.eclipse.vjet.dsf.javatojs.tests.cli.data.subdir.Foo" mode="Dependency,Declaration" thread="1">
  <Dependents/>
- <Time start="16:15:46:260" end="16:15:46:260" duration="0"/>
+ <Time start="10:20:40:240" end="10:20:40:241" duration="1"/>
 </Task><Task type="org.eclipse.vjet.dsf.javatojs.tests.cli.data.subdir.Hoo" mode="Dependency,Declaration" thread="1">
  <Dependents/>
- <Time start="16:15:46:260" end="16:15:46:260" duration="0"/>
+ <Time start="10:20:40:241" end="10:20:40:241" duration="0"/>
 </Task></DependencyPhase><DeclarationPhase><Task type="org.eclipse.vjet.dsf.javatojs.tests.cli.data2.Doo" mode="Dependency,Declaration" thread="1">
  <Dependents/>
- <Time start="16:15:46:261" end="16:15:46:262" duration="1"/>
+ <Time start="10:20:40:242" end="10:20:40:242" duration="0"/>
 </Task></DeclarationPhase><ImplementationPhase><Task type="org.eclipse.vjet.dsf.javatojs.tests.cli.data.Boo" mode="Dependency,Declaration,Impl" thread="1">
- <Time start="16:15:46:263" end="16:15:46:265" duration="2"/>
+ <Time start="10:20:40:244" end="10:20:40:245" duration="1"/>
 </Task><Task type="org.eclipse.vjet.dsf.javatojs.tests.cli.data.Goo" mode="Dependency,Declaration,Impl" thread="1">
- <Time start="16:15:46:265" end="16:15:46:265" duration="0"/>
+ <Time start="10:20:40:246" end="10:20:40:246" duration="0"/>
 </Task><Task type="org.eclipse.vjet.dsf.javatojs.tests.cli.data.subdir.Foo" mode="Dependency,Declaration,Impl" thread="1">
- <Time start="16:15:46:265" end="16:15:46:266" duration="1"/>
+ <Time start="10:20:40:246" end="10:20:40:246" duration="0"/>
 </Task><Task type="org.eclipse.vjet.dsf.javatojs.tests.cli.data.subdir.Hoo" mode="Dependency,Declaration,Impl" thread="1">
- <Time start="16:15:46:266" end="16:15:46:266" duration="0"/>
+ <Time start="10:20:40:247" end="10:20:40:247" duration="0"/>
 </Task><Task type="org.eclipse.vjet.dsf.javatojs.tests.cli.data2.Doo" mode="Dependency,Declaration,Impl" thread="1">
- <Time start="16:15:46:266" end="16:15:46:267" duration="1"/>
-</Task></ImplementationPhase><Time start="16:15:46:241" end="16:15:46:273" duration="32"/></Controller></Package></JavaToJst>
+ <Time start="10:20:40:247" end="10:20:40:247" duration="0"/>
+</Task></ImplementationPhase><Time start="10:20:40:228" end="10:20:40:248" duration="20"/></Controller></Package></JavaToJst>
