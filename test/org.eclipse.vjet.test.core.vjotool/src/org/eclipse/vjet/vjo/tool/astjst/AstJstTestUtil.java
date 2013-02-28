@@ -260,7 +260,7 @@ public class AstJstTestUtil {
 				!bindInfo.getBindParent().equals("")) {
 			List<String> typeList = getTypeList(getParentType(bNode));
 			Assert.assertNotNull(typeList);
-			Assert.assertEquals("bindInfofailed = " + bindInfo.getBindNode(),typeList.get(0).toString(),bindInfo.getBindParent().toString());
+			Assert.assertEquals("test num: " + testNumber + "binding node:"+ bindInfo.bindingnode +"  bindInfofailed = " + bindInfo.getBindNode(),typeList.get(0).toString(),bindInfo.getBindParent().toString());
 		}
 		if (bindInfo.getBindingclass()!=null && 
 				!bindInfo.getBindingclass().equals("")) {
@@ -315,9 +315,11 @@ public class AstJstTestUtil {
 		List<String> actualType = new ArrayList<String>();
 		try {
 			JstAstInfoVisitor visitor = new JstAstInfoVisitor();
-			Method method = JstAstInfoVisitor.class.getMethod("visit", node
-					.getClass());
-			method.invoke(visitor, node);
+			if(node!=null){
+				Method method = JstAstInfoVisitor.class.getMethod("visit", node
+						.getClass());
+				method.invoke(visitor, node);
+			}
 			actualType = visitor.getType();
 		} catch (Exception e) {}
 		

@@ -41,7 +41,7 @@
 			<nodecount>1</nodecount>
 			<node position='1' status='pass'>
 				<bindingnode>E</bindingnode>
-				<bindingtype>Object</bindingtype>
+				<bindingtype>Undefined</bindingtype>
 				<bindingclass>JstProperty</bindingclass>
 				<bindingparent>Bug9096</bindingparent>
 			</node>

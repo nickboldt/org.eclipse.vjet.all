@@ -107,7 +107,7 @@
 			<nodecount>1</nodecount>
 			<node position='1' status='pass'>
 				<bindingnode>constructor</bindingnode>
-				<bindingtype>Object</bindingtype>
+				<bindingtype>Function</bindingtype>
 				<bindingclass>JstProperty</bindingclass>
 				<bindingparent>Object</bindingparent>
 			</node>

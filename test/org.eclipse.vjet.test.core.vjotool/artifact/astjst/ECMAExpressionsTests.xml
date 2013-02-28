@@ -93,7 +93,7 @@
 		<nodecount>1</nodecount>
 		<node position='1' status='pass'>
 			<bindingnode><![CDATA[num1||num2]]></bindingnode>  <!--  BUG why spaces -->
-			<bindingtype>PrimitiveBoolean</bindingtype>  
+			<bindingtype>[Boolean+Boolean]</bindingtype>  
 			<bindingclass></bindingclass>
 			<bindingparent></bindingparent>
 		</node>

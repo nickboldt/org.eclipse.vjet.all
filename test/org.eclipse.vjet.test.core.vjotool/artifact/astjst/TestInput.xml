@@ -139,7 +139,7 @@
 			<nodecount>1</nodecount>
 			<node position='1' status='pass'>
 				<bindingnode>prop2</bindingnode>
-				<bindingtype>Object</bindingtype>
+				<bindingtype>Undefined</bindingtype>
 			</node>
 		</jxpath>
 	</testcase>

@@ -1557,7 +1557,12 @@ class JstExpressionTypeLinker implements IJstVisitor {
 		if (mtd == null) {
 			return "";
 		}
-		String mtdKey = mtd.getOwnerType().getName();
+		IJstType ownerType = mtd.getOwnerType();
+		
+		if(ownerType==null){
+			return "";
+		}
+		String mtdKey = ownerType.getName();
 		mtdKey += mtd.isStatic() ? "::" : ":";
 		mtdKey += mtd.getName().getName();
 		return mtdKey;

@@ -72,6 +72,8 @@ public class LocalDeclarationTranslator extends
 		if (metaList.size()>0 && metaList.get(0).getTyping() != null){
 			 	outerMeta = metaList.get(0);
 				outerJstType = TranslateHelper.findType(m_ctx, outerMeta.getTyping(), outerMeta);
+				
+				
 		}
 		int count = 0;
 		
@@ -137,7 +139,7 @@ public class LocalDeclarationTranslator extends
 			}
 			
 			// if multi var look up metatypes
-			if(multiVar){
+//			if(multiVar){
 				if(metaList != null && metaList.size() > 0){
 					meta = metaList.get(0);
 				}
@@ -148,7 +150,7 @@ public class LocalDeclarationTranslator extends
 						meta = metaList.iterator().next();
 					}
 				}
-			}
+//			}
 		
 			if (meta != null) {
 				jstType = getTypeFromMeta(jstType, meta,metaList,
@@ -165,6 +167,8 @@ public class LocalDeclarationTranslator extends
 				foundType = jstType; 
 			}else if(outerMetaList!=null && outerMetaList.size()==1){
 				foundType = outerJstType;
+				foundType = handleSynthesizedMethods(foundType, metaList,
+						jstIdentifier, init);
 			}else{
 				foundType = jstType;
 			}
@@ -225,36 +229,44 @@ public class LocalDeclarationTranslator extends
 		else if (meta.getTyping() != null){
 			jstType = TranslateHelper.findType(m_ctx, meta.getTyping(), meta);
 			
-			//TODO combine this logic to TranslateHelper#findType
-			if(jstType instanceof JstFuncType){
-				IJstMethod replacement = null;
-				//further check rhs of the assignment
-				boolean rhsMethodFound = false;
-				if(init != null){
-					final IJstNode initBinding = JstBindingUtil.getJstBinding(init);
-					rhsMethodFound = initBinding != null && initBinding instanceof JstMethod;
-					if(rhsMethodFound){
-						replacement = (IJstMethod)initBinding;
-						jstIdentifier.setJstBinding(initBinding);
-						jstType = init.getResultType() != null ? init.getResultType() : jstType;
-						
+			jstType = handleSynthesizedMethods(jstType, metaList,
+					jstIdentifier, init);
+		}
+		return jstType;
+	}
+
+	private IJstType handleSynthesizedMethods(IJstType jstType,
+			List<IJsCommentMeta> metaList, JstIdentifier jstIdentifier,
+			IExpr init) {
+		//TODO combine this logic to TranslateHelper#findType
+		if(jstType instanceof JstFuncType){
+			IJstMethod replacement = null;
+			//further check rhs of the assignment
+			boolean rhsMethodFound = false;
+			if(init != null){
+				final IJstNode initBinding = JstBindingUtil.getJstBinding(init);
+				rhsMethodFound = initBinding != null && initBinding instanceof JstMethod;
+				if(rhsMethodFound){
+					replacement = (IJstMethod)initBinding;
+					jstIdentifier.setJstBinding(initBinding);
+					jstType = init.getResultType() != null ? init.getResultType() : jstType;
+					
 //						replacement = TranslateHelper.MethodTranslateHelper.createJstSynthesizedMethod(metaList, m_ctx, "");
 //						jstType = TranslateHelper.replaceSynthesizedMethodBinding(jstIdentifier,
 //								replacement);
-						
-					}
+					
 				}
-				if(!rhsMethodFound){
-					// to solve the local function no overloading problem
-					// we need to obtain the whole JsCommentMeta list declared for the local variable
-					replacement = TranslateHelper.MethodTranslateHelper.createJstSynthesizedMethod(metaList, m_ctx, "");
+			}
+			if(!rhsMethodFound){
+				// to solve the local function no overloading problem
+				// we need to obtain the whole JsCommentMeta list declared for the local variable
+				replacement = TranslateHelper.MethodTranslateHelper.createJstSynthesizedMethod(metaList, m_ctx, "");
 //					if(replacement instanceof JstSynthesizedMethod){
 //						((JstSynthesizedMethod) replacement).setParent(m_ctx.getCurrentType());
 //					}
-					
-					jstType = TranslateHelper.replaceSynthesizedMethodBinding(jstIdentifier,
-							replacement);
-				}
+				
+				jstType = TranslateHelper.replaceSynthesizedMethodBinding(jstIdentifier,
+						replacement);
 			}
 		}
 		return jstType;
