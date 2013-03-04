@@ -12,22 +12,16 @@ package org.eclipse.vjet.eclipse.internal.formatter;
 
 import java.util.Arrays;
 
-//import org.eclipse.text.edits.MultiTextEdit;
-//import org.eclipse.text.edits.ReplaceEdit;
-//import org.eclipse.text.edits.TextEdit;
+
 import org.eclipse.mod.wst.jsdt.core.compiler.CharOperation;
 import org.eclipse.mod.wst.jsdt.core.compiler.InvalidInputException;
 import org.eclipse.mod.wst.jsdt.internal.compiler.ASTVisitor;
-import org.eclipse.mod.wst.jsdt.internal.compiler.parser.Scanner1;
+import org.eclipse.mod.wst.jsdt.internal.compiler.parser.Scanner;
 import org.eclipse.mod.wst.jsdt.internal.compiler.parser.ScannerHelper;
 import org.eclipse.mod.wst.jsdt.internal.compiler.parser.TerminalTokens;
 import org.eclipse.mod.wst.jsdt.internal.compiler.util.Util;
 import org.eclipse.text.edits.MultiTextEdit;
 import org.eclipse.text.edits.ReplaceEdit;
-//import org.eclipse.mod.wst.jsdt.internal.core.util.CodeSnippetParsingUtil;
-//import org.eclipse.mod.wst.jsdt.internal.core.util.RecordedParsingInformation;
-//import org.eclipse.mod.wst.jsdt.internal.formatter.align.Alignment;
-//import org.eclipse.mod.wst.jsdt.internal.formatter.align.AlignmentException;
 import org.eclipse.text.edits.TextEdit;
 
 /**
@@ -64,7 +58,7 @@ public class Scribe {
 	public int pageWidth;
 	public boolean pendingSpace = false;
 
-	public Scanner1 scanner;
+	public Scanner scanner;
 	public int scannerEndPosition;
 	public int tabLength;
 	public int indentationSize;
@@ -81,7 +75,7 @@ public class Scribe {
 	private final boolean formatBlockComment;
 
 	Scribe(CodeFormatterVisitor formatter, long sourceLevel, int offset, int length, CodeSnippetParsingUtil codeSnippetParsingUtil) {
-		this.scanner = new Scanner1(true, true, false/*nls*/, sourceLevel/*sourceLevel*/, null/*taskTags*/, null/*taskPriorities*/, true/*taskCaseSensitive*/);
+		this.scanner = new Scanner(true, true, false/*nls*/, sourceLevel/*sourceLevel*/, null/*taskTags*/, null/*taskPriorities*/, true/*taskCaseSensitive*/);
 		this.formatter = formatter;
 		this.pageWidth = formatter.preferences.page_width;
 		this.tabLength = formatter.preferences.tab_size;
@@ -629,7 +623,7 @@ public class Scribe {
 					// check that we are on the same line
 					int lineIndexForComment = Arrays.binarySearch(this.lineEnds, start);
 					if (lineIndexForComment == index) {
-						return CharOperation.indexOf(Scanner1.TAG_PREFIX, this.scanner.source, true, start, currentLineEnd) != -1;
+						return CharOperation.indexOf(Scanner.TAG_PREFIX, this.scanner.source, true, start, currentLineEnd) != -1;
 					}
 				}
 			}
@@ -1104,7 +1098,7 @@ public class Scribe {
 	private void printLineComment(char[] s) {
 		int currentTokenStartPosition = this.scanner.getCurrentTokenStartPosition();
 		int currentTokenEndPosition = this.scanner.getCurrentTokenEndPosition() + 1;
-		if (CharOperation.indexOf(Scanner1.TAG_PREFIX, this.scanner.source, true, currentTokenStartPosition, currentTokenEndPosition) != -1) {
+		if (CharOperation.indexOf(Scanner.TAG_PREFIX, this.scanner.source, true, currentTokenStartPosition, currentTokenEndPosition) != -1) {
 			this.nlsTagCounter = 0;
 		}
 		this.scanner.resetTo(currentTokenStartPosition, currentTokenEndPosition - 1);
