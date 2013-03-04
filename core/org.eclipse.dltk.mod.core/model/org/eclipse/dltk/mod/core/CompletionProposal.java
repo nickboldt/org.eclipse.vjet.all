@@ -18,25 +18,24 @@ import org.eclipse.dltk.mod.internal.codeassist.InternalCompletionProposal;
  * <p>
  * In typical usage, the user working in a code editor issues a code assist
  * command. This command results in a call to
- * <code>ICodeAssist.codeComplete(position, completionRequestor)</code>
- * passing the current position in the source code. The code assist engine
- * analyzes the code in the buffer, determines what kind of language construct
- * is at that position, and proposes ways to complete that construct. These
- * proposals are instances of the class <code>CompletionProposal</code>.
- * These proposals, perhaps after sorting and filtering, are presented to the
- * user to make a choice.
+ * <code>ICodeAssist.codeComplete(position, completionRequestor)</code> passing
+ * the current position in the source code. The code assist engine analyzes the
+ * code in the buffer, determines what kind of language construct is at that
+ * position, and proposes ways to complete that construct. These proposals are
+ * instances of the class <code>CompletionProposal</code>. These proposals,
+ * perhaps after sorting and filtering, are presented to the user to make a
+ * choice.
  * </p>
  * <p>
- * The proposal is as follows: insert the
- * {@linkplain #getCompletion() completion string} into the source file buffer,
- * replacing the characters between {@linkplain #getReplaceStart() the start}
- * and {@linkplain #getReplaceEnd() end}. The string can be arbitrary; for
- * example, it might include not only the name of a method but a set of
- * parentheses. Moreover, the source range may include source positions before
- * or after the source position where <code>ICodeAssist.codeComplete</code>
- * was invoked. The rest of the information associated with the proposal is to
- * provide context that may help a user to choose from among competing
- * proposals.
+ * The proposal is as follows: insert the {@linkplain #getCompletion()
+ * completion string} into the source file buffer, replacing the characters
+ * between {@linkplain #getReplaceStart() the start} and
+ * {@linkplain #getReplaceEnd() end}. The string can be arbitrary; for example,
+ * it might include not only the name of a method but a set of parentheses.
+ * Moreover, the source range may include source positions before or after the
+ * source position where <code>ICodeAssist.codeComplete</code> was invoked. The
+ * rest of the information associated with the proposal is to provide context
+ * that may help a user to choose from among competing proposals.
  * </p>
  * <p>
  * The completion engine creates instances of this class; it is not intended to
@@ -75,8 +74,8 @@ public final class CompletionProposal extends InternalCompletionProposal {
 
 	/**
 	 * Completion is a reference to a local variable. This kind of completion
-	 * might occur in a context like <code>"ke^ = 4;"</code> and complete it
-	 * to <code>"keys = 4;"</code>.
+	 * might occur in a context like <code>"ke^ = 4;"</code> and complete it to
+	 * <code>"keys = 4;"</code>.
 	 * 
 	 * @see #getKind()
 	 */
@@ -84,8 +83,8 @@ public final class CompletionProposal extends InternalCompletionProposal {
 
 	/**
 	 * Completion is a reference to a method. This kind of completion might
-	 * occur in a context like <code>"System.out.pr^();"</code> and complete
-	 * it to <code>""System.out.println();"</code>.
+	 * occur in a context like <code>"System.out.pr^();"</code> and complete it
+	 * to <code>""System.out.println();"</code>.
 	 * 
 	 * @see #getKind()
 	 */
@@ -93,8 +92,8 @@ public final class CompletionProposal extends InternalCompletionProposal {
 
 	/**
 	 * Completion is a declaration of a method. This kind of completion might
-	 * occur in a context like <code>"new List() {si^};"</code> and complete
-	 * it to <code>"new List() {public int size() {} };"</code>.
+	 * occur in a context like <code>"new List() {si^};"</code> and complete it
+	 * to <code>"new List() {public int size() {} };"</code>.
 	 * 
 	 * @see #getKind()
 	 */
@@ -131,20 +130,19 @@ public final class CompletionProposal extends InternalCompletionProposal {
 
 	/**
 	 * Completion is a reference to a method name. This kind of completion might
-	 * occur in a context like <code>"import p.X.fo^"</code> and complete it
-	 * to <code>"import p.X.foo;"</code>.
+	 * occur in a context like <code>"import p.X.fo^"</code> and complete it to
+	 * <code>"import p.X.foo;"</code>.
 	 * 
 	 * @see #getKind()
 	 * 
 	 */
 	public static final int METHOD_NAME_REFERENCE = 10;
-	
+
 	public static final int PACKAGE_REF = 11;
 	/**
 	 * Private method declarations.
 	 */
 	public static final int USER = 15;
-
 
 	/**
 	 * First valid completion kind.
@@ -240,7 +238,7 @@ public final class CompletionProposal extends InternalCompletionProposal {
 	// private boolean parameterNamesComputed = false;
 	private IModelElement modelElement;
 
-//	private String proposalInfo;
+	// private String proposalInfo;
 
 	/**
 	 * Creates a basic completion proposal. All instance field have plausible
@@ -344,7 +342,8 @@ public final class CompletionProposal extends InternalCompletionProposal {
 	/**
 	 * Returns the character index of the end (exclusive) of the subrange in the
 	 * source file buffer containing the relevant token. When there is no
-	 * relevant token, the range is empty (<code>getEndToken() == getStartToken()</code>).
+	 * relevant token, the range is empty (
+	 * <code>getEndToken() == getStartToken()</code>).
 	 * 
 	 * @return character index of token end position (exclusive)
 	 */
@@ -424,8 +423,7 @@ public final class CompletionProposal extends InternalCompletionProposal {
 							.getChars(0, nameLength, this.completion, 0);
 				}
 			}
-		}
-		else if (this.completionKind == METHOD_REF) {
+		} else if (this.completionKind == METHOD_REF) {
 			this.findParameterNames(null);
 			if (this.updateCompletion) {
 				this.updateCompletion = false;
@@ -481,14 +479,14 @@ public final class CompletionProposal extends InternalCompletionProposal {
 	 *            the completion string
 	 */
 	public void setCompletion(char[] completion) {
-		this.completion = completion;
+		this.completion = completion.clone();
 	}
 
 	/**
 	 * Returns the character index of the start of the subrange in the source
 	 * file buffer to be replaced by the completion string. If the subrange is
-	 * empty (<code>getReplaceEnd() == getReplaceStart()</code>), the
-	 * completion string is to be inserted at this index.
+	 * empty (<code>getReplaceEnd() == getReplaceStart()</code>), the completion
+	 * string is to be inserted at this index.
 	 * <p>
 	 * Note that while the token subrange is precisely specified, the
 	 * replacement range is loosely constrained and may not bear any direct
@@ -506,8 +504,9 @@ public final class CompletionProposal extends InternalCompletionProposal {
 
 	/**
 	 * Returns the character index of the end of the subrange in the source file
-	 * buffer to be replaced by the completion string. If the subrange is empty (<code>getReplaceEnd() == getReplaceStart()</code>),
-	 * the completion string is to be inserted at this index.
+	 * buffer to be replaced by the completion string. If the subrange is empty
+	 * (<code>getReplaceEnd() == getReplaceStart()</code>), the completion
+	 * string is to be inserted at this index.
 	 * 
 	 * @return replacement end position (exclusive)
 	 */
@@ -517,8 +516,9 @@ public final class CompletionProposal extends InternalCompletionProposal {
 
 	/**
 	 * Sets the character indices of the subrange in the source file buffer to
-	 * be replaced by the completion string. If the subrange is empty (<code>startIndex == endIndex</code>),
-	 * the completion string is to be inserted at this index.
+	 * be replaced by the completion string. If the subrange is empty (
+	 * <code>startIndex == endIndex</code>), the completion string is to be
+	 * inserted at this index.
 	 * <p>
 	 * If not set, defaults to empty subrange at [0,0).
 	 * </p>
@@ -581,8 +581,8 @@ public final class CompletionProposal extends InternalCompletionProposal {
 	 * <ul>
 	 * <li><code>ANONYMOUS_CLASS_DECLARATION</code> - key of the type that is
 	 * being subclassed or implemented</li>
-	 * <li><code>METHOD_DECLARATION</code> - key of the type that declares
-	 * the method that is being implemented or overridden</li>
+	 * <li><code>METHOD_DECLARATION</code> - key of the type that declares the
+	 * method that is being implemented or overridden</li>
 	 * </ul>
 	 * For kinds of completion proposals, this method returns <code>null</code>.
 	 * Clients must not modify the array returned.
@@ -592,7 +592,7 @@ public final class CompletionProposal extends InternalCompletionProposal {
 	 * 
 	 */
 	public char[] getDeclarationKey() {
-		return this.declarationKey;
+		return this.declarationKey.clone();
 	}
 
 	/**
@@ -611,7 +611,7 @@ public final class CompletionProposal extends InternalCompletionProposal {
 	 * 
 	 */
 	public void setDeclarationKey(char[] key) {
-		this.declarationKey = key;
+		this.declarationKey = key.clone();
 	}
 
 	/**
@@ -640,7 +640,7 @@ public final class CompletionProposal extends InternalCompletionProposal {
 	 *         <code>null</code> if none
 	 */
 	public char[] getName() {
-		return this.name;
+		return this.name.clone();
 	}
 
 	/**
@@ -660,7 +660,7 @@ public final class CompletionProposal extends InternalCompletionProposal {
 	 *            <code>null</code> if none
 	 */
 	public void setName(char[] name) {
-		this.name = name;
+		this.name = name.clone();
 	}
 
 	/**
@@ -669,8 +669,8 @@ public final class CompletionProposal extends InternalCompletionProposal {
 	 * This field is available for the following kinds of completion proposals:
 	 * <ul>
 	 * <li><code>ANONYMOUS_CLASS_DECLARATION</code> - method key of the
-	 * constructor that is being invoked, or <code>null</code> if the
-	 * declaring type is an interface</li>
+	 * constructor that is being invoked, or <code>null</code> if the declaring
+	 * type is an interface</li>
 	 * <li><code>METHOD_DECLARATION</code> - method key of the method that is
 	 * being implemented or overridden</li>
 	 * </ul>
@@ -682,7 +682,7 @@ public final class CompletionProposal extends InternalCompletionProposal {
 	 * 
 	 */
 	public char[] getKey() {
-		return this.key;
+		return this.key.clone();
 	}
 
 	/**
@@ -701,7 +701,7 @@ public final class CompletionProposal extends InternalCompletionProposal {
 	 * 
 	 */
 	public void setKey(char[] key) {
-		this.key = key;
+		this.key = key.clone();
 	}
 
 	/**
@@ -716,22 +716,22 @@ public final class CompletionProposal extends InternalCompletionProposal {
 	 * constructor that is referenced</li>
 	 * <li><code>FIELD_REF</code> - modifier flags of the field that is
 	 * referenced; <code>Flags.AccEnum</code> can be used to recognize
-	 * references to enum constants </li>
-	 * <li><code>KEYWORD</code> - modifier flag corrresponding to the
-	 * modifier keyword</li>
+	 * references to enum constants</li>
+	 * <li><code>KEYWORD</code> - modifier flag corrresponding to the modifier
+	 * keyword</li>
 	 * <li><code>LOCAL_VARIABLE_REF</code> - modifier flags of the local
 	 * variable that is referenced</li>
 	 * <li><code>METHOD_REF</code> - modifier flags of the method that is
 	 * referenced; <code>Flags.AccAnnotation</code> can be used to recognize
-	 * references to annotation type members </li>
-	 * <li><code>METHOD_DECLARATION</code> - modifier flags for the method
-	 * that is being implemented or overridden</li>
+	 * references to annotation type members</li>
+	 * <li><code>METHOD_DECLARATION</code> - modifier flags for the method that
+	 * is being implemented or overridden</li>
 	 * <li><code>TYPE_REF</code> - modifier flags of the type that is
 	 * referenced; <code>Flags.AccInterface</code> can be used to recognize
 	 * references to interfaces, <code>Flags.AccEnum</code> enum types, and
-	 * <code>Flags.AccAnnotation</code> annotation types </li>
-	 * <li><code>VARIABLE_DECLARATION</code> - modifier flags for the
-	 * variable being declared</li>
+	 * <code>Flags.AccAnnotation</code> annotation types</li>
+	 * <li><code>VARIABLE_DECLARATION</code> - modifier flags for the variable
+	 * being declared</li>
 	 * <li><code>POTENTIAL_METHOD_DECLARATION</code> - modifier flags for the
 	 * method that is being created</li>
 	 * </ul>
@@ -796,7 +796,7 @@ public final class CompletionProposal extends InternalCompletionProposal {
 	 *            the parameter names, or <code>null</code> if none
 	 */
 	public void setParameterNames(char[][] parameterNames) {
-		this.parameterNames = parameterNames;
+		this.parameterNames = parameterNames.clone();
 		// this.parameterNamesComputed = true;
 	}
 
