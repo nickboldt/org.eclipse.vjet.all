@@ -575,6 +575,10 @@ public class TranslateHelper {
 			type = JstCache.getInstance().getType(null, "String");
 			return type;
 		}
+		if(name.startsWith("js.")){
+			String suffix =name.substring(name.indexOf("js.")+3);
+			type = JstCache.getInstance().getType(null,suffix);
+		}
 
 		if (type == null) {
 			String fullyQualifiedName = name;
