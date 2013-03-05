@@ -50,7 +50,8 @@ public class SynthOlType extends JstType implements ISynthesized {
 	private synchronized void init() {
 		if (!m_init) {
 			m_init = true;
-			IJstType defaultType = JstCache.getInstance().getType("ObjLiteral");
+			IJstType defaultType = JstCache.getInstance().getType("Undefined"); // not sure what the type is
+			// there may be a todo here for a second pass
 			for (NV nv: m_ol.getNVs()) {
 				JstIdentifier id = nv.getIdentifier();
 				IJstNode binding = id.getJstBinding();
@@ -58,7 +59,7 @@ public class SynthOlType extends JstType implements ISynthesized {
 					this.addMethod((IJstMethod)binding);
 				}
 				else {
-					IJstType type = id.getResultType();
+					IJstType type = id.getResultType(); // this may be null at init time. 
 					if (type == null || type == defaultType) {
 						IExpr expr = nv.getValue();
 						if (expr != null) {
@@ -74,7 +75,8 @@ public class SynthOlType extends JstType implements ISynthesized {
 					
 					this.addProperty(pty);
 				}
-			}			
+			}
+			
 		}
 	}
 	
