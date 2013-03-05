@@ -168,7 +168,14 @@ public interface String extends Object {
 	 * @param regexp Name of the regular expression. 
 	 * It can be a variable name or a literal. 
 	 */
-	@Function String match(Object regexp);
+	@OverLoadFunc String[] match(RegExp regexp);
+	
+	/**
+	 * Used to match a regular expression against a string.
+	 * @param regexp Name of the regular expression. 
+	 * It can be a variable name or a literal. 
+	 */
+	@OverLoadFunc String[] match(String regexp);
 	
 	/**
 	 * Finds a match between a regular expression and a string, 
