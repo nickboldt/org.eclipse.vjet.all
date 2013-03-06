@@ -66,6 +66,7 @@ import org.eclipse.dltk.mod.internal.core.SourceModule;
 import org.eclipse.dltk.mod.internal.core.VjoLocalVariable;
 import org.eclipse.dltk.mod.internal.core.VjoSourceModule;
 import org.eclipse.dltk.mod.internal.core.VjoSourceType;
+import org.eclipse.vjet.dsf.jsgen.shared.validation.vjo.util.JstBindingUtil;
 import org.eclipse.vjet.dsf.jst.BaseJstNode;
 import org.eclipse.vjet.dsf.jst.IJstMethod;
 import org.eclipse.vjet.dsf.jst.IJstNode;
@@ -73,6 +74,8 @@ import org.eclipse.vjet.dsf.jst.IJstProperty;
 import org.eclipse.vjet.dsf.jst.IJstType;
 import org.eclipse.vjet.dsf.jst.IJstTypeReference;
 import org.eclipse.vjet.dsf.jst.JstSource;
+import org.eclipse.vjet.dsf.jst.JstSource.IBinding;
+import org.eclipse.vjet.dsf.jst.SimpleBinding;
 import org.eclipse.vjet.dsf.jst.declaration.JstArg;
 import org.eclipse.vjet.dsf.jst.declaration.JstBlock;
 import org.eclipse.vjet.dsf.jst.declaration.JstConstructor;
@@ -1600,7 +1603,21 @@ public class CodeassistUtils {
 		} else {
 			return null;
 		}
-		return findType(getScriptProject(groupName), jstType.getName());
+		ScriptProject scriptProject = getScriptProject(groupName);
+		// need to find by file name
+		IType typeByTypeNAme  = findType(scriptProject, jstType.getName());
+		if(typeByTypeNAme==null){
+			IBinding binding = jstType.getSource().getBinding();
+			if(binding!=null && binding instanceof SimpleBinding){
+				String pkg = binding.getName().substring(0, binding.getName().lastIndexOf("."));
+				String typeName = binding.getName().substring(binding.getName().lastIndexOf(".")+1, binding.getName().length());
+				typeByTypeNAme = findType(scriptProject, typeName, pkg );
+			}
+			
+		}
+		
+		return typeByTypeNAme;
+		
 	}
 
 	private static boolean isBase(Object expression) {

@@ -12,6 +12,7 @@ import java.util.List;
 
 import org.eclipse.vjet.dsf.jst.IJstType;
 import org.eclipse.vjet.eclipse.codeassist.CodeassistUtils;
+import org.eclipse.vjet.eclipse.core.VjetPlugin;
 import org.eclipse.vjet.vjo.tool.typespace.SourceTypeName;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
@@ -98,9 +99,11 @@ public class VjoSourceHelper {
 	
 	public static SourceTypeName getFileQulifieName(IResource resource) {
 		if (resource instanceof IFile
+				&& resource.getLocation() !=null
 				&& resource.getLocation().toOSString().endsWith(".js")) {
 			return CodeassistUtils.getTypeName(resource);
 		}
+		VjetPlugin.error("could not find type for " + resource.toString());
 		return null;
 	}
 }

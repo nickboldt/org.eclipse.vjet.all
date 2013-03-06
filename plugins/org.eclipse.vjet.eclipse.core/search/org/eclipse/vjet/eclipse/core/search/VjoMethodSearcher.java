@@ -24,6 +24,7 @@ import org.eclipse.vjet.dsf.ts.method.MethodName;
 import org.eclipse.vjet.dsf.ts.type.TypeName;
 import org.eclipse.vjet.eclipse.codeassist.CodeassistUtils;
 import org.eclipse.vjet.eclipse.core.IVjoSourceModule;
+import org.eclipse.vjet.eclipse.core.VjetPlugin;
 import org.eclipse.vjet.vjo.tool.typespace.TypeSpaceMgr;
 import org.eclipse.dltk.mod.core.Flags;
 import org.eclipse.dltk.mod.core.IMethod;
@@ -95,10 +96,8 @@ public class VjoMethodSearcher extends AbstractVjoElementSearcher {
 	private void processSourceMethodReference(IMethod method,
 			List<VjoMatch> result) {
 		IVjoSourceModule module = (IVjoSourceModule) method.getSourceModule();
-		IJstType jstType = TypeSpaceMgr.findType(module.getTypeName()
-				.groupName(), module.getTypeName().typeName());
-		IType type = CodeassistUtils.findType(jstType);
-		String dltkTypeName = type.getElementName();
+		IJstType jstType = module.getJstType();
+//		IType type = CodeassistUtils.findType(jstType);
 //		String dltkTypeName = ((IType) method.getParent())
 //				.getFullyQualifiedName(ENCLOSING_TYPE_SEPARATOR);
 		int offset;
@@ -202,10 +201,14 @@ public class VjoMethodSearcher extends AbstractVjoElementSearcher {
 		//if (!isValidNode(jstNode))
 			//return;
 
-		IType dltkType = CodeassistUtils.findType(jstNode.getRootType());
-		if (dltkType == null)
+		IJstType ownerType = jstNode.getOwnerType();
+		IType dltkType = CodeassistUtils.findType(ownerType);
+		
+		if (dltkType == null){
+			VjetPlugin.error("Could not find DLTKType for JstType: " + ownerType.getName());
 			return;
 
+		}
 		//Check if the file is visible in the result project's build path
 //		IType declareType = CodeassistUtils.findType((ScriptProject)dltkType.getScriptProject(), method.getDeclaringType().getFullyQualifiedName("."));
 //		if (declareType == null) {
