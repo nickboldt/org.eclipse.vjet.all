@@ -576,7 +576,7 @@ public class TypeSpaceMgr {
 		List<IJstNode> dependents = getController().getJstTypeSpaceMgr().getTypeSpace()
 				.getMethodDependents(mtdName);
 
-		return getVisibleDependents(dependents, mtdName.getGroupName());
+		return dependents;
 	}
 
 	/**
