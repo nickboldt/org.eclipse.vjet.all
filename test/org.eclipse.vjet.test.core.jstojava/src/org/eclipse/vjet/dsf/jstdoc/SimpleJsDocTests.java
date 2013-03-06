@@ -12,8 +12,10 @@ package org.eclipse.vjet.dsf.jstdoc;
 
 
 import static junit.framework.Assert.assertTrue;
+import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 
@@ -22,6 +24,11 @@ import org.eclipse.vjet.dsf.jst.IJstMethod;
 import org.eclipse.vjet.dsf.jst.IJstNode;
 import org.eclipse.vjet.dsf.jst.IJstType;
 import org.eclipse.vjet.dsf.jst.JstCommentLocation;
+import org.eclipse.vjet.dsf.jst.declaration.JstBlock;
+import org.eclipse.vjet.dsf.jst.expr.MtdInvocationExpr;
+import org.eclipse.vjet.dsf.jst.term.NV;
+import org.eclipse.vjet.dsf.jst.term.ObjLiteral;
+import org.eclipse.vjet.dsf.jst.token.IExpr;
 import org.eclipse.vjet.dsf.jst.util.JstCommentHelper;
 import org.eclipse.vjet.dsf.jstojava.parser.VjoParser;
 import org.eclipse.vjet.dsf.jstojava.translator.TranslateCtx;
@@ -98,6 +105,48 @@ public class SimpleJsDocTests {
 	
 	
 	}
+	
+	@Test
+	public void testObjLiteralDocs() throws Exception {
+	
+       // jsdocwithobjectliteral.js
+		
+		
+		String postiveCaseJs = "jsdocwithobjectliteral" + ".js";
+		URL goodCaseFile = ResourceUtil.getResource(JsDocTests.class, postiveCaseJs);
+		
+		String goodCase = VjoParser.getContent(goodCaseFile);
+		
+		
+		TranslateCtx positiveCtx = new TranslateCtx();
+		assertTrue(positiveCtx.getErrorReporter().getErrors().size()==0);
+		assertTrue(positiveCtx.getErrorReporter().getWarnings().size()==0);
+		
+		
+		IJstType posJST = new VjoParser().parse("TEST", goodCaseFile.getFile(), goodCase, false);
+		
+		printLocations(posJST);
+		JstBlock block = posJST.getInitBlock();
+		MtdInvocationExpr mie = (MtdInvocationExpr)block.getChildren().get(0);
+		ObjLiteral objliteralexpr = (ObjLiteral)mie.getArgs().get(1);
+		assertEquals(8,objliteralexpr.getNVs().size());
+		JstCommentLocation lastLocation = null;
+		for(NV field: objliteralexpr.getNVs()){
+			JstCommentLocation newLocation = field.getCommentLocations().get(0);
+			if(lastLocation!=null){
+				
+				assertTrue(lastLocation.getEndOffset()< newLocation.getStartOffset());
+				
+				
+			}
+			
+			lastLocation = newLocation;
+			assertNotNull(lastLocation);
+			
+		}
+		
+	}
+	
 	private void printLocations(IJstNode node) {
 		System.out.println(node.toString());
 		for(JstCommentLocation loc : node.getCommentLocations()){
