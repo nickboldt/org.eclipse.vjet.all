@@ -969,6 +969,8 @@ public class NameLookup {
 	protected void seekTypesInSourcePackage(String name, IScriptFolder pkg,
 			int firstDot, boolean partialMatch, String topLevelTypeName,
 			int acceptFlags, IModelElementRequestor requestor) {
+		System.out.println("searching for " + pkg.getElementName() + " type: "
+				+ topLevelTypeName);
 
 		long start = -1;
 		if (VERBOSE)
