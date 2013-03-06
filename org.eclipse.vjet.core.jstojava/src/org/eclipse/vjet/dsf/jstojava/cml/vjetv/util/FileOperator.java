@@ -277,6 +277,9 @@ public class FileOperator {
      * @return String
      */
     public static String getSourceLineFromFile(String source, int start, int end) {
+    	if(end > source.length()){
+    		return "no info"; 
+    	}
         String endString = source.substring(end);
         int newline = endString.indexOf("\n");
         int newEnd = newline == -1 ? source.length() : newline + end;
