@@ -50,7 +50,10 @@ public class JstDoc extends BaseJstNode implements IJstDoc {
 	
 	@Override
 	public int hashCode(){
+		if(m_comment!=null){
 		return m_comment.hashCode();
+		}
+		return super.hashCode();
 	}
 
 }
