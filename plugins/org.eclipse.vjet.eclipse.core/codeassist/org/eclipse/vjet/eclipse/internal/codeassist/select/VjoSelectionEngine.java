@@ -35,6 +35,7 @@ import org.eclipse.vjet.dsf.jst.term.JstIdentifier;
 import org.eclipse.vjet.dsf.jstojava.translator.JstUtil;
 import org.eclipse.vjet.eclipse.codeassist.CodeassistUtils;
 import org.eclipse.vjet.eclipse.core.IVjoSourceModule;
+import org.eclipse.vjet.eclipse.core.VjetPlugin;
 import org.eclipse.vjet.eclipse.internal.codeassist.select.translator.IJstNodeTranslator;
 import org.eclipse.vjet.eclipse.internal.codeassist.select.translator.JstToDLTKNodeTranslator;
 import org.eclipse.vjet.vjo.tool.typespace.TypeSpaceMgr;
@@ -158,8 +159,12 @@ public class VjoSelectionEngine extends ScriptSelectionEngine {
 
 		// issue with nothing being found... offsets don't match?
 		IJstNodeTranslator nodeTranslator = JstToDLTKNodeTranslator
-				.getNodeTranslator(jstNode.getRootType());
-		IModelElement[] dltktypes = nodeTranslator.convert(jstNode.getRootType());
+				.getNodeTranslator(jstNode);
+		if(nodeTranslator==null){
+			VjetPlugin.error("There is no jst2dltk translator for node: " + jstNode.getClass().getName());
+			return new IModelElement[0];
+		}
+		IModelElement[] dltktypes = nodeTranslator.convert(jstNode);
 		
 		if(dltktypes!=null && dltktypes.length>0){
 			IModelElement elem = visitAndFindModelElement(dltktypes[0], startOffset,
