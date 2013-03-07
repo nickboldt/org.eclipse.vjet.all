@@ -740,6 +740,9 @@ class JstExpressionTypeLinker implements IJstVisitor {
 
 	private void visitForInStmt(ForInStmt forStmt) {
 		ILHS var = forStmt.getVar();
+
+		visit(forStmt.getExpr());
+
 		IJstType objType = forStmt.getExpr().getResultType();
 
 		IJstType array = JstCache.getInstance().getType("Array");
@@ -749,14 +752,34 @@ class JstExpressionTypeLinker implements IJstVisitor {
 		if (var instanceof JstVar) {
 
 			JstVar jstVar = (JstVar) var;
-
+			boolean isInferred = false;
+			if (objType != null && objType instanceof JstInferredType) {
+				objType = ((JstInferredType) objType).getType();
+				isInferred = true;
+				
+			}
+			
+			
 			if (objType != null
-					&& !(objType instanceof JstInferredType)
+					&& !isInferred
 					&& (objType == array || JstTypeHelper.isTypeOf(objType,
 							array))) {
 				jstVar.setType(integer);
-			} else {
-				// jstVar.setType(string);
+			} else if (objType != null && objType instanceof JstArray) {
+
+				IJstType componentType = ((JstArray) objType)
+						.getComponentType();
+				if (componentType != null) {
+
+					if (componentType instanceof IJstRefType) {
+						jstVar.setType(new JstInferredRefType(
+								(IJstRefType) componentType));
+					} else {
+						jstVar.setType(new JstInferredType(componentType));
+					}
+
+				}
+
 			}
 
 			String varName = jstVar.getName();
@@ -813,8 +836,6 @@ class JstExpressionTypeLinker implements IJstVisitor {
 			postVisitCurrentType();
 		} else if (node instanceof JstVars) {
 			postVisitJstVars((JstVars) node);
-		} else if (node instanceof ForInStmt) {
-			postVisitForInStmt((ForInStmt) node);
 		} else if (node instanceof JstVar) {
 			postVisitJstVar((JstVar) node);
 		} else if (node instanceof JstArg) {
@@ -832,8 +853,10 @@ class JstExpressionTypeLinker implements IJstVisitor {
 		} else if (node instanceof JstProxyIdentifier) {
 			postVisitJstProxyIdentifier((JstProxyIdentifier) node);
 		} else if (node instanceof IJstMethod) {
-			if ((node.getParentNode()!= null && node.getParentNode() instanceof IJstType)
-					|| (node.getParentNode()!=null && node.getParentNode().getParentNode()!=null && !(node.getParentNode().getParentNode() instanceof NV))) {
+			if ((node.getParentNode() != null && node.getParentNode() instanceof IJstType)
+					|| (node.getParentNode() != null
+							&& node.getParentNode().getParentNode() != null && !(node
+							.getParentNode().getParentNode() instanceof NV))) {
 				m_scopeStack.pop();
 			}
 		} else if (
@@ -879,30 +902,7 @@ class JstExpressionTypeLinker implements IJstVisitor {
 		}
 	}
 
-	private void postVisitForInStmt(ForInStmt node) {
-		// get type from
-
-		if (!(node.getVar().getType() instanceof IInferred)) {
-			return;
-		}
-		// other wise infer based on right hand side
-		IJstType resultType = node.getExpr().getResultType();
-		if (resultType != null && resultType instanceof JstInferredType) {
-			resultType = ((JstInferredType) resultType).getType();
-		}
-		if (resultType instanceof JstArray) {
-
-			IJstType componentType = ((JstArray) resultType).getComponentType();
-			if (componentType != null) {
-				if(node.getVar() instanceof JstVar){
-					((JstVar) node.getVar()).setType(componentType);
-				}else if(node.getVar() instanceof JstIdentifier){
-					((JstIdentifier)node.getVar()).setType(componentType);
-				}
-			}
-		}
-
-	}
+	
 
 	private void postVisitCurrentType() {
 		IJstType outerType = m_currentType.getOuterType();
