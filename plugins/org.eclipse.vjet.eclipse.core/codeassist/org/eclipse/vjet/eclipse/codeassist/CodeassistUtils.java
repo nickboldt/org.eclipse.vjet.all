@@ -1606,7 +1606,7 @@ public class CodeassistUtils {
 		ScriptProject scriptProject = getScriptProject(groupName);
 		// need to find by file name
 		IType typeByTypeNAme  = findType(scriptProject, jstType.getName());
-		if(typeByTypeNAme==null){
+		if(typeByTypeNAme==null && jstType.getSource()!=null){
 			IBinding binding = jstType.getSource().getBinding();
 			if(binding!=null && binding instanceof SimpleBinding){
 				String pkg = binding.getName().substring(0, binding.getName().lastIndexOf("."));
