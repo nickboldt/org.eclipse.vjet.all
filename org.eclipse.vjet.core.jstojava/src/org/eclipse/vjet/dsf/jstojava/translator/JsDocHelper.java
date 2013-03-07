@@ -164,23 +164,24 @@ public class JsDocHelper {
 	
 	
 	private  static void addCommentsAsDoc(IJstMethod node, List<String> comments) {
-		JstMethod mtd = (JstMethod)node;
-		StringBuilder sb = getAllCommentsAsString(comments);
-		addJsDoc(sb.toString(), mtd);
+		if(node instanceof JstMethod){
+			JstMethod mtd = (JstMethod)node;
+			for(String comment: comments){
+				addJsDoc(comment, mtd);
+			}
+			
+		}
 		
 	}
 
-	private static StringBuilder getAllCommentsAsString(List<String> comments) {
-		StringBuilder sb = new StringBuilder();
-		for (String string : comments) {
-			sb.append(string);
-		}
-		return sb;
-	}
 	private static void addCommentsAsDoc(IJstProperty node, List<String> comments) {
-		JstProperty property = (JstProperty)node;
-		StringBuilder sb = getAllCommentsAsString(comments);
-		addJsDoc(sb.toString(), property);
+		if(node instanceof JstProperty){
+			JstProperty property = (JstProperty)node;
+			for(String comment: comments){
+				addJsDoc(comment, property);
+			}
+		}
+		// TODO what to do with proxy properties?
 		
 	}
 	
