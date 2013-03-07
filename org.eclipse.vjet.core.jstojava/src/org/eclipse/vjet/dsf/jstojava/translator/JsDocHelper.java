@@ -8,11 +8,18 @@
  *******************************************************************************/
 package org.eclipse.vjet.dsf.jstojava.translator;
 
+import java.util.Collection;
+import java.util.List;
+
+import org.eclipse.vjet.dsf.jst.IJstMethod;
+import org.eclipse.vjet.dsf.jst.IJstProperty;
+import org.eclipse.vjet.dsf.jst.IJstType;
 import org.eclipse.vjet.dsf.jst.declaration.JstDoc;
 import org.eclipse.vjet.dsf.jst.declaration.JstMethod;
 import org.eclipse.vjet.dsf.jst.declaration.JstProperty;
 import org.eclipse.vjet.dsf.jst.declaration.JstType;
 import org.eclipse.vjet.dsf.jst.meta.IJsCommentMeta;
+import org.eclipse.vjet.dsf.jst.util.JstCommentHelper;
 
 public class JsDocHelper {
 
@@ -124,6 +131,57 @@ public class JsDocHelper {
 			
 
 		}
+	}
+	
+	
+	/**
+	 * converts docs from jst comment locations to 
+	 * jstdoc nodes. 
+	 * @param jstTypes
+	 */
+	public static void saveDocs(Collection<IJstType> jstTypes){
+		for (IJstType iJstType : jstTypes) {
+			saveDocForJstType(iJstType);
+		}
+	}
+	private static void saveDocForJstType(IJstType iJstType) {
+		
+		// for each property
+		for (IJstProperty property : iJstType.getProperties()) {
+			List<String> comments = JstCommentHelper.getCommentsAsString(iJstType, property.getCommentLocations(), true);
+			addCommentsAsDoc(property, comments);
+		}
+		// for each method save comments
+		for (IJstMethod method : iJstType.getMethods()) {
+			List<String> comments = JstCommentHelper.getCommentsAsString(iJstType, method.getCommentLocations(), true);
+			addCommentsAsDoc(method, comments);
+		}
+		
+		// nested types?
+		
+		
+	}
+	
+	
+	private  static void addCommentsAsDoc(IJstMethod node, List<String> comments) {
+		JstMethod mtd = (JstMethod)node;
+		StringBuilder sb = getAllCommentsAsString(comments);
+		addJsDoc(sb.toString(), mtd);
+		
+	}
+
+	private static StringBuilder getAllCommentsAsString(List<String> comments) {
+		StringBuilder sb = new StringBuilder();
+		for (String string : comments) {
+			sb.append(string);
+		}
+		return sb;
+	}
+	private static void addCommentsAsDoc(IJstProperty node, List<String> comments) {
+		JstProperty property = (JstProperty)node;
+		StringBuilder sb = getAllCommentsAsString(comments);
+		addJsDoc(sb.toString(), property);
+		
 	}
 	
 	
