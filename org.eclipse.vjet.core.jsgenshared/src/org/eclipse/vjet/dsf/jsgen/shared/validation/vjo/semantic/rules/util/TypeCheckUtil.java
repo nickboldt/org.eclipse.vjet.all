@@ -574,7 +574,8 @@ public class TypeCheckUtil {
 		IJstType toType = assignTo;
 		if (assignTo instanceof IJstRefType) {
 			// we can only assign from another JstTypeRefType
-			if (!(assignFrom instanceof IJstRefType)) {
+			if (!(assignFrom instanceof IJstRefType)
+					&& !isUndefined(assignFrom)) {
 				return false;
 			}
 			toType = ((IJstRefType) assignTo).getReferencedNode();
