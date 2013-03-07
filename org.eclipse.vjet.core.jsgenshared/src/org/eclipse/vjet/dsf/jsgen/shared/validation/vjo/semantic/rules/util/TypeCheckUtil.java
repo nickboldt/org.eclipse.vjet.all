@@ -29,6 +29,7 @@ import org.eclipse.vjet.dsf.jst.declaration.JstCache;
 import org.eclipse.vjet.dsf.jst.declaration.JstExtendedType;
 import org.eclipse.vjet.dsf.jst.declaration.JstFuncType;
 import org.eclipse.vjet.dsf.jst.declaration.JstFunctionRefType;
+import org.eclipse.vjet.dsf.jst.declaration.JstInferredType;
 import org.eclipse.vjet.dsf.jst.declaration.JstMixedType;
 import org.eclipse.vjet.dsf.jst.declaration.JstObjectLiteralType;
 import org.eclipse.vjet.dsf.jst.declaration.JstPackage;
@@ -1002,6 +1003,11 @@ public class TypeCheckUtil {
 	}
 
 	public static boolean isNumber(IJstType exprValue) {
+		
+		if(exprValue instanceof JstInferredType){
+			exprValue = ((JstInferredType) exprValue).getType();
+		}
+		
 		if (exprValue instanceof JstVariantType) {
 			for (IJstType type : ((JstVariantType) exprValue).getVariantTypes()) {
 				if (isNumber(type)) {
