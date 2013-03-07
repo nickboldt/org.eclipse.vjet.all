@@ -112,7 +112,9 @@ public class VjetScriptDocProvider implements IScriptDocumentationProvider {
 							String jsdoc = commentsAsString.get(0);
 							return new JavaDoc2HTMLTextReader(new StringReader( JsDocHelper.cleanJsDocComment(jsdoc)));
 						}
-					}else if(property!=null && property.getDoc()!=null ) {
+					}
+					
+					if(property!=null && property.getDoc()!=null ) {
 						return new JavaDoc2HTMLTextReader(new StringReader( property.getDoc().getComment()));
 					}
 
@@ -125,7 +127,8 @@ public class VjetScriptDocProvider implements IScriptDocumentationProvider {
 							String jsdoc = commentsAsString.get(0);
 							return new JavaDoc2HTMLTextReader(new StringReader( JsDocHelper.cleanJsDocComment(jsdoc)));
 						}
-					}else if(method!=null && method.getDoc()!=null && m_node != method)  {
+					}
+					if(method!=null && method.getDoc()!=null && m_node != method)  {
 						m_node = method;
 						return new JavaDoc2HTMLTextReader(new StringReader( method.getDoc().getComment()));
 					}
