@@ -24,6 +24,8 @@ import org.eclipse.vjet.dsf.jst.declaration.JstDefaultConstructor;
 import org.eclipse.vjet.dsf.jst.declaration.JstFunctionRefType;
 import org.eclipse.vjet.dsf.jst.declaration.JstGlobalFunc;
 import org.eclipse.vjet.dsf.jst.declaration.JstGlobalProp;
+import org.eclipse.vjet.dsf.jst.declaration.JstInferredRefType;
+import org.eclipse.vjet.dsf.jst.declaration.JstInferredType;
 import org.eclipse.vjet.dsf.jst.declaration.JstMethod;
 import org.eclipse.vjet.dsf.jst.declaration.JstName;
 import org.eclipse.vjet.dsf.jst.declaration.JstObjectLiteralType;
@@ -60,6 +62,8 @@ public class JstToDLTKNodeTranslator {
 		s_translators.put(JstAttributedType.class, new JstAttributedTypeTranslator());
 		s_translators.put(JstType.class, jstTypeTranslator);
 		s_translators.put(JstTypeWithArgs.class, jstTypeTranslator);
+		s_translators.put(JstInferredType.class, new JstInferredTypeToDLTKTranslator());
+		s_translators.put(JstInferredRefType.class, new JstInferredRefTypeToDLTKTranslator());
 //		s_translators.put(JstAttributedType.class, jstTypeTranslator);
 		s_translators.put(JstObjectLiteralType.class, new JstObjectLiteralTypeTranslator());
 		s_translators.put(JstFunctionRefType.class, new JstFunctionRefTypeTranslator());

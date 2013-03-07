@@ -64,9 +64,12 @@ public class JstTypeTranslator extends DefaultNodeTranslator {
 		}
 		if (mElement == null) {
 			IModelElement[] elements = convert(jstNode);
-			if(elements!=null){
+			if(elements!=null && elements.length>0){
 				mElement = elements[0];
+			}else if(jstNode!=null){
+				VjetPlugin.error("could not convert " + jstNode.getClass().getName());
 			}
+			
 		}
 		return mElement != null ? new IModelElement[] { mElement }
 		: new IModelElement[0];
