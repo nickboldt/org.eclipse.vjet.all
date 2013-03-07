@@ -89,11 +89,14 @@ public class JstCommentHelper {
 				ByteArrayOutputStream sb = new ByteArrayOutputStream();
 				int startOffset = jstCommentLocation.getStartOffset();
 				int max = jstCommentLocation.getEndOffset() - startOffset;
+
 				random.seek(startOffset);
 				
 				byte[] buffer = new byte[max];
 				int comment = random.read(buffer);
-				sb.write(buffer, 0, comment);
+				if(comment!=-1){
+					sb.write(buffer, 0, comment);
+				}
 				comments.add(sb.toString("utf-8"));
 			}
 		} catch (FileNotFoundException e) {
