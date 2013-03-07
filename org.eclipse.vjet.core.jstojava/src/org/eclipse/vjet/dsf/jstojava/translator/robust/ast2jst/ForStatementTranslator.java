@@ -61,11 +61,19 @@ public class ForStatementTranslator extends
 			
 			
 			
-			
+			int initcount = 0;
 			for (Statement initializer : inits) {
 				if (initializer.getASTType() == IASTNode.LOCAL_DECLARATION) {
 					isLocalDeclaration = true;
 				}
+				if (initcount + 1 < inits.length) {
+					m_ctx.setNextNodeSourceStart(inits[initcount + 1].sourceStart);
+				} else if(statement.condition !=null ) {
+					m_ctx.setNextNodeSourceStart(statement.condition.sourceStart);
+				}else if(statement.condition == null && statement.increments !=null  && statement.increments.length>0) {
+					m_ctx.setNextNodeSourceStart(statement.increments[0].sourceStart);
+				}
+				
 				final Object translated = getTranslatorAndTranslate(initializer, forStmt);
 				if(translated instanceof JstVars[] ){
 					
@@ -101,7 +109,7 @@ public class ForStatementTranslator extends
 							+ initializer.getClass()
 							+ " in ForStatementTranslator");
 				}
-
+				initcount++;
 			}
 			if (isLocalDeclaration) { // initializer is a local declaration: for (var i = 0;;;)
 				

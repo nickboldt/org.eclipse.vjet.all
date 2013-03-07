@@ -11,6 +11,7 @@ package org.eclipse.vjet.dsf.jstojava.translator.robust.ast2jst;
 import org.eclipse.vjet.dsf.jst.BaseJstNode;
 import org.eclipse.vjet.dsf.jst.IJstType;
 import org.eclipse.vjet.dsf.jst.declaration.JstVar;
+import org.eclipse.vjet.dsf.jst.declaration.JstVars;
 import org.eclipse.vjet.dsf.jst.expr.FieldAccessExpr;
 import org.eclipse.vjet.dsf.jst.stmt.ForInStmt;
 import org.eclipse.vjet.dsf.jst.term.JstIdentifier;
@@ -35,10 +36,23 @@ public class ForInStatementTranslator extends BaseAst2JstTranslator<ForInStateme
 		Statement varStatement = statement.iterationVariable;
 		ForInStmt stmt = null;
 		if (varStatement instanceof LocalDeclaration) {
+			
+			if (statement.collection!=null) {
+				m_ctx.setNextNodeSourceStart(statement.collection.sourceStart);
+			}
+			
 			LocalDeclaration locdec = (LocalDeclaration) statement.iterationVariable;
-			JstVar var = new JstVar((IJstType)null, String.valueOf(locdec.getName()));
-			var.setSource(TranslateHelper.getSource(varStatement, m_ctx.getSourceUtil()));
-			stmt = new ForInStmt(var, expr);
+	
+			final Object translated = getTranslatorAndTranslate(locdec, stmt);
+			if(translated instanceof JstVars[] ){
+				JstVars[] vars = (JstVars[])translated;
+				// TODO look into jstvar vs jstvars -- inference is not working here
+				JstVar var = new JstVar((IJstType)vars[0].getType(), String.valueOf(locdec.getName()));
+				var.setSource(TranslateHelper.getSource(varStatement, m_ctx.getSourceUtil()));
+				stmt = new ForInStmt(var, expr);
+			}
+			
+			
 		}
 		else if(varStatement instanceof SingleNameReference) { //SingleNameReference
 			JstIdentifier var = new JstIdentifier(((SingleNameReference)varStatement).toString());
