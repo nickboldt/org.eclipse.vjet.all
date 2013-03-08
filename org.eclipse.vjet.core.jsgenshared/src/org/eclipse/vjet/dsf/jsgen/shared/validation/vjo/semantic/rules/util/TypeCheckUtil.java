@@ -966,9 +966,11 @@ public class TypeCheckUtil {
 
 		if (exprValue != null) {
 			if (!equals(VjoConstants.NativeTypes.getObjectJstType(),
-					toJsNativeType(exprValue))) {
+					toJsNativeType(exprValue)) && !equals(VjoConstants.NativeTypes.getJsObjectJstType(),
+							toJsNativeType(exprValue))) {
 				return false;
 			}
+			
 		}
 
 		return true;
