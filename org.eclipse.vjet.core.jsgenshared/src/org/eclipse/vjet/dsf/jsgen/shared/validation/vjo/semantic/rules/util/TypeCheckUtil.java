@@ -119,9 +119,9 @@ public class TypeCheckUtil {
 				|| "Array".equals(type.getSimpleName())) {
 			return VjoConstants.NativeTypes.getArrayJstType();
 		}
-		// else if(type instanceof JstObjectLiteralType){
-		// return getObjectNativeType();
-		// }
+		 else if(type instanceof JstObjectLiteralType){
+		 return getObjectNativeType();
+		 }
 
 		return null;
 	}
@@ -622,7 +622,12 @@ public class TypeCheckUtil {
 			return true;
 		}
 
+		if((isObject(assignFrom) || isObjLiteral(assignFrom)) && TypeConversionPolicy.getInstance().allowObjectToTConversion()){
+			return true;
+		}
+		
 		final IJstType assignToTransformed = toJsNativeType(toType);
+		// TODO ObjLiteral -> transformed type is null?
 		final IJstType assignFromTransformed = toJsNativeType(fromType);
 
 		if (!(fromType instanceof SynthOlType)
@@ -968,6 +973,21 @@ public class TypeCheckUtil {
 			if (!equals(VjoConstants.NativeTypes.getObjectJstType(),
 					toJsNativeType(exprValue)) && !equals(VjoConstants.NativeTypes.getJsObjectJstType(),
 							toJsNativeType(exprValue))) {
+				return false;
+			}
+			
+		}
+
+		return true;
+	}
+	
+	public static boolean isObjLiteral(IJstType exprValue) {
+		if (isArbitary(exprValue)) {
+			return true;
+		}
+
+		if (exprValue != null) {
+			if (!exprValue.getSimpleName().equals("ObjLiteral")) {
 				return false;
 			}
 			
