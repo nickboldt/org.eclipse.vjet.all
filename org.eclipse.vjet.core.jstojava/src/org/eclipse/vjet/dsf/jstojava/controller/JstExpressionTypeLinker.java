@@ -1142,7 +1142,7 @@ class JstExpressionTypeLinker implements IJstVisitor {
 					mixedTypes.add(rightResultType);
 				}
 				if (mixedTypes.size() > 0) {
-					JstMixedType mixedType = new JstMixedType(mixedTypes);
+					JstVariantType mixedType = new JstVariantType(mixedTypes);
 					JstExpressionTypeLinkerHelper.updateResultType(expr,
 							mixedType);
 				} else {
