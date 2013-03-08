@@ -132,7 +132,7 @@ public class JstPropertyTranslator extends DefaultNodeTranslator {
 			
 			
 	
-		}else if(elements!=null && ownerType instanceof JstObjectLiteralType){
+		}else if(elements!=null && elements.length>0  && ownerType instanceof JstObjectLiteralType){
 			// find otype that is requested
 			try {
 				IModelElement element = CodeassistUtils.findDeclaringObjectLiteralFieldChain((ModelElement)elements[0], node);

@@ -79,7 +79,10 @@ public class JstObjectLiteralTypeTranslator extends DefaultNodeTranslator {
 					jstType);
 		}
 		if (mElement == null) {
-			mElement = convert(jstNode)[0];
+			IModelElement[] elems = convert(jstNode);
+			if(elems!=null && elems.length>0){
+				mElement = convert(jstNode)[0];
+			}
 		}
 		
 		final JstObjectLiteralType jstObjectLiteralType = (JstObjectLiteralType)jstNode;
