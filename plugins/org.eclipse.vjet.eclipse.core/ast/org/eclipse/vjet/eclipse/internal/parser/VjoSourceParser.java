@@ -165,7 +165,7 @@ public class VjoSourceParser extends AbstractSourceParser{
 			// Register type to typeSpace when type is not exist in type space
 			// and package path is same with OS path
 			
-			if(scriptUnit!=null  && 
+			if(scriptUnit!=null  && scriptUnit.getName() !=null && 
 					!scriptUnit.getName().equals(typeName)){
 				typeName = scriptUnit.getName();
 			}
