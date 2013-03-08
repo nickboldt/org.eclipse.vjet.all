@@ -113,6 +113,8 @@ public interface VjoConstants {
 
 	public static final class NativeTypes{
 		
+		private static final String JS_OBJECT = "js.Object";
+
 		public static IJstType getStringJstType(){
 			return JstCache.getInstance().getType(
 					org.eclipse.vjet.dsf.jsnative.global.String.class.getSimpleName());
@@ -149,6 +151,10 @@ public interface VjoConstants {
 		public static IJstType getObjectJstType(){
 			return JstCache.getInstance().getType(
 					org.eclipse.vjet.dsf.jsnative.global.Object.class.getSimpleName());
+		}
+		
+		public static IJstType getJsObjectJstType(){
+			return JstCache.getInstance().getType(JS_OBJECT);
 		}
 		
 		public static IJstType getRegExpJstType(){
