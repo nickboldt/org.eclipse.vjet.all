@@ -33,12 +33,14 @@ import org.eclipse.vjet.dsf.jst.declaration.JstAttributedType;
 import org.eclipse.vjet.dsf.jst.declaration.JstDeferredType;
 import org.eclipse.vjet.dsf.jst.declaration.JstFuncType;
 import org.eclipse.vjet.dsf.jst.declaration.JstFunctionRefType;
+import org.eclipse.vjet.dsf.jst.declaration.JstInferredType;
 import org.eclipse.vjet.dsf.jst.declaration.JstMethod;
 import org.eclipse.vjet.dsf.jst.declaration.JstMixedType;
 import org.eclipse.vjet.dsf.jst.declaration.JstObjectLiteralType;
 import org.eclipse.vjet.dsf.jst.declaration.JstPackage;
 import org.eclipse.vjet.dsf.jst.declaration.JstParamType;
 import org.eclipse.vjet.dsf.jst.declaration.JstProxyType;
+import org.eclipse.vjet.dsf.jst.declaration.JstRefType;
 import org.eclipse.vjet.dsf.jst.declaration.JstType;
 import org.eclipse.vjet.dsf.jst.declaration.JstTypeWithArgs;
 import org.eclipse.vjet.dsf.jst.declaration.JstVariantType;
@@ -430,15 +432,39 @@ public abstract class VjoSemanticValidator implements
 					&& !"ERROR_UNDEFINED_TYPE".equals(type.getSimpleName())
 					&& !JstWildcardType.DEFAULT_NAME.equals(type.getSimpleName())){
 				//report problem, type unknown
-				if(!ctx.getUnresolvedTypes().contains(type.getName())){
-					if(!ctx.getMissingImportTypes().contains(type)){
-						ctx.addMissingImportType(type);
+				if(type instanceof JstInferredType){
+					type = ((JstInferredType) type).getType();
+				}
+				
+				if(type instanceof JstMixedType){
+					for (IJstType mixedType : ((JstMixedType) type).getMixedTypes()) {
+						checkUnresolvedType(ctx, jstNode, mixedType, ruleRepo);
 					}
+				}else if(type instanceof JstVariantType){
+					for (IJstType mixedType : ((JstVariantType) type).getVariantTypes()) {
+						checkUnresolvedType(ctx, jstNode, mixedType, ruleRepo);
+					}
+				}else{
 					
-					final BaseVjoSemanticRuleCtx ruleCtx = new BaseVjoSemanticRuleCtx(jstNode, ctx.getGroupId(), new String[]{type.getName()});
-					satisfyRule(ctx, ruleRepo.UNKNOWN_TYPE_MISSING_IMPORT, ruleCtx);
+					checkUnresolvedType(ctx, jstNode, type, ruleRepo);
 				}
 			}
+		}
+	}
+
+	private void checkUnresolvedType(final VjoValidationCtx ctx,
+			final IJstNode jstNode, IJstType type,
+			final VjoSemanticRuleRepo ruleRepo) {
+		if(type instanceof JstRefType){
+			return;
+		}
+		if(!ctx.getUnresolvedTypes().contains(type.getName())){
+			if(!ctx.getMissingImportTypes().contains(type)){
+				ctx.addMissingImportType(type);
+			}
+			
+			final BaseVjoSemanticRuleCtx ruleCtx = new BaseVjoSemanticRuleCtx(jstNode, ctx.getGroupId(), new String[]{type.getName()});
+			satisfyRule(ctx, ruleRepo.UNKNOWN_TYPE_MISSING_IMPORT, ruleCtx);
 		}
 	}
 
