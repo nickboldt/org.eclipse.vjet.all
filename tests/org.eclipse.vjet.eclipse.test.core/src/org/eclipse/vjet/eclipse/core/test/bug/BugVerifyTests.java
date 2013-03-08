@@ -1230,7 +1230,7 @@ public class BugVerifyTests extends AbstractVjoModelTests {
 		assertNotNull("The menu should be registered!",newMenuContributionItem);
 		
 		IContributionItem reorgContributionItem = menuManager.find(RefactorActionGroup.MENU_ID);
-		assertNull("The menu should not be registered!",reorgContributionItem);
+		assertNotNull("The menu should be registered!",reorgContributionItem);
 	}
 
 	/**
