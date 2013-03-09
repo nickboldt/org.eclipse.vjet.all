@@ -36,12 +36,12 @@ public class JstTypeTranslator extends DefaultNodeTranslator {
 			: new IModelElement[0];
 		} else {
 			IType rootDLTKType = CodeassistUtils
-					.findType(jstType.getRootType());
+					.findType(jstType);
 			if (rootDLTKType == null)
 				return null;
 
-			IType type = this.getType(rootDLTKType, jstType.getName());
-			return type != null ? new IModelElement[] { type }
+//			IType type = this.getType(rootDLTKType, jstType.getName());
+			return rootDLTKType != null ? new IModelElement[] { rootDLTKType }
 			: new IModelElement[0];
 		}
 	}

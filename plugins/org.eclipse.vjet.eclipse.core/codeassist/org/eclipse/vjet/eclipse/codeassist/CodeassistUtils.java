@@ -43,6 +43,7 @@ import org.eclipse.dltk.mod.core.IScriptProject;
 import org.eclipse.dltk.mod.core.IType;
 import org.eclipse.dltk.mod.core.ModelException;
 import org.eclipse.dltk.mod.internal.core.DefaultWorkingCopyOwner;
+import org.eclipse.dltk.mod.internal.core.ExternalFoldersManager;
 import org.eclipse.dltk.mod.internal.core.ExternalScriptFolder;
 import org.eclipse.dltk.mod.internal.core.ImportContainer;
 import org.eclipse.dltk.mod.internal.core.InternalDLTKLanguageManager;
@@ -1606,6 +1607,18 @@ public class CodeassistUtils {
 		ScriptProject scriptProject = getScriptProject(groupName);
 		// need to find by file name
 		IType typeByTypeNAme  = findType(scriptProject, jstType.getName());
+		
+		// in the case where scriptProject is empty and type is not found test external project
+		if(groupName!=null && groupName.endsWith(".zip")){
+//			ScriptProject externalScriptPRoject = getScriptProject(ExternalFoldersManager.EXTERNAL_PROJECT_NAME );
+//			
+//			typeByTypeNAme  = findType(externalScriptPRoject, jstType.getName());
+			NativeVjoSourceModule nativeModule = CodeassistUtils.findNativeModule(groupName, jstType.getName());
+			if(nativeModule!=null){
+				typeByTypeNAme = nativeModule.getVjoType();
+			}
+		}
+				
 		if(typeByTypeNAme==null && jstType.getSource()!=null){
 			IBinding binding = jstType.getSource().getBinding();
 			if(binding!=null && binding instanceof SimpleBinding){

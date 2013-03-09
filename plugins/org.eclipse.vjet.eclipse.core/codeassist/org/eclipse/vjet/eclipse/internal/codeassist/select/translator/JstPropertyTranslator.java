@@ -47,7 +47,9 @@ public class JstPropertyTranslator extends DefaultNodeTranslator {
 	@Override
 	public IModelElement[] convert(IVjoSourceModule module, IJstNode node) {
 		IJstProperty jstProperty = (IJstProperty) node;
+		// TODO why does OwnerType return empty type for mixed in properties? 
 		IJstType ownerType = jstProperty.getOwnerType();
+		
 		IModelElement[] elements = JstNodeDLTKElementResolver.convert(module, ownerType);
 		
 	

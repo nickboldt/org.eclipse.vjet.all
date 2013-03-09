@@ -11,12 +11,16 @@ package org.eclipse.vjet.eclipse.internal.ui.scriptdoc;
 import java.io.Reader;
 import java.io.StringReader;
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.dltk.mod.core.IField;
 import org.eclipse.dltk.mod.core.IMember;
 import org.eclipse.dltk.mod.core.IMethod;
 import org.eclipse.dltk.mod.core.IModelElement;
+import org.eclipse.dltk.mod.core.IPackageDeclaration;
+import org.eclipse.dltk.mod.core.ModelException;
+import org.eclipse.dltk.mod.internal.core.NativeVjoSourceModule;
 import org.eclipse.dltk.mod.internal.core.VjoExternalSourceModule;
 import org.eclipse.dltk.mod.internal.core.VjoSourceModule;
 import org.eclipse.dltk.mod.internal.core.VjoSourceType;
@@ -65,14 +69,29 @@ public class VjetScriptDocProvider implements IScriptDocumentationProvider {
 
 			}else{
 				URI resource = element.getResource().getLocationURI();
-				System.out.println(resource);
 				if(resource.getScheme().equals("typespace")){
 					groupName = resource.getHost();
 				}else{
 					groupName = determineGroup(module);
 				}
-				typeName = module.getFullyQualifiedName(".");
-				IJstType t = TypeSpaceMgr.findType(groupName, typeName);
+				IJstType t = null;
+				
+				if(element.getParent() instanceof NativeVjoSourceModule){
+					t =  ((NativeVjoSourceModule)element.getParent()).getJstType();
+				}else if(element.getParent() instanceof VjoSourceModule){
+					t = findTypeWhenPkgTypeMismatch((VjoSourceModule)module.getParent());
+
+				}
+				 
+				
+				
+				if (t!=null && !t.getCommentLocations().isEmpty() ) {
+					List<String> commentsAsString = JstCommentHelper.getCommentsAsString(t, t.getCommentLocations());
+					if(commentsAsString.size()>0){
+						String jsdoc = commentsAsString.get(0);
+						return new JavaDoc2HTMLTextReader(new StringReader( JsDocHelper.cleanJsDocComment(jsdoc)));
+					}
+				}
 				if (t != null && t.getDoc() != null) {
 					return new JavaDoc2HTMLTextReader(new StringReader(t.getDoc()
 							.getComment()));
@@ -97,12 +116,20 @@ public class VjetScriptDocProvider implements IScriptDocumentationProvider {
 			if (secondLevelParent instanceof VjoSourceModule) {
 				VjoSourceModule module = (VjoSourceModule) secondLevelParent;
 				IJstType t = module.getJstType();
+				if(t==null){
+					t = findTypeWhenPkgTypeMismatch(module);
+				}
+				
+				if(t==null){
+					return null;
+				}
+				
 				if(element instanceof VjoSourceType){
 					if (t != null && t.getDoc() != null) {
 						return new JavaDoc2HTMLTextReader(new StringReader(t
 								.getDoc().getComment()));
 					}
-				}else if(element instanceof IField){
+				}else if( element instanceof IField){
 
 					IJstProperty property = t.getProperty(element.getElementName());
 
@@ -128,7 +155,7 @@ public class VjetScriptDocProvider implements IScriptDocumentationProvider {
 							return new JavaDoc2HTMLTextReader(new StringReader( JsDocHelper.cleanJsDocComment(jsdoc)));
 						}
 					}
-					if(method!=null && method.getDoc()!=null && m_node != method)  {
+					if(method!=null && method.getDoc()!=null)  {
 						m_node = method;
 						return new JavaDoc2HTMLTextReader(new StringReader( method.getDoc().getComment()));
 					}
@@ -181,6 +208,27 @@ public class VjetScriptDocProvider implements IScriptDocumentationProvider {
 		}
 		return new StringReader("");
 
+	}
+
+
+
+	private IJstType findTypeWhenPkgTypeMismatch(VjoSourceModule module) {
+		IJstType t = null;
+		try {
+		if(module.getPackageDeclarations().length>0){
+				String pkgName = module.getPackageDeclarations()[0].getElementName();
+				if(module.getTypes().length>0){
+					String dltkTypeName = module.getTypes()[0].getElementName();
+					t = TypeSpaceMgr.findType(module.getGroupName(), pkgName + "." + dltkTypeName);
+				}
+			
+			
+		}
+		} catch (ModelException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return t;
 	}
 
 

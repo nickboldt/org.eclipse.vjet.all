@@ -11,12 +11,15 @@
  */
 package org.eclipse.vjet.eclipse.internal.codeassist.select.translator;
 
+import java.util.List;
+
 import org.eclipse.vjet.dsf.jst.IJstNode;
+import org.eclipse.vjet.dsf.jst.IJstProperty;
 import org.eclipse.vjet.dsf.jst.IJstType;
-import org.eclipse.vjet.dsf.jst.declaration.JstBlock;
-import org.eclipse.vjet.dsf.jst.declaration.JstProperty;
 import org.eclipse.vjet.dsf.jst.declaration.SynthOlType;
 import org.eclipse.vjet.dsf.jst.term.JstIdentifier;
+import org.eclipse.vjet.dsf.jst.term.NV;
+import org.eclipse.vjet.dsf.jst.term.ObjLiteral;
 import org.eclipse.vjet.eclipse.codeassist.CodeassistUtils;
 import org.eclipse.vjet.eclipse.internal.codeassist.select.JstNodeDLTKElementResolver;
 
@@ -37,6 +40,33 @@ public class JstIdentifierTranslator extends DefaultNodeTranslator {
 	@Override
 	public IJstNode lookupBinding(IJstNode jstNode) {
 		JstIdentifier identifier = (JstIdentifier) jstNode;
+		
+		// TODO should this part of binding? each client currently has to do this lookup.
+		// see similiar logic in VjoCcObjLiteralAdvisor
+		if(identifier.getParentNode() instanceof NV){
+			NV realParent = (NV) identifier.getParentNode();
+			String fieldName = realParent.getName();
+			ObjLiteral enclosingObjLiteral = (ObjLiteral) ((NV) realParent)
+					.getParentNode();
+			final IJstType olExprType = enclosingObjLiteral.getResultType();
+			if (olExprType != null && olExprType instanceof SynthOlType) {
+				final SynthOlType enclosingObjLiteralType = (SynthOlType) olExprType;
+				List<IJstType> olResolvedTypes = enclosingObjLiteralType
+						.getResolvedOTypes();
+				if(olResolvedTypes==null){
+					return null;
+				}
+				for (IJstType iJstType : olResolvedTypes) {
+					IJstProperty prop = iJstType.getProperty(fieldName);
+					if(prop!=null){
+						return prop;
+					}
+				}
+				
+			}
+			
+		}
+		
 		if (identifier.getJstBinding() == null) {
 			return null;
 		}
