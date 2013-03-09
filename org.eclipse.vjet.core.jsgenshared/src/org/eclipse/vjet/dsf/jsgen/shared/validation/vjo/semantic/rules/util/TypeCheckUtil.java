@@ -119,9 +119,10 @@ public class TypeCheckUtil {
 				|| "Array".equals(type.getSimpleName())) {
 			return VjoConstants.NativeTypes.getArrayJstType();
 		}
-		 else if(type instanceof JstObjectLiteralType){
-		 return getObjectNativeType();
-		 }
+		// TODO look into this failure case TypecheckObjLiteralTester
+//		 else if(type instanceof JstObjectLiteralType){
+//		 return getObjectNativeType();
+//		 }
 
 		return null;
 	}
