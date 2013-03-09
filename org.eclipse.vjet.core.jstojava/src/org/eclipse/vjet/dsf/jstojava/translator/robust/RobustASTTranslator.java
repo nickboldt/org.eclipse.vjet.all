@@ -120,6 +120,9 @@ public class RobustASTTranslator extends BaseTranslator {
 				}
 				jst.setFakeType(true);
 				jst.setSource(src);
+				if(statements.length>0){
+					jst.setCommentLocations(m_ctx.getCommentCollector().getCommentLocationNonMeta(statements[0].sourceStart,0));
+				}				
 				TypeTranslator.addInactiveNeeds(jst, m_ctx);
 				if (jst.getImports().size() > 0 || jst.getInactiveImports().size() > 0) {
 					TopLevelJstBlock proxy = new TopLevelJstBlock();

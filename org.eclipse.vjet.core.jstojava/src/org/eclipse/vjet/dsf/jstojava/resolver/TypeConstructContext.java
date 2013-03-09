@@ -18,6 +18,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.vjet.dsf.jst.IJstType;
+import org.eclipse.vjet.dsf.jst.JstCommentLocation;
 import org.eclipse.vjet.dsf.jst.JstSource;
 import org.eclipse.vjet.dsf.jst.token.IExpr;
 import org.eclipse.vjet.dsf.jstojava.translator.robust.completion.IJstCompletion;
@@ -37,27 +38,32 @@ public class TypeConstructContext implements ITypeConstructContext {
 	private String groupName;
 	private JstSource workingSource;
 	private String orginalTypeName;
+	private List<JstCommentLocation> commentLocations;
+
+	public List<JstCommentLocation> getCommentLocations() {
+		return commentLocations;
+	}
+
+	public void setCommentLocations(List<JstCommentLocation> commentLocations) {
+		this.commentLocations = commentLocations;
+	}
 
 	public JstSource getWorkingSource() {
 		return workingSource;
 	}
 
-
-
 	public void setWorkingSource(JstSource workingSource) {
 		this.workingSource = workingSource;
 	}
-
-
 
 	public Class<? extends IExpr> getExprClass() {
 		return exprClass;
 	}
 
-
-
 	public TypeConstructContext(IExpr inputExpr, IExpr lhsExpr,
-			List<IExpr> argsExprList, IJstCompletion jstCompletion, Class<? extends IExpr> class1, String groupName, JstSource source, String typeName) {
+			List<IExpr> argsExprList, IJstCompletion jstCompletion,
+			Class<? extends IExpr> class1, String groupName, JstSource source,
+			String typeName, List<JstCommentLocation> commentLocations) {
 
 		this.inputExpr = inputExpr;
 		this.lhsExpr = lhsExpr;
@@ -68,6 +74,7 @@ public class TypeConstructContext implements ITypeConstructContext {
 		this.setGroupName(groupName);
 		this.workingSource = source;
 		this.orginalTypeName = typeName;
+		this.commentLocations = commentLocations;
 	}
 
 	@Override
@@ -113,8 +120,7 @@ public class TypeConstructContext implements ITypeConstructContext {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * org.eclipse.vjet.dsf.jstojava.resolver.ITypeConstructContext#addType
+	 * @see org.eclipse.vjet.dsf.jstojava.resolver.ITypeConstructContext#addType
 	 * (org.eclipse.vjet.dsf.jst.IJstType)
 	 */
 	@Override
@@ -134,19 +140,13 @@ public class TypeConstructContext implements ITypeConstructContext {
 		return jstCompletion;
 	}
 
-
-
 	public String getGroupName() {
 		return groupName;
 	}
 
-
-
 	public void setGroupName(String groupName) {
 		this.groupName = groupName;
 	}
-
-
 
 	@Override
 	public String getOriginalTypeName() {

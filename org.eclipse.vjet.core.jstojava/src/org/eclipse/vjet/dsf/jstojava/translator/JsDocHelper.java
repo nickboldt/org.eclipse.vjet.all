@@ -141,19 +141,30 @@ public class JsDocHelper {
 	 */
 	public static void saveDocs(Collection<IJstType> jstTypes){
 		for (IJstType iJstType : jstTypes) {
-			saveDocForJstType(iJstType);
+						
+			saveDocForJstType(iJstType, iJstType);
+			
+			if(iJstType.getOTypes().size()>0){
+				for (IJstType otype : iJstType.getOTypes()) {
+					saveDocForJstType(otype, iJstType);
+				}
+				
+			}
 		}
 	}
-	private static void saveDocForJstType(IJstType iJstType) {
+	
+	
+	
+	private static void saveDocForJstType(IJstType iJstType, IJstType parentType) {
 		
 		// for each property
 		for (IJstProperty property : iJstType.getProperties()) {
-			List<String> comments = JstCommentHelper.getCommentsAsString(iJstType, property.getCommentLocations(), true);
+			List<String> comments = JstCommentHelper.getCommentsAsString(parentType, property.getCommentLocations(), true);
 			addCommentsAsDoc(property, comments);
 		}
 		// for each method save comments
 		for (IJstMethod method : iJstType.getMethods()) {
-			List<String> comments = JstCommentHelper.getCommentsAsString(iJstType, method.getCommentLocations(), true);
+			List<String> comments = JstCommentHelper.getCommentsAsString(parentType, method.getCommentLocations(), true);
 			addCommentsAsDoc(method, comments);
 		}
 		

@@ -16,6 +16,7 @@ package org.eclipse.vjet.dsf.jstojava.resolver;
 import java.util.List;
 
 import org.eclipse.vjet.dsf.jst.IJstType;
+import org.eclipse.vjet.dsf.jst.JstCommentLocation;
 import org.eclipse.vjet.dsf.jst.JstSource;
 import org.eclipse.vjet.dsf.jst.token.IExpr;
 import org.eclipse.vjet.dsf.jstojava.translator.robust.completion.IJstCompletion;
@@ -85,6 +86,8 @@ public interface ITypeConstructContext {
 	public JstSource getWorkingSource();
 
 	public String getOriginalTypeName();
+	
+	public List<JstCommentLocation> getCommentLocations();
 
 
 

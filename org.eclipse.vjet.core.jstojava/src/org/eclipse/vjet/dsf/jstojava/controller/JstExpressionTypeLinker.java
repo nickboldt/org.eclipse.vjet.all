@@ -1433,7 +1433,6 @@ class JstExpressionTypeLinker implements IJstVisitor {
 					// TODO consolidate this CnP from
 					// getReturnTypeFormFactoryEnabled
 					String mtdKey = createMtdKey(mtd);
-
 					constructType(mie, null, mtdKey, MtdInvocationExpr.class);
 				}
 
@@ -1625,7 +1624,8 @@ class JstExpressionTypeLinker implements IJstVisitor {
 			// TODO pass the reference to JSTCompletion
 			ITypeConstructContext constrCtx = new TypeConstructContext(mie,
 					lhs, exprs, null, class1, m_groupInfo.getGroupName(),
-					m_currentType.getSource(), m_currentType.getName());
+					m_currentType.getSource(), m_currentType.getName(),
+					m_currentType.getCommentLocations());
 			// resolve
 			tcr.resolve(mtdKey, constrCtx);
 
