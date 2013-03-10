@@ -1096,6 +1096,18 @@ public class DefaultCodeFormatterConstants {
 	public static final String FORMATTER_INSERT_NEW_LINE_BEFORE_WHILE_IN_DO_STATEMENT = VjetPlugin.PLUGIN_ID + ".formatter.insert_new_line_before_while_in_do_statement";	//$NON-NLS-1$
 	/**
 	 * <pre>
+	 * FORMATTER / Option to insert a new line before multi local declarations
+	 *     - option id:         "org.eclipse.vjet.eclipse.core.formatter.insert_new_line_before_multi_local_declarations"
+	 *     - possible values:   { INSERT, DO_NOT_INSERT }
+	 *     - default:           DO_NOT_INSERT
+	 * </pre>
+	 * @see VjetPlugin#INSERT
+	 * @see VjetPlugin#DO_NOT_INSERT
+	 *  
+	 */
+	public static final String FORMATTER_INSERT_NEW_LINE_BEFORE_MULTI_LOCAL_DECLARATIONS = VjetPlugin.PLUGIN_ID + ".formatter.insert_new_line_before_multi_local_declarations";	//$NON-NLS-1$
+	/**
+	 * <pre>
 	 * FORMATTER / Option to insert a new line in an empty annotation declaration
 	 *     - option id:         "org.eclipse.vjet.eclipse.core.formatter.insert_new_line_in_empty_annotation_declaration"
 	 *     - possible values:   { INSERT, DO_NOT_INSERT }

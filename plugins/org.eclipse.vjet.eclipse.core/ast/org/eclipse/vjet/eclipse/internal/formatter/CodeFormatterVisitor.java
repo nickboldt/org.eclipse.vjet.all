@@ -121,6 +121,8 @@ import org.eclipse.mod.wst.jsdt.internal.compiler.parser.TerminalTokens;
 //import org.eclipse.vjet.dsf.jstojava.formatter.DefaultCodeFormatterOptions;
 import org.eclipse.mod.wst.jsdt.internal.core.util.PublicScanner;
 
+import com.sun.org.apache.xpath.internal.operations.Mult;
+
 /**
  * This class is responsible for formatting a valid java source code.
  * @since 2.1
@@ -1355,9 +1357,21 @@ public class CodeFormatterVisitor extends ASTVisitor {
         }
     }
 
-	private void formatLocalDeclaration(LocalDeclaration localDeclaration, BlockScope scope, boolean insertSpaceBeforeComma, boolean insertSpaceAfterComma) {
+    /**
+     * @param localDeclaration
+     * @param scope
+     * @param insertSpaceBeforeComma
+     * @param insertSpaceAfterComma
+     * @deprecated use another method.
+     */
+    private void formatLocalDeclaration(LocalDeclaration localDeclaration, BlockScope scope, boolean insertSpaceBeforeComma, boolean insertSpaceAfterComma) {
+    	this.formatLocalDeclaration(localDeclaration, scope, insertSpaceBeforeComma, insertSpaceAfterComma, true);
+    }
+    
+	private void formatLocalDeclaration(LocalDeclaration localDeclaration, BlockScope scope, boolean insertSpaceBeforeComma, boolean insertSpaceAfterComma, boolean insertLineBeforeMultiLocalDeclaration) {
+		boolean isMulti = isMultipleLocalDeclaration(localDeclaration);
 
-		if (!isMultipleLocalDeclaration(localDeclaration)) {
+		if (!isMulti) {
 			if (localDeclaration.modifiers != NO_MODIFIERS) {
 		        this.scribe.printComment();
 				this.scribe.printModifiers(this);
@@ -1423,6 +1437,18 @@ public class CodeFormatterVisitor extends ASTVisitor {
 				this.scribe.space();
 			}
 			this.scribe.printTrailingComment();
+		}
+		if (insertLineBeforeMultiLocalDeclaration) {
+			if (localDeclaration.nextLocal != null) {
+				this.scribe.printNewLine();
+				if (!isMulti) {
+					this.scribe.indent();
+				}
+			} else {
+				if (isMulti) {
+					this.scribe.unIndent();
+				}
+			}
 		}
 	}
 
@@ -1944,7 +1970,7 @@ public class CodeFormatterVisitor extends ASTVisitor {
 				&& block.statements.length == 1
 				&& (block.statements[0] instanceof ReturnStatement || block.statements[0] instanceof ThrowStatement);
 	}
-
+	
 	private boolean isMultipleLocalDeclaration(LocalDeclaration localDeclaration) {
 
 		if (localDeclaration.declarationSourceStart == this.lastLocalDeclarationSourceStart) return true;
@@ -3372,7 +3398,7 @@ public class CodeFormatterVisitor extends ASTVisitor {
 		if (this.preferences.insert_space_after_opening_paren_in_for) {
 			this.scribe.space();
 		}
-		formatLocalDeclaration(forStatement.elementVariable, scope, false, false);
+		formatLocalDeclaration(forStatement.elementVariable, scope, false, false, this.preferences.insert_new_line_before_multiple_local_declarations);
 
 		this.scribe.printNextToken(TerminalTokens.TokenNameCOLON, this.preferences.insert_space_before_colon_in_for);
 		if (this.preferences.insert_space_after_colon_in_for) {
@@ -3477,7 +3503,7 @@ public class CodeFormatterVisitor extends ASTVisitor {
 			int length = initializations.length;
 			for (int i = 0; i < length; i++) {
 				if (initializations[i] instanceof LocalDeclaration) {
-					formatLocalDeclaration((LocalDeclaration) initializations[i], scope, this.preferences.insert_space_before_comma_in_for_inits, this.preferences.insert_space_after_comma_in_for_inits);
+					formatLocalDeclaration((LocalDeclaration) initializations[i], scope, this.preferences.insert_space_before_comma_in_for_inits, this.preferences.insert_space_after_comma_in_for_inits, this.preferences.insert_new_line_before_multiple_local_declarations);
 				} else {
 					initializations[i].traverse(this, scope);
 					if (i >= 0 && (i < length - 1)) {
@@ -3765,7 +3791,7 @@ public class CodeFormatterVisitor extends ASTVisitor {
 	 * @see org.eclipse.wst.jsdt.internal.compiler.ASTVisitor#visit(org.eclipse.wst.jsdt.internal.compiler.ast.LocalDeclaration, org.eclipse.wst.jsdt.internal.compiler.lookup.BlockScope)
 	 */
 	public boolean visit(LocalDeclaration localDeclaration, BlockScope scope) {
-		formatLocalDeclaration(localDeclaration, scope, this.preferences.insert_space_before_comma_in_multiple_local_declarations, this.preferences.insert_space_after_comma_in_multiple_local_declarations);
+		formatLocalDeclaration(localDeclaration, scope, this.preferences.insert_space_before_comma_in_multiple_local_declarations, this.preferences.insert_space_after_comma_in_multiple_local_declarations, this.preferences.insert_new_line_before_multiple_local_declarations);
 		return false;
 	}
 	/**
