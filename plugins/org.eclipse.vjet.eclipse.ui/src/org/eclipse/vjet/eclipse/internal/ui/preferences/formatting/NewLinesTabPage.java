@@ -45,7 +45,7 @@ public class NewLinesTabPage extends FormatterTabPage {
 	"\n" + //$NON-NLS-1$
 	"function foo(data) {\n" + //$NON-NLS-1$
 	"\n" + //$NON-NLS-1$
-	"    var var1 = 1, var2 = 2, var3 = 3;\n" + //$NON-NLS-1$
+	"    var x = 20, y = 30, z = 40;\n" + //$NON-NLS-1$
 	"    var abc = 1;\n" + //$NON-NLS-1$
 	"    var xyz = 'one';\n" + //$NON-NLS-1$
 	"    var arr1 = ['123',function() {return 5},'abc'];\n" + //$NON-NLS-1$
