@@ -33,6 +33,7 @@ import org.eclipse.dltk.mod.core.IModelElement;
 import org.eclipse.dltk.mod.core.IPackageDeclaration;
 import org.eclipse.dltk.mod.core.IScriptFolder;
 import org.eclipse.dltk.mod.core.ISourceModule;
+import org.eclipse.dltk.mod.core.IType;
 import org.eclipse.dltk.mod.core.ModelException;
 import org.eclipse.dltk.mod.internal.ui.actions.BuildActionGroup;
 import org.eclipse.dltk.mod.internal.ui.actions.CCPActionGroup;
@@ -315,7 +316,9 @@ public abstract class ScriptBrowsingPart extends ViewPart implements
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.eclipse.ui.part.WorkbenchPart#createPartControl(org.eclipse.swt.widgets.Composite)
+	 * @see
+	 * org.eclipse.ui.part.WorkbenchPart#createPartControl(org.eclipse.swt.widgets
+	 * .Composite)
 	 */
 	public void createPartControl(Composite parent) {
 		Assert.isTrue(fViewer == null);
@@ -529,7 +532,9 @@ public abstract class ScriptBrowsingPart extends ViewPart implements
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.eclipse.jface.action.IMenuListener#menuAboutToShow(org.eclipse.jface.action.IMenuManager)
+	 * @see
+	 * org.eclipse.jface.action.IMenuListener#menuAboutToShow(org.eclipse.jface
+	 * .action.IMenuManager)
 	 */
 	public void menuAboutToShow(IMenuManager menu) {
 		DLTKUIPlugin.createStandardGroups(menu);
@@ -635,8 +640,7 @@ public abstract class ScriptBrowsingPart extends ViewPart implements
 	}
 
 	/**
-	 * Answers if the given <code>element</code> is a valid input for this
-	 * part.
+	 * Answers if the given <code>element</code> is a valid input for this part.
 	 * 
 	 * @param element
 	 *            the object to test
@@ -1116,7 +1120,7 @@ public abstract class ScriptBrowsingPart extends ViewPart implements
 				&& (elementToSelect == null || oldInput == null || (!((elementToSelect instanceof IPackageDeclaration)
 						&& (elementToSelect.getParent().equals(oldInput
 								.getParent())) && (!isAncestorOf(
-						getViewPartInput(), elementToSelect)))));
+							getViewPartInput(), elementToSelect)))));
 	}
 
 	/**
@@ -1337,23 +1341,18 @@ public abstract class ScriptBrowsingPart extends ViewPart implements
 		return null;
 	}
 
-	// protected IType getTypeForCU(ISourceModule cu) {
-	// // Use primary type if possible
-	// IType primaryType = cu.findPrimaryType();
-	// if (primaryType != null)
-	// return primaryType;
-	//
-	// // Use first top-level type
-	// try {
-	// IType[] types = cu.getTypes();
-	// if (types.length > 0)
-	// return types[0];
-	// else
-	// return null;
-	// } catch (ModelException ex) {
-	// return null;
-	// }
-	// }
+	protected IType getTypeForCU(ISourceModule module) {
+		try {
+			IType[] types = module.getTypes();
+			if (types != null && types.length > 0) {
+				return types[0];
+			} else {
+				return null;
+			}
+		} catch (ModelException e) {
+			return null;
+		}
+	}
 
 	void setProcessSelectionEvents(boolean state) {
 		fProcessSelectionEvents = state;
@@ -1362,7 +1361,8 @@ public abstract class ScriptBrowsingPart extends ViewPart implements
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.eclipse.jdt.internal.ui.viewsupport.IViewPartInputProvider#getViewPartInput()
+	 * @see org.eclipse.jdt.internal.ui.viewsupport.IViewPartInputProvider#
+	 * getViewPartInput()
 	 */
 	public Object getViewPartInput() {
 		if (fViewer != null) {

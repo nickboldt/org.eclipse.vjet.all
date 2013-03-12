@@ -134,8 +134,14 @@ public abstract class Member extends SourceRefElement implements IMember {
 	 */
 	public IType getDeclaringType() {
 		ModelElement parentElement = (ModelElement) getParent();
-		if (parentElement.getElementType() == TYPE) {
-			return (IType) parentElement;
+		// check all it's ancestors
+		while (parentElement != null) {
+			if (parentElement.getElementType() == TYPE) {
+				return (IType) parentElement;
+			} else {
+				parentElement = (ModelElement) parentElement.getParent();
+			}
+
 		}
 		return null;
 	}
@@ -192,29 +198,31 @@ public abstract class Member extends SourceRefElement implements IMember {
 		}
 		return false;
 	}
+
 	/*
-	 * Returns the outermost context defining a local element. Per construction, it can only be a
-	 * method/field/initializarer member; thus, returns null if this member is already a top-level type or member type.
-	 * e.g for X.java/X/Y/foo()/Z/bar()/T, it will return X.java/X/Y/foo()
+	 * Returns the outermost context defining a local element. Per construction,
+	 * it can only be a method/field/initializarer member; thus, returns null if
+	 * this member is already a top-level type or member type. e.g for
+	 * X.java/X/Y/foo()/Z/bar()/T, it will return X.java/X/Y/foo()
 	 */
 	public Member getOuterMostLocalContext() {
 		IModelElement current = this;
 		Member lastLocalContext = null;
 		parentLoop: while (true) {
 			switch (current.getElementType()) {
-				case SOURCE_MODULE:
-					break parentLoop; // done recursing
-				case TYPE:
-					// cannot be a local context
-					break;
-				case FIELD:
-				case METHOD:
-					 // these elements can define local members
-					lastLocalContext = (Member) current;
-					break;
-			}		
+			case SOURCE_MODULE:
+				break parentLoop; // done recursing
+			case TYPE:
+				// cannot be a local context
+				break;
+			case FIELD:
+			case METHOD:
+				// these elements can define local members
+				lastLocalContext = (Member) current;
+				break;
+			}
 			current = current.getParent();
-		} 
+		}
 		return lastLocalContext;
 	}
 }

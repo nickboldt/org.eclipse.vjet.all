@@ -64,18 +64,20 @@ public class TypesView extends ScriptBrowsingPart {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.eclipse.jdt.internal.ui.browsing.JavaBrowsingPart#getAdapter(java.lang.Class)
+	 * @see
+	 * org.eclipse.jdt.internal.ui.browsing.JavaBrowsingPart#getAdapter(java
+	 * .lang.Class)
 	 */
 	public Object getAdapter(Class key) {
-//		if (key == IShowInTargetList.class) {
-//			return new IShowInTargetList() {
-//				public String[] getShowInTargetIds() {
-//					return new String[] { JavaUI.ID_PACKAGES,
-//							IPageLayout.ID_RES_NAV };
-//				}
-//
-//			};
-//		}
+		// if (key == IShowInTargetList.class) {
+		// return new IShowInTargetList() {
+		// public String[] getShowInTargetIds() {
+		// return new String[] { JavaUI.ID_PACKAGES,
+		// IPageLayout.ID_RES_NAV };
+		// }
+		//
+		// };
+		// }
 		return super.getAdapter(key);
 	}
 
@@ -88,8 +90,7 @@ public class TypesView extends ScriptBrowsingPart {
 	}
 
 	/**
-	 * Answers if the given <code>element</code> is a valid input for this
-	 * part.
+	 * Answers if the given <code>element</code> is a valid input for this part.
 	 * 
 	 * @param element
 	 *            the object to test
@@ -137,8 +138,7 @@ public class TypesView extends ScriptBrowsingPart {
 				type = (IType) je;
 			return type;
 		case IModelElement.SOURCE_MODULE:
-//			return getTypeForCU((ISourceModule) je);
-			return je;
+			return getTypeForCU((ISourceModule) je);
 		case IModelElement.PACKAGE_DECLARATION:
 			return findElementToSelect(je.getParent());
 		default:
@@ -155,7 +155,7 @@ public class TypesView extends ScriptBrowsingPart {
 	 * @return the string used as ID for the Help context
 	 */
 	protected String getHelpContextId() {
-//		return IJavaHelpContextIds.TYPES_VIEW;
+		// return IJavaHelpContextIds.TYPES_VIEW;
 		return ""; //$NON-NLS-1$
 	}
 
@@ -216,7 +216,9 @@ public class TypesView extends ScriptBrowsingPart {
 	}
 
 	/*
-	 * @see org.eclipse.jdt.internal.ui.browsing.JavaBrowsingPart#createDecoratingLabelProvider(org.eclipse.jdt.internal.ui.viewsupport.JavaUILabelProvider)
+	 * @see org.eclipse.jdt.internal.ui.browsing.JavaBrowsingPart#
+	 * createDecoratingLabelProvider
+	 * (org.eclipse.jdt.internal.ui.viewsupport.JavaUILabelProvider)
 	 */
 	protected DecoratingModelLabelProvider createDecoratingLabelProvider(
 			ScriptUILabelProvider provider) {
