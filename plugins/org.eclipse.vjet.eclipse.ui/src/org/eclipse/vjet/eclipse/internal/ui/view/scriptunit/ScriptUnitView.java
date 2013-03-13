@@ -462,7 +462,7 @@ public class ScriptUnitView extends ViewPart implements ISelectionListener{
 		try {
 			String groupName = sourceModule.getGroupName();
 			String fileName = sourceModule.getTypeName().typeName();
-			System.out.println(groupName);
+//			System.out.println(groupName);
 			if(groupName.equals(".org.eclipse.dltk.mod.core.external.folders")){
 				return TypeSpaceMgr.getInstance().findType(sourceModule.getTypeName());
 			}
