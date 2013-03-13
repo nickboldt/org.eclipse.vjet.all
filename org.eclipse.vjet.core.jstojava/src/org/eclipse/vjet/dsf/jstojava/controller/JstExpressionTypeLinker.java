@@ -1033,7 +1033,7 @@ class JstExpressionTypeLinker implements IJstVisitor {
 				types.put(inferType, null);
 				List<IJstType> list = new ArrayList<IJstType>();
 				list.addAll(types.keySet());
-				JstMixedType mixed = new JstMixedType(list);
+				JstVariantType mixed = new JstVariantType(list);
 				jstMethod.setRtnType(new JstInferredType(mixed));
 			}
 		}
