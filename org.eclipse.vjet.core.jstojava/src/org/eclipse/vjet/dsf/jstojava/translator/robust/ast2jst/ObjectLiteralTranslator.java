@@ -97,11 +97,22 @@ public class ObjectLiteralTranslator extends
 					.translate(astObjectLiteralField);
 
 			int sourceEnd = jstNode != null && jstNode.getSource()!=null ? jstNode.getSource()
-					.getEndOffSet() : astObjectLiteralField.sourceEnd;
+					.getEndOffSet() : astObjectLiteralField.fieldName.sourceEnd;
+			int sourceStart = jstNode != null && jstNode.getSource()!=null ? jstNode.getSource()
+							.getStartOffSet() : astObjectLiteralField.sourceStart;		
 			m_ctx.setPreviousNodeSourceEnd(sourceEnd);
 
 			if (jstNode instanceof NV) {
-				result.add((NV) jstNode);
+				if(result.getNV(((NV) jstNode).getName())==null){
+					result.add((NV) jstNode);
+				}else{
+					m_ctx.getErrorReporter().error("Duplicate literal field: " +((NV)jstNode).getName(), 
+							m_ctx.getCurrentType()!=null? m_ctx.getCurrentType().getName():null,
+							sourceStart,
+							sourceEnd, 
+							m_ctx.getLineInfoProvider().line(sourceStart),
+							m_ctx.getLineInfoProvider().line(sourceEnd));
+				}
 			}
 
 			// add restored ast object literal fields to list and process
