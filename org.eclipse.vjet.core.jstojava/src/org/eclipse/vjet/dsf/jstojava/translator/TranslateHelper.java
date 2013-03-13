@@ -2429,7 +2429,7 @@ public class TranslateHelper {
 			return createJstSynthesizedMethod(funcMetaList, ctx, methName);
 		}
 
-		private static void attachOverloaded(final JstMethod dispatcher,
+		public static void attachOverloaded(final JstMethod dispatcher,
 				final JstMethod overloaded) {
 			dispatcher.addOverloaded(overloaded);
 			overloaded.setParent(dispatcher, false);
@@ -2608,7 +2608,7 @@ public class TranslateHelper {
 			}
 		}
 
-		private static List<IJsCommentMeta> filterFuncMetas(
+		public static List<IJsCommentMeta> filterFuncMetas(
 				final IFindTypeSupport ctx, final List<IJsCommentMeta> original) {
 			if (original == null || original.isEmpty()) {
 				return Collections.emptyList();
