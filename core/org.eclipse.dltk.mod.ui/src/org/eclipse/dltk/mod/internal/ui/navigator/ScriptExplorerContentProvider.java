@@ -1093,7 +1093,18 @@ public class ScriptExplorerContentProvider extends
 		runnables.add(new Runnable() {
 			public void run() {
 				for (Iterator iter = toRefresh.iterator(); iter.hasNext();) {
-					fViewer.refresh(iter.next(), updateLabels);
+					Object obj = iter.next();
+					if (obj instanceof IModelElement) {
+						IModelElement parent = ((IModelElement) obj)
+								.getParent();
+						// If the obj is invisible, refresh its parent
+						if (fViewer.testFindItem(obj) == null) {
+							fViewer.refresh(parent, updateLabels);
+							return;
+						}
+					}
+
+					fViewer.refresh(obj, updateLabels);
 				}
 			}
 		});
