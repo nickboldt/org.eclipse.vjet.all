@@ -17,6 +17,7 @@ import org.eclipse.vjet.dsf.jst.declaration.JstArg;
 import org.eclipse.vjet.dsf.jst.declaration.JstFuncType;
 import org.eclipse.vjet.dsf.jst.declaration.JstFunctionRefType;
 import org.eclipse.vjet.dsf.jst.expr.MtdInvocationExpr;
+import org.eclipse.vjet.dsf.jst.term.JstIdentifier;
 import org.eclipse.vjet.dsf.jst.token.IExpr;
 import org.eclipse.vjet.dsf.jstojava.translator.TranslateHelper.RenameableSynthJstProxyMethod;
 import org.eclipse.vjet.vjo.tool.codecompletion.IVjoCcAdvisor;
@@ -53,29 +54,90 @@ public class VjoCcFunctionArgumentAdvisor extends AbstractVjoCcAdvisor implement
 		}
 		final MtdInvocationExpr mtdInvocationExpr = (MtdInvocationExpr) argument.getParentNode();
 		final int position = mtdInvocationExpr.getArgs().indexOf(argument);
-		final IJstNode node = mtdInvocationExpr.getMethod();
+		IJstNode node = mtdInvocationExpr.getMethod();
+		
+		if(node instanceof JstIdentifier){
+			node = ((JstIdentifier) node).getJstBinding();
+		}
+		
 		if (node == null || !(node instanceof IJstMethod)) {
 			return;
 		}
 		
 		final IJstMethod method = (IJstMethod) node;
+		
+		
+		
+		
 		IJstType calledType = method.getOwnerType();
 		if (calledType == null) {
 			return;
 		}
 		
-		final List<JstArg> parameters = method.getArgs();
-		if(parameters.size() <= position){
+		final List<JstArg> arguments = method.getArgs();
+		if(arguments.size() <= position){
+			return;
+		}
+		 IJstType parameterType = null;
+		final IExpr parameterAtPos = mtdInvocationExpr.getArgs().get(position);
+		final JstArg argAtPosition = arguments.get(position);
+		if(parameterAtPos instanceof JstIdentifier){
+			parameterType = ((JstIdentifier) parameterAtPos).getType();
+		}else{
 			return;
 		}
 		
-		final JstArg parameterAtPos = parameters.get(position);
-		final IJstType parameterType = parameterAtPos.getType();
+		
+//		if(parameterType.getName().equals("Function")){
+//			// let's lookup possible anon functions which can be provided here
+//			IExpr keyArg = mtdInvocationExpr.getArgs().get(0);
+//			String key = keyArg.toExprText();
+//			key = key.replace("\"", "");
+//			String groupId = ctx.getGroupName();
+//			List<String >dependentGroups = null;
+//			List<IGroup<IJstType>> dependentGroupIds = ctx.getJstTypeSpaceMgr().getTypeSpace().getGroup(groupId).getGroupDependency();
+//			if (dependentGroupIds != null && !dependentGroupIds.isEmpty()) {
+//				dependentGroups = new ArrayList<String>(dependentGroupIds.size());
+//				for (IGroup<IJstType> group : dependentGroupIds) {
+//					dependentGroups.add(group.getName());
+//				}
+//			}
+//			String targetFunc = calledType.getName()
+//					+ (method.isStatic() ? "::" : ":")
+//					+ method.getName().getName();
+//			IMetaExtension metaExt = FunctionMetaRegistry.getInstance().getExtentedArgBinding(targetFunc, key, groupId, dependentGroups);
+//			if (metaExt != null) {
+//				IJstMethod extFunc = metaExt.getMethod();
+//				if (extFunc != null) {
+//						appendData(ctx, getParamNamedMethodProposal(parameterAtPos, new JstFuncType(extFunc).getFunction()), true);
+//					}
+//					
+////					JstExpressionTypeLinkerTraversal.accept(
+////							extFunc, revisitor);
+////					// when referencing attributed type unwrapMethod is not resolving the ftype
+////					IJstMethod resolved = unwrapMethod(extFunc);
+////					
+////					if (resolved != null) {
+////						paramType = new JstFuncType(
+////								unwrapMethod(extFunc));
+////					}
+//				
+//			}
+//			
+//		}
+		
 		if(parameterType instanceof JstFuncType){
-			appendData(ctx, getParamNamedMethodProposal(parameterAtPos, ((JstFuncType)parameterType).getFunction()), true);
+			IJstMethod function = ((JstFuncType)parameterType).getFunction();
+			if(function.isDispatcher()){
+				for (IJstMethod overload : function.getOverloaded()) {
+					appendData(ctx, getParamNamedMethodProposal(argAtPosition, overload), false);
+				}
+			}else{
+				appendData(ctx, getParamNamedMethodProposal(argAtPosition, function), true);
+			}
 		}
 		else if(parameterType instanceof JstFunctionRefType){
-			appendData(ctx, getParamNamedMethodProposal(parameterAtPos, ((JstFunctionRefType)parameterType).getMethodRef()), true);
+			appendData(ctx, getParamNamedMethodProposal(argAtPosition, ((JstFunctionRefType)parameterType).getMethodRef()), true);
 		}
 	}
 

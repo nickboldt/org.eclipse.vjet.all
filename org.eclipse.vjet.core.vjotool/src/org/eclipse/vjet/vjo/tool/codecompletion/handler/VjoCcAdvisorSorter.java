@@ -23,6 +23,7 @@ import org.eclipse.vjet.vjo.tool.codecompletion.advisor.VjoCcCTypeProposalAdviso
 import org.eclipse.vjet.vjo.tool.codecompletion.advisor.VjoCcConstructorGenProposalAdvisor;
 import org.eclipse.vjet.vjo.tool.codecompletion.advisor.VjoCcDerivedPropMethodAdvisor;
 import org.eclipse.vjet.vjo.tool.codecompletion.advisor.VjoCcEnumElementAdvisor;
+import org.eclipse.vjet.vjo.tool.codecompletion.advisor.VjoCcFunctionArgumentAdvisor;
 import org.eclipse.vjet.vjo.tool.codecompletion.advisor.VjoCcFunctionGenProposalAdvisor;
 import org.eclipse.vjet.vjo.tool.codecompletion.advisor.VjoCcGlobalAdvisor;
 import org.eclipse.vjet.vjo.tool.codecompletion.advisor.VjoCcGlobalExtensionAdvisor;
@@ -57,6 +58,7 @@ public class VjoCcAdvisorSorter implements Comparator<IVjoCcProposalData>, Seria
 		int i = 0;
 		// inner function
 		SORT_MAP.put(VjoCcVariableProposalAdvisor.ID, i);
+		SORT_MAP.put(VjoCcFunctionArgumentAdvisor.ID, ++i);
 		SORT_MAP.put(VjoCcParameterProposalAdvisor.ID, ++i);
 		SORT_MAP.put(VjoCcObjLiteralAdvisor.ID, i++);
 
