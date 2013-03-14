@@ -56,17 +56,21 @@ public class TypeResolverRegistry {
 		if (resolverList == null) {
 			return null;
 		}
+		String typeName =null;
 		for (int i = 0; i < resolverList.size(); i++) {
 			ITypeResolver resolver = resolverList.get(i);
-			String typeName = resolver.resolve(args);
-			if(typeName==null || typeName.equals("")){
-				return null;
-			}
+			 typeName = resolver.resolve(args);
+				if(typeName==null || typeName.equals("")){
+					continue;
+				}
 			if(typeName.contains("org.mozilla.mod.javascript.Undefined")){
 				return null;
 			}
 			
 			try {
+				
+			
+				
 				final JsCommentMeta commentMeta = VjComment.parse("//>" + typeName);;
 				final JsTypingMeta typingMeta = commentMeta.getTyping();
 				IFindTypeSupport findSupport = new IFindTypeSupport() {
