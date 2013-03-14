@@ -492,8 +492,9 @@ class JstExpressionTypeLinker implements IJstVisitor {
 				m_groupInfo);
 
 		IJstType varType = vars.getType();
-		if (varType instanceof JstType
+		if (varType instanceof JstType && !(varType instanceof JstFunctionRefType)
 				&& !((JstType) varType).getStatus().isValid()) {
+			
 			final IJstType potentialOtypeMemberType = varType;
 			IJstOType resolvedOtype = JstExpressionTypeLinkerHelper
 					.getOtype(potentialOtypeMemberType.getName());
@@ -853,11 +854,16 @@ class JstExpressionTypeLinker implements IJstVisitor {
 		} else if (node instanceof JstProxyIdentifier) {
 			postVisitJstProxyIdentifier((JstProxyIdentifier) node);
 		} else if (node instanceof IJstMethod) {
-			if ((node.getParentNode() != null && node.getParentNode() instanceof IJstType)
+			// add support for converting attributed method to JstFunctionType
+			if (node instanceof JstPotentialAttributedMethod) {
+				postVisitJstPotentialAttributedMethod((JstPotentialAttributedMethod) node);
+			}else if ( (node.getParentNode() != null && node.getParentNode() instanceof IJstType)
 					|| (node.getParentNode() != null
 							&& node.getParentNode().getParentNode() != null && !(node
 							.getParentNode().getParentNode() instanceof NV))) {
-				m_scopeStack.pop();
+				if(!m_scopeStack.isEmpty()){
+					m_scopeStack.pop();
+				}
 			}
 		} else if (
 
@@ -1394,6 +1400,8 @@ class JstExpressionTypeLinker implements IJstVisitor {
 				.getQualifierType(m_resolver, mie);
 		IJstType mtdBindingType = methodId.getType();
 		String methodName = methodId.getName();
+	
+		IJstNode mtdBinding = null;
 
 		final IJstType vjoSyntacticType = JstExpressionTypeLinkerHelper
 				.processSyntacticCalls(mie, methodName, m_provider);
@@ -1402,11 +1410,41 @@ class JstExpressionTypeLinker implements IJstVisitor {
 					this, mie, methodId, mtdBindingType)) {
 				return;// constructor handled
 			}
+			if(qualifierType==null){
+				boolean isStatic = false;
+				if(mie.getQualifyExpr()==null){
+					IJstNode node = methodId.getJstBinding();
+					if(node!=null && node instanceof JstIdentifier){
+						IJstNode possibleMethodNode = ((JstIdentifier)node).getJstBinding();
+						if(possibleMethodNode!=null && possibleMethodNode instanceof IJstMethod){
+							IJstMethod iJstMethod = (IJstMethod)possibleMethodNode;
+							methodName = iJstMethod.getName().getName();
+							mtdBinding = iJstMethod;
+							isStatic = iJstMethod.isStatic();
+							
+						}
+					}
+				}
+				if(mtdBinding!=null){
+					
+					if(isStatic){
+						qualifierType = new JstTypeRefType(mtdBinding.getRootType());
+					}else{
+						qualifierType = mtdBinding.getRootType();
+					}
+				}
+//				if(mtdBindingType instanceof JstInferredType){
+//					qualifierType = ((JstInferredType) mtdBindingType).getType();
+//				}else{
+//					qualifierType = mtdBindingType;
+//				
+//				}
+			}
 		}
 
 		// extracted by huzhou for further linking case:
 		// anonymous function argument infer from parameter definition
-		IJstNode mtdBinding = null;
+	
 		// search method in qualifier
 		if (qualifierType != null) {
 			// by huzhou@ebay.com ftype references are always static
@@ -1416,8 +1454,13 @@ class JstExpressionTypeLinker implements IJstVisitor {
 					m_resolver, qualifierType, methodName, isStatic);
 
 			if (mtdBinding != null) {
+				
+			
+				
 				JstExpressionTypeLinkerHelper.bindMtdInvocationExpr(m_resolver,
 						this, mtdBinding, qualifierType, mie, m_groupInfo);
+				
+				
 				if (vjoSyntacticType != null) { // replace result type of
 												// endType()
 					// call
@@ -1425,7 +1468,7 @@ class JstExpressionTypeLinker implements IJstVisitor {
 				}
 				JstExpressionTypeLinkerHelper
 						.tryDerivingAnonymousFunctionsFromParam(mie,
-								mtdBinding, this, m_groupInfo);
+								mtdBinding, this, m_groupInfo, qualifierType);
 
 				if (mtdBinding instanceof JstMethod) {
 					JstMethod mtd = (JstMethod) mtdBinding;
@@ -1492,7 +1535,7 @@ class JstExpressionTypeLinker implements IJstVisitor {
 								mie, m_groupInfo);
 						JstExpressionTypeLinkerHelper
 								.tryDerivingAnonymousFunctionsFromParam(mie,
-										mtdBinding, this, m_groupInfo);
+										mtdBinding, this, m_groupInfo, qualifierType);
 						return;
 					}
 				}
@@ -1552,7 +1595,7 @@ class JstExpressionTypeLinker implements IJstVisitor {
 					mie.setResultType(rtnType);
 					JstExpressionTypeLinkerHelper
 							.tryDerivingAnonymousFunctionsFromParam(mie,
-									mtdBinding, this, m_groupInfo);
+									mtdBinding, this, m_groupInfo, qualifierType);
 					JstExpressionTypeLinkerHelper.bindMtdInvocations(
 							m_resolver, this, mie, mtdBinding, m_groupInfo);
 					return;
@@ -2122,7 +2165,7 @@ class JstExpressionTypeLinker implements IJstVisitor {
 
 				JstExpressionTypeLinkerHelper
 						.tryDerivingAnonymousFunctionsFromParam(mie,
-								mtdBinding, this, m_groupInfo);
+								mtdBinding, this, m_groupInfo, qualifierType);
 				if (mtdBinding instanceof JstMethod) {
 					return (JstMethod) mtdBinding;
 				}

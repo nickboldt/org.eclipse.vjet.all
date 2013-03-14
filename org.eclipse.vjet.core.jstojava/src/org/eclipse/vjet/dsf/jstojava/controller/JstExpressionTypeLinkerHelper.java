@@ -2733,7 +2733,7 @@ public class JstExpressionTypeLinkerHelper {
 
 	public static void tryDerivingAnonymousFunctionsFromParam(
 			final MtdInvocationExpr mie, final IJstNode mtdBinding,
-			final IJstVisitor revisitor, final GroupInfo groupInfo) {
+			final IJstVisitor revisitor, final GroupInfo groupInfo, IJstType qualifierType) {
 		if (mtdBinding != null && mie != null
 				&& mtdBinding instanceof IJstMethod) {
 			// handle anonymous function argument inference
@@ -2747,7 +2747,7 @@ public class JstExpressionTypeLinkerHelper {
 				int paramLen = paramTypes.size(), argLen = arguments.size();
 				if (supportArgTypeExt && paramLen >= 2 && argLen >= 2) {
 					if (paramTypes.get(1) == null
-							&& arguments.get(1) instanceof FuncExpr) {
+							&& (arguments.get(1) instanceof FuncExpr || arguments.get(1) instanceof JstIdentifier)) {
 						paramTypes.set(1, getFakeFunc());
 					}
 				}
@@ -2763,7 +2763,37 @@ public class JstExpressionTypeLinkerHelper {
 						if (arg instanceof FuncExpr) {
 							processFunctionExpression(mie, revisitor,
 									groupInfo, callingMethod, arguments,
-									supportArgTypeExt, paramIdx, paramType, arg);
+									supportArgTypeExt, paramIdx, paramType, arg,qualifierType);
+						}else if(arg instanceof JstIdentifier){
+							
+							IJstType qualiferType = mtdBinding.getRootType();
+									
+//							IJstType qualiferType = mie.getQualifyExpr()
+//									.getResultType();
+							
+							if (qualiferType != null) {
+								
+								IExpr keyArg = arguments.get(0);
+								if (keyArg instanceof JstLiteral) {
+									paramType = deriveFunctionType(revisitor, groupInfo,
+											callingMethod, paramType, keyArg, qualiferType);
+									// should the parent 
+									((JstIdentifier) arg).setType(paramType);
+									((JstIdentifier) arg).setJstBinding(paramType.getFunction());
+								}
+							}
+						
+							
+							//arg = new FuncExpr(func)
+//							IJstType qualiferType = mie.getQualifyExpr()
+//									.getResultType();
+//							JstFuncType funcTye = deriveFunctionType(revisitor, groupInfo, callingMethod, paramType, arg, qualiferType);
+////							deriveAnonymousFunction(paramType, (JstIdentifier) arg, (IJstDoc)null);
+//							// bugfix by huzhou@ebay.com, needs to revisit
+//							// the func expression
+//							// to allow the correct binding inside after the
+//							// inference
+//							JstExpressionTypeLinkerTraversal.accept(arg, revisitor);
 						}
 						// tricks the loop to continue till all arguments are
 						// consumed
@@ -2786,7 +2816,7 @@ public class JstExpressionTypeLinkerHelper {
 			final IJstVisitor revisitor, final GroupInfo groupInfo,
 			final IJstMethod callingMethod, final List<IExpr> arguments,
 			boolean supportArgTypeExt, int paramIdx, JstFuncType paramType,
-			final IExpr arg) {
+			final IExpr arg, IJstType qualifierType) {
 		// it actually could be
 		// new Function as
 		// ObjCreateExpr but
@@ -2804,37 +2834,13 @@ public class JstExpressionTypeLinkerHelper {
 			if (paramIdx == 1 && supportArgTypeExt) {
 				IExpr keyArg = arguments.get(0);
 				if (keyArg instanceof JstLiteral) {
-					IJstType qualiferType = mie.getQualifyExpr()
-							.getResultType();
-					if (qualiferType != null) {
-						if (qualiferType instanceof IJstRefType) {
-							qualiferType = ((IJstRefType) qualiferType)
-									.getReferencedNode();
-						}
-						String targetFunc = qualiferType.getName()
-								+ (callingMethod.isStatic() ? "::" : ":")
-								+ callingMethod.getName().getName();
-						FunctionMetaRegistry fmr = FunctionMetaRegistry
-								.getInstance();
-						if (fmr.isFuncMetaMappingSupported(targetFunc)) {
-							String key = ((JstLiteral) keyArg).toString();
-							key = unquote(key);
-							IMetaExtension metaExt = fmr.getExtentedArgBinding(
-									targetFunc, key, groupInfo.getGroupName(),
-									groupInfo.getDependentGroups());
-							if (metaExt != null) {
-								IJstMethod extFunc = metaExt.getMethod();
-								if (extFunc != null) {
-									JstExpressionTypeLinkerTraversal.accept(
-											extFunc, revisitor);
-									IJstMethod resolved = unwrapMethod(extFunc);
-									if (resolved != null) {
-										paramType = new JstFuncType(
-												unwrapMethod(extFunc));
-									}
-								}
-							}
-						}
+					//if(mie.getQualifyExpr()!=null){
+					// NPE here when accessing function reference rather than direct invoke?
+					
+					
+					if (qualifierType != null) {
+						paramType = deriveFunctionType(revisitor, groupInfo,
+								callingMethod, paramType, keyArg, qualifierType);
 					}
 				}
 			}
@@ -2845,6 +2851,48 @@ public class JstExpressionTypeLinkerHelper {
 			// inference
 			JstExpressionTypeLinkerTraversal.accept(func, revisitor);
 		}
+	}
+
+	private static JstFuncType deriveFunctionType(final IJstVisitor revisitor,
+			final GroupInfo groupInfo, final IJstMethod callingMethod,
+			JstFuncType paramType, IExpr keyArg, IJstType qualiferType) {
+		if (qualiferType instanceof IJstRefType) {
+			qualiferType = ((IJstRefType) qualiferType)
+					.getReferencedNode();
+		}
+		String targetFunc = qualiferType.getName()
+				+ (callingMethod.isStatic() ? "::" : ":")
+				+ callingMethod.getName().getName();
+		FunctionMetaRegistry fmr = FunctionMetaRegistry
+				.getInstance();
+		if (fmr.isFuncMetaMappingSupported(targetFunc) && keyArg instanceof JstLiteral){
+				
+			String key = ((JstLiteral) keyArg).toString();
+			key = unquote(key);
+			IMetaExtension metaExt = fmr.getExtentedArgBinding(
+					targetFunc, key, groupInfo.getGroupName(),
+					groupInfo.getDependentGroups());
+			if (metaExt != null) {
+				// if the metaExt is attributed type need to get method from that attributed type
+				
+				IJstMethod extFunc = metaExt.getMethod();
+				
+				
+				if (extFunc != null) {
+					
+					JstExpressionTypeLinkerTraversal.accept(
+							extFunc, revisitor);
+					// when referencing attributed type unwrapMethod is not resolving the ftype
+					IJstMethod resolved = unwrapMethod(extFunc);
+					
+					if (resolved != null) {
+						paramType = new JstFuncType(
+								resolved);
+					}
+				}
+			}
+		}
+		return paramType;
 	}
 
 	private static IJstMethod unwrapMethod(IJstMethod extFunc) {

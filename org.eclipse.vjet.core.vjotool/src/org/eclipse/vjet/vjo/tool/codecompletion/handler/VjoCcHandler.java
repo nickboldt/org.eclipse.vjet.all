@@ -172,6 +172,23 @@ public class VjoCcHandler implements IVjoCcHandler {
 						final IJstNode nodeParent = node.getParentNode();
 						if(nodeParent instanceof MtdInvocationExpr){
 							final MtdInvocationExpr mtdInvocationExpr = (MtdInvocationExpr)nodeParent;
+							
+							if( mtdInvocationExpr.getMethod() instanceof IJstMethod){
+								 if(((IJstMethod)mtdInvocationExpr.getMethod()).isFuncArgMetaExtensionEnabled()){
+									 	ctx.putInfo(VjoCcCtx.INFO_KEY_ARGUMENT, node);
+										return new String[] { VjoCcFunctionArgumentAdvisor.ID };
+								 }
+							}else if(mtdInvocationExpr.getMethod() instanceof JstIdentifier){
+								IJstNode binding = ((JstIdentifier)mtdInvocationExpr.getMethod()).getJstBinding();
+								if(binding instanceof  IJstMethod){
+									IJstMethod method = (IJstMethod)binding;
+									if(method.isFuncArgMetaExtensionEnabled()){
+									 	ctx.putInfo(VjoCcCtx.INFO_KEY_ARGUMENT, node);
+										return new String[] { VjoCcFunctionArgumentAdvisor.ID };
+								 }
+								}
+							}
+							
 							final int position = mtdInvocationExpr.getArgs().indexOf(node);
 							if(position >= 0
 									&& mtdInvocationExpr.getMethod() instanceof IJstMethod){
@@ -372,6 +389,7 @@ public class VjoCcHandler implements IVjoCcHandler {
 		}
 		return new String[0];
 	}
+
 
 	private boolean isExtendedFunc(IJstType parameterType) {
 		if(parameterType instanceof JstExtendedType){

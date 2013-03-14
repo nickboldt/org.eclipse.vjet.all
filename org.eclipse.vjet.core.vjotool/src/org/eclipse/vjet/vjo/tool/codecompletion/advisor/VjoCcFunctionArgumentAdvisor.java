@@ -17,6 +17,7 @@ import org.eclipse.vjet.dsf.jst.declaration.JstArg;
 import org.eclipse.vjet.dsf.jst.declaration.JstFuncType;
 import org.eclipse.vjet.dsf.jst.declaration.JstFunctionRefType;
 import org.eclipse.vjet.dsf.jst.expr.MtdInvocationExpr;
+import org.eclipse.vjet.dsf.jst.term.JstIdentifier;
 import org.eclipse.vjet.dsf.jst.token.IExpr;
 import org.eclipse.vjet.dsf.jstojava.translator.TranslateHelper.RenameableSynthJstProxyMethod;
 import org.eclipse.vjet.vjo.tool.codecompletion.IVjoCcAdvisor;
@@ -53,7 +54,12 @@ public class VjoCcFunctionArgumentAdvisor extends AbstractVjoCcAdvisor implement
 		}
 		final MtdInvocationExpr mtdInvocationExpr = (MtdInvocationExpr) argument.getParentNode();
 		final int position = mtdInvocationExpr.getArgs().indexOf(argument);
-		final IJstNode node = mtdInvocationExpr.getMethod();
+		IJstNode node = mtdInvocationExpr.getMethod();
+		
+		if(node instanceof JstIdentifier){
+			node = ((JstIdentifier) node).getJstBinding();
+		}
+		
 		if (node == null || !(node instanceof IJstMethod)) {
 			return;
 		}
@@ -64,18 +70,31 @@ public class VjoCcFunctionArgumentAdvisor extends AbstractVjoCcAdvisor implement
 			return;
 		}
 		
-		final List<JstArg> parameters = method.getArgs();
-		if(parameters.size() <= position){
+		final List<JstArg> arguments = method.getArgs();
+		if(arguments.size() <= position){
+			return;
+		}
+		 IJstType parameterType = null;
+		final IExpr parameterAtPos = mtdInvocationExpr.getArgs().get(position);
+		final JstArg argAtPosition = arguments.get(position);
+		if(parameterAtPos instanceof JstIdentifier){
+			parameterType = ((JstIdentifier) parameterAtPos).getType();
+		}else{
 			return;
 		}
 		
-		final JstArg parameterAtPos = parameters.get(position);
-		final IJstType parameterType = parameterAtPos.getType();
 		if(parameterType instanceof JstFuncType){
-			appendData(ctx, getParamNamedMethodProposal(parameterAtPos, ((JstFuncType)parameterType).getFunction()), true);
+			IJstMethod function = ((JstFuncType)parameterType).getFunction();
+			if(function.isDispatcher()){
+				for (IJstMethod overload : function.getOverloaded()) {
+					appendData(ctx, getParamNamedMethodProposal(argAtPosition, overload), false);
+				}
+			}else{
+				appendData(ctx, getParamNamedMethodProposal(argAtPosition, function), true);
+			}
 		}
 		else if(parameterType instanceof JstFunctionRefType){
-			appendData(ctx, getParamNamedMethodProposal(parameterAtPos, ((JstFunctionRefType)parameterType).getMethodRef()), true);
+			appendData(ctx, getParamNamedMethodProposal(argAtPosition, ((JstFunctionRefType)parameterType).getMethodRef()), true);
 		}
 	}
 
