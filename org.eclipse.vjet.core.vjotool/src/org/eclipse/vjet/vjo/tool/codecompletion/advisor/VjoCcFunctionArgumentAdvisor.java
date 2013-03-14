@@ -65,6 +65,10 @@ public class VjoCcFunctionArgumentAdvisor extends AbstractVjoCcAdvisor implement
 		}
 		
 		final IJstMethod method = (IJstMethod) node;
+		
+		
+		
+		
 		IJstType calledType = method.getOwnerType();
 		if (calledType == null) {
 			return;
@@ -82,7 +86,6 @@ public class VjoCcFunctionArgumentAdvisor extends AbstractVjoCcAdvisor implement
 		}else{
 			return;
 		}
-		
 		if(parameterType instanceof JstFuncType){
 			IJstMethod function = ((JstFuncType)parameterType).getFunction();
 			if(function.isDispatcher()){
