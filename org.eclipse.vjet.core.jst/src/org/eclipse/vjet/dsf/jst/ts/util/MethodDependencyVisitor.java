@@ -71,6 +71,10 @@ public class MethodDependencyVisitor extends ADependencyVisitor<MethodName> impl
 		}
 		
 		IJstMethod jstMethod = (IJstMethod)binding;
+		if(jstMethod.getName()==null){
+			return;
+		}
+		
 		String mtdName = jstMethod.getName().getName();
 		IJstType mtdOwnerType = binding.getOwnerType();
 
