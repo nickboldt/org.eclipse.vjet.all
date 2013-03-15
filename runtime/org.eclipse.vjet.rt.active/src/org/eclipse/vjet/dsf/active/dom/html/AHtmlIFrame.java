@@ -37,7 +37,7 @@ public class AHtmlIFrame extends AHtmlElement implements HtmlIFrame {
 		return getDIFrame().getHtmlAlign();
 	}
 
-	public String getFrameBorder() {
+	public Object getFrameBorder() {
 		return getDIFrame().getHtmlFrameBorder();
 	}
 

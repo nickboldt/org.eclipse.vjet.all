@@ -30,10 +30,10 @@ import org.eclipse.vjet.dsf.jsnative.anno.Property;
 public interface HtmlVideo extends HtmlElement {
 	
 	@Property long getHeight();
-	@Property void setHeight(long height);
+	@Property void setHeight(int height);
 	
 	@Property long getWidth();
-	@Property void setWidth(long width);
+	@Property void setWidth(int width);
 	
 	@Property long getVideoWidth();
 	@Property long getVideoHeight();

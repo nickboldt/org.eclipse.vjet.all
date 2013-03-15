@@ -233,17 +233,7 @@ public class AHtmlVideo extends AMediaElement implements HtmlVideo {
 		return (DVideo) getDNode();
 	}
 
-	@Override
-	public void setHeight(long height) {
-		// TODO Auto-generated method stub
-		
-	}
 
-	@Override
-	public void setWidth(long width) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	public long getVideoWidth() {
