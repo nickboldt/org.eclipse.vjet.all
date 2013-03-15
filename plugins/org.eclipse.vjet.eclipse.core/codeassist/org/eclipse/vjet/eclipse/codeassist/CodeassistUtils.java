@@ -2689,8 +2689,10 @@ public class CodeassistUtils {
 		Deque<String> dq = new ArrayDeque<String>();
 		while (jstMethod != null && !(jstMethod instanceof IJstType)) {
 			if (jstMethod instanceof JstMethod) {
-				dq.push(((JstMethod) jstMethod).getName().getName());
-				jstMethod = jstMethod.getParentNode();
+				if(((JstMethod) jstMethod).getName()!=null){
+					dq.push(((JstMethod) jstMethod).getName().getName());
+					jstMethod = jstMethod.getParentNode();
+				}
 			} else {
 				jstMethod = jstMethod.getParentNode();
 			}

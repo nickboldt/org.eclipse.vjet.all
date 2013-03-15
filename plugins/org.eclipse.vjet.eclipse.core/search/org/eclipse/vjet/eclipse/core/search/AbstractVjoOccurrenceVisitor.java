@@ -70,7 +70,10 @@ public abstract class AbstractVjoOccurrenceVisitor extends GenericVisitor {
 	}
 
 	protected boolean matchName(String name) {
-		return m_matchName.equals(name);
+		if(m_matchName!=null){
+			return m_matchName.equals(name);
+		}
+		return false;
 	}
 
 	protected boolean matchNode(IJstNode node) {
