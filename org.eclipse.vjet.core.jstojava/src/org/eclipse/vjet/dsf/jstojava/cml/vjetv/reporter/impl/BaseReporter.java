@@ -158,7 +158,11 @@ public class BaseReporter implements IHeadLessReporter {
 //        message.append("=====================================" +
 //                    "============================================" +
 //                    "============================================\n");
-        String sources = FileOperator.getSourceFromFile(validateFile);
+        
+        String sources = "";
+        if(validateFile.exists()){
+          sources = FileOperator.getSourceFromFile(validateFile);
+        }
         boolean hasProblem = false;
         for (VjoSemanticProblem vjoSemanticProblem : actualProblems) {
             if (vjoSemanticProblem.type().equals(ProblemSeverity.error)) {

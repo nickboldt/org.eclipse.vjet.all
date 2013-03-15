@@ -310,7 +310,7 @@ public class EVHeadlessLauncher implements IHeadLessLauncher {
 
 				String printProblems = baseReporter.printProblems(
 						actualProblemList, result, conf.getReportLevel(), true,
-						validateFile);
+						new File(type.getAlias()));
 				if (printProblems != null) {
 					baseReporter.printCurrentStates(printProblems);
 				}

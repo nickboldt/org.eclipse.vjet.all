@@ -50,7 +50,7 @@ public class BuildReporter extends BaseReporter {
 			}
 			message.append("^\n");
 		}else{
-			message.append("No message available");
+			message.append("No message available\n");
 		}
 
 		// message.append("=====================================" +
