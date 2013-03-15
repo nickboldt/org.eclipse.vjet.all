@@ -41,8 +41,12 @@ import org.eclipse.vjet.dsf.jst.declaration.SynthOlType;
 
 public class TypeCheckUtil {
 
+	private static final String FUNCTION = "Function";
+	private static final String ARRAY = "Array";
+	private static final String ARGUMENTS = "Arguments";
+
 	public static IJstType getFunctionNativeType() {
-		return JstCache.getInstance().getType("Function");
+		return JstCache.getInstance().getType(FUNCTION);
 	}
 
 	public static IJstType getObjectNativeType() {
@@ -113,10 +117,10 @@ public class TypeCheckUtil {
 		} else if (equals(JstReservedTypes.Other.VOID, type)) {
 			return JstReservedTypes.Other.VOID;
 		} else if (type instanceof JstFunctionRefType
-				|| "Function".equals(type.getSimpleName())) {
+				|| FUNCTION.equals(type.getSimpleName())) {
 			return getFunctionNativeType();
 		} else if (type instanceof JstArray
-				|| "Array".equals(type.getSimpleName())) {
+				|| ARRAY.equals(type.getSimpleName())) {
 			return VjoConstants.NativeTypes.getArrayJstType();
 		}
 		// TODO look into this failure case TypecheckObjLiteralTester
@@ -582,10 +586,17 @@ public class TypeCheckUtil {
 			}
 			toType = ((IJstRefType) assignTo).getReferencedNode();
 		}
+		// bug 403061 allow arguments to convert to Array
+		if (assignFrom != null && assignFrom != null
+				&& ARGUMENTS.equals(assignFrom.getName())
+				&& ARRAY.equals(assignTo.getName())) {
+			return true;
+		}
+		
 		if (assignFrom instanceof IJstRefType) {
 			// added by huzhou@ebay.com, any type reference should be assignable
 			// to Function
-			if ("Function".equals(assignTo.getName())) {
+			if (FUNCTION.equals(assignTo.getName())) {
 				return true;
 			}
 			// we can only assign from another JstTypeRefType
