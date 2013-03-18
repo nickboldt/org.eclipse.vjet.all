@@ -1621,7 +1621,7 @@ public class CodeassistUtils {
 				
 		if(typeByTypeNAme==null && jstType.getSource()!=null){
 			IBinding binding = jstType.getSource().getBinding();
-			if(binding!=null && binding instanceof SimpleBinding){
+			if(binding!=null && binding instanceof SimpleBinding && binding.getName()!=null &&  binding.getName().lastIndexOf(".")!=-1){
 				String pkg = binding.getName().substring(0, binding.getName().lastIndexOf("."));
 				String typeName = binding.getName().substring(binding.getName().lastIndexOf(".")+1, binding.getName().length());
 				typeByTypeNAme = findType(scriptProject, typeName, pkg );
