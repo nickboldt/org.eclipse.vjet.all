@@ -135,6 +135,13 @@ public interface Global extends Object {
 	@OverLoadFunc Number parseInt(Number number);
 	
 	/**
+	 * Parses a number argument and returns an integer of the specified radix or base.
+	 * @param string 
+	 * @param radix A number (from 2 to 36) that represents the numeral system to be used
+	 */
+	@OverLoadFunc Number parseInt(Number string, Number radix);
+	
+	/**
 	 * Parses a string argument and returns an integer of the specified radix or base.
 	 * @param string 
 	 * @param radix A number (from 2 to 36) that represents the numeral system to be used
