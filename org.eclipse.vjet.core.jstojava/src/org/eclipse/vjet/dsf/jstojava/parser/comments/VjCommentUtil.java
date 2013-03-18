@@ -30,8 +30,9 @@ public class VjCommentUtil {
 		if(semiColon >-1 && semiColon<endGreaterThan){
 			return false;
 		}
+		int secondLessThanAndSlash = comment.indexOf("</", startLessThan+1);
 		int secondLessThan = comment.indexOf("<", startLessThan+1);
-		if(secondLessThan!=-1 && secondLessThan<semiColon){
+		if(secondLessThanAndSlash != secondLessThan && secondLessThan!=-1 && secondLessThan<semiColon){
 			return false;
 		}
 		if(startLessThan==-1 && endGreaterThan ==-1){
