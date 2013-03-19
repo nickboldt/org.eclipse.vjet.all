@@ -3459,7 +3459,7 @@ public class JstExpressionTypeLinkerHelper {
 		// bugfix for otype using attributed presentation
 		 if (type instanceof JstMixedType) {
 			for(IJstType mixedType: ((JstMixedType)type).getMixedTypes()){
-				IJstType x = getCorrectType(resolver, mixedType, groupInfo);
+				getCorrectType(resolver, mixedType, groupInfo);
 
 			}
 			return type;

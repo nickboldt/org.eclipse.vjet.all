@@ -13,14 +13,13 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.vjet.dsf.jst.IJstMethod;
-import org.eclipse.vjet.dsf.jst.IJstOType;
+import org.eclipse.vjet.dsf.jst.IJstNode;
 import org.eclipse.vjet.dsf.jst.IJstProperty;
 import org.eclipse.vjet.dsf.jst.IJstType;
 import org.eclipse.vjet.dsf.jst.declaration.JstAttributedType;
 import org.eclipse.vjet.dsf.jst.declaration.JstFuncType;
 import org.eclipse.vjet.dsf.jst.declaration.JstMixedType;
 import org.eclipse.vjet.dsf.jst.declaration.JstObjectLiteralType;
-import org.eclipse.vjet.dsf.jst.declaration.JstProxyType;
 import org.eclipse.vjet.dsf.jst.util.JstTypeHelper;
 import org.eclipse.vjet.vjo.tool.codecompletion.CodeCompletionUtils;
 import org.eclipse.vjet.vjo.tool.codecompletion.IVjoCcAdvisor;
@@ -132,12 +131,19 @@ public class VjoCcPropMethodProposalAdvisor extends AbstractVjoCcAdvisor
 		for(IJstType type: calledType.getMixedTypes()){
 			if(type instanceof JstAttributedType){
 				JstAttributedType atype = ((JstAttributedType)type);
-				IJstOType otype = atype.getOType(atype.getAttributeName());
-				props.addAll(getTypeProperties(otype));
+				IJstNode otypecandidate = atype.getJstBinding();
+				if(otypecandidate!=null && otypecandidate instanceof JstObjectLiteralType){
+					JstObjectLiteralType otype = (JstObjectLiteralType)otypecandidate;
+					props.addAll(getTypeProperties(otype));
+					
+				}
+				
 			}
 			if(type instanceof JstObjectLiteralType){
 				JstObjectLiteralType otype = ((JstObjectLiteralType)type);
-				props.addAll(getTypeProperties(otype));
+				if(otype!=null){
+					props.addAll(getTypeProperties(otype));
+				}
 			}
 			
 		}

@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.eclipse.vjet.dsf.jst.IJstMethod;
+import org.eclipse.vjet.dsf.jst.IJstNode;
 import org.eclipse.vjet.dsf.jst.IJstProperty;
 import org.eclipse.vjet.dsf.jst.IJstRefType;
 import org.eclipse.vjet.dsf.jst.IJstType;
@@ -154,6 +155,11 @@ public abstract class JstTypeMixer extends JstType {
 		for (IJstType type : m_types) {
 			if (type instanceof IJstRefType) {
 				pty = type.getStaticProperty(name, recursive);
+			}else if(type instanceof JstAttributedType){
+				IJstNode node = ((JstAttributedType)type).getJstBinding();
+				if(node instanceof IJstType){
+					pty = ((IJstType)node).getInstanceProperty(name);
+				}
 			}
 			else {
 				pty = type.getInstanceProperty(name, recursive);
