@@ -390,6 +390,9 @@ public class VjoCcCtx {
 			if (node instanceof IJstMethod) {
 				methods.add((IJstMethod) node);
 			}
+			if(node instanceof JstBlock && node.getParentNode() instanceof IJstMethod){
+				methods.add((IJstMethod)node.getParentNode());
+			}
 		}
 		return methods;
 	}
