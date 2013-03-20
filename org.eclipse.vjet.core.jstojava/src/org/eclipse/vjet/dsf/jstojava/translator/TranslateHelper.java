@@ -908,11 +908,23 @@ public class TranslateHelper {
 	}
 
 	private static void fixModifiersForDispatchMethod(JstMethod jstMethod) {
+		// fixes modifier and fixes extension modifiers
 		if (jstMethod.isDispatcher()) {
 			final JstModifiers dispatcherModifiers = jstMethod.getModifiers();
+			boolean funcargextenabled = false;
+			boolean dynamictypeenabled = false;
 			for (IJstMethod overload : jstMethod.getOverloaded()) {
 				dispatcherModifiers.merge(overload.getModifiers().getFlags());
+				if(!funcargextenabled){
+					funcargextenabled = overload.isFuncArgMetaExtensionEnabled();
+				}
+				if(!dynamictypeenabled){
+					dynamictypeenabled = overload.isTypeFactoryEnabled();
+				}
+			    
 			}
+			jstMethod.setFuncArgMetaExtensionEnabled(funcargextenabled);
+			jstMethod.setTypeFactoryEnabled(dynamictypeenabled);
 		}
 	}
 
@@ -3240,6 +3252,16 @@ public class TranslateHelper {
 			}
 		}
 
+		@Override
+		public boolean isFuncArgMetaExtensionEnabled() {
+			return m_originalJsFunc.isFuncArgMetaExtensionEnabled();
+		}
+		
+		@Override
+		public boolean isTypeFactoryEnabled() {
+			return m_originalJsFunc.isTypeFactoryEnabled();
+		}
+		
 		@Override
 		public boolean isOptional() {
 			return m_originalJsFunc.isOptional();

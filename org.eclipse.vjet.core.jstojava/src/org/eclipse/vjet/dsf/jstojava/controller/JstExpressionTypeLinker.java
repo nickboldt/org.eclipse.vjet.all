@@ -1455,7 +1455,16 @@ class JstExpressionTypeLinker implements IJstVisitor {
 
 			if (mtdBinding != null) {
 				
-			
+			   if(mtdBinding instanceof JstMethod){
+				   if(((JstMethod) mtdBinding).getOverloaded().size()>0){
+						final List<IJstMethod> matchingMtds = JstExpressionTypeLinkerHelper.getMatchingMtdFromOverloads(
+								(JstMethod) mtdBinding, mie.getArgs());
+						if(matchingMtds.size()==1){
+							mtdBinding = matchingMtds.get(0);
+						}
+				   }
+			   }
+				
 				
 				JstExpressionTypeLinkerHelper.bindMtdInvocationExpr(m_resolver,
 						this, mtdBinding, qualifierType, mie, m_groupInfo);

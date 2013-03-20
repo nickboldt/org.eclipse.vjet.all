@@ -2156,7 +2156,7 @@ public class JstExpressionTypeLinkerHelper {
 		return null;
 	}
 
-	private static List<IJstMethod> getMatchingMtdFromOverloads(
+	public static List<IJstMethod> getMatchingMtdFromOverloads(
 			IJstMethod bindMtd, List<IExpr> arguments) {
 
 		if (!bindMtd.isDispatcher()) {
