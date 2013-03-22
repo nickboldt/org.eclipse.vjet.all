@@ -50,6 +50,7 @@ import org.eclipse.vjet.dsf.jst.declaration.JstObjectLiteralType;
 import org.eclipse.vjet.dsf.jst.declaration.JstPotentialAttributedMethod;
 import org.eclipse.vjet.dsf.jst.declaration.JstPotentialOtypeMethod;
 import org.eclipse.vjet.dsf.jst.declaration.JstProperty;
+import org.eclipse.vjet.dsf.jst.declaration.JstProxyMethod;
 import org.eclipse.vjet.dsf.jst.declaration.JstSynthesizedMethod;
 import org.eclipse.vjet.dsf.jst.declaration.JstType;
 import org.eclipse.vjet.dsf.jst.declaration.JstTypeRefType;
@@ -1429,6 +1430,11 @@ class JstExpressionTypeLinker implements IJstVisitor {
 					
 					if(isStatic){
 						qualifierType = new JstTypeRefType(mtdBinding.getRootType());
+					}else if(mtdBinding instanceof JstProxyMethod){
+						if(((JstProxyMethod) mtdBinding).getTargetType()!=null){
+							IJstType parentType = JstCache.getInstance().getType(((JstProxyMethod) mtdBinding).getTargetType());
+							qualifierType = parentType;
+						}
 					}else{
 						qualifierType = mtdBinding.getRootType();
 					}
@@ -1463,6 +1469,20 @@ class JstExpressionTypeLinker implements IJstVisitor {
 							mtdBinding = matchingMtds.get(0);
 						}
 				   }
+			   }
+			   else if(mtdBinding instanceof JstProxyMethod){
+				  
+				   IJstMethod targetMethod = ((JstProxyMethod) mtdBinding).getTargetMethod();
+					if(targetMethod.getOverloaded().size()>0){
+							final List<IJstMethod> matchingMtds = JstExpressionTypeLinkerHelper.getMatchingMtdFromOverloads(
+									targetMethod, mie.getArgs());
+							if(matchingMtds.size()==1){
+								mtdBinding = matchingMtds.get(0);
+							}
+					   }else{
+						   mtdBinding = targetMethod;
+					   }
+				   
 			   }
 				
 				

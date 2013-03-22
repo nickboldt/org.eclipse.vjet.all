@@ -1000,7 +1000,9 @@ public class JstType extends BaseJstNode implements IJstType {
 				if (mtd instanceof ISynthesized || mtd instanceof JstProxyMethod) {
 					continue;
 				}
-				list.add(new JstProxyMethod(mtd));
+				JstProxyMethod jstProxyMethod = new JstProxyMethod(mtd, this.getName());
+				
+				list.add(jstProxyMethod);
 			}
 		}
 		return list;
@@ -2678,7 +2680,7 @@ public class JstType extends BaseJstNode implements IJstType {
 			
 			// add new proxy methods and properties from new mixin jstType
 			for (IJstMethod mtd : mixinType.getMethods()) {
-				addMethod(new JstProxyMethod(mtd));
+				addMethod(new JstProxyMethod(mtd, this.getName()));
 			}
 			// add proxy properties for mixin properties
 			for (IJstProperty prop : mixinType.getProperties()) {

@@ -66,8 +66,6 @@ public class VjoCcFunctionArgumentAdvisor extends AbstractVjoCcAdvisor implement
 		
 		final IJstMethod method = (IJstMethod) node;
 		
-		System.out.println(method);
-		
 		
 		IJstType calledType = method.getOwnerType();
 		if (calledType == null) {

@@ -16,7 +16,7 @@ public class SynthJstProxyMethod extends JstProxyMethod implements ISynthesized 
 	private static final long serialVersionUID = -4311349903150084555L;
 
 	public SynthJstProxyMethod(IJstMethod targetType) {
-		super(targetType);
+		super(targetType,null);
 	}
 
 }

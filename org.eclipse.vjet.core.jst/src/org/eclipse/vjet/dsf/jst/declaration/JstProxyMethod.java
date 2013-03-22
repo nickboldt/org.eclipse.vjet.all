@@ -28,12 +28,14 @@ import org.eclipse.vjet.dsf.jst.traversal.IJstNodeVisitor;
 public class JstProxyMethod implements IJstMethod {
 	private static final long serialVersionUID = 1L;
 	private IJstMethod m_targetMethod;
+	private String m_targetTypeName;
 	
-	public JstProxyMethod(IJstMethod targetType){
+	public JstProxyMethod(IJstMethod targetType, String targetTypeName){
 		if (targetType == null){
 			throw new AssertionError("target cannot be null");
 		}
 		m_targetMethod = targetType;
+		m_targetTypeName = targetTypeName;
 	}
 
 	//
@@ -42,6 +44,11 @@ public class JstProxyMethod implements IJstMethod {
 	public IJstMethod getTargetMethod(){
 		return m_targetMethod;
 	}
+	
+	public String getTargetType(){
+		return m_targetTypeName;
+	}
+	
 	
 	public List<JstArg> getArgs() {
 		return m_targetMethod.getArgs();

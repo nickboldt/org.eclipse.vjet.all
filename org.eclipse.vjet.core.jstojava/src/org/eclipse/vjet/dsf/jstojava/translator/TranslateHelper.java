@@ -913,6 +913,7 @@ public class TranslateHelper {
 			final JstModifiers dispatcherModifiers = jstMethod.getModifiers();
 			boolean funcargextenabled = false;
 			boolean dynamictypeenabled = false;
+			boolean isReturnOptional = false;
 			for (IJstMethod overload : jstMethod.getOverloaded()) {
 				dispatcherModifiers.merge(overload.getModifiers().getFlags());
 				if(!funcargextenabled){
@@ -921,10 +922,13 @@ public class TranslateHelper {
 				if(!dynamictypeenabled){
 					dynamictypeenabled = overload.isTypeFactoryEnabled();
 				}
-			    
+			    if(!isReturnOptional){
+			    	isReturnOptional = overload.isReturnTypeOptional();
+			    }
 			}
 			jstMethod.setFuncArgMetaExtensionEnabled(funcargextenabled);
 			jstMethod.setTypeFactoryEnabled(dynamictypeenabled);
+			jstMethod.setReturnOptional(isReturnOptional);
 		}
 	}
 
@@ -2372,6 +2376,8 @@ public class TranslateHelper {
 							meta, ctx, true, methName);
 					attachOverloaded(dispatcher, overloaded);
 				}
+				
+				fixDispatcher(dispatcher);
 				return dispatcher;
 			}
 		}
@@ -2828,10 +2834,11 @@ public class TranslateHelper {
 		private static IJsCommentMeta getSynthesizedMethodCommentForMultiValues(
 				final IJsCommentMeta originalMeta,
 				final List<JsParam> expandedParams) {
-			return new OverwritableJsCommentMeta(originalMeta,
-					new OverwritableJsFuncType(
+			OverwritableJsFuncType func = new OverwritableJsFuncType(
 							(JsFuncType) originalMeta.getTyping(), null,
-							expandedParams));
+							expandedParams);
+			return new OverwritableJsCommentMeta(originalMeta,
+					func);
 		}
 
 		/**
@@ -3193,7 +3200,7 @@ public class TranslateHelper {
 					final JsTypingMeta retTyping = getReturnTyping(meta);
 					final IJstType retType = findType(ctx, retTyping, meta);
 					jstMethod.setRtnType(retType);
-					jstMethod.setReturnOptional(retTyping.isOptional());
+					jstMethod.setReturnOptional(meta.getTyping().isOptional());
 				}
 			}
 
@@ -3252,6 +3259,8 @@ public class TranslateHelper {
 			}
 		}
 
+		
+		
 		@Override
 		public boolean isFuncArgMetaExtensionEnabled() {
 			return m_originalJsFunc.isFuncArgMetaExtensionEnabled();

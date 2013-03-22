@@ -2766,17 +2766,17 @@ public class JstExpressionTypeLinkerHelper {
 									supportArgTypeExt, paramIdx, paramType, arg,qualifierType);
 						}else if(arg instanceof JstIdentifier){
 							
-							IJstType qualiferType = mtdBinding.getRootType();
+//							IJstType qualiferType = mtdBinding.getRootType();
 									
 //							IJstType qualiferType = mie.getQualifyExpr()
 //									.getResultType();
 							
-							if (qualiferType != null) {
+							if (qualifierType != null) {
 								
 								IExpr keyArg = arguments.get(0);
 								if (keyArg instanceof JstLiteral) {
 									paramType = deriveFunctionType(revisitor, groupInfo,
-											callingMethod, paramType, keyArg, qualiferType);
+											callingMethod, paramType, keyArg, qualifierType);
 									// should the parent 
 									((JstIdentifier) arg).setType(paramType);
 									((JstIdentifier) arg).setJstBinding(paramType.getFunction());
