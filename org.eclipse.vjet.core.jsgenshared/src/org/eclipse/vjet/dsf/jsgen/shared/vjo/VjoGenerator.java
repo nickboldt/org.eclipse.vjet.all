@@ -311,6 +311,7 @@ public class VjoGenerator extends BaseGenerator {
 	}
 
 	private void writeOType(JstObjectLiteralType type) {
+		writeNewline();
 		getWriter().append(type.getSimpleName()).append(" : {");
 		List<IJstProperty> props = type.getProperties();
 		
@@ -375,7 +376,7 @@ public class VjoGenerator extends BaseGenerator {
 		writeNewline();
 		writeIndent();
 		getWriter().append(type.getMethodRef().getOriginalName()).append(" : ")
-				.append("undefined");
+				.append("vjo.NEEDS_IMPL");
 		// writeNameFunc(type.getMethod(),false);
 	}
 //
