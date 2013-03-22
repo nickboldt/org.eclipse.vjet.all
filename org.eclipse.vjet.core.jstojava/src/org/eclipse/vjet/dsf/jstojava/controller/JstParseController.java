@@ -107,19 +107,16 @@ public class JstParseController implements IJstParseController {
 	}
 	
 	public IJstType resolve(String groupName, IJstType su) {
-		List<JstBlock> blocks = su.getJstBlockList();
+		 
 		ResolutionResult resolve = m_resolver.resolve(groupName, su);
 		addResolutionResultToSU(su, resolve);
-		if(blocks==null){
-			return null;
-		}
-		
-		if(su.getJstBlockList()==null){
-			su.setJstBlockList(blocks);
-		}
-		for (JstBlock block : blocks) {
-			ResolutionResult resolutionResult = m_resolver.resolve(null, block);
-			addResolutionResultToSU(su, resolutionResult);			
+
+		if(su.getJstBlockList()!=null){
+			List<JstBlock> blocks = su.getJstBlockList();
+			for (JstBlock block : blocks) {
+				ResolutionResult resolutionResult = m_resolver.resolve(null, block);
+				addResolutionResultToSU(su, resolutionResult);			
+			}
 		}
 		
 		return resolve.getType();
