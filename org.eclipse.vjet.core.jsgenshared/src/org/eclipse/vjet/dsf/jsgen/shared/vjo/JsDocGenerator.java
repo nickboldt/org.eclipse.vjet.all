@@ -173,6 +173,10 @@ public class JsDocGenerator extends BaseGenerator {
 			if (rtnType instanceof JstTypeWithArgs){
 				appendArguments((JstTypeWithArgs)rtnType);
 			}
+			
+			if(mtd.isReturnTypeOptional()){
+				getWriter().append("?");
+			}
 		}
 		
 		getWriter().append(SPACE);
