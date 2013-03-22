@@ -143,7 +143,9 @@ public class VjoSelectionEngine extends ScriptSelectionEngine {
 				nameSource = ((JstConstructor)jstNode).getOwnerType().getSource();
 			}
 		}else if(jstNode instanceof IJstMethod){
-			nameSource = ((IJstMethod)jstNode).getName().getSource();
+			if(((IJstMethod)jstNode).getName()!=null){
+				nameSource = ((IJstMethod)jstNode).getName().getSource();
+			}
 		}
 		
 		if(nameSource!=null){

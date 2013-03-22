@@ -29,8 +29,9 @@ public class VjoMehtodOccurrenceVisitor extends AbstractVjoOccurrenceVisitor {
 	 */
 	public VjoMehtodOccurrenceVisitor(IJstMethod searchedJstNode) {
 		super(searchedJstNode);
-
-		setMatchName(searchedJstNode.getName().getName());
+		if(searchedJstNode.getName()!=null){
+			setMatchName(searchedJstNode.getName().getName());
+		}
 	}
 
 	/*
