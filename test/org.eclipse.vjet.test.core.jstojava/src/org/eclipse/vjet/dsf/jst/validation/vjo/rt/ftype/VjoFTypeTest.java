@@ -34,7 +34,8 @@ public class VjoFTypeTest extends VjoValidationBaseTester{
 	//@Description("Test validation error for non existing type usage and redundant needs")
 	public void testFType() throws Exception {
 		expectProblems.clear();
-		expectProblems.add(createNewProblem2(FieldProbIds.UndefinedField, 14, 0));
+		// disabled due to object type being dynamic
+//		expectProblems.add(createNewProblem2(FieldProbIds.UndefinedField, 14, 0));
 		actualProblems = getVjoSemanticProblem("org.eclipse.vjet.dsf.jst.validation.vjo.rt.ftype.", "FType.js", this.getClass());
 		assertProblemEquals(expectProblems, actualProblems);
 	}

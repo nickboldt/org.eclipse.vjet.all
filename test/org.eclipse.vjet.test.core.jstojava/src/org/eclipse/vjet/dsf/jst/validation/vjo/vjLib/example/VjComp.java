@@ -43,14 +43,15 @@ public class VjComp extends VjoValidationBaseTester {
 				.add(createNewProblem2(FieldProbIds.UndefinedField, 78, 0));
 		expectProblems.add(createNewProblem2(TypeProbIds.UnusedActiveNeeds, 11,
 				0));
-		expectProblems.add(createNewProblem2(FieldProbIds.UndefinedField, 193,
-				0));
-		expectProblems.add(createNewProblem2(FieldProbIds.UndefinedField, 193,
-				0));
-		expectProblems.add(createNewProblem2(FieldProbIds.UndefinedField, 193,
-				0));
-		expectProblems.add(createNewProblem2(FieldProbIds.UndefinedField, 208,
-				0));
+		// disabled due to object type being dynamic
+//		expectProblems.add(createNewProblem2(FieldProbIds.UndefinedField, 193,
+//				0));
+//		expectProblems.add(createNewProblem2(FieldProbIds.UndefinedField, 193,
+//				0));
+//		expectProblems.add(createNewProblem2(FieldProbIds.UndefinedField, 193,
+//				0));
+//		expectProblems.add(createNewProblem2(FieldProbIds.UndefinedField, 208,
+//				0));
 	}
 
 	@Test

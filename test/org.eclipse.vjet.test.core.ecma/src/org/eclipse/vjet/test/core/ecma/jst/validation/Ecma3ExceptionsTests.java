@@ -41,10 +41,11 @@ public class Ecma3ExceptionsTests extends VjoValidationBaseTester {
         expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 886, 0));
         expectProblems.add(createNewProblem(VarProbIds.LooseVarDecl, 900, 0));
         // prototype extensions which are unknown
-        expectProblems.add(createNewProblem(FieldProbIds.UndefinedField, 629, 0));
-        expectProblems.add(createNewProblem(FieldProbIds.UndefinedField, 755, 0));
-        expectProblems.add(createNewProblem(FieldProbIds.UndefinedField, 767, 0));
-        expectProblems.add(createNewProblem(FieldProbIds.UndefinedField, 743, 0));
+        // not going to see these warnings with Object being dynamic
+//        expectProblems.add(createNewProblem(FieldProbIds.UndefinedField, 629, 0));
+//        expectProblems.add(createNewProblem(FieldProbIds.UndefinedField, 755, 0));
+//        expectProblems.add(createNewProblem(FieldProbIds.UndefinedField, 767, 0));
+//        expectProblems.add(createNewProblem(FieldProbIds.UndefinedField, 743, 0));
     }
 
     @Test

@@ -34,14 +34,15 @@ public class Ecma3_1ObjectTests extends VjoValidationBaseTester {
     @Before
     public void setUp() {
         expectProblems.clear();
-        expectProblems.add(createNewProblem(MethodProbIds.UndefinedMethod, 82,
-                0));
-        expectProblems.add(createNewProblem(MethodProbIds.UndefinedMethod, 90,
-                0));
-        expectProblems.add(createNewProblem(MethodProbIds.UndefinedMethod, 113,
-                0));
-        expectProblems.add(createNewProblem(MethodProbIds.UndefinedMethod, 143,
-                0));
+        // not going to see these warnings due to Object being dynamic
+//        expectProblems.add(createNewProblem(MethodProbIds.UndefinedMethod, 82,
+//                0));
+//        expectProblems.add(createNewProblem(MethodProbIds.UndefinedMethod, 90,
+//                0));
+//        expectProblems.add(createNewProblem(MethodProbIds.UndefinedMethod, 113,
+//                0));
+//        expectProblems.add(createNewProblem(MethodProbIds.UndefinedMethod, 143,
+//                0));
     }
 
     @Test

@@ -40,7 +40,8 @@ public class Js15ScopeTests extends VjoValidationBaseTester {
         expectProblems.add(createNewProblem(FieldProbIds.UndefinedField, 1073,
                 0));
         // unknown prototype
-        expectProblems.add(createNewProblem(FieldProbIds.UndefinedField, 1411, 0));
+     // not going to see these warnings with Object being dynamic
+//        expectProblems.add(createNewProblem(FieldProbIds.UndefinedField, 1411, 0));
     }
 
     @Test

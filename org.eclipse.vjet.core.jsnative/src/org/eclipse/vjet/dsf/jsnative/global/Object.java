@@ -24,6 +24,7 @@ import org.mozilla.mod.javascript.IWillBeScriptable;
  * All JavaScript objects are descended from Object.
  *
  */
+@Dynamic
 @JsSupport( {JsVersion.MOZILLA_ONE_DOT_ONE, JsVersion.JSCRIPT_THREE_DOT_ZERO})
 public interface Object extends IWillBeScriptable {
 	
