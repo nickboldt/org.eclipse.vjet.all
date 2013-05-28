@@ -93,10 +93,10 @@ public class JsFuncType extends JsTypingMeta {
 				throw new ParseException(
 						"Only the last argument in your parameter list can be variable.");
 			}
-			if (prevParam.isOptional() && !(isOptional || isVariable)) {
-				throw new ParseException(
-						"optional param can't be followed by regular param");
-			}
+//			if (prevParam.isOptional() && !(isOptional || isVariable)) {
+//				throw new ParseException(
+//						"optional param can't be followed by regular param");
+//			}
 		}
 
 		param.setVariable(isVariable);
