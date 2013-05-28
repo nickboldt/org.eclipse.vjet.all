@@ -54,8 +54,8 @@ public interface Array extends Object {
 	 * Returns a new array comprised of this array 
 	 * joined with other array(s) and/or value(s). 
 	 */
-	@Function Array concat(Array ...arrays);
-	
+	@OverLoadFunc Array concat(Array ...arrays);
+	@OverLoadFunc Array concat(Object ...arrays);
 	/**
 	 * Returns true if every element in an array meets the specified criteria.
 	 */
