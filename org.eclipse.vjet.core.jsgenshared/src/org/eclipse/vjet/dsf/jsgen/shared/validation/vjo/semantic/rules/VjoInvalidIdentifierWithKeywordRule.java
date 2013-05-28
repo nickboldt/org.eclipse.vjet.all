@@ -37,10 +37,12 @@ public class VjoInvalidIdentifierWithKeywordRule extends VjoSemanticRule<Invalid
 		
 		
 		if(identifierName != null){
+			
 			final Matcher m = s_idPattern.matcher(identifierName);
 			if(!m.matches()){
-				final VjoSemanticProblem problem = VjoSemanticProblemFactory.getInstance().createProblem(ctx.getArguments(), ctx.getGroupId(), getProblemId(), getErrMsg(), ctx.getNode(), this);
-				return problem;
+				// TODO revisit this .. make a warning and only give warning underline for object literal field not value.
+//				final VjoSemanticProblem problem = VjoSemanticProblemFactory.getInstance().createProblem(ctx.getArguments(), ctx.getGroupId(), getProblemId(), getErrMsg(), ctx.getNode(), this);
+//				return problem;
 			}
 			else{
 				//check keywords 
