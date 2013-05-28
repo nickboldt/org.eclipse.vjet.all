@@ -85,6 +85,10 @@ public class JstExpressionBindingResolver implements IJstRefResolver {
 
 	private void promoteGlobals(IJstType type, JstTypeSpaceMgr mgr,
 			ResolutionResult rr) {
+		if(type==null){
+			return;
+		}
+		
 		if (type.hasGlobalVars()) {
 			ITypeSpace<IJstType, IJstNode> typeSpace = mgr.getTypeSpace();
 			boolean error = false;
