@@ -2307,12 +2307,12 @@ public class JstExpressionTypeLinkerHelper {
 					&& exprType instanceof SynthOlType
 					&& type instanceof JstMixedType) {
 
-				doObjLiteralAndOTypeBindingsMixedTypes((ObjLiteral) expr,
-						(SynthOlType) exprType, (JstMixedType) type, revisitor);
+//				doObjLiteralAndOTypeBindingsMixedTypes((ObjLiteral) expr,
+//						(SynthOlType) exprType, (JstMixedType) type, revisitor);
 			} else if (expr instanceof ObjLiteral
 					&& exprType instanceof SynthOlType) {
-				doObjLiteralAndOTypeBindings((ObjLiteral) expr,
-						(SynthOlType) exprType, type, revisitor, null);
+//				doObjLiteralAndOTypeBindings((ObjLiteral) expr,
+//						(SynthOlType) exprType, type, revisitor, null);
 			} else if (expr instanceof FuncExpr
 					&& exprType instanceof JstFuncType) {
 				if (type instanceof JstFuncType) {

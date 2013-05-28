@@ -344,10 +344,10 @@ class JstExpressionTypeLinker implements IJstVisitor {
 		// get list of type keys from registered resolvers
 		// then do the following if object literal contains literal name
 
-		if (node.getResultType() instanceof SynthOlType) {
-			JstExpressionTypeLinkerHelper.doObjLiteralAndOTypeBindings(node,
-					(SynthOlType) node.getResultType(), null, this, null);
-		}
+//		if (node.getResultType() instanceof SynthOlType) {
+//			JstExpressionTypeLinkerHelper.doObjLiteralAndOTypeBindings(node,
+//					(SynthOlType) node.getResultType(), null, this, null);
+//		}
 
 	}
 
