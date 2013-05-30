@@ -37,7 +37,7 @@ import org.eclipse.vjet.vsf.resource.pattern.js.IJsObjHandler;
 public final class EventDispatcherEnabler {
     private static final String NEW_LINE = System.getProperty("line.separator") ;
 	
-	public static final String EVENT_DISPATCHER = "vjo.dsf.EventDispatcher";
+	public static final String EVENT_DISPATCHER = "org.eclipse.vjet.vsf.EventDispatcher";
 	public static final String EVENT_DISPATCHER_SHORT = "_d";
 		//"var eventDispatcher = new dsf_EventDispatcher();";
 		

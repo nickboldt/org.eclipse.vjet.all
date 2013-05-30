@@ -75,6 +75,10 @@ public class DapUnitPlayer {
 			validator.startInit(initCapture);
 			dlcDispatcher.startInit(initCapture);
 			
+			if(true){
+				System.out.println(html);
+			}
+			
 			DapBrowserEngine browserEngine = new DapBrowserEngine(html,
 					new DapBrowserBinding(dlcDispatcher), 
 					dlcDispatcher, 

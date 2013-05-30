@@ -3,8 +3,6 @@ package org.eclipse.vjet.vsf.dapunit;
 import java.io.IOException;
 import java.net.URL;
 
-import junit.framework.Assert;
-
 import org.eclipse.vjet.dsf.common.context.DsfCtx;
 import org.eclipse.vjet.dsf.common.exceptions.DsfRuntimeException;
 import org.eclipse.vjet.dsf.common.resource.ResourceUtil;
@@ -12,7 +10,6 @@ import org.eclipse.vjet.dsf.dap.cnr.ReplaySpeed;
 import org.eclipse.vjet.dsf.dap.rt.DapCtx;
 import org.eclipse.vjet.dsf.dap.rt.DapCtx.ExeMode;
 import org.eclipse.vjet.dsf.dom.DNode;
-import org.eclipse.vjet.vsf.jsruntime.context.JsRuntimeCtx;
 
 /**
  * Base type for all DAP Unit tests
@@ -42,7 +39,6 @@ public class BaseDapUnit {
 	 *            DNode
 	 */
 	protected void runTest(final DNode root) {
-
 		ValidationCommands.enableAllPropertyBasedCommands();
 		ValidationCommands.enableAllStyleCommands();
 		AssertionSerializationHelper.enableAssertion();
@@ -50,7 +46,7 @@ public class BaseDapUnit {
 		new DapUnitDriver(getCaptureFileName()).setUserAgents(getUserAgents())
 				.addView(root, getTimeout()).run(getConfig());
 
-		Assert.assertEquals("Please find errors in console.",
+		AssertUtils.assertEquals("Please find errors in console.",
 				m_expectedErrorCount, getConfig().getErrorReporter()
 						.getDomErrors().size());
 		

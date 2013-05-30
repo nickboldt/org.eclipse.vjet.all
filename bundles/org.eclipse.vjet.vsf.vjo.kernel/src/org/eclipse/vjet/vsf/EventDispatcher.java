@@ -21,7 +21,7 @@ import org.eclipse.vjet.dsf.javatojs.anno.AJavaOnly;
 import org.eclipse.vjet.dsf.jsnative.HtmlElement;
 import org.eclipse.vjet.dsf.jsnative.Window;
 
-//NativeJsProxy for vjo.dsf.EventDispatcher.js
+//NativeJsProxy for org.eclipse.vjet.vsf.EventDispatcher.js
 @org.eclipse.vjet.dsf.resource.utils.CodeGen("NativeJsProxyGenerator")
 @AJsProxy
 public class EventDispatcher extends NativeJsProxy {
@@ -42,167 +42,167 @@ public class EventDispatcher extends NativeJsProxy {
     }
 
     public static Object process(String srcId, Object event) {
-        return callStaticWithName("vjo.dsf.EventDispatcher", "process", Object.class, srcId, event);
+        return callStaticWithName("org.eclipse.vjet.vsf.EventDispatcher", "process", Object.class, srcId, event);
     }
 
     public static Object register(String id, String eventType, Object handler, Object scope) {
-        return callStaticWithName("vjo.dsf.EventDispatcher", "register", Object.class, id, eventType, handler, scope);
+        return callStaticWithName("org.eclipse.vjet.vsf.EventDispatcher", "register", Object.class, id, eventType, handler, scope);
     }
 
     public static void unregister(String id, String eventType) {
-        callStaticWithName("vjo.dsf.EventDispatcher", "unregister", id, eventType);
+        callStaticWithName("org.eclipse.vjet.vsf.EventDispatcher", "unregister", id, eventType);
     }
 
     public static Object add(String id, String eventType, Object handler, Object scope) {
-        return callStaticWithName("vjo.dsf.EventDispatcher", "add", Object.class, id, eventType, handler, scope);
+        return callStaticWithName("org.eclipse.vjet.vsf.EventDispatcher", "add", Object.class, id, eventType, handler, scope);
     }
 
     public static Object addEventListener(HtmlElement elem, String type, Object listener, Object scope, boolean capture) {
-        return callStaticWithName("vjo.dsf.EventDispatcher", "addEventListener", Object.class, elem, type, listener, scope, capture);
+        return callStaticWithName("org.eclipse.vjet.vsf.EventDispatcher", "addEventListener", Object.class, elem, type, listener, scope, capture);
     }
 
     public static Object addEventListener(HtmlElement elem, String type, Object listener, Object scope) {
-        return callStaticWithName("vjo.dsf.EventDispatcher", "addEventListener", Object.class, elem, type, listener, scope);
+        return callStaticWithName("org.eclipse.vjet.vsf.EventDispatcher", "addEventListener", Object.class, elem, type, listener, scope);
     }
 
     public static Object addEventListener(Window elem, String type, Object listener, Object scope) {
-        return callStaticWithName("vjo.dsf.EventDispatcher", "addEventListener", Object.class, elem, type, listener, scope);
+        return callStaticWithName("org.eclipse.vjet.vsf.EventDispatcher", "addEventListener", Object.class, elem, type, listener, scope);
     }
 
     public static Object addEventListener(String elem, String type, Object listener, Object scope) {
-        return callStaticWithName("vjo.dsf.EventDispatcher", "addEventListener", Object.class, elem, type, listener, scope);
+        return callStaticWithName("org.eclipse.vjet.vsf.EventDispatcher", "addEventListener", Object.class, elem, type, listener, scope);
     }
 
     public static Object bind(String id, String eventType) {
-        return callStaticWithName("vjo.dsf.EventDispatcher", "bind", Object.class, id, eventType);
+        return callStaticWithName("org.eclipse.vjet.vsf.EventDispatcher", "bind", Object.class, id, eventType);
     }
 
     public static void reBind() {
-        callStaticWithName("vjo.dsf.EventDispatcher", "reBind");
+        callStaticWithName("org.eclipse.vjet.vsf.EventDispatcher", "reBind");
     }
 
     public static boolean isBound(String id, String type) {
-        return callStaticWithName("vjo.dsf.EventDispatcher", "isBound", Boolean.class, id, type);
+        return callStaticWithName("org.eclipse.vjet.vsf.EventDispatcher", "isBound", Boolean.class, id, type);
     }
 
     public static void removeEventListener(Object elem, String type, Object listener) {
-        callStaticWithName("vjo.dsf.EventDispatcher", "removeEventListener", elem, type, listener);
+        callStaticWithName("org.eclipse.vjet.vsf.EventDispatcher", "removeEventListener", elem, type, listener);
     }
 
     public static void detachNativeHandlers(Object elem, String type) {
-        callStaticWithName("vjo.dsf.EventDispatcher", "detachNativeHandlers", elem, type);
+        callStaticWithName("org.eclipse.vjet.vsf.EventDispatcher", "detachNativeHandlers", elem, type);
     }
 
     public static void detachHandler(String id, String eventType, Object handler) {
-        callStaticWithName("vjo.dsf.EventDispatcher", "detachHandler", id, eventType, handler);
+        callStaticWithName("org.eclipse.vjet.vsf.EventDispatcher", "detachHandler", id, eventType, handler);
     }
 
     public static void detachHandlers(String id, String eventType) {
-        callStaticWithName("vjo.dsf.EventDispatcher", "detachHandlers", id, eventType);
+        callStaticWithName("org.eclipse.vjet.vsf.EventDispatcher", "detachHandlers", id, eventType);
     }
 
     public static void stopEvent(Object e) {
-        callStaticWithName("vjo.dsf.EventDispatcher", "stopEvent", e);
+        callStaticWithName("org.eclipse.vjet.vsf.EventDispatcher", "stopEvent", e);
     }
 
     public static void stopPropagation(Object e) {
-        callStaticWithName("vjo.dsf.EventDispatcher", "stopPropagation", e);
+        callStaticWithName("org.eclipse.vjet.vsf.EventDispatcher", "stopPropagation", e);
     }
 
     public static void preventDefault(Object e) {
-        callStaticWithName("vjo.dsf.EventDispatcher", "preventDefault", e);
+        callStaticWithName("org.eclipse.vjet.vsf.EventDispatcher", "preventDefault", e);
     }
 
     public static HtmlElement target(Object event) {
-        return callStaticWithName("vjo.dsf.EventDispatcher", "target", HtmlElement.class, event);
+        return callStaticWithName("org.eclipse.vjet.vsf.EventDispatcher", "target", HtmlElement.class, event);
     }
 
     public static HtmlElement relatedTarget(Object event) {
-        return callStaticWithName("vjo.dsf.EventDispatcher", "relatedTarget", HtmlElement.class, event);
+        return callStaticWithName("org.eclipse.vjet.vsf.EventDispatcher", "relatedTarget", HtmlElement.class, event);
     }
 
     public static void detachAllElemHandlers(Object elem, String eventType) {
-        callStaticWithName("vjo.dsf.EventDispatcher", "detachAllElemHandlers", elem, eventType);
+        callStaticWithName("org.eclipse.vjet.vsf.EventDispatcher", "detachAllElemHandlers", elem, eventType);
     }
 
     public static Object unload(Object src, Object pEvent) {
-        return callStaticWithName("vjo.dsf.EventDispatcher", "unload", Object.class, src, pEvent);
+        return callStaticWithName("org.eclipse.vjet.vsf.EventDispatcher", "unload", Object.class, src, pEvent);
     }
 
     public static Object change(Object src, Object pEvent) {
-        return callStaticWithName("vjo.dsf.EventDispatcher", "change", Object.class, src, pEvent);
+        return callStaticWithName("org.eclipse.vjet.vsf.EventDispatcher", "change", Object.class, src, pEvent);
     }
 
     public static Object submit(Object src, Object pEvent) {
-        return callStaticWithName("vjo.dsf.EventDispatcher", "submit", Object.class, src, pEvent);
+        return callStaticWithName("org.eclipse.vjet.vsf.EventDispatcher", "submit", Object.class, src, pEvent);
     }
 
     public static Object reset(Object src, Object pEvent) {
-        return callStaticWithName("vjo.dsf.EventDispatcher", "reset", Object.class, src, pEvent);
+        return callStaticWithName("org.eclipse.vjet.vsf.EventDispatcher", "reset", Object.class, src, pEvent);
     }
 
     public static Object select(Object src, Object pEvent) {
-        return callStaticWithName("vjo.dsf.EventDispatcher", "select", Object.class, src, pEvent);
+        return callStaticWithName("org.eclipse.vjet.vsf.EventDispatcher", "select", Object.class, src, pEvent);
     }
 
     public static Object blur(Object src, Object pEvent) {
-        return callStaticWithName("vjo.dsf.EventDispatcher", "blur", Object.class, src, pEvent);
+        return callStaticWithName("org.eclipse.vjet.vsf.EventDispatcher", "blur", Object.class, src, pEvent);
     }
 
     public static Object focus(Object src, Object pEvent) {
-        return callStaticWithName("vjo.dsf.EventDispatcher", "focus", Object.class, src, pEvent);
+        return callStaticWithName("org.eclipse.vjet.vsf.EventDispatcher", "focus", Object.class, src, pEvent);
     }
 
     public static Object keydown(Object src, Object pEvent) {
-        return callStaticWithName("vjo.dsf.EventDispatcher", "keydown", Object.class, src, pEvent);
+        return callStaticWithName("org.eclipse.vjet.vsf.EventDispatcher", "keydown", Object.class, src, pEvent);
     }
 
     public static Object keypress(Object src, Object pEvent) {
-        return callStaticWithName("vjo.dsf.EventDispatcher", "keypress", Object.class, src, pEvent);
+        return callStaticWithName("org.eclipse.vjet.vsf.EventDispatcher", "keypress", Object.class, src, pEvent);
     }
 
     public static Object keyup(Object src, Object pEvent) {
-        return callStaticWithName("vjo.dsf.EventDispatcher", "keyup", Object.class, src, pEvent);
+        return callStaticWithName("org.eclipse.vjet.vsf.EventDispatcher", "keyup", Object.class, src, pEvent);
     }
 
     public static Object click(Object src, Object pEvent) {
-        return callStaticWithName("vjo.dsf.EventDispatcher", "click", Object.class, src, pEvent);
+        return callStaticWithName("org.eclipse.vjet.vsf.EventDispatcher", "click", Object.class, src, pEvent);
     }
 
     public static Object dblclick(Object src, Object pEvent) {
-        return callStaticWithName("vjo.dsf.EventDispatcher", "dblclick", Object.class, src, pEvent);
+        return callStaticWithName("org.eclipse.vjet.vsf.EventDispatcher", "dblclick", Object.class, src, pEvent);
     }
 
     public static Object mousedown(Object src, Object pEvent) {
-        return callStaticWithName("vjo.dsf.EventDispatcher", "mousedown", Object.class, src, pEvent);
+        return callStaticWithName("org.eclipse.vjet.vsf.EventDispatcher", "mousedown", Object.class, src, pEvent);
     }
 
     public static Object mousemove(Object src, Object pEvent) {
-        return callStaticWithName("vjo.dsf.EventDispatcher", "mousemove", Object.class, src, pEvent);
+        return callStaticWithName("org.eclipse.vjet.vsf.EventDispatcher", "mousemove", Object.class, src, pEvent);
     }
 
     public static Object mouseout(Object src, Object pEvent) {
-        return callStaticWithName("vjo.dsf.EventDispatcher", "mouseout", Object.class, src, pEvent);
+        return callStaticWithName("org.eclipse.vjet.vsf.EventDispatcher", "mouseout", Object.class, src, pEvent);
     }
 
     public static Object mouseover(Object src, Object pEvent) {
-        return callStaticWithName("vjo.dsf.EventDispatcher", "mouseover", Object.class, src, pEvent);
+        return callStaticWithName("org.eclipse.vjet.vsf.EventDispatcher", "mouseover", Object.class, src, pEvent);
     }
 
     public static Object mouseup(Object src, Object pEvent) {
-        return callStaticWithName("vjo.dsf.EventDispatcher", "mouseup", Object.class, src, pEvent);
+        return callStaticWithName("org.eclipse.vjet.vsf.EventDispatcher", "mouseup", Object.class, src, pEvent);
     }
 
     public static Object contextmenu(Object src, Object pEvent) {
-        return callStaticWithName("vjo.dsf.EventDispatcher", "contextmenu", Object.class, src, pEvent);
+        return callStaticWithName("org.eclipse.vjet.vsf.EventDispatcher", "contextmenu", Object.class, src, pEvent);
     }
 
     public static Object load(Object src, Object pEvent) {
-        return callStaticWithName("vjo.dsf.EventDispatcher", "load", Object.class, src, pEvent);
+        return callStaticWithName("org.eclipse.vjet.vsf.EventDispatcher", "load", Object.class, src, pEvent);
     }
 
     public static Object run(Object src, Object pEvent, String eventType) {
-        return callStaticWithName("vjo.dsf.EventDispatcher", "run", Object.class, src, pEvent, eventType);
+        return callStaticWithName("org.eclipse.vjet.vsf.EventDispatcher", "run", Object.class, src, pEvent, eventType);
     }
 
     @AJavaOnly

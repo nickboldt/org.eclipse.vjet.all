@@ -2,8 +2,6 @@ package org.eclipse.vjet.vsf.dapunit;
 
 import java.util.Iterator;
 
-import junit.framework.Assert;
-
 import org.eclipse.vjet.dsf.common.exceptions.DsfRuntimeException;
 import org.eclipse.vjet.dsf.dap.cnr.DapCaptureData;
 import org.eclipse.vjet.dsf.dap.cnr.DapCaptureData.EventCapture;
@@ -84,9 +82,9 @@ public class DapUnitInstantValidator implements IDapCaptureListener {
 		EventCapture actualEventCapture = m_actualCaptureData.getInitEventCapture();
 		if (actualEventCapture instanceof EventCapture) {
 			EventCapture ec = (EventCapture) actualEventCapture;
-			Assert.assertNotNull(ASSERT_NULL.concat(ec.getEvent() != null ? ec
+			AssertUtils.assertNotNull(ASSERT_NULL.concat(ec.getEvent() != null ? ec
 					.getEvent().getPayload() : CONS_NULL), actualEventCapture);
-			Assert.assertEquals(ASSERT_EQUALS.concat(ec.getEvent() != null ? ec
+			AssertUtils.assertEquals(ASSERT_EQUALS.concat(ec.getEvent() != null ? ec
 					.getEvent().getPayload() : CONS_NULL), m_curEventCapture
 					.getDomChangeSize(), ec.getDomChangeSize());
 		}
@@ -116,9 +114,9 @@ public class DapUnitInstantValidator implements IDapCaptureListener {
 		IEventCapture actualEventCapture = m_actualCaptureData.getCurrentEventCapture();
 		if(actualEventCapture instanceof EventCapture){
 			EventCapture ec = (EventCapture)actualEventCapture;
-			Assert.assertNotNull(ASSERT_NULL.concat(ec.getEvent() != null ? ec
+			AssertUtils.assertNotNull(ASSERT_NULL.concat(ec.getEvent() != null ? ec
 					.getEvent().getPayload() : CONS_NULL), actualEventCapture);
-			Assert.assertEquals(ASSERT_EQUALS
+			AssertUtils.assertEquals(ASSERT_EQUALS
 					.concat(ec.getEvent() != null ? ec.getEvent().getPayload()
 							: CONS_NULL), m_curEventCapture.getDomChangeSize(), ec
 					.getDomChangeSize());

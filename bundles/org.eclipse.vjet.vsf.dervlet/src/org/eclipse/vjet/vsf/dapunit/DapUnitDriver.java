@@ -6,8 +6,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import junit.framework.Assert;
-
 import org.eclipse.vjet.dsf.common.exceptions.DsfRuntimeException;
 import org.eclipse.vjet.dsf.common.xml.IIndenter;
 import org.eclipse.vjet.dsf.dap.cnr.DapCapture;
@@ -179,7 +177,7 @@ public class DapUnitDriver {
 		try {
 
 			// Assert MATCHING VIEW SIZE
-			Assert.assertEquals(m_captureData.getViewCaptures().size(), m_views
+			AssertUtils.assertEquals(m_captureData.getViewCaptures().size(), m_views
 					.size());
 
 			DapCapture dapCapture = new DapCapture();

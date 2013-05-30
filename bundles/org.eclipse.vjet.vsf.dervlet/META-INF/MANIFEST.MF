@@ -4,21 +4,20 @@ Bundle-Name: Dervlet (Incubation)
 Bundle-SymbolicName: org.eclipse.vjet.vsf.dervlet
 Bundle-Version: 0.10.0.qualifier
 Require-Bundle: org.eclipse.core.runtime;visibility:=reexport,
- org.eclipse.jetty.http;bundle-version="8.1.3";visibility:=reexport,
- org.eclipse.jetty.server;bundle-version="8.1.3";visibility:=reexport,
- org.eclipse.jetty.continuation;bundle-version="8.1.3";visibility:=reexport,
- org.eclipse.jetty.io;bundle-version="8.1.3";visibility:=reexport,
- org.eclipse.jetty.security;bundle-version="8.1.3";visibility:=reexport,
- org.eclipse.jetty.servlet;bundle-version="8.1.3";visibility:=reexport,
- org.eclipse.jetty.util;bundle-version="8.1.3";visibility:=reexport,
+ org.eclipse.jetty.http;bundle-version="[8.1.3, 9.0.0)";visibility:=reexport,
+ org.eclipse.jetty.server;bundle-version="[8.1.3, 9.0.0)";visibility:=reexport,
+ org.eclipse.jetty.continuation;bundle-version="[8.1.3, 9.0.0)";visibility:=reexport,
+ org.eclipse.jetty.io;bundle-version="[8.1.3, 9.0.0)";visibility:=reexport,
+ org.eclipse.jetty.security;bundle-version="[8.1.3, 9.0.0)";visibility:=reexport,
+ org.eclipse.jetty.servlet;bundle-version="[8.1.3, 9.0.0)";visibility:=reexport,
+ org.eclipse.jetty.util;bundle-version="[8.1.3, 9.0.0)";visibility:=reexport,
  org.eclipse.vjet.rt.active;visibility:=reexport,
  org.eclipse.vjet.vsf.jsruntime;visibility:=reexport,
  org.eclipse.vjet.vsf.aggregator;visibility:=reexport,
  org.eclipse.vjet.vsf.docprocessing;visibility:=reexport,
  org.eclipse.vjet.vsf.resource.js;visibility:=reexport,
  org.apache.commons.httpclient;bundle-version="3.1.0";visibility:=reexport,
- org.eclipse.vjet.vsf.spec;visibility:=reexport,
- org.junit4;bundle-version="4.8.1"
+ org.eclipse.vjet.vsf.spec;visibility:=reexport
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Import-Package: javax.servlet,

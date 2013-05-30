@@ -32,7 +32,7 @@ public class EventDispatcherJsr extends JsObj {
     private static final long serialVersionUID = 1L;
 
     private static final JsObjData S = 
-        new JsObjData("vjo.dsf.EventDispatcher", EventDispatcherJsr.class, "EventDispatcher");
+        new JsObjData("org.eclipse.vjet.vsf.EventDispatcher", EventDispatcherJsr.class, "EventDispatcher");
 
     
     public static class ResourceSpec {
