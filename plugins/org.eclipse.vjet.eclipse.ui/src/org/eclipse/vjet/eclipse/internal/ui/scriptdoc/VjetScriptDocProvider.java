@@ -11,14 +11,12 @@ package org.eclipse.vjet.eclipse.internal.ui.scriptdoc;
 import java.io.Reader;
 import java.io.StringReader;
 import java.net.URI;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.dltk.mod.core.IField;
 import org.eclipse.dltk.mod.core.IMember;
 import org.eclipse.dltk.mod.core.IMethod;
 import org.eclipse.dltk.mod.core.IModelElement;
-import org.eclipse.dltk.mod.core.IPackageDeclaration;
 import org.eclipse.dltk.mod.core.ModelException;
 import org.eclipse.dltk.mod.internal.core.NativeVjoSourceModule;
 import org.eclipse.dltk.mod.internal.core.VjoExternalSourceModule;

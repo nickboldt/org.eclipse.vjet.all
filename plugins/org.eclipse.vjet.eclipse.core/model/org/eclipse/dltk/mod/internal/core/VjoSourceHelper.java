@@ -103,7 +103,7 @@ public class VjoSourceHelper {
 				&& resource.getLocation().toOSString().endsWith(".js")) {
 			return CodeassistUtils.getTypeName(resource);
 		}
-		VjetPlugin.error("could not find type for " + resource.toString());
+		//VjetPlugin.error("could not find type for " + resource.toString());
 		return null;
 	}
 }

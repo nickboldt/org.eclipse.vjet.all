@@ -132,6 +132,10 @@ public class VjetScriptBuilder extends ScriptBuilder {
 			if (resource.getType() == IResource.FILE) {
 				SourceTypeName name;
 				IFile file = (IFile) resource;
+				SourceTypeName qualifiedName = VjoSourceHelper.getFileQulifieName(resource);
+				if(qualifiedName==null){
+					return false;
+				}
 				
 				ISourceModule module = VjoSourceHelper.getModuleFromResource(file, scriptProject);
 				TypeSpaceMgr tsmgr = TypeSpaceMgr.getInstance();
@@ -422,7 +426,7 @@ public class VjetScriptBuilder extends ScriptBuilder {
 					if (DEBUG)
 						log("Performing full build since group was not found in typespace"); //$NON-NLS-1$
 					fullBuild(monitor);
-				} else if (EclipseTypeSpaceLoader.isBildPathChangedEvent(delta)) {
+				} else if (kind != AUTO_BUILD && EclipseTypeSpaceLoader.isBildPathChangedEvent(delta)) {
 					if (DEBUG)
 						log("Performing full build since build path changed"); //$NON-NLS-1$
 					fullBuild(monitor);
@@ -1028,13 +1032,13 @@ public class VjetScriptBuilder extends ScriptBuilder {
 			total += workEstimations[k];
 		}
 
-		for (int k = 0; k < builders.length; k++) {
+//		for (int k = 0; k < builders.length; k++) {
 			if (monitor.isCanceled()) {
 				return;
 			}
-			final IScriptBuilder builder = builders[k];
-			int builderWork = workEstimations[k] * ticks / total;
-			final List buildExternalElements = builderExternalElements[k];
+			final IScriptBuilder builder = builders[0];
+			int builderWork = workEstimations[0] * ticks / total;
+			final List buildExternalElements = builderExternalElements[0];
 			if (buildExternalElements != null
 					&& buildExternalElements.size() > 0
 					&& builder instanceof IScriptBuilderExtension) {
@@ -1045,9 +1049,9 @@ public class VjetScriptBuilder extends ScriptBuilder {
 						Integer.toString(buildExternalElements.size())));
 				((IScriptBuilderExtension) builder).buildExternalElements(
 						scriptProject, buildExternalElements,
-						new SubProgressMonitor(monitor, step), buildTypes[k]);
+						new SubProgressMonitor(monitor, step), buildTypes[0]);
 			}
-			final List buildElementsList = builderToElements[k];
+			final List buildElementsList = builderToElements[0];
 			if (buildElementsList.size() > 0) {
 				final int step = buildElementsList.size() * ticks / total;
 				builderWork -= step;
@@ -1083,6 +1087,12 @@ public class VjetScriptBuilder extends ScriptBuilder {
 					IProblemReporter reporter = module.getProblemReporter();
 					boolean validatable = reporter!=null;
 					IJstType unit = module.getUnit();
+					List<DefaultProblem> dproblems = null;
+					if(unit==null){
+						// log error
+						VjetPlugin.error("could not parse file: " + module.getFile());
+						continue;
+					}
 					TypeSpaceMgr.getInstance().getController().resolve(module.getVjoSourceModule().getGroupName(), unit);
 					if (unit != null) {
 						//if disable all the validations (syntax and semantic)
@@ -1090,7 +1100,7 @@ public class VjetScriptBuilder extends ScriptBuilder {
 							continue;
 						}
 						// deal with problems
-						List<DefaultProblem> dproblems = null;
+						
 						List<IScriptProblem> problems = unit.getProblems();
 						if (problems!=null && !problems.isEmpty() && validatable) {
 							dproblems = ProblemUtility.reportProblems(problems);	
@@ -1116,7 +1126,7 @@ public class VjetScriptBuilder extends ScriptBuilder {
 
 //				builder.buildModelElements(scriptProject, buildElementsList,
 //						new SubProgressMonitor(monitor, step), buildTypes[k]);
-			}
+//			}
 			if (builderWork > 0) {
 				monitor.worked(builderWork);
 			}
