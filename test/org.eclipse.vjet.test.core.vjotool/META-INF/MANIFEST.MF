@@ -7,6 +7,6 @@ Require-Bundle: org.eclipse.vjet.resource.jsnativetypes,
  org.eclipse.vjet.resource.vjojavalib,
  org.eclipse.vjet.resource.vjolib,
  org.eclipse.vjet.core.vjotool,
- org.junit4;bundle-version="4.8.1",
+ org.junit,
  org.eclipse.core.runtime,
  org.eclipse.vjet.test.utils

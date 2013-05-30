@@ -198,8 +198,6 @@ public class VjoValidationBugFixTests extends VjoValidationBaseTester {
         final List<VjoSemanticProblem> expectedProblems = new ArrayList<VjoSemanticProblem>();
         expectedProblems.add(createNewProblem(
                 MethodProbIds.WrongNumberOfArguments, 2, 0));
-        expectedProblems.add(createNewProblem(
-                VjoSyntaxProbIds.InvalidIdentifier, 2, 0));
 
         final List<VjoSemanticProblem> actualProblems = getVjoSemanticProblem(
                 "org.eclipse.vjet.dsf.jst.validation.vjo.BugFixes.", "Bug4591.js", this
@@ -966,11 +964,6 @@ public class VjoValidationBugFixTests extends VjoValidationBaseTester {
     public void testBug5880Error() throws Exception {
         final List<VjoSemanticProblem> expectedProblems = new ArrayList<VjoSemanticProblem>(
                 0);
-        for (int i = 0; i < VjoConstants.JAVA_ONLY_KEYWORDS.size(); i++) {
-            expectedProblems.add(createNewProblem(
-                    VjoSyntaxProbIds.InvalidIdentifier, i + 3, 0));
-        }
-
         final List<VjoSemanticProblem> actualProblems = getVjoSemanticProblem(
                 "org.eclipse.vjet.dsf.jst.validation.vjo.BugFixes.", "Bug5880.js", this
                         .getClass());
@@ -1723,11 +1716,6 @@ public class VjoValidationBugFixTests extends VjoValidationBaseTester {
     public void testBug7671Error() throws Exception {
         final List<VjoSemanticProblem> expectedProblems = new ArrayList<VjoSemanticProblem>(
                 0);
-        expectedProblems.add(createNewProblem(
-                VjoSyntaxProbIds.InvalidIdentifier, 3, 0));
-        expectedProblems.add(createNewProblem(
-                VjoSyntaxProbIds.InvalidIdentifier, 6, 0));
-
         final List<VjoSemanticProblem> actualProblems = getVjoSemanticProblem(
                 "org.eclipse.vjet.dsf.jst.validation.vjo.BugFixes.", "Bug7671.js", this
                         .getClass());

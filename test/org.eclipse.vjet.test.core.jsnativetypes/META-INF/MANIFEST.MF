@@ -14,7 +14,7 @@ Require-Bundle: org.eclipse.vjet.rt.active,
  org.eclipse.vjet.resource.jsnativetypes,
  org.eclipse.vjet.resource.vjolib,
  org.eclipse.vjet.resource.jsnativetypes,
- org.junit4;bundle-version="4.8.1"
+ org.junit
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 
 

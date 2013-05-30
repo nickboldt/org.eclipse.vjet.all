@@ -8,5 +8,5 @@ Require-Bundle: org.eclipse.vjet.core.jsnative,
  org.eclipse.vjet.web.kernel,
  org.eclipse.vjet.web.html,
  org.eclipse.vjet.rt.vjoruntime,
- org.junit4;bundle-version="4.8.1",
+ org.junit,
  org.eclipse.core.runtime

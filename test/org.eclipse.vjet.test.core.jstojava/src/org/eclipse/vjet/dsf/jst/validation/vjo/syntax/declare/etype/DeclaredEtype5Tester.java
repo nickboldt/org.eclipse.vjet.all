@@ -38,7 +38,6 @@ public class DeclaredEtype5Tester extends VjoValidationBaseTester {
     public void setUp(){
         expectProblems.clear();
         expectProblems.add(createNewProblem(MethodProbIds.WrongNumberOfArguments, 2, 0));
-        expectProblems.add(createNewProblem(VjoSyntaxProbIds.InvalidIdentifier,2, 0));
     }
 
     @Test

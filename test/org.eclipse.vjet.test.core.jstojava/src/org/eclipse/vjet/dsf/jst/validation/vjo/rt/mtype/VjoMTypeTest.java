@@ -111,7 +111,6 @@ public class VjoMTypeTest extends VjoValidationBaseTester{
 	public void testBadMType5() throws Exception {
 		expectProblems.clear();
 		expectProblems.add(createNewProblem(MethodProbIds.UndefinedMethod, 2,  0));
-		expectProblems.add(createNewProblem(VjoSyntaxProbIds.InvalidIdentifier, 1, 0));
 		actualProblems = getVjoSemanticProblem("org.eclipse.vjet.dsf.jst.validation.vjo.rt.mtype.", "BadMType5.js", this.getClass());
 		assertProblemEquals(expectProblems, actualProblems);
 	}

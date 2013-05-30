@@ -72,7 +72,6 @@ public class VjoCTypeTest extends VjoValidationBaseTester{
 	public void testBadCType1() throws Exception {
 		expectProblems.clear();
 		expectProblems.add(createNewProblem(MethodProbIds.UndefinedMethod, 2, 0));
-		expectProblems.add(createNewProblem(VjoSyntaxProbIds.InvalidIdentifier, 1, 0));
 		actualProblems = getVjoSemanticProblem("org.eclipse.vjet.dsf.jst.validation.vjo.rt.ctype.", "BadCType1.js", this.getClass());
 		assertProblemEquals(expectProblems, actualProblems);
 	}

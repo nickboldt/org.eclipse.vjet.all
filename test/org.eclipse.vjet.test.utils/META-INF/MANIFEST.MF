@@ -6,7 +6,7 @@ Bundle-Version: 0.10.0.qualifier
 Export-Package: org.eclipse.vjet.dsf.test.utils,
  org.eclipse.vjet.dsf.test.utils.vjo
 Require-Bundle: org.eclipse.jdt.core,
- org.junit4;bundle-version="4.8.1",
+ org.junit,
  org.eclipse.vjet.core.ext,
  org.eclipse.vjet.core.javatojs,
  org.eclipse.vjet.resource.jsnativetypes,
