@@ -59,7 +59,7 @@ public class JstParseController implements IJstParseController {
 		return m_parser.parse(groupName, sourceFile);
 	}
 
-	public synchronized IJstType parseAndResolve(String groupName, String fileName,
+	public IJstType parseAndResolve(String groupName, String fileName,
 			String source) {
 		if (source == null) {
 			throw new DsfRuntimeException("missing source for " + fileName);
@@ -110,7 +110,9 @@ public class JstParseController implements IJstParseController {
 		 
 		ResolutionResult resolve = m_resolver.resolve(groupName, su);
 		addResolutionResultToSU(su, resolve);
-
+		if(su==null){
+			System.out.println(su);
+		}
 		if(su.getJstBlockList()!=null){
 			List<JstBlock> blocks = su.getJstBlockList();
 			for (JstBlock block : blocks) {
