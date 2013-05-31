@@ -109,7 +109,6 @@ import org.eclipse.mod.wst.jsdt.internal.compiler.lookup.CompilationUnitScope;
 import org.eclipse.mod.wst.jsdt.internal.compiler.lookup.ExtraCompilerModifiers;
 import org.eclipse.mod.wst.jsdt.internal.compiler.lookup.MethodScope;
 import org.eclipse.mod.wst.jsdt.internal.compiler.lookup.Scope;
-import org.eclipse.mod.wst.jsdt.internal.compiler.parser.Scanner;
 import org.eclipse.mod.wst.jsdt.internal.compiler.parser.TerminalTokens;
 //import org.eclipse.wst.jsdt.internal.core.util.CodeSnippetParsingUtil;
 //import org.eclipse.wst.jsdt.internal.formatter.align.Alignment;
@@ -121,7 +120,6 @@ import org.eclipse.mod.wst.jsdt.internal.compiler.parser.TerminalTokens;
 //import org.eclipse.vjet.dsf.jstojava.formatter.DefaultCodeFormatterOptions;
 import org.eclipse.mod.wst.jsdt.internal.core.util.PublicScanner;
 
-import com.sun.org.apache.xpath.internal.operations.Mult;
 
 /**
  * This class is responsible for formatting a valid java source code.
