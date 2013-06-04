@@ -272,7 +272,9 @@ public class BootstrapParser {
 				Iterator iter = m.getArgs().iterator();
 				while (iter.hasNext()) {
 					JstArg arg = (JstArg) iter.next();
-					z.append(arg.getType().getName());
+					if(arg.getType()!=null && arg.getType().getName()!=null){
+						z.append(arg.getType().getName());
+					}
 					z.append(" " + (arg.isVariable() ? "..." : "")
 							+ arg.getName());
 					if (iter.hasNext()) {

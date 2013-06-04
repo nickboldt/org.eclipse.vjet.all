@@ -89,7 +89,7 @@ public class JstCache {
 	 * @return boolean
 	 */
 	public synchronized boolean addType(JstType type){
-		if(!type.getAlias().equals(type.getName())){
+		if(type.getAlias()!=null && !type.getAlias().equals(type.getName())){
 			addType(type.getAlias(), type);
 		}
 		return addType(type.getName(), type);

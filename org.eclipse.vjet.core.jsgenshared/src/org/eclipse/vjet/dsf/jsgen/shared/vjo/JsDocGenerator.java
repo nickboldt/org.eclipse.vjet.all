@@ -539,6 +539,9 @@ public class JsDocGenerator extends BaseGenerator {
 	}
 	
 	private boolean compare(String name, IJstType type) {
+		if(name==null){
+			return false;
+		}
 		String typeName = type.getName();
 		return (name.equals(typeName) || name.startsWith(typeName+DOT) || name.startsWith(typeName+"["));
 	}
