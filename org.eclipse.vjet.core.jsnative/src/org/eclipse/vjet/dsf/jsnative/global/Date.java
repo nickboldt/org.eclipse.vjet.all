@@ -161,175 +161,175 @@ public interface Date extends Object {
 	/**
 	 * Sets the day of the month for a specified date according to local time. 
 	 */
-	@Function void setDate(Number day);
+	@Function Number setDate(Number day);
 	
 	/**
 	 * Sets the full year for a specified date according to local time. 
 	 */
 	@JsSupport( JsVersion.MOZILLA_ONE_DOT_THREE)
-	@OverLoadFunc void setFullYear(Number year);
+	@OverLoadFunc Number setFullYear(Number year);
 	
 	/**
 	 * Sets the full year for a specified date according to local time. 
 	 */
 	@JsSupport( JsVersion.MOZILLA_ONE_DOT_THREE)
-	@OverLoadFunc void setFullYear(Number year,Number month);
+	@OverLoadFunc Number setFullYear(Number year,Number month);
 	
 	/**
 	 * Sets the full year for a specified date according to local time. 
 	 */
 	@JsSupport( JsVersion.MOZILLA_ONE_DOT_THREE)
-	@OverLoadFunc void setFullYear(Number year,Number month,Number day);
+	@OverLoadFunc Number setFullYear(Number year,Number month,Number day);
 	
 	/**
 	 * Sets the hours for a specified date according to local time. 
 	 */
-	@OverLoadFunc void setHours(Number hour);
+	@OverLoadFunc Number setHours(Number hour);
 	
 	/**
 	 * Sets the hours for a specified date according to local time. 
 	 */
-	@OverLoadFunc void setHours(Number hour,Number min);
+	@OverLoadFunc Number setHours(Number hour,Number min);
 	
 	/**
 	 * Sets the hours for a specified date according to local time. 
 	 */
-	@OverLoadFunc void setHours(Number hour,Number min,Number sec);
+	@OverLoadFunc Number setHours(Number hour,Number min,Number sec);
 	
 	/**
 	 * Sets the hours for a specified date according to local time. 
 	 */
-	@OverLoadFunc void setHours(Number hour,Number min,Number sec,Number millisec);
+	@OverLoadFunc Number setHours(Number hour,Number min,Number sec,Number millisec);
 	
 	/**
 	 * Sets the milliseconds for a specified date according to local time. 
 	 */
-	@Function void setMilliseconds(Number millisec);
+	@Function Number setMilliseconds(Number millisec);
 	
 	/**
 	 * Sets the minutes for a specified date according to local time. 
 	 */
-	@OverLoadFunc void setMinutes(Number min);
+	@OverLoadFunc Number setMinutes(Number min);
 	
 	/**
 	 * Sets the minutes for a specified date according to local time. 
 	 */
-	@OverLoadFunc void setMinutes(Number min,Number sec);
+	@OverLoadFunc Number setMinutes(Number min,Number sec);
 	
 	/**
 	 * Sets the minutes for a specified date according to local time. 
 	 */
-	@OverLoadFunc void setMinutes(Number min,Number sec,Number millisec);
+	@OverLoadFunc Number setMinutes(Number min,Number sec,Number millisec);
 	
 	/**
 	 * Set the month for a specified date according to local time. 
 	 */
-	@OverLoadFunc void setMonth(Number month);
+	@OverLoadFunc Number setMonth(Number month);
 	
 	/**
 	 * Set the month for a specified date according to local time. 
 	 */
-	@OverLoadFunc void setMonth(Number month,Number day);
+	@OverLoadFunc Number setMonth(Number month,Number day);
 	
 	/**
 	 * Sets the seconds for a specified date according to local time. 
 	 */
-	@OverLoadFunc void setSeconds(Number sec);
+	@OverLoadFunc Number setSeconds(Number sec);
 	
 	/**
 	 * Sets the seconds for a specified date according to local time. 
 	 */
-	@OverLoadFunc void setSeconds(Number sec,Number millisec);
+	@OverLoadFunc Number setSeconds(Number sec,Number millisec);
 	
 	/**
 	 * Sets the value of a Date object according to local time. 
 	 */
-	@Function void setTime(Number millisec);
+	@Function Number setTime(Number millisec);
 	
 	/**
 	 * Sets the day of the month for a specified date according to universal time. 
 	 */
-	@Function void setUTCDate(Number day);
+	@Function Number setUTCDate(Number day);
 	
 	/**
 	 * Sets the full year for a specified date according to universal time. 
 	 */
-	@OverLoadFunc void setUTCFullYear(Number year);
+	@OverLoadFunc Number setUTCFullYear(Number year);
 	
 	/**
 	 * Sets the full year for a specified date according to universal time. 
 	 */
-	@OverLoadFunc void setUTCFullYear(Number year,Number month);
+	@OverLoadFunc Number setUTCFullYear(Number year,Number month);
 	
 	/**
 	 * Sets the full year for a specified date according to universal time. 
 	 */
-	@OverLoadFunc void setUTCFullYear(Number year,Number month,Number day);
+	@OverLoadFunc Number setUTCFullYear(Number year,Number month,Number day);
 	
 	/**
 	 * Sets the hour for a specified date according to universal time. 
 	 */
-	@OverLoadFunc void setUTCHours(Number hour);
+	@OverLoadFunc Number setUTCHours(Number hour);
 	
 	/**
 	 * Sets the hour for a specified date according to universal time. 
 	 */
-	@OverLoadFunc void setUTCHours(Number hour,Number min);
+	@OverLoadFunc Number setUTCHours(Number hour,Number min);
 	
 	/**
 	 * Sets the hour for a specified date according to universal time. 
 	 */
-	@OverLoadFunc void setUTCHours(Number hour,Number min,Number sec);
+	@OverLoadFunc Number setUTCHours(Number hour,Number min,Number sec);
 	
 	/**
 	 * Sets the hour for a specified date according to universal time. 
 	 */
-	@OverLoadFunc void setUTCHours(Number hour,Number min,Number sec,Number millisec);
+	@OverLoadFunc Number setUTCHours(Number hour,Number min,Number sec,Number millisec);
 	
 	/**
 	 * Sets the minutes for a specified date according to universal time. 
 	 */
-	@OverLoadFunc void setUTCMinutes(Number min);
+	@OverLoadFunc Number setUTCMinutes(Number min);
 	
 	/**
 	 * Sets the minutes for a specified date according to universal time. 
 	 */
-	@OverLoadFunc void setUTCMinutes(Number min,Number sec);
+	@OverLoadFunc Number setUTCMinutes(Number min,Number sec);
 	
 	/**
 	 * Sets the minutes for a specified date according to universal time. 
 	 */
-	@OverLoadFunc void setUTCMinutes(Number min,Number sec,Number millisec);
+	@OverLoadFunc Number setUTCMinutes(Number min,Number sec,Number millisec);
 	
 	/**
 	 * Sets the seconds for a specified date according to universal time. 
 	 */
-	@OverLoadFunc void setUTCSeconds(Number sec);
+	@OverLoadFunc Number setUTCSeconds(Number sec);
 	
 	/**
 	 * Sets the seconds for a specified date according to universal time. 
 	 */
-	@OverLoadFunc void setUTCSeconds(Number sec,Number millisec);
+	@OverLoadFunc Number setUTCSeconds(Number sec,Number millisec);
 	
 	/**
 	 * Sets the milliseconds for a specified date according to universal time. 
 	 */
-	@Function void setUTCMilliseconds(Number millisec);
+	@Function Number setUTCMilliseconds(Number millisec);
 	
 	/**
 	 * Sets the month for a specified date according to universal time. 
 	 */
-	@OverLoadFunc void setUTCMonth(Number month);
+	@OverLoadFunc Number setUTCMonth(Number month);
 	
 	/**
 	 * Sets the month for a specified date according to universal time. 
 	 */
-	@OverLoadFunc void setUTCMonth(Number month,Number day);
+	@OverLoadFunc Number setUTCMonth(Number month,Number day);
 	
 	/**
 	 * Sets the year for a specified date according to local time. 
 	 */
-	@Function void setYear(Number year);
+	@Function Number setYear(Number year);
 	
 	/**
 	 * Returns a string version of the Date object expressed in local time.
