@@ -57,6 +57,7 @@ public class VjoSemanticRuleRepo {
 	public final IVjoSemanticRule<BaseVjoSemanticRuleCtx> STATIC_REFERENCE_TO_NON_STATIC_TYPE = new StaticReferenceToNonStaticType();
 	
 	public final IVjoSemanticRule<BaseVjoSemanticRuleCtx> METHOD_SHOULD_BE_DEFINED = new MethodShouldBeDefinedRule();
+	public final IVjoSemanticRule<BaseVjoSemanticRuleCtx> INFERRED_TYPE_METHOD_SHOULD_BE_DEFINED = new MethodShouldBeDefinedRule();
 	public final IVjoSemanticRule<BaseVjoSemanticRuleCtx> FUNCTION_SHOULD_BE_DEFINED = new FunctionShouldBeDefinedRule();
 	public final IVjoSemanticRule<BaseVjoSemanticRuleCtx> METHOD_SHOULD_BE_VISIBLE = new MethodShouldBeVisibleRule();
 	public final IVjoSemanticRule<BaseVjoSemanticRuleCtx> CONSTRUCTOR_SHOULD_BE_VISIBLE = new ConstructorShouldBeVisibleRule();
@@ -225,6 +226,7 @@ public class VjoSemanticRuleRepo {
 		NONE_STATIC_PROPERTY_SHOULD_NOT_BE_ACCESSED_FROM_STATIC_SCOPE.setGlobalPolicy(GLOBAL_ERROR_POLICY);
 		STATIC_REFERENCE_TO_NON_STATIC_TYPE.setGlobalPolicy(GLOBAL_ERROR_POLICY);
 		METHOD_SHOULD_BE_DEFINED.setGlobalPolicy(GLOBAL_ERROR_POLICY);
+		INFERRED_TYPE_METHOD_SHOULD_BE_DEFINED.setGlobalPolicy(GLOBAL_WARNING_POLICY);
 		FUNCTION_SHOULD_BE_DEFINED.setGlobalPolicy(GLOBAL_WARNING_POLICY);
 		METHOD_SHOULD_BE_VISIBLE.setGlobalPolicy(GLOBAL_WARNING_POLICY);
 		CONSTRUCTOR_SHOULD_BE_VISIBLE.setGlobalPolicy(GLOBAL_ERROR_POLICY);
@@ -408,6 +410,7 @@ public class VjoSemanticRuleRepo {
 //		MISC.addRule(QUALIFIER_SHOULD_BE_DEFINED);
 		JAVASCRIPT_EXTENSIONS.addRule(PROPERTY_SHOULD_BE_DEFINED);
 		JAVASCRIPT_EXTENSIONS.addRule(METHOD_SHOULD_BE_DEFINED);
+		JAVASCRIPT_EXTENSIONS.addRule(INFERRED_TYPE_METHOD_SHOULD_BE_DEFINED);
 		JAVASCRIPT_EXTENSIONS.addRule(FUNCTION_SHOULD_BE_DEFINED);
 		JAVASCRIPT_EXTENSIONS.addRule(METHOD_WRONG_NUMBER_OF_ARGS);
 		JAVASCRIPT_EXTENSIONS.addRule(NONE_VOID_METHOD_SHOULD_HAVE_RETURN);
@@ -563,6 +566,7 @@ public class VjoSemanticRuleRepo {
 //		QUALIFIER_SHOULD_NOT_BE_NULL.setErrMsg(bundle.getErrorMessage("QUALIFIER_SHOULD_NOT_BE_NULL", verbose));
 //		QUALIFIER_SHOULD_BE_DEFINED.setErrMsg(bundle.getErrorMessage("QUALIFIER_SHOULD_BE_DEFINED", verbose));
 		METHOD_SHOULD_BE_DEFINED.setErrMsg(bundle.getErrorMessage("METHOD_SHOULD_BE_DEFINED", verbose));
+		INFERRED_TYPE_METHOD_SHOULD_BE_DEFINED.setErrMsg(bundle.getErrorMessage("METHOD_SHOULD_BE_DEFINED", verbose));
 		FUNCTION_SHOULD_BE_DEFINED.setErrMsg(bundle.getErrorMessage("FUNCTION_SHOULD_BE_DEFINED", verbose));
 		METHOD_SHOULD_BE_VISIBLE.setErrMsg(bundle.getErrorMessage("METHOD_SHOULD_BE_VISIBLE", verbose));
 		CONSTRUCTOR_SHOULD_BE_VISIBLE.setErrMsg(bundle.getErrorMessage("CONSTRUCTOR_SHOULD_BE_VISIBLE", verbose));
@@ -997,6 +1001,11 @@ public class VjoSemanticRuleRepo {
 		setUpRule(METHOD_SHOULD_BE_DEFINED, 
 				MethodProbIds.UndefinedMethod, 
 				"Method_Should_Be_Defined", 
+				"Method is not found in the context");
+		
+		setUpRule(INFERRED_TYPE_METHOD_SHOULD_BE_DEFINED, 
+				MethodProbIds.UndefinedMethod, 
+				"Inferred_Type_Method_Should_Be_Defined", 
 				"Method is not found in the context");
 		
 		setUpRule(FUNCTION_SHOULD_BE_DEFINED,

@@ -122,6 +122,7 @@ public class VjoMtdInvocationExprValidator
 	public void onPostAllChildrenEvent(final IVjoValidationVisitorEvent event){
 		final VjoValidationCtx ctx = event.getValidationCtx();
 		final IJstNode jstNode = event.getVisitNode();
+		boolean isInferred = false;
 		if(!(jstNode instanceof MtdInvocationExpr)){
 			return;
 		}
@@ -161,6 +162,7 @@ public class VjoMtdInvocationExprValidator
 			}	
 			if(qualifierType instanceof JstInferredType){
 				qualifierType = ((JstInferredType)qualifierType).getType();
+				isInferred = true;
 			}
 				
 			if(identifier != null && identifier instanceof JstIdentifier){
@@ -222,12 +224,19 @@ public class VjoMtdInvocationExprValidator
 						
 						// TODO support mixed and variant type method / property checking 
 						// make sure to make dynamic types not give error
+						// if isInferred && give error on inferred type ) give error 
 						if(!ctx.getMissingImportTypes().contains(qualifierType) && !(qualifierType instanceof JstVariantType)
 								 && !(qualifierType instanceof JstMixedType)){
 							//METHOD_SHOULD_BE_DEFINED
-							satisfyRule(ctx, ruleRepo.METHOD_SHOULD_BE_DEFINED,
+							if(isInferred){
+							satisfyRule(ctx, ruleRepo.INFERRED_TYPE_METHOD_SHOULD_BE_DEFINED,
 								new BaseVjoSemanticRuleCtx
 									(identifier, ctx.getGroupId(), arguments));
+							}else{
+								satisfyRule(ctx, ruleRepo.METHOD_SHOULD_BE_DEFINED,
+										new BaseVjoSemanticRuleCtx
+											(identifier, ctx.getGroupId(), arguments));
+							}
 						}
 					}
 					return;

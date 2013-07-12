@@ -2440,10 +2440,10 @@ class JstExpressionTypeLinker implements IJstVisitor {
 				m_resolver, fullName, m_groupInfo);
 		if (type != null) {
 			if (type.isSingleton()) {
-				JstInferredType infferedType = new JstInferredType(type);
-				fieldAccessExpr.getName().setJstBinding(infferedType);
+//				JstInferredType infferedType = new JstInferredType(type);
+				fieldAccessExpr.getName().setJstBinding(type);
 				JstExpressionTypeLinkerHelper.doExprTypeUpdate(m_resolver,
-						this, fieldAccessExpr, infferedType, m_groupInfo);
+						this, fieldAccessExpr, type, m_groupInfo);
 				JstExpressionTypeLinkerHelper
 						.setPackageBindingForQualifier(fieldAccessExpr
 								.getExpr()); // set
@@ -2455,7 +2455,7 @@ class JstExpressionTypeLinker implements IJstVisitor {
 												// qualifier,
 												// e.g.
 												// a.b.c
-				return infferedType;
+				return type;
 			} else {
 				final JstTypeRefType typeRef = new JstTypeRefType(type);
 				fieldAccessExpr.getName().setJstBinding(typeRef);
