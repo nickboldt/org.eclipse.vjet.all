@@ -2311,8 +2311,8 @@ public class JstExpressionTypeLinkerHelper {
 //						(SynthOlType) exprType, (JstMixedType) type, revisitor);
 			} else if (expr instanceof ObjLiteral
 					&& exprType instanceof SynthOlType) {
-//				doObjLiteralAndOTypeBindings((ObjLiteral) expr,
-//						(SynthOlType) exprType, type, revisitor, null);
+				doObjLiteralAndOTypeBindings((ObjLiteral) expr,
+						(SynthOlType) exprType, type, revisitor, null);
 			} else if (expr instanceof FuncExpr
 					&& exprType instanceof JstFuncType) {
 				if (type instanceof JstFuncType) {
