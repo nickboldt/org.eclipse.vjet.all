@@ -271,7 +271,7 @@ public class VjoParser implements IJstParser {
 				
 				hasContructorResolver = TypeConstructorRegistry.getInstance().hasResolver(key);
 				if(!hasContructorResolver){
-					String key2 = receiverStr +"::" + name;
+					
 					hasContructorResolver = TypeConstructorRegistry.getInstance().hasResolver(key);
 					
 				}
