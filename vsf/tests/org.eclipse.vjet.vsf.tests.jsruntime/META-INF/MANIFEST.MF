@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Jsruntime (Incubation)
+Bundle-SymbolicName: org.eclipse.vjet.vsf.tests.jsruntime
+Bundle-Version: 0.10.0.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Require-Bundle: org.junit,
+ org.eclipse.vjet.vsf.jsref,
+ org.eclipse.vjet.core.util,
+ org.eclipse.vjet.web.html,
+ org.eclipse.vjet.core.jstojava,
+ org.eclipse.vjet.rt.active,
+ org.eclipse.vjet.vsf.jsbrowser.jsr,
+ org.eclipse.vjet.vsf.jsnative.jsr,
+ org.eclipse.vjet.vsf.aggregator,
+ org.eclipse.vjet.rt.test.utils
+Bundle-Vendor: eclipse.org

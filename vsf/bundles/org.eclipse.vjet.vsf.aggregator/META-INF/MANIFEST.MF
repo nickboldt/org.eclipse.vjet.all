@@ -1,0 +1,18 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: VJET VSF Aggregator (Incubation)
+Bundle-SymbolicName: org.eclipse.vjet.vsf.aggregator
+Bundle-Version: 0.10.0.qualifier
+Require-Bundle: org.eclipse.vjet.vsf.jsref,
+ org.eclipse.vjet.vsf.resource.slot,
+ org.eclipse.vjet.vsf.vjo.kernel,
+ org.eclipse.vjet.vsf.docprocessing,
+ org.eclipse.vjet.vsf.aggregator.cache,
+ org.eclipse.vjet.vsf.resource.environment,
+ org.eclipse.vjet.core.vjodef
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Export-Package: org.eclipse.vjet.vsf.aggregator.js,
+ org.eclipse.vjet.vsf.aggregator.js.error,
+ org.eclipse.vjet.vsf.aggregator.view
+Bundle-Vendor: eclipse.org

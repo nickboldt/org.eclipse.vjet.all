@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <parent>
+  <groupId>org.eclipse.vjet.core</groupId>
+   	<artifactId>org.eclipse.vjet.vsf-parent</artifactId>
+   	<version>0.10.0-SNAPSHOT</version>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.eclipse.vjet.core</groupId>
+  <artifactId>bundles</artifactId>
+  <version>0.10.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  <modules>
+    <module>org.eclipse.vjet.vsf.aggregator</module>
+    <module>org.eclipse.vjet.vsf.aggregator.cache</module>
+    <module>org.eclipse.vjet.vsf.common.converter</module>
+    <module>org.eclipse.vjet.vsf.docprocessing</module>
+    <module>org.eclipse.vjet.vsf.jsbrowser.jsr</module>
+    <module>org.eclipse.vjet.vsf.jsnative.jsr</module>
+    <module>org.eclipse.vjet.vsf.jsref</module>
+    <module>org.eclipse.vjet.vsf.jsruntime</module>
+    <module>org.eclipse.vjet.vsf.resource</module>
+    <module>org.eclipse.vjet.vsf.resource.environment</module>
+    <module>org.eclipse.vjet.vsf.resource.js</module>
+    <module>org.eclipse.vjet.vsf.resource.slot</module>
+    <module>org.eclipse.vjet.vsf.serializer</module>
+    <module>org.eclipse.vjet.vsf.spec</module>
+    <module>org.eclipse.vjet.vsf.vjo.kernel</module>
+    <module>org.eclipse.vjet.vjo.vjojavalib</module>
+    <module>org.eclipse.vjet.vsf.dervlet</module>
+  </modules>
+</project>

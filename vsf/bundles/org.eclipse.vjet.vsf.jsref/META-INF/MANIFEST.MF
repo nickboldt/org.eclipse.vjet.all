@@ -1,0 +1,19 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: VJET VSF: JsRef (Incubation)
+Bundle-SymbolicName: org.eclipse.vjet.vsf.jsref
+Bundle-Version: 0.10.0.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Require-Bundle: org.eclipse.vjet.core.util;visibility:=reexport,
+ org.eclipse.vjet.web.html;visibility:=reexport,
+ org.eclipse.vjet.vsf.resource.js;visibility:=reexport,
+ org.eclipse.vjet.vsf.spec;visibility:=reexport,
+ org.eclipse.vjet.vsf.jsruntime;visibility:=reexport,
+ org.eclipse.vjet.vsf.common.converter;visibility:=reexport,
+ org.eclipse.vjet.core.vjodef
+Export-Package: org.eclipse.vjet.vjo.bootstrap,
+ org.eclipse.vjet.vsf.jsref,
+ org.eclipse.vjet.vsf.jsref.ctx,
+ org.eclipse.vjet.vsf.jsref.d,
+ org.eclipse.vjet.vsf.jsref.internals
+Bundle-Vendor: eclipse.org

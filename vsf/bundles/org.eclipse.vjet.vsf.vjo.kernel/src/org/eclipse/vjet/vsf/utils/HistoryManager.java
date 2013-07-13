@@ -1,0 +1,62 @@
+/*******************************************************************************
+ * Copyright (c) 2012 eBay Inc. and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     eBay Inc. - initial API and implementation
+ *******************************************************************************/
+package org.eclipse.vjet.vsf.utils;
+
+import org.eclipse.vjet.dsf.javatojs.anno.AJsProxy;
+import org.eclipse.vjet.dsf.dap.proxy.NativeJsProxy;
+import org.mozilla.mod.javascript.Scriptable;
+import org.eclipse.vjet.dsf.javatojs.anno.AExclude;
+import org.eclipse.vjet.dsf.dap.proxy.INativeJsFuncProxy;
+import org.eclipse.vjet.dsf.dap.proxy.NativeJsFuncProxy;
+import org.eclipse.vjet.dsf.dap.proxy.NativeJsTypeRef;
+import org.eclipse.vjet.dsf.javatojs.anno.AJavaOnly;
+
+//NativeJsProxy for vjo.dsf.utils.HistoryManager.js
+@org.eclipse.vjet.dsf.resource.utils.CodeGen("NativeJsProxyGenerator")
+@AJsProxy
+public class HistoryManager extends NativeJsProxy {
+
+    /** for framework use only */
+    @AExclude
+    public HistoryManager(Scriptable nativeObj){
+        super(nativeObj);
+    }
+
+    /** internal use only */
+    protected HistoryManager(Object ...args){
+        super(args);
+    }
+
+    public HistoryManager(Object model) {
+        super(model);
+    }
+
+    public void putState(Object key, Object state) {
+        callWithName("putState", key, state);
+    }
+
+    public Object getState(Object key) {
+        return callWithName("getState", Object.class, key);
+    }
+
+    public void pushHistory(String name, Object state, String title) {
+        callWithName("pushHistory", name, state, title);
+    }
+
+    @AJavaOnly
+    public static final NativeJsTypeRef<HistoryManager> prototype = NativeJsTypeRef.get(HistoryManager.class);
+
+    public final INativeJsFuncProxy<HistoryManager> putState = NativeJsFuncProxy.create(this, "putState");
+
+    public final INativeJsFuncProxy<HistoryManager> getState = NativeJsFuncProxy.create(this, "getState");
+
+    public final INativeJsFuncProxy<HistoryManager> pushHistory = NativeJsFuncProxy.create(this, "pushHistory");
+}

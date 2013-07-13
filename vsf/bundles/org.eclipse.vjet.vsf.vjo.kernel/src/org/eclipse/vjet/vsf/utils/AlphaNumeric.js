@@ -1,0 +1,93 @@
+/*******************************************************************************
+ * Copyright (c) 2012 eBay Inc. and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     eBay Inc. - initial API and implementation
+ *******************************************************************************/
+/**
+* Utility class to detect whether the given string is in the specified format.
+*/
+vjo.ctype("org.eclipse.vjet.vsf.utils.AlphaNumeric")
+.needs(["org.eclipse.vjet.vsf.typeextensions.string.Comparison",
+	"org.eclipse.vjet.vsf.typeextensions.number.DecimalToHex"])
+.props({
+	sUpperChars : 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+	sLowerChars : 'abcdefghijklmnopqrstuvwxyz',
+	sNumbers : '0123456789',
+	
+	//Local methods
+	
+	/**
+	* Detects whether the given string is in upper case.
+	* 
+	* @param {String} str
+	*        a string to be checked
+	*/
+	//> public boolean isUpper(String);
+	isUpper : function(psStr) {
+	    return this.doCompare(psStr,this.sUpperChars);
+	},
+	
+	/**
+	* Detects whether the given string is in lower case.
+	* 
+	* @param {String} str
+	*        a string to be checked
+	*/
+	//> public boolean isLower(String);
+	isLower : function(psStr) {
+	    return this.doCompare(psStr,this.sLowerChars);
+	},
+
+	/**
+	* Detects whether given string is in the alphabet.
+	* 
+	* @param {String} str
+	*        a string to be checked
+	*/
+	//> public boolean isAlpha(String);
+	isAlpha : function(psStr) {
+	    with (this){
+	        return doCompare(psStr,sUpperChars + sLowerChars);
+	     }
+	},
+	
+	/**
+	* Detects whether the given string is a number
+	* 
+	* @param {String} str
+	*        a string to be checked
+	*/
+	//> public boolean isNumeric(String);
+	isNumeric : function(psStr) {
+	    return this.doCompare(psStr,this.sNumbers);
+	},
+	
+	/**
+	* Detects whether the given string is a number or in the alphabet.
+	* 
+	* @param {String} str
+	*        a string to be checked
+	*/
+	//> public boolean isAlphaNumeric(String,String);
+	isAlphaNumeric : function(psStr,pExceptions) {
+	    var ex = pExceptions || "";
+	    with (this)
+	        return doCompare(psStr,sUpperChars + sLowerChars + sNumbers + ex);
+	},
+	
+	//> private boolean doCompare(String,String);
+	doCompare : function(psStr,pChars) {
+	    var len = psStr.length, rv = true;
+	    for (var i=0; i<len && rv; i++)
+	        rv = pChars.has(psStr.charAt(i)); //<@SUPRESSTYPECHECK
+	    return rv;
+	}
+})
+.endType();
+
+

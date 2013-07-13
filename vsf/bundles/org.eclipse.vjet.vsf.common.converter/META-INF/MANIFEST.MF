@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: VJET VSF: Common Converter
+Bundle-SymbolicName: org.eclipse.vjet.vsf.common.converter
+Bundle-Version: 0.10.0.qualifier
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.vjet.core.util
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Export-Package: org.eclipse.vjet.dsf.common.converter,
+ org.eclipse.vjet.dsf.common.converter.registry
+Bundle-Vendor: eclipse.org

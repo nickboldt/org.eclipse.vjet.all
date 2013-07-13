@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: JS Browser Jsr API (Incubator)
+Bundle-SymbolicName: org.eclipse.vjet.vsf.jsbrowser.jsr
+Bundle-Version: 0.10.0.qualifier
+Require-Bundle: org.eclipse.vjet.vsf.jsref,
+ org.eclipse.vjet.vsf.jsnative.jsr
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Export-Package: org.eclipse.vjet.vsf.jsbrowser.jsr
+Bundle-ActivationPolicy: lazy
+Bundle-Vendor: eclipse.org

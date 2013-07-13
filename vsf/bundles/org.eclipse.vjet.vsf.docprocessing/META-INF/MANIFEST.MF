@@ -1,0 +1,19 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: VJET VSF: Docprocessing (Incubation)
+Bundle-SymbolicName: org.eclipse.vjet.vsf.docprocessing
+Bundle-Version: 0.10.0.qualifier
+Require-Bundle: org.eclipse.vjet.web.html,
+ org.eclipse.vjet.web.kernel,
+ org.eclipse.vjet.vsf.resource.slot,
+ org.eclipse.vjet.vsf.spec,
+ org.eclipse.vjet.vsf.jsruntime,
+ org.eclipse.vjet.vsf.resource,
+ org.eclipse.vjet.vsf.resource.js,
+ org.eclipse.vjet.vsf.vjo.kernel,
+ org.eclipse.vjet.vsf.jsref,
+ org.eclipse.vjet.vsf.aggregator.cache
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Export-Package: org.eclipse.vjet.vsf.docprocessing
+Bundle-Vendor: eclipse.org
