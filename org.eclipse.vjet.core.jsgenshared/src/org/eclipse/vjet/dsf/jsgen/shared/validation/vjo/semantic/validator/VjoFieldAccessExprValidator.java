@@ -99,7 +99,7 @@ public class VjoFieldAccessExprValidator
 					&& !"ERROR_UNDEFINED_TYPE".equals(qualifierType.getName())
 					&& !isDynamicType(qualifierType)) {
 				
-				if (qualifierType instanceof IJstRefType) {
+				if (qualifierType instanceof IJstRefType && !qualifierType.isSingleton()) {
 					//NONE_STATIC_PROPERTY_SHOULD_NOT_BE_ACCESSED_FROM_STATIC_SCOPE
 					if (qualifierType.getProperty(fieldName, false, true) != null) {					
 						satisfyRule(ctx, 
