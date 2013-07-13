@@ -1,0 +1,82 @@
+package v4.js.etype;
+
+import org.eclipse.vjet.vsf.jsref.JsFunc;
+import org.eclipse.vjet.dsf.common.binding.IValueBinding;
+import org.eclipse.vjet.vsf.jsref.JsEnum;
+import org.eclipse.vjet.vsf.jsref.JsProp;
+import org.eclipse.vjet.vsf.jsruntime.jsref.IJsPropSetter;
+import org.eclipse.vjet.vsf.jsref.internals.JsCmpMeta;
+import org.eclipse.vjet.vsf.jsref.JsTypeRef;
+import org.eclipse.vjet.vsf.jsref.JsObjData;
+import org.eclipse.vjet.dsf.spec.component.IComponentSpec;
+import org.eclipse.vjet.vsf.resource.pattern.js.JsResource;
+import org.eclipse.vjet.vsf.resource.pattern.js.IJsResourceRef;
+import v4.js.etype.IETypeJsr;
+
+@org.eclipse.vjet.dsf.resource.utils.CodeGen("JsrGenerator")
+public final class ETypeComplexJsr extends JsEnum implements IETypeJsr {
+    private static final long serialVersionUID = 1L;
+
+    private static final JsObjData S = 
+        new JsObjData("v4.js.etype.ETypeComplex", ETypeComplexJsr.class, "ETypeComplex");
+
+    
+    public static class ResourceSpec {
+        public static IComponentSpec getInstance() {
+            return S.getResourceSpec(); 
+        }
+        public static final JsResource RESOURCE = S.getJsResource();
+        public static final IJsResourceRef REF = S.getJsResourceRef();
+    }
+
+    public static final IComponentSpec SPEC = S.getResourceSpec()
+        .addDependentComponent(IETypeJsr.ResourceSpec.getInstance());
+
+    public ETypeComplexJsr(){
+        super(S.getJsCmpMeta(), true);
+    }
+
+    protected ETypeComplexJsr(JsCmpMeta cmpMeta, boolean isInstance, Object... args) {
+        super(cmpMeta, isInstance, args);
+    }
+
+    public static final JsProp<ETypeComplexJsr> MON = new JsProp<ETypeComplexJsr>(S.getStaticAnchor(), "MON");
+
+    public static final JsProp<ETypeComplexJsr> TUE = new JsProp<ETypeComplexJsr>(S.getStaticAnchor(), "TUE");
+
+    public static final JsProp<ETypeComplexJsr> WED = new JsProp<ETypeComplexJsr>(S.getStaticAnchor(), "WED");
+
+    public static final JsProp<ETypeComplexJsr> THU = new JsProp<ETypeComplexJsr>(S.getStaticAnchor(), "THU");
+
+    public static final JsProp<ETypeComplexJsr> FRI = new JsProp<ETypeComplexJsr>(S.getStaticAnchor(), "FRI");
+
+    public static final JsProp<ETypeComplexJsr> SAT = new JsProp<ETypeComplexJsr>(S.getStaticAnchor(), "SAT");
+
+    public static final JsProp<ETypeComplexJsr> SUN = new JsProp<ETypeComplexJsr>(S.getStaticAnchor(), "SUN");
+
+    public JsProp<String> m_msg(){
+        return getProp(String.class, "m_msg");
+    }
+
+    public IJsPropSetter m_msg(String v) {
+        return setProp("m_msg", v);
+    }
+
+    public IJsPropSetter m_msg(IValueBinding<String> v) {
+        return setProp("m_msg", v);
+    }
+
+    public JsFunc<Boolean> isWeekday(){
+        return call(Boolean.class, "isWeekday");
+    }
+
+    public JsFunc<Boolean> isEvenOrdinal(){
+        return call(Boolean.class, "isEvenOrdinal");
+    }
+
+    public JsFunc<String> getDisplayName(){
+        return call(String.class, "getDisplayName");
+    }
+    
+    public static JsTypeRef<ETypeComplexJsr> prototype = new JsTypeRef<ETypeComplexJsr>(S);
+}

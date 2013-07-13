@@ -1,0 +1,7 @@
+vjo.ctype("org.eclipse.vjet.dsf.tests.jsast.parser.simplevjo")
+.protos({
+ 	//> public String constructs();
+	constructs:function(arg1){
+	 	throw "Error";
+	}
+});

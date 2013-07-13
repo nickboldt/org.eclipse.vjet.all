@@ -1,0 +1,57 @@
+package vjo.a.b;
+
+import org.eclipse.vjet.vsf.jsref.JsFunc;
+import org.eclipse.vjet.dsf.common.binding.IValueBinding;
+import org.eclipse.vjet.vsf.jsref.JsObj;
+import org.eclipse.vjet.vsf.jsref.internals.JsCmpMeta;
+import org.eclipse.vjet.vsf.jsref.JsTypeRef;
+import org.eclipse.vjet.vsf.jsref.JsObjData;
+import org.eclipse.vjet.dsf.spec.component.IComponentSpec;
+import org.eclipse.vjet.vsf.resource.pattern.js.JsResource;
+import org.eclipse.vjet.vsf.resource.pattern.js.IJsResourceRef;
+
+@org.eclipse.vjet.dsf.resource.utils.CodeGen("JsrGenerator")
+public class CTypeMultipleArgs17Jsr extends JsObj {
+    private static final long serialVersionUID = 1L;
+
+    private static final JsObjData S = 
+        new JsObjData("vjo.a.b.CTypeMultipleArgs17", CTypeMultipleArgs17Jsr.class, "CTypeMultipleArgs17");
+
+    
+    public static class ResourceSpec {
+        public static IComponentSpec getInstance() {
+            return S.getResourceSpec(); 
+        }
+        public static final JsResource RESOURCE = S.getJsResource();
+        public static final IJsResourceRef REF = S.getJsResourceRef();
+    }
+
+    public static final IComponentSpec SPEC = S.getResourceSpec();
+
+    public CTypeMultipleArgs17Jsr(){
+        super(S.getJsCmpMeta(), true);
+    }
+
+    protected CTypeMultipleArgs17Jsr(JsCmpMeta cmpMeta, boolean isInstance, Object... args) {
+        super(cmpMeta, isInstance, args);
+    }
+
+    public static JsFunc<Void> foo17(Float[] arg0){
+        return call(S, "foo17").with((Object)arg0);
+    }
+
+    public static JsFunc<Void> foo17(IValueBinding<Float[]> arg0){
+        return call(S, "foo17").with(arg0);
+    }
+
+    public static JsFunc<Void> foo17(double[] arg0){
+        return call(S, "foo17").with((Object)arg0);
+    }
+
+    public static JsFunc<Void> foo17(IValueBinding<double[]> arg0, 
+            org.eclipse.vjet.vsf.jsref.d.D1... notUsed){
+        return call(S, "foo17").with(arg0);
+    }
+    
+    public static JsTypeRef<CTypeMultipleArgs17Jsr> prototype = new JsTypeRef<CTypeMultipleArgs17Jsr>(S);
+}

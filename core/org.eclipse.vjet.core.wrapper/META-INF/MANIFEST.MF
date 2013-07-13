@@ -1,0 +1,19 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Vendor: %pluginProvider
+Bundle-Name: %pluginName
+Bundle-SymbolicName: org.eclipse.vjet.core.wrapper
+Bundle-Version: 0.10.0.qualifier
+Bundle-ActivationPolicy: lazy
+Bundle-Localization: plugin
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Require-Bundle: 
+ org.eclipse.vjet.core.util;visibility:=reexport,
+ org.eclipse.vjet.core.ext;visibility:=reexport,
+ org.eclipse.vjet.core.jsnative;visibility:=reexport,
+ org.eclipse.vjet.core.jst;visibility:=reexport,
+ org.eclipse.vjet.core.vjodef;visibility:=reexport,
+ org.eclipse.vjet.core.jsgenshared;visibility:=reexport,
+ org.eclipse.vjet.core.jstojava;visibility:=reexport,
+ org.eclipse.vjet.core.javatojs;visibility:=reexport,
+ org.eclipse.vjet.core.vjotool;visibility:=reexport

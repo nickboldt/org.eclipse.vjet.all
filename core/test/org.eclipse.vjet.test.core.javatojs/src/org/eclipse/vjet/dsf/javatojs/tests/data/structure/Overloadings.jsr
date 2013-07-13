@@ -1,0 +1,100 @@
+package org.eclipse.vjet.dsf.javatojs.tests.data.structure;
+
+import org.eclipse.vjet.vsf.jsref.JsFunc;
+import org.eclipse.vjet.dsf.common.binding.IValueBinding;
+import org.eclipse.vjet.vsf.jsref.JsObj;
+import org.eclipse.vjet.vsf.jsref.internals.JsCmpMeta;
+import org.eclipse.vjet.vsf.jsref.JsTypeRef;
+import org.eclipse.vjet.vsf.jsref.JsObjData;
+import org.eclipse.vjet.dsf.spec.component.IComponentSpec;
+import org.eclipse.vjet.vsf.resource.pattern.js.JsResource;
+import org.eclipse.vjet.vsf.resource.pattern.js.IJsResourceRef;
+
+@org.eclipse.vjet.dsf.resource.utils.CodeGen("JsrGenerator")
+public class OverloadingsJsr extends JsObj {
+    private static final long serialVersionUID = 1L;
+
+    private static final JsObjData S = 
+        new JsObjData("org.eclipse.vjet.dsf.javatojs.tests.data.structure.Overloadings", OverloadingsJsr.class, "Overloadings", true);
+
+    
+    public static class ResourceSpec {
+        public static IComponentSpec getInstance() {
+            return S.getResourceSpec(); 
+        }
+        public static final JsResource RESOURCE = S.getJsResource();
+        public static final IJsResourceRef REF = S.getJsResourceRef();
+    }
+
+    public static final IComponentSpec SPEC = S.getResourceSpec();
+
+    public OverloadingsJsr(int size, int multipler){
+        super(S.getJsCmpMeta(), true, size, multipler);
+    }
+
+    public OverloadingsJsr(IValueBinding<Integer> size, IValueBinding<Integer> multipler){
+        super(S.getJsCmpMeta(), true, size, multipler);
+    }
+
+    public OverloadingsJsr(int size, boolean triple){
+        super(S.getJsCmpMeta(), true, size, triple);
+    }
+
+    public OverloadingsJsr(IValueBinding<Integer> size, IValueBinding<Boolean> triple, org.eclipse.vjet.vsf.jsref.d.D1... notUsed){
+        super(S.getJsCmpMeta(), true, size, triple);
+    }
+
+    public OverloadingsJsr(int size){
+        super(S.getJsCmpMeta(), true, size);
+    }
+
+    public OverloadingsJsr(IValueBinding<Integer> size){
+        super(S.getJsCmpMeta(), true, size);
+    }
+
+    public OverloadingsJsr(int[] size){
+        super(S.getJsCmpMeta(), true, size);
+    }
+
+    public OverloadingsJsr(IValueBinding<Integer[]> size, org.eclipse.vjet.vsf.jsref.d.D1... notUsed){
+        super(S.getJsCmpMeta(), true, size);
+    }
+
+    public OverloadingsJsr(String[] size){
+        super(S.getJsCmpMeta(), true, size);
+    }
+
+    public OverloadingsJsr(IValueBinding<String[]> size, org.eclipse.vjet.vsf.jsref.d.D2... notUsed){
+        super(S.getJsCmpMeta(), true, size);
+    }
+
+    protected OverloadingsJsr(JsCmpMeta cmpMeta, boolean isInstance, Object... args) {
+        super(cmpMeta, isInstance, args);
+    }
+
+    public static final JsFunc<Integer> testStaticFinal(){
+        return call(S, Integer.class, "testStaticFinal");
+    }
+
+    public static final <T> JsFunc<Integer> testStaticFinal(T amount){
+        return call(S, Integer.class, "testStaticFinal").with(amount);
+    }
+
+    public static final <T> JsFunc<Integer> testStaticFinal(IValueBinding<? extends T> amount){
+        return call(S, Integer.class, "testStaticFinal").with(amount);
+    }
+
+    public final JsFunc<Integer> testFinal(){
+        return call(Integer.class, "testFinal");
+    }
+
+    public final <T> JsFunc<Integer> testFinal(T amount){
+        return call(Integer.class, "testFinal").with(amount);
+    }
+
+    public final <T> JsFunc<Integer> testFinal(IValueBinding<? extends T> amount){
+        return call(Integer.class, "testFinal").with(amount);
+    }
+    
+    public static JsTypeRef<OverloadingsJsr> prototype = new JsTypeRef<OverloadingsJsr>(S);
+}

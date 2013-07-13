@@ -1,0 +1,56 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Vendor: %pluginProvider
+Bundle-Name: %pluginName
+Bundle-SymbolicName: org.eclipse.vjet.web.kernel
+Bundle-Version: 0.10.0.qualifier
+Bundle-ActivationPolicy: lazy
+Bundle-Localization: plugin
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Require-Bundle: 
+ javax.servlet;visibility:=reexport,
+ org.eclipse.vjet.core.ext;visibility:=reexport,
+ org.ccil.cowan.tagsoup;bundle-version="1.2.0",
+ org.apache.xerces;bundle-version="2.9.0"
+Export-Package: 
+  org.eclipse.vjet.dsf.util,
+  org.eclipse.vjet.dsf.common.trace,
+  org.eclipse.vjet.dsf.common.utils,
+  org.eclipse.vjet.dsf.html.dom.util,
+  org.eclipse.vjet.dsf,
+  org.eclipse.vjet.dsf.common,
+  org.eclipse.vjet.dsf.css,
+  org.eclipse.vjet.dsf.dom,
+  org.eclipse.vjet.dsf.util,
+  org.eclipse.vjet.dsf.common.binding,
+  org.eclipse.vjet.dsf.common.container,
+  org.eclipse.vjet.dsf.common.context,
+  org.eclipse.vjet.dsf.common.error,
+  org.eclipse.vjet.dsf.common.event,
+  org.eclipse.vjet.dsf.common.naming,
+  org.eclipse.vjet.dsf.common.node,
+  org.eclipse.vjet.dsf.common.ovs,
+  org.eclipse.vjet.dsf.common.phase,
+  org.eclipse.vjet.dsf.common.spyglass,
+  org.eclipse.vjet.dsf.common.state,
+  org.eclipse.vjet.dsf.common.statistics,
+  org.eclipse.vjet.dsf.common.trace,
+  org.eclipse.vjet.dsf.common.tracer,
+  org.eclipse.vjet.dsf.common.utils,
+  org.eclipse.vjet.dsf.dom.stylesheets,
+  org.eclipse.vjet.dsf.dom.support,
+  org.eclipse.vjet.dsf.dom.util,
+  org.eclipse.vjet.dsf.html.sax,
+  org.eclipse.vjet.dsf.common.context.subctx,
+  org.eclipse.vjet.dsf.common.node.visitor,
+  org.eclipse.vjet.dsf.common.trace.config,
+  org.eclipse.vjet.dsf.common.trace.handler,
+  org.eclipse.vjet.dsf.common.trace.listener,
+  org.eclipse.vjet.dsf.html.dom.util,
+  org.eclipse.vjet.dsf.common.context.subctx.browser,
+  org.eclipse.vjet.dsf.common.context.subctx.browser.internal
+Import-Package: org.apache.commons.codec.binary;version="1.3.0",
+ org.apache.commons.collections,
+ org.apache.commons.collections.map;version="3.2.0"
+
+

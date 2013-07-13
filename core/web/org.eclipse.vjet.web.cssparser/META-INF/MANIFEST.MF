@@ -1,0 +1,24 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Vendor: %pluginProvider
+Bundle-Name: %pluginName
+Bundle-SymbolicName: org.eclipse.vjet.web.cssparser
+Bundle-Version: 0.10.0.qualifier
+Bundle-ActivationPolicy: lazy
+Bundle-Localization: plugin
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Require-Bundle: 
+ org.eclipse.vjet.web.kernel;visibility:=reexport,
+ org.apache.batik.css;bundle-version="1.7.0",
+ org.w3c.css.sac;bundle-version="1.3.1",
+ org.apache.batik.util;bundle-version="1.7.0"
+Export-Package: 
+  org.eclipse.vjet.dsf.css.dom,
+  org.eclipse.vjet.dsf.css.parser,
+  org.eclipse.vjet.dsf.css.sac,
+  org.eclipse.vjet.dsf.css.dom.impl,
+  org.eclipse.vjet.dsf.css.parser.selectors,
+  org.eclipse.vjet.dsf.css.sac.helpers
+
+
+

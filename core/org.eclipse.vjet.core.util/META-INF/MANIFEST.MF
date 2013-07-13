@@ -1,0 +1,33 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Vendor: %pluginProvider
+Bundle-Name: %pluginName
+Bundle-SymbolicName: org.eclipse.vjet.core.util
+Bundle-Version: 0.10.0.qualifier
+Bundle-ActivationPolicy: lazy
+Bundle-Localization: plugin
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Export-Package: 
+ org.eclipse.vjet.dsf.common,
+ org.eclipse.vjet.dsf.common.cmdexec,
+ org.eclipse.vjet.dsf.common.enums,
+ org.eclipse.vjet.dsf.common.event,
+ org.eclipse.vjet.dsf.common.exceptions,
+ org.eclipse.vjet.dsf.common.initialization,
+ org.eclipse.vjet.dsf.common.resource,
+ org.eclipse.vjet.dsf.common.trace,
+ org.eclipse.vjet.dsf.common.trace.config,
+ org.eclipse.vjet.dsf.common.trace.event,
+ org.eclipse.vjet.dsf.common.trace.filter,
+ org.eclipse.vjet.dsf.common.trace.handler,
+ org.eclipse.vjet.dsf.common.trace.introspect,
+ org.eclipse.vjet.dsf.common.trace.listener,
+ org.eclipse.vjet.dsf.common.tracer,
+ org.eclipse.vjet.dsf.common.xml,
+ org.eclipse.vjet.dsf.javatojs.anno,
+ org.eclipse.vjet.dsf.json,
+ org.eclipse.vjet.dsf.logger,
+ org.eclipse.vjet.dsf.serializers,
+ org.eclipse.vjet.dsf.util
+Require-Bundle: org.apache.commons.collections;bundle-version="3.2.0"
+

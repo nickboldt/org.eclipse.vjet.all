@@ -1,0 +1,59 @@
+package org.eclipse.vjet.dsf.javatojs.tests.data.datatype;
+
+import org.eclipse.vjet.vsf.jsref.JsFunc;
+import org.eclipse.vjet.vsf.jsref.JsObj;
+import org.eclipse.vjet.vsf.jsref.internals.JsCmpMeta;
+import org.eclipse.vjet.vsf.jsref.JsTypeRef;
+import org.eclipse.vjet.vsf.jsref.JsObjData;
+import org.eclipse.vjet.dsf.spec.component.IComponentSpec;
+import org.eclipse.vjet.vsf.resource.pattern.js.JsResource;
+import org.eclipse.vjet.vsf.resource.pattern.js.IJsResourceRef;
+import org.eclipse.vjet.dsf.javatojs.tests.data.AJsr;
+import org.eclipse.vjet.vjo.java.lang.ObjectUtilJsr;
+
+@org.eclipse.vjet.dsf.resource.utils.CodeGen("JsrGenerator")
+public class ObjectMethodsJsr extends JsObj {
+    private static final long serialVersionUID = 1L;
+
+    private static final JsObjData S = 
+        new JsObjData("org.eclipse.vjet.dsf.javatojs.tests.data.datatype.ObjectMethods", ObjectMethodsJsr.class, "ObjectMethods", true);
+
+    
+    public static class ResourceSpec {
+        public static IComponentSpec getInstance() {
+            return S.getResourceSpec(); 
+        }
+        public static final JsResource RESOURCE = S.getJsResource();
+        public static final IJsResourceRef REF = S.getJsResourceRef();
+    }
+
+    public static final IComponentSpec SPEC = S.getResourceSpec()
+        .addDependentComponent(AJsr.ResourceSpec.getInstance())
+        .addDependentComponent(ObjectUtilJsr.ResourceSpec.getInstance());
+
+    public ObjectMethodsJsr(){
+        super(S.getJsCmpMeta(), true);
+    }
+
+    protected ObjectMethodsJsr(JsCmpMeta cmpMeta, boolean isInstance, Object... args) {
+        super(cmpMeta, isInstance, args);
+    }
+
+    public JsFunc<Boolean> foo(){
+        return call(Boolean.class, "foo");
+    }
+
+    public JsFunc<Boolean> foo1(){
+        return call(Boolean.class, "foo1");
+    }
+
+    public JsFunc<Boolean> foo2(){
+        return call(Boolean.class, "foo2");
+    }
+
+    public JsFunc<Boolean> foo3(){
+        return call(Boolean.class, "foo3");
+    }
+    
+    public static JsTypeRef<ObjectMethodsJsr> prototype = new JsTypeRef<ObjectMethodsJsr>(S);
+}

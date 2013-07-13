@@ -1,0 +1,50 @@
+
+import org.eclipse.vjet.vsf.jsref.JsFunc;
+import org.eclipse.vjet.vsf.jsref.JsObj;
+import org.eclipse.vjet.vsf.jsref.internals.JsCmpMeta;
+import org.eclipse.vjet.vsf.jsref.JsTypeRef;
+import org.eclipse.vjet.vsf.jsref.JsObjData;
+import org.eclipse.vjet.dsf.spec.component.IComponentSpec;
+import org.eclipse.vjet.vsf.resource.pattern.js.JsResource;
+import org.eclipse.vjet.vsf.resource.pattern.js.IJsResourceRef;
+
+@org.eclipse.vjet.dsf.resource.utils.CodeGen("JsrGenerator")
+public class typeXJsr extends JsObj {
+    private static final long serialVersionUID = 1L;
+
+    private static final JsObjData S = 
+        new JsObjData("typeX", typeXJsr.class, "typeX", true);
+
+    
+    public static class ResourceSpec {
+        public static IComponentSpec getInstance() {
+            return S.getResourceSpec(); 
+        }
+        public static final JsResource RESOURCE = S.getJsResource();
+        public static final IJsResourceRef REF = S.getJsResourceRef();
+    }
+
+    public static final IComponentSpec SPEC = S.getResourceSpec();
+
+    public typeXJsr(){
+        super(S.getJsCmpMeta(), true);
+    }
+
+    protected typeXJsr(JsCmpMeta cmpMeta, boolean isInstance, Object... args) {
+        super(cmpMeta, isInstance, args);
+    }
+
+    public static JsFunc<Void> mtdB(){
+        return call(S, "mtdB");
+    }
+
+    public JsFunc<Void> mtdA(){
+        return call("mtdA");
+    }
+
+    public JsFunc<Void> doit(){
+        return call("doit");
+    }
+    
+    public static JsTypeRef<typeXJsr> prototype = new JsTypeRef<typeXJsr>(S);
+}

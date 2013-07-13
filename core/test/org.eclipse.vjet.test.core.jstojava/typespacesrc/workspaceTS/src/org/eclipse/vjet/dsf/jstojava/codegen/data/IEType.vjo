@@ -1,0 +1,12 @@
+vjo.itype("org.eclipse.vjet.dsf.jstojava.codegen.data.IEType")
+.protos( {
+    //> public String getDisplayName()
+    getDisplayName : function () {
+    }
+  } 
+)
+.props({
+	//> public static final String
+	msg : "Test IDay prop value"
+})
+.endType();

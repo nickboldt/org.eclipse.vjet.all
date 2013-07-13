@@ -1,0 +1,17 @@
+/* @org.eclipse.vjet.dsf.resource.utils.CodeGen("VjoGenerator") */
+vjo.ctype('org.eclipse.vjet.dsf.javatojs.tests.data.structure.ns.SuperStatic') //< public
+.inherits('org.eclipse.vjet.dsf.javatojs.tests.data.Super')
+.protos({
+    //> public void foo()
+    foo:function(){
+        this.vj$.Super.s_super=null;
+        this.vj$.Super.getSuperStaticMtd();
+        this.vj$.Super.s_super=null;
+        this.vj$.Super.getSuperStaticMtd();
+        this.vj$.Super.s_super=null;
+        this.vj$.Super.getSuperStaticMtd();
+        this.vj$.Super.s_super=null;
+        this.vj$.Super.getSuperStaticMtd();
+    }
+})
+.endType();

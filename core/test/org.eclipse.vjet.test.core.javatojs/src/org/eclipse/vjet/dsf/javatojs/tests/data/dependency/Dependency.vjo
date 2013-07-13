@@ -1,0 +1,19 @@
+/* @org.eclipse.vjet.dsf.resource.utils.CodeGen("VjoGenerator") */
+vjo.ctype('org.eclipse.vjet.dsf.javatojs.tests.data.dependency.Dependency') //< public
+.needs('org.eclipse.vjet.vjo.java.util.Collections')
+//> needs org.eclipse.vjet.vjo.java.util.List,org.eclipse.vjet.vjo.java.util.Stack,org.eclipse.vjet.vjo.java.util.Iterator
+.protos({
+    //> public List getList()
+    getList:function(){
+        return this.vj$.Collections.emptyList();
+    },
+    //> public Stack getStack()
+    getStack:function(){
+        return null;
+    },
+    //> public Iterator getIterator()
+    getIterator:function(){
+        return null;
+    }
+})
+.endType();

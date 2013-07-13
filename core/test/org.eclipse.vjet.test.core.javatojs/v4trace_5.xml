@@ -1,0 +1,6 @@
+<JavaToJst><Controller method="TargetedTranslation"><DependencyPhase><Task type="org.eclipse.vjet.dsf.javatojs.tests.data.structure.Generics" mode="Dependency,Declaration" thread="1">
+ <Dependents/>
+ <Time start="13:14:34:663" end="13:14:34:670" duration="7"/>
+</Task></DependencyPhase><ImplementationPhase><Task type="org.eclipse.vjet.dsf.javatojs.tests.data.structure.Generics" mode="Dependency,Declaration,Impl" thread="1">
+ <Time start="13:14:34:670" end="13:14:34:674" duration="4"/>
+</Task></ImplementationPhase><Time start="13:14:34:659" end="13:14:34:676" duration="17"/></Controller></JavaToJst>

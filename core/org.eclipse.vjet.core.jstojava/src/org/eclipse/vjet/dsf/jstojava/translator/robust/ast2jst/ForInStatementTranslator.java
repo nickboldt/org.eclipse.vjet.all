@@ -1,0 +1,89 @@
+/*******************************************************************************
+ * Copyright (c) 2005, 2012 eBay Inc.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ *******************************************************************************/
+package org.eclipse.vjet.dsf.jstojava.translator.robust.ast2jst;
+
+import org.eclipse.vjet.dsf.jst.BaseJstNode;
+import org.eclipse.vjet.dsf.jst.IJstType;
+import org.eclipse.vjet.dsf.jst.declaration.JstVar;
+import org.eclipse.vjet.dsf.jst.declaration.JstVars;
+import org.eclipse.vjet.dsf.jst.expr.FieldAccessExpr;
+import org.eclipse.vjet.dsf.jst.stmt.ForInStmt;
+import org.eclipse.vjet.dsf.jst.term.JstIdentifier;
+import org.eclipse.vjet.dsf.jst.token.IExpr;
+import org.eclipse.vjet.dsf.jstojava.translator.TranslateHelper;
+import org.eclipse.mod.wst.jsdt.internal.compiler.ast.ArrayReference;
+import org.eclipse.mod.wst.jsdt.internal.compiler.ast.FieldReference;
+import org.eclipse.mod.wst.jsdt.internal.compiler.ast.ForInStatement;
+import org.eclipse.mod.wst.jsdt.internal.compiler.ast.LocalDeclaration;
+import org.eclipse.mod.wst.jsdt.internal.compiler.ast.SingleNameReference;
+import org.eclipse.mod.wst.jsdt.internal.compiler.ast.Statement;
+
+public class ForInStatementTranslator extends BaseAst2JstTranslator<ForInStatement, ForInStmt> {
+
+	@Override
+	protected ForInStmt doTranslate(ForInStatement statement) {
+		
+		IExpr expr = (IExpr)getTranslatorAndTranslate(statement.collection, m_parent);
+		if (expr instanceof BaseJstNode) {
+			((BaseJstNode)expr).setSource(TranslateHelper.getSource(statement.collection, m_ctx.getSourceUtil()));
+		}
+		Statement varStatement = statement.iterationVariable;
+		ForInStmt stmt = null;
+		if (varStatement instanceof LocalDeclaration) {
+			
+			if (statement.collection!=null) {
+				m_ctx.setNextNodeSourceStart(statement.collection.sourceStart);
+			}
+			
+			LocalDeclaration locdec = (LocalDeclaration) statement.iterationVariable;
+	
+			final Object translated = getTranslatorAndTranslate(locdec, stmt);
+			if(translated instanceof JstVars[] ){
+				JstVars[] vars = (JstVars[])translated;
+				// TODO look into jstvar vs jstvars -- inference is not working here
+				JstVar var = new JstVar((IJstType)vars[0].getType(), String.valueOf(locdec.getName()));
+				var.setSource(TranslateHelper.getSource(varStatement, m_ctx.getSourceUtil()));
+				stmt = new ForInStmt(var, expr);
+			}
+			
+			
+		}
+		else if(varStatement instanceof SingleNameReference) { //SingleNameReference
+			JstIdentifier var = new JstIdentifier(((SingleNameReference)varStatement).toString());
+			var.setSource(TranslateHelper.getSource(varStatement, m_ctx.getSourceUtil()));
+			stmt = new ForInStmt(var, expr);
+		}else if(varStatement instanceof ArrayReference){
+			ArrayReference ref = (ArrayReference)varStatement;
+			JstIdentifier var = new JstIdentifier(ref.receiver.toString());
+			var.setSource(TranslateHelper.getSource(varStatement, m_ctx.getSourceUtil()));
+			stmt = new ForInStmt(var, expr);
+		}else if(varStatement instanceof FieldReference){
+			Object fieldRef = getTranslatorAndTranslate(varStatement);
+			if(fieldRef instanceof FieldAccessExpr){
+				stmt = new ForInStmt((FieldAccessExpr)fieldRef, expr);
+			}
+		}else{
+			System.err.println("Unprocessed type: "
+					+ varStatement.getClass()
+					+ " in ForInStatementTranslator");
+			return null;
+		}
+		
+		
+		if (m_parent != null){
+			m_parent.addChild(stmt);
+		}
+		if (!statement.isEmptyBlock()) {
+			getTranslatorAndTranslate(statement.action, stmt.getBody());
+		}
+		stmt.setSource(TranslateHelper.getSource(statement, m_ctx.getSourceUtil()));
+		return stmt;
+	}
+
+}

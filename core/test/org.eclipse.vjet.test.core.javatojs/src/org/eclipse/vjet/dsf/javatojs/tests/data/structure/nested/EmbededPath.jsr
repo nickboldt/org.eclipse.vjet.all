@@ -1,0 +1,127 @@
+package org.eclipse.vjet.dsf.javatojs.tests.data.structure.nested;
+
+import org.eclipse.vjet.vsf.jsref.JsFunc;
+import org.eclipse.vjet.vsf.jsref.JsObj;
+import org.eclipse.vjet.vsf.jsref.internals.JsCmpMeta;
+import org.eclipse.vjet.vsf.jsref.JsTypeRef;
+import org.eclipse.vjet.vsf.jsref.JsObjData;
+import org.eclipse.vjet.dsf.spec.component.IComponentSpec;
+import org.eclipse.vjet.vsf.resource.pattern.js.JsResource;
+import org.eclipse.vjet.vsf.resource.pattern.js.IJsResourceRef;
+
+@org.eclipse.vjet.dsf.resource.utils.CodeGen("JsrGenerator")
+public class EmbededPathJsr extends JsObj {
+    private static final long serialVersionUID = 1L;
+
+    private static final JsObjData S = 
+        new JsObjData("org.eclipse.vjet.dsf.javatojs.tests.data.structure.nested.EmbededPath", EmbededPathJsr.class, "EmbededPath", true);
+
+    
+    public static class ResourceSpec {
+        public static IComponentSpec getInstance() {
+            return S.getResourceSpec(); 
+        }
+        public static final JsResource RESOURCE = S.getJsResource();
+        public static final IJsResourceRef REF = S.getJsResourceRef();
+    }
+
+    public static final IComponentSpec SPEC = S.getResourceSpec();
+
+    public EmbededPathJsr(){
+        super(S.getJsCmpMeta(), true);
+    }
+
+    protected EmbededPathJsr(JsCmpMeta cmpMeta, boolean isInstance, Object... args) {
+        super(cmpMeta, isInstance, args);
+    }
+
+    public JsFunc<Void> javaTest(){
+        return call("javaTest");
+    }
+
+    public class InnerClassAJsr extends JsObj {
+        private static final long serialVersionUID = 1L;
+
+
+        public InnerClassAJsr(){
+            super(S.getJsCmpMeta(), true);
+        }
+
+        protected InnerClassAJsr(JsCmpMeta cmpMeta, boolean isInstance, Object... args) {
+            super(cmpMeta, isInstance, args);
+        }
+
+        public class InnerClassJsr extends JsObj {
+            private static final long serialVersionUID = 1L;
+
+
+            public InnerClassJsr(){
+                super(S.getJsCmpMeta(), true);
+            }
+
+            protected InnerClassJsr(JsCmpMeta cmpMeta, boolean isInstance, Object... args) {
+                super(cmpMeta, isInstance, args);
+            }
+
+            public JsFunc<Void> foo(){
+                return call("foo");
+            }
+        }
+    }
+    public class InnerClassBJsr extends JsObj {
+        private static final long serialVersionUID = 1L;
+
+
+        public InnerClassBJsr(){
+            super(S.getJsCmpMeta(), true);
+        }
+
+        protected InnerClassBJsr(JsCmpMeta cmpMeta, boolean isInstance, Object... args) {
+            super(cmpMeta, isInstance, args);
+        }
+
+        public class InnerClassJsr extends JsObj {
+            private static final long serialVersionUID = 1L;
+
+
+            public InnerClassJsr(){
+                super(S.getJsCmpMeta(), true);
+            }
+
+            protected InnerClassJsr(JsCmpMeta cmpMeta, boolean isInstance, Object... args) {
+                super(cmpMeta, isInstance, args);
+            }
+        }
+    }
+    public static class InnerClassCJsr extends JsObj {
+        private static final long serialVersionUID = 1L;
+
+        private static final JsObjData S = 
+            new JsObjData("org.eclipse.vjet.dsf.javatojs.tests.data.structure.nested.EmbededPath.InnerClassC", InnerClassCJsr.class, "EmbededPath");
+
+        public InnerClassCJsr(){
+            super(S.getJsCmpMeta(), true);
+        }
+
+        protected InnerClassCJsr(JsCmpMeta cmpMeta, boolean isInstance, Object... args) {
+            super(cmpMeta, isInstance, args);
+        }
+
+        public class InnerClassJsr extends JsObj {
+            private static final long serialVersionUID = 1L;
+
+
+            public InnerClassJsr(){
+                super(S.getJsCmpMeta(), true);
+            }
+
+            protected InnerClassJsr(JsCmpMeta cmpMeta, boolean isInstance, Object... args) {
+                super(cmpMeta, isInstance, args);
+            }
+        }
+        
+        public static JsTypeRef<InnerClassCJsr> prototype = new JsTypeRef<InnerClassCJsr>(S);
+    }
+    
+    public static JsTypeRef<EmbededPathJsr> prototype = new JsTypeRef<EmbededPathJsr>(S);
+}

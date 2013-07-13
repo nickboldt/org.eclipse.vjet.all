@@ -1,0 +1,23 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Vendor: %pluginProvider
+Bundle-Name: %pluginName
+Bundle-SymbolicName: org.eclipse.vjet.rt.active.javatojs
+Bundle-Version: 0.10.0.qualifier
+Bundle-ActivationPolicy: lazy
+Bundle-Localization: plugin
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Require-Bundle: 
+ org.eclipse.vjet.core.javatojs;visibility:=reexport,
+ org.eclipse.vjet.rt.active;visibility:=reexport,
+ org.eclipse.vjet.extmod.rhino
+Export-Package: 
+  org.eclipse.vjet.dsf.javatojs.cli,
+  org.eclipse.vjet.dsf.javatojs.control,
+  org.eclipse.vjet.dsf.javatojs.prebuild,
+  org.eclipse.vjet.dsf.javatojs.translate.config,
+  org.eclipse.vjet.dsf.javatojs.translate.custom.dap,
+  org.eclipse.vjet.dsf.javatojs.translate.custom.dom
+
+
+

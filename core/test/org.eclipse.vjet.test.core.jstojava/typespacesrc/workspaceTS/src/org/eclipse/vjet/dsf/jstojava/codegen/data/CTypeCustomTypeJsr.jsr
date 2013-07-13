@@ -1,0 +1,104 @@
+package v4.js.etype.test;
+
+import org.eclipse.vjet.vsf.jsref.JsFunc;
+import org.eclipse.vjet.dsf.common.binding.IValueBinding;
+import org.eclipse.vjet.vsf.jsref.JsObj;
+import org.eclipse.vjet.vsf.jsref.JsProp;
+import org.eclipse.vjet.vsf.jsruntime.jsref.IJsPropSetter;
+import org.eclipse.vjet.vsf.jsref.internals.JsCmpMeta;
+import org.eclipse.vjet.vsf.jsref.JsTypeRef;
+import org.eclipse.vjet.vsf.jsref.JsObjData;
+import org.eclipse.vjet.dsf.spec.component.IComponentSpec;
+import org.eclipse.vjet.vsf.resource.pattern.js.JsResource;
+import org.eclipse.vjet.vsf.resource.pattern.js.IJsResourceRef;
+import v4.js.etype.ETypeComplexJsr;
+
+@org.eclipse.vjet.dsf.resource.utils.CodeGen("JsrGenerator")
+public class CTypeCustomTypeJsr extends JsObj {
+    private static final long serialVersionUID = 1L;
+
+    private static final JsObjData S = 
+        new JsObjData("v4.js.etype.test.CTypeCustomType", CTypeCustomTypeJsr.class, "CTypeCustomType");
+
+    
+    public static class ResourceSpec {
+        public static IComponentSpec getInstance() {
+            return S.getResourceSpec(); 
+        }
+        public static final JsResource RESOURCE = S.getJsResource();
+        public static final IJsResourceRef REF = S.getJsResourceRef();
+    }
+
+    public static final IComponentSpec SPEC = S.getResourceSpec()
+        .addDependentComponent(ETypeComplexJsr.ResourceSpec.getInstance());
+
+    public CTypeCustomTypeJsr(ETypeComplexJsr arg){
+        super(S.getJsCmpMeta(), true, arg);
+    }
+
+    public CTypeCustomTypeJsr(IValueBinding<? extends ETypeComplexJsr> arg){
+        super(S.getJsCmpMeta(), true, arg);
+    }
+
+    protected CTypeCustomTypeJsr(JsCmpMeta cmpMeta, boolean isInstance, Object... args) {
+        super(cmpMeta, isInstance, args);
+    }
+
+    public static JsProp<ETypeComplexJsr> s_obj(){
+        return getProp(S, ETypeComplexJsr.class, "s_obj");
+    }
+
+    public static IJsPropSetter s_obj(ETypeComplexJsr v) {
+        return setProp(S, "s_obj", v);
+    }
+
+    public static IJsPropSetter s_obj(IValueBinding<? extends ETypeComplexJsr> v) {
+        return setProp(S, "s_obj", v);
+    }
+
+    public static JsFunc<? extends ETypeComplexJsr> getObj(ETypeComplexJsr arg){
+        return call(S, ETypeComplexJsr.class, "getObj").with(arg);
+    }
+
+    public static JsFunc<? extends ETypeComplexJsr> getObj(IValueBinding<? extends ETypeComplexJsr> arg){
+        return call(S, ETypeComplexJsr.class, "getObj").with(arg);
+    }
+
+    public JsProp<String> msg(){
+        return getProp(String.class, "msg");
+    }
+
+    public IJsPropSetter msg(String v) {
+        return setProp("msg", v);
+    }
+
+    public IJsPropSetter msg(IValueBinding<String> v) {
+        return setProp("msg", v);
+    }
+
+    public JsProp<ETypeComplexJsr> m_obj(){
+        return getProp(ETypeComplexJsr.class, "m_obj");
+    }
+
+    public IJsPropSetter m_obj(ETypeComplexJsr v) {
+        return setProp("m_obj", v);
+    }
+
+    public IJsPropSetter m_obj(IValueBinding<? extends ETypeComplexJsr> v) {
+        return setProp("m_obj", v);
+    }
+
+    public JsFunc<? extends ETypeComplexJsr> getValue(){
+        return call(ETypeComplexJsr.class, "getValue");
+    }
+
+    public JsFunc<Void> doSomething(ETypeComplexJsr x, ETypeComplexJsr y){
+        return call("doSomething").with(x, y);
+    }
+
+    public JsFunc<Void> doSomething(IValueBinding<? extends ETypeComplexJsr> x, IValueBinding<? extends ETypeComplexJsr> y){
+        return call("doSomething").with(x, y);
+    }
+    
+    public static JsTypeRef<CTypeCustomTypeJsr> prototype = new JsTypeRef<CTypeCustomTypeJsr>(S);
+}

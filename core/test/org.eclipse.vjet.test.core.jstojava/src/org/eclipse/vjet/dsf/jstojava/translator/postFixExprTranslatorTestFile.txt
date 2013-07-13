@@ -1,0 +1,6 @@
+vjo.ctype("org.eclipse.vjet.dsf.tests.jsast.parser.simplevjo")
+.protos({
+	doIt:function(){
+		i--;
+	}
+});

@@ -1,0 +1,78 @@
+package org.eclipse.vjet.dsf.javatojs.tests.data.structure.nested;
+
+import org.eclipse.vjet.vsf.jsref.JsFunc;
+import org.eclipse.vjet.vsf.jsref.JsObj;
+import org.eclipse.vjet.vsf.jsref.internals.JsCmpMeta;
+import org.eclipse.vjet.vsf.jsref.JsTypeRef;
+import org.eclipse.vjet.vsf.jsref.JsObjData;
+import org.eclipse.vjet.dsf.spec.component.IComponentSpec;
+import org.eclipse.vjet.vsf.resource.pattern.js.JsResource;
+import org.eclipse.vjet.vsf.resource.pattern.js.IJsResourceRef;
+import org.eclipse.vjet.dsf.javatojs.tests.data.structure.nested.AJsr;
+
+@org.eclipse.vjet.dsf.resource.utils.CodeGen("JsrGenerator")
+public class BJsr extends JsObj {
+    private static final long serialVersionUID = 1L;
+
+    private static final JsObjData S = 
+        new JsObjData("org.eclipse.vjet.dsf.javatojs.tests.data.structure.nested.B", BJsr.class, "B", true);
+
+    
+    public static class ResourceSpec {
+        public static IComponentSpec getInstance() {
+            return S.getResourceSpec(); 
+        }
+        public static final JsResource RESOURCE = S.getJsResource();
+        public static final IJsResourceRef REF = S.getJsResourceRef();
+    }
+
+    public static final IComponentSpec SPEC = S.getResourceSpec()
+        .addDependentComponent(AJsr.ResourceSpec.getInstance());
+
+    public BJsr(){
+        super(S.getJsCmpMeta(), true);
+    }
+
+    protected BJsr(JsCmpMeta cmpMeta, boolean isInstance, Object... args) {
+        super(cmpMeta, isInstance, args);
+    }
+
+    public static JsFunc<Void> outerStatic(){
+        return call(S, "outerStatic");
+    }
+
+    public JsFunc<Void> outerInstance(){
+        return call("outerInstance");
+    }
+
+    public class XJsr extends org.eclipse.vjet.dsf.javatojs.tests.data.structure.nested.AJsr.XJsr {
+        private static final long serialVersionUID = 1L;
+
+
+        public XJsr(){
+            super(S.getJsCmpMeta(), true);
+        }
+
+        protected XJsr(JsCmpMeta cmpMeta, boolean isInstance, Object... args) {
+            super(cmpMeta, isInstance, args);
+        }
+    }
+    public class YJsr extends JsObj {
+        private static final long serialVersionUID = 1L;
+
+
+        public YJsr(){
+            super(S.getJsCmpMeta(), true);
+        }
+
+        protected YJsr(JsCmpMeta cmpMeta, boolean isInstance, Object... args) {
+            super(cmpMeta, isInstance, args);
+        }
+
+        public JsFunc<Void> innerInstance(){
+            return call("innerInstance");
+        }
+    }
+    
+    public static JsTypeRef<BJsr> prototype = new JsTypeRef<BJsr>(S);
+}

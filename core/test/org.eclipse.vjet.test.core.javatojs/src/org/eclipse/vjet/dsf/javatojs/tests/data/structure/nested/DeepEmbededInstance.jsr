@@ -1,0 +1,94 @@
+package org.eclipse.vjet.dsf.javatojs.tests.data.structure.nested;
+
+import org.eclipse.vjet.vsf.jsref.JsFunc;
+import org.eclipse.vjet.vsf.jsref.JsObj;
+import org.eclipse.vjet.vsf.jsref.internals.JsCmpMeta;
+import org.eclipse.vjet.vsf.jsref.JsTypeRef;
+import org.eclipse.vjet.vsf.jsref.JsObjData;
+import org.eclipse.vjet.dsf.spec.component.IComponentSpec;
+import org.eclipse.vjet.vsf.resource.pattern.js.JsResource;
+import org.eclipse.vjet.vsf.resource.pattern.js.IJsResourceRef;
+
+@org.eclipse.vjet.dsf.resource.utils.CodeGen("JsrGenerator")
+public class DeepEmbededInstanceJsr extends JsObj {
+    private static final long serialVersionUID = 1L;
+
+    private static final JsObjData S = 
+        new JsObjData("org.eclipse.vjet.dsf.javatojs.tests.data.structure.nested.DeepEmbededInstance", DeepEmbededInstanceJsr.class, "DeepEmbededInstance", true);
+
+    
+    public static class ResourceSpec {
+        public static IComponentSpec getInstance() {
+            return S.getResourceSpec(); 
+        }
+        public static final JsResource RESOURCE = S.getJsResource();
+        public static final IJsResourceRef REF = S.getJsResourceRef();
+    }
+
+    public static final IComponentSpec SPEC = S.getResourceSpec();
+
+    public DeepEmbededInstanceJsr(){
+        super(S.getJsCmpMeta(), true);
+    }
+
+    protected DeepEmbededInstanceJsr(JsCmpMeta cmpMeta, boolean isInstance, Object... args) {
+        super(cmpMeta, isInstance, args);
+    }
+
+    public static JsFunc<Void> test(){
+        return call(S, "test");
+    }
+
+    public class Inner1Jsr extends JsObj {
+        private static final long serialVersionUID = 1L;
+
+
+        public Inner1Jsr(){
+            super(S.getJsCmpMeta(), true);
+        }
+
+        protected Inner1Jsr(JsCmpMeta cmpMeta, boolean isInstance, Object... args) {
+            super(cmpMeta, isInstance, args);
+        }
+
+        public JsFunc<String> foo1(){
+            return call(String.class, "foo1");
+        }
+
+        public class Inner2Jsr extends JsObj {
+            private static final long serialVersionUID = 1L;
+
+
+            public Inner2Jsr(){
+                super(S.getJsCmpMeta(), true);
+            }
+
+            protected Inner2Jsr(JsCmpMeta cmpMeta, boolean isInstance, Object... args) {
+                super(cmpMeta, isInstance, args);
+            }
+
+            public JsFunc<String> foo2(){
+                return call(String.class, "foo2");
+            }
+
+            public class Inner3Jsr extends JsObj {
+                private static final long serialVersionUID = 1L;
+
+
+                public Inner3Jsr(){
+                    super(S.getJsCmpMeta(), true);
+                }
+
+                protected Inner3Jsr(JsCmpMeta cmpMeta, boolean isInstance, Object... args) {
+                    super(cmpMeta, isInstance, args);
+                }
+
+                public JsFunc<String> foo3(){
+                    return call(String.class, "foo3");
+                }
+            }
+        }
+    }
+    
+    public static JsTypeRef<DeepEmbededInstanceJsr> prototype = new JsTypeRef<DeepEmbededInstanceJsr>(S);
+}

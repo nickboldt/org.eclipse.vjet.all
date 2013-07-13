@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Vjoruntime Tests (Incubation)
+Bundle-SymbolicName: org.eclipse.vjet.test.rt.vjoruntime
+Bundle-Version: 0.10.0.qualifier
+Require-Bundle: org.eclipse.vjet.core.jsnative,
+ org.eclipse.vjet.core.vjodef,
+ org.eclipse.vjet.web.kernel,
+ org.eclipse.vjet.web.html,
+ org.eclipse.vjet.rt.vjoruntime,
+ org.junit,
+ org.eclipse.core.runtime

@@ -1,0 +1,9 @@
+vjo.ctype("org.eclipse.vjet.dsf.tests.jsast.parser.data.CommentConstructorWithArgsIntCType-1")
+.protos({
+   //-1
+   //> constructs()
+   constructs: function() {
+   }
+})
+
+

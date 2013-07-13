@@ -1,0 +1,16 @@
+/* @org.eclipse.vjet.dsf.resource.utils.CodeGen("VjoGenerator") */
+vjo.ctype('org.eclipse.vjet.dsf.javatojs.tests.data.custom.OverloadedMethods') //< public
+.needs('org.eclipse.vjet.vjo.java.lang.BooleanUtil','')
+.needs('a.b.c','')
+//> needs org.eclipse.vjet.vjo.java.lang.Integer
+.props({
+    //> public void main(String[] args)
+    main:function(args){
+        var test=new this(); //<OverloadedMethods
+        xyx();
+        test.foo(org.eclipse.vjet.vjo.java.lang.BooleanUtil.TRUE);
+        test;
+        a.b.c.Y(10);
+    }
+})
+.endType();

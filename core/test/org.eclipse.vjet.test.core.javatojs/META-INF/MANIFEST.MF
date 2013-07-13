@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Javatojs
+Bundle-SymbolicName: org.eclipse.vjet.test.core.javatojs;singleton:=true
+Bundle-Version: 0.10.0.qualifier
+Require-Bundle: org.eclipse.vjet.test.utils,
+ org.eclipse.vjet.core.jst,
+ org.eclipse.vjet.core.javatojs,
+ org.eclipse.vjet.rt.active.javatojs,
+ org.junit,
+ org.eclipse.vjet.resource.jsnativetypes,
+ org.eclipse.vjet.resource.vjojavalib,
+ org.eclipse.vjet.resource.vjolib
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ActivationPolicy: lazy

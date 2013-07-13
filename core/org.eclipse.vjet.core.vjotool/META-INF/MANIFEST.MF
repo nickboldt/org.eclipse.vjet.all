@@ -1,0 +1,24 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Vendor: %pluginProvider
+Bundle-Name: %pluginName
+Bundle-SymbolicName: org.eclipse.vjet.core.vjotool
+Bundle-Version: 0.10.0.qualifier
+Bundle-ActivationPolicy: lazy
+Bundle-Localization: plugin
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Require-Bundle: 
+  org.eclipse.vjet.core.jstojava;visibility:=reexport
+Export-Package: 
+  org.eclipse.vjet.vjo.tool.codecompletion,
+  org.eclipse.vjet.vjo.tool.typespace,
+  org.eclipse.vjet.vjo.tool.codecompletion.advisor,
+  org.eclipse.vjet.vjo.tool.codecompletion.comment,
+  org.eclipse.vjet.vjo.tool.codecompletion.engine,
+  org.eclipse.vjet.vjo.tool.codecompletion.handler,
+  org.eclipse.vjet.vjo.tool.codecompletion.highlight,
+  org.eclipse.vjet.vjo.tool.codecompletion.proposaldata,
+  org.eclipse.vjet.vjo.tool.codecompletion.reporter,
+  org.eclipse.vjet.vjo.tool.codecompletion.advisor.keyword,
+  org.eclipse.vjet.vjo.tool.codecompletion.proposaldata.integration
+

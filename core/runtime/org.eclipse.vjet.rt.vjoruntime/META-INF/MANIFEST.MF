@@ -1,0 +1,23 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Vendor: %pluginProvider
+Bundle-Name: %pluginName
+Bundle-SymbolicName: org.eclipse.vjet.rt.vjoruntime
+Bundle-Version: 0.10.0.qualifier
+Bundle-ActivationPolicy: lazy
+Bundle-Localization: plugin
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Require-Bundle: 
+ org.eclipse.vjet.extmod.rhino;visibility:=reexport,
+ org.eclipse.vjet.core.vjodef;visibility:=reexport,
+ org.eclipse.vjet.rt.active;visibility:=reexport
+Export-Package: 
+  org.eclipse.vjet.vjo.coverage,
+  org.eclipse.vjet.vjo.jsunit,
+  org.eclipse.vjet.vjo.loader,
+  org.eclipse.vjet.vjo.runner
+  
+
+
+
+

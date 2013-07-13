@@ -1,0 +1,10 @@
+/* @org.eclipse.vjet.dsf.resource.utils.CodeGen("VjoGenerator") */
+vjo.ctype('org.eclipse.vjet.dsf.javatojs.tests.data.structure.imports.OnDemandImports') //< public
+.needs('org.eclipse.vjet.dsf.javatojs.tests.data.Super')
+.protos({
+    //> public String foo()
+    foo:function(){
+        return this.vj$.Super.s_super;
+    }
+})
+.endType();

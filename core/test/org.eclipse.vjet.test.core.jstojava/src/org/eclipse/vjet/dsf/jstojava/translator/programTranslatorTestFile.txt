@@ -1,0 +1,4 @@
+vjo.needs("a.b.c.Z");
+vjo.needs("r.s.t.U");
+
+vjo.ctype("org.eclipse.vjet.dsf.tests.jsast.parser.simplevjo");

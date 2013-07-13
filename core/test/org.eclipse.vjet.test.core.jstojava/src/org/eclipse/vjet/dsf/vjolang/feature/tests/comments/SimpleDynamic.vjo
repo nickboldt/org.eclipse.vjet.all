@@ -1,0 +1,2 @@
+vjo.ctype('org.eclipse.vjet.dsf.vjolang.feature.tests.comments.SimpleDynamic') //< public dynamic
+.endType();

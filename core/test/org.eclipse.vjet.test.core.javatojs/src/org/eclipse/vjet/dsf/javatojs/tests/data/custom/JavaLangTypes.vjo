@@ -1,0 +1,28 @@
+/* @org.eclipse.vjet.dsf.resource.utils.CodeGen("VjoGenerator") */
+vjo.ctype('org.eclipse.vjet.dsf.javatojs.tests.data.custom.JavaLangTypes') //< public
+.needs(['org.eclipse.vjet.vjo.java.util.LinkedList','org.eclipse.vjet.vjo.java.lang.StringUtil',
+    'org.eclipse.vjet.vjo.java.lang.ObjectUtil','org.eclipse.vjet.vjo.java.lang.Integer'])
+.needs('org.eclipse.vjet.vjo.java.lang.BooleanUtil','')
+.protos({
+    //> public int testString()
+    testString:function(){
+        var text=" ABC "; //<String
+        var index=text.indexOf("C"); //<int
+        var length=text.length; //<int
+        var name=vjo.java.lang.StringUtil.trim(text); //<String
+        var value=name; //<String
+        var bytes=value.getBytes(); //<byte[]
+        return vjo.java.lang.StringUtil.compareTo(text,value);
+    },
+    //> public void testStringHashCode()
+    testStringHashCode:function(){
+        var v_linkObj1=new this.vj$.LinkedList(); //<LinkedList
+        assertEquals(true,v_linkObj1.add(new this.vj$.Integer(vjo.java.lang.ObjectUtil.hashCode("ABC"))));
+    },
+    //> public void testBoolean()
+    testBoolean:function(){
+        var isOk=org.eclipse.vjet.vjo.java.lang.BooleanUtil.TRUE; //<Boolean
+        var isFalse=org.eclipse.vjet.vjo.java.lang.BooleanUtil.booleanValue(org.eclipse.vjet.vjo.java.lang.BooleanUtil.FALSE); //<boolean
+    }
+})
+.endType();

@@ -1,0 +1,61 @@
+package org.eclipse.vjet.dsf.jstojava.codegen.data;
+
+import org.eclipse.vjet.vsf.jsref.JsFunc;
+import org.eclipse.vjet.vsf.jsref.JsObj;
+import org.eclipse.vjet.vsf.jsref.JsProp;
+import org.eclipse.vjet.vsf.jsref.internals.JsCmpMeta;
+import org.eclipse.vjet.vsf.jsref.JsTypeRef;
+import org.eclipse.vjet.vsf.jsref.JsObjData;
+import org.eclipse.vjet.dsf.spec.component.IComponentSpec;
+import org.eclipse.vjet.vsf.resource.pattern.js.JsResource;
+import org.eclipse.vjet.vsf.resource.pattern.js.IJsResourceRef;
+import vjo.ClassJsr;
+
+@org.eclipse.vjet.dsf.resource.utils.CodeGen("JsrGenerator")
+public class VjoObjectUsageJsr extends JsObj {
+    private static final long serialVersionUID = 1L;
+
+    private static final JsObjData S = 
+        new JsObjData("org.eclipse.vjet.dsf.jstojava.codegen.data.VjoObjectUsage", VjoObjectUsageJsr.class, "VjoObjectUsage");
+
+    
+    public static class ResourceSpec {
+        public static IComponentSpec getInstance() {
+            return S.getResourceSpec(); 
+        }
+        public static final JsResource RESOURCE = S.getJsResource();
+        public static final IJsResourceRef REF = S.getJsResourceRef();
+    }
+
+    public static final IComponentSpec SPEC = S.getResourceSpec();
+
+    public VjoObjectUsageJsr(){
+        super(S.getJsCmpMeta(), true);
+    }
+
+    protected VjoObjectUsageJsr(JsCmpMeta cmpMeta, boolean isInstance, Object... args) {
+        super(cmpMeta, isInstance, args);
+    }
+
+    public static final JsProp<Object> S_PROP_ONE(){
+        return getProp(S, Object.class, "S_PROP_ONE");
+    }
+
+    public static JsFunc<Object> staticMethod(){
+        return call(S, Object.class, "staticMethod");
+    }
+
+    public final JsProp<Object> m_prop_one(){
+        return getProp(Object.class, "m_prop_one");
+    }
+
+    public JsFunc<Object> instanceMethod(){
+        return call(Object.class, "instanceMethod");
+    }
+
+    public JsFunc<? extends ClassJsr> getMyClass(){
+        return call(ClassJsr.class, "getMyClass");
+    }
+    
+    public static JsTypeRef<VjoObjectUsageJsr> prototype = new JsTypeRef<VjoObjectUsageJsr>(S);
+}

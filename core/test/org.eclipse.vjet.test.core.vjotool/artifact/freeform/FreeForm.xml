@@ -1,0 +1,14 @@
+<handler>
+
+	<case position='1' status='pass'>
+		<advisor description=''>org.eclipse.vjet.vjo.tool.codecompletion.advisor.VjoCcParameterHintAdvisor</advisor>
+	</case>
+	<case position='2' status='pass'>
+		<advisor description=''>org.eclipse.vjet.vjo.tool.codecompletion.advisor.VjoCcDerivedPropMethodAdvisor</advisor>
+		<advisor description=''>org.eclipse.vjet.vjo.tool.codecompletion.advisor.VjoCcPackageProposalAdvisor</advisor>
+		<advisor description=''>org.eclipse.vjet.vjo.tool.codecompletion.advisor.VjoCcPropMethodProposalAdvisor</advisor>
+		<advisor description=''>org.eclipse.vjet.vjo.tool.codecompletion.advisor.VjoCcTypeProposalAdvisor</advisor>
+		<!--  <proposal description='POSITION_AFTER_THIS' name='unwatch'>unwatch(String prop)</proposal>-->
+	</case>
+	
+</handler>
