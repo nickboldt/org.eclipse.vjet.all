@@ -1,0 +1,26 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Java 2 JS Code Gen UI (Incubation)
+Bundle-SymbolicName: org.eclipse.vjet.eclipse.javatojs.ui;singleton:=true
+Bundle-Version: 0.10.0.qualifier
+Bundle-Activator: org.eclipse.vjet.eclipse.javatojs.ui.Java2JsPlugin
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.ui.console,
+ org.eclipse.vjet.eclipse.javalaunch,
+ org.eclipse.vjet.core.codegen.bootstrap,
+ org.eclipse.core.resources,
+ org.eclipse.jdt.core,
+ org.eclipse.dltk.mod.core
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Import-Package: org.eclipse.core.resources,
+ org.eclipse.jdt.core
+Export-Package: org.eclipse.vjet.eclipse.javatojs.ui,
+ org.eclipse.vjet.eclipse.javatojs.ui.actions,
+ org.eclipse.vjet.eclipse.javatojs.ui.adapters,
+ org.eclipse.vjet.eclipse.javatojs.ui.commands,
+ org.eclipse.vjet.eclipse.javatojs.ui.markers,
+ org.eclipse.vjet.eclipse.javatojs.ui.plugin,
+ org.eclipse.vjet.eclipse.javatojs.ui.preferences
+Bundle-Vendor: eclipse.org

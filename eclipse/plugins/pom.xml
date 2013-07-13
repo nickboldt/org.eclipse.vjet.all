@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+   xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <modelVersion>4.0.0</modelVersion>
+   <parent>
+      <groupId>org.eclipse.vjet.eclipse</groupId>
+      <artifactId>eclipse-parent</artifactId>
+      <version>0.10.0-SNAPSHOT</version>
+   </parent>
+   <groupId>org.eclipse.vjet.eclipse.plugins</groupId>
+   <artifactId>plugins-parent</artifactId>
+   <version>0.10.0-SNAPSHOT</version>
+   <packaging>pom</packaging>
+
+   <modules>
+      <!-- Plugins -->
+      <module>org.eclipse.vjet.eclipse.core</module> 
+      <module>org.eclipse.vjet.eclipse.launching</module> 
+      <module>org.eclipse.vjet.eclipse.ui</module>
+      <module>org.eclipse.vjet.eclipse.dltk.core.fragment</module>
+      <module>org.eclipse.vjet.eclipse.rhino.dbgp</module>
+      <module>org.eclipse.vjet.eclipse.debug</module>
+      <module>org.eclipse.vjet.eclipse.debug.ui</module>
+      <module>org.eclipse.vjet.eclipse.vjetv</module>
+      <module>org.eclipse.vjet.eclipse.help</module>
+      <module>org.eclipse.vjet.eclipse.typespace.efs</module>
+      <module>org.eclipse.vjet.eclipse.ui.html</module>
+      <module>org.eclipse.vjet.eclipse.welcome</module>
+      <module>org.eclipse.vjet.eclipse.javalaunch</module>
+      <module>org.eclipse.vjet.eclipse.javatojs.core</module>
+      <module>org.eclipse.vjet.eclipse.javatojs.ui</module>
+   </modules>
+
+</project>

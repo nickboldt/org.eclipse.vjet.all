@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: VJETVRunner Plug-in (Incubation)
+Bundle-SymbolicName: org.eclipse.vjet.eclipse.vjetv;singleton:=true
+Bundle-Version: 0.10.0.qualifier
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.vjet.core.jstojava,
+ org.eclipse.vjet.resource.jsnativetypes,
+ org.eclipse.vjet.resource.vjolib,
+ org.eclipse.vjet.eclipse.core
+Eclipse-LazyStart: true
+Bundle-Vendor: %providerName

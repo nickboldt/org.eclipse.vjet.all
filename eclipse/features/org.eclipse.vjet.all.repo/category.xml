@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature url="features/org.eclipse.vjet.js.ide_0.10.0.qualifier.jar" id="org.eclipse.vjet.js.ide" version="0.10.0.qualifier">
+      <category name="VJET_CATEGORY"/>
+   </feature>
+   <feature url="features/org.eclipse.vjet.codegen_0.10.0.qualifier.jar" id="org.eclipse.vjet.codegen" version="0.10.0.qualifier">
+      <category name="VJET_OPTIONAL"/>
+   </feature>
+   <feature url="features/org.eclipse.vjet.vsf.domkit_0.10.0.qualifier.jar" id="org.eclipse.vjet.vsf.domkit" version="0.10.0.qualifier">
+      <category name="VJET_OPTIONAL"/>
+   </feature>
+   <category-def name="VJET_CATEGORY" label="Eclipse VJET JS Toolkit (Incubation)"/>
+   <category-def name="VJET_OPTIONAL" label="VJET Optional Features (Incubation)"/>
+</site>

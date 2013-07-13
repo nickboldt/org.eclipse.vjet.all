@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright (c) 2000, 2011 IBM Corporation, eBay Inc and others.
+All rights reserved. This program and the accompanying materials
+are made available under the terms of the Eclipse Public License v1.0
+which accompanies this distribution, and is available at
+http://www.eclipse.org/legal/epl-v10.html
+
+Contributors:
+    IBM Corporation - initial API and implementation
+    eBay Inc - Modified
+ -->
+<feature
+      id="org.eclipse.vjet.extmod.dltk.core"
+      label="%featureName"
+      version="0.10.0.qualifier"
+      provider-name="%providerName">
+
+   <description url="http://www.eclipse.org/dltk">
+      %description
+   </description>
+
+   <copyright>
+      %copyright
+   </copyright>
+
+   <license url="%licenseURL">
+      %license
+   </license>
+
+   <plugin
+         id="org.eclipse.dltk.mod.core"
+         download-size="0"
+         install-size="0"
+         version="0.10.0.qualifier"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.dltk.mod.ui"
+         download-size="0"
+         install-size="0"
+         version="0.10.0.qualifier"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.dltk.mod.debug"
+         download-size="0"
+         install-size="0"
+         version="0.10.0.qualifier"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.dltk.mod.debug.ui"
+         download-size="0"
+         install-size="0"
+         version="0.10.0.qualifier"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.dltk.mod.launching"
+         download-size="0"
+         install-size="0"
+         version="0.10.0.qualifier"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.dltk.mod.console"
+         download-size="0"
+         install-size="0"
+         version="0.10.0.qualifier"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.dltk.mod.console.ui"
+         download-size="0"
+         install-size="0"
+         version="0.10.0.qualifier"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.dltk.mod.validators.core"
+         download-size="0"
+         install-size="0"
+         version="0.10.0.qualifier"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.dltk.mod.formatter"
+         download-size="0"
+         install-size="0"
+         version="0.10.0.qualifier"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.dltk.mod.validators.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+</feature>

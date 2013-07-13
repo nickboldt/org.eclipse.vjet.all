@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+
+   
+   <extension
+         point="org.eclipse.core.runtime.adapters">
+      <factory
+            adaptableType="org.eclipse.core.resources.IResource"
+            class="org.eclipse.vjet.eclipse.javatojs.ui.adapters.Java2JsAdapterFactory">
+         <adapter
+               type="org.eclipse.vjet.core.codegen.bootstrap.IJava2JsCodeGenInput">
+         </adapter>
+      </factory>
+      <factory
+            adaptableType="org.eclipse.jdt.core.IJavaElement"
+            class="org.eclipse.vjet.eclipse.javatojs.ui.adapters.Java2JsAdapterFactory">
+         <adapter
+               type="org.eclipse.vjet.core.codegen.bootstrap.IJava2JsCodeGenInput">
+         </adapter>
+      </factory>
+      <factory
+            adaptableType="org.eclipse.vjet.eclipse.javatojs.ui.adapters.Java2JsInput"
+            class="org.eclipse.vjet.eclipse.javatojs.ui.adapters.Java2JsAdapterFactory">
+         <adapter
+               type="org.eclipse.core.resources.IResource">
+         </adapter>
+      </factory>
+      
+      <!-- js to java adapters -->
+         <factory
+            adaptableType="org.eclipse.core.resources.IResource"
+            class="org.eclipse.vjet.eclipse.javatojs.ui.adapters.Js2JavaAdapterFactory">
+         <adapter
+               type="org.eclipse.vjet.core.codegen.bootstrap.IJs2JavaCodeGenInput">
+         </adapter>
+      </factory>
+          <factory
+            adaptableType="org.eclipse.dltk.mod.core.IModelElement"
+            class="org.eclipse.vjet.eclipse.javatojs.ui.adapters.Js2JavaAdapterFactory">
+         <adapter
+               type="org.eclipse.vjet.core.codegen.bootstrap.IJs2JavaCodeGenInput">
+         </adapter>
+      </factory>
+      <factory
+            adaptableType="org.eclipse.vjet.eclipse.javatojs.ui.adapters.Js2JavaInput"
+            class="org.eclipse.vjet.eclipse.javatojs.ui.adapters.Js2JavaAdapterFactory">
+         <adapter
+               type="org.eclipse.core.resources.IResource">
+         </adapter>
+      </factory>
+   </extension>
+   
+   <extension
+         point="org.eclipse.ui.commands">
+      <category
+            description="Java2Js Commands"
+            id="org.eclipse.vjet.eclipse.javatojs"
+            name="Java2Js Commands">
+      </category>
+      <command
+            categoryId="org.eclipse.vjet.eclipse.javatojs"
+            defaultHandler="org.eclipse.vjet.eclipse.javatojs.ui.commands.Java2JsGenerateHandler"
+            description="Java2Js Code Generation"
+            id="org.eclipse.vjet.eclipse.javatojs.ui.commands.Java2JsGenerate"
+            name="Java2Js Code Generation">
+      </command>
+   </extension>
+   
+      <extension
+         point="org.eclipse.ui.commands">
+      <category
+            description="Js2Java Commands"
+            id="org.eclipse.vjet.eclipse.jstojava"
+            name="Js2Java Commands">
+      </category>
+      <command
+            categoryId="org.eclipse.vjet.eclipse.jstojava"
+            defaultHandler="org.eclipse.vjet.eclipse.javatojs.ui.commands.Js2JavaGenerateHandler"
+            description="Js 2 Java Code Generation"
+            id="org.eclipse.vjet.eclipse.javatojs.ui.commands.Js2JavaGenerate"
+            name="Js 2 Java Code Generation">
+      </command>
+   </extension>
+   
+ 
+
+   
+   <extension
+         point="org.eclipse.ui.menus">
+      
+
+           
+      <!-- java editor -->
+    <!--  <menuContribution
+            locationURI="popup:#CompilationUnitEditorContext">
+            <menu  id="org.eclipse.vjet.shortcuts.menu"  label="VJET"></menu>
+      </menuContribution>
+        -->   
+      <!-- java editor -->
+ 
+   
+      <menuContribution
+            locationURI="popup:org.eclipse.vjet.shortcuts.menu">
+            <command
+               commandId="org.eclipse.vjet.eclipse.javatojs.ui.commands.Java2JsGenerate"
+               icon="icons/etool16/generate.gif"
+               label="Java2Js Code Generation">
+
+			<visibleWhen>
+			   <or>
+			      <with variable="selection">
+			         <iterate ifEmtpy="false">
+			           <reference definitionId="org.eclipse.vjet.javafile"/>
+			         </iterate>
+			      </with>
+			      <with variable="activeEditorInput">
+			        <reference definitionId="org.eclipse.vjet.javafile"/>
+			      </with>
+			   </or>
+			</visibleWhen>
+         </command>
+		</menuContribution>
+		
+		     <menuContribution
+            locationURI="popup:org.eclipse.vjet.shortcuts.menu">
+            <command
+               commandId="org.eclipse.vjet.eclipse.javatojs.ui.commands.Js2JavaGenerate"
+               icon="icons/etool16/generate.gif"
+               label="Js2Java Code Generation">
+
+			<visibleWhen>
+			   <or>
+			      <with variable="selection">
+			         <iterate ifEmtpy="false">
+			           <reference definitionId="org.eclipse.vjet.jsfile"/>
+			         </iterate>
+			      </with>
+			      <with variable="activeEditorInput">
+			        <reference definitionId="org.eclipse.vjet.jsfile"/>
+			      </with>
+			   </or>
+			</visibleWhen>
+         </command>
+		</menuContribution>
+		
+		
+         
+         <menuContribution
+            locationURI="popup:org.eclipse.vjet.shortcuts.menu">
+            <command
+               commandId="org.eclipse.vjet.eclipse.javatojs.ui.commands.Java2JsGenerate"
+               icon="icons/etool16/generate.gif"
+               label="Java2Js Code Generation">
+
+			<visibleWhen>
+               <with variable="activeMenuEditorInput">
+                  <iterate ifEmpty="false">
+                     		<adapt type="org.eclipse.jdt.core.IJavaElement"/>
+
+                  </iterate>
+                
+               </with>
+        	</visibleWhen>
+         </command>
+      </menuContribution>
+
+
+   </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            category="org.eclipse.vjet.eclipse.javatojs.ui.preferences"
+            class="org.eclipse.vjet.eclipse.javatojs.ui.preferences.Java2JsPreferencePage"
+            id="org.eclipse.vjet.eclipse.javatojs.ui.preferences.Java2JsPreferencePage"
+            name="Java to JavaScript ">
+      </page>
+   </extension>
+   <extension
+         point="org.eclipse.core.runtime.preferences">
+      <initializer
+            class="org.eclipse.vjet.eclipse.javatojs.ui.preferences.Java2JsPreferenceInitializer">
+      </initializer>
+   </extension>
+  
+   
+</plugin>

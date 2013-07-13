@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension-point id="typeconstruct" name="VJET Type Constructor" schema="schema/typeconstruct.exsd"/>
+   <extension-point id="functionparam" name="VJET Function Param Extension" schema="schema/functionparam.exsd"/>
+   <extension-point id="thisresolver" name="This scope resolver" schema="schema/thisresolver.exsd"/>
+   <extension-point id="functionreturntype" name="Function Return Type Resolver" schema="schema/functionreturntype.exsd"/>
+   <extension-point id="otypedef" name="OType definition resolver" schema="schema/otypedef.exsd"/>
+   
+   <extension point="org.eclipse.team.core.fileTypes">
+	<fileTypes extension="js" type="text"/>
+	</extension>
+   
+	<extension
+	         point="org.eclipse.core.contenttype.contentTypes">
+	      <content-type
+	            file-extensions="js"
+	            base-type="org.eclipse.core.runtime.text"
+	            id="org.eclipse.dltk.mod.vjoContentType"
+	            name="%vjoContentType"
+	            priority="high">
+	      </content-type>
+	</extension>
+   <extension
+         id="org.eclipse.vjet.core.nature"
+         name="%vjetNature"
+         point="org.eclipse.core.resources.natures">
+      <runtime>
+         <run
+               class="org.eclipse.vjet.eclipse.core.VjoNature">
+         </run>
+      </runtime>
+   </extension>
+   <extension
+         point="org.eclipse.dltk.mod.core.language">
+      <language
+            class="org.eclipse.vjet.eclipse.core.VjoLanguageToolkit"
+            nature="org.eclipse.vjet.core.nature">
+      </language>
+   </extension>
+   <extension
+         point="org.eclipse.dltk.mod.core.sourceElementParsers">
+      <parser
+            class="org.eclipse.vjet.eclipse.internal.compiler.VjoSourceElementParser"
+            nature="org.eclipse.vjet.core.nature"
+            priority="0">
+      </parser> 
+   </extension>
+   <extension
+         point="org.eclipse.dltk.mod.core.search">
+      <seachFactory
+            class="org.eclipse.vjet.eclipse.internal.core.VjetSearchFactory"
+            nature="org.eclipse.vjet.core.nature">
+      </seachFactory>
+   </extension>
+   <extension
+         point="org.eclipse.dltk.mod.core.sourceModuleFactories">
+      <factory
+            class="org.eclipse.vjet.eclipse.core.JSSourceModuleFactory"
+            nature="org.eclipse.vjet.core.nature"
+            priority="0">
+      </factory>
+   </extension>
+   <extension
+        point="org.eclipse.dltk.mod.core.buildProblemReporterFactory">
+      <factory
+            class="org.eclipse.vjet.eclipse.core.parser.VjoBuildProblemReporterFactory"
+            nature="org.eclipse.vjet.core.nature"
+            priority="0">
+      </factory>
+   </extension>  
+   <extension
+         point="org.eclipse.dltk.mod.core.completionEngine">
+      <completionEngine
+            class="org.eclipse.vjet.eclipse.codeassist.VjoCompletionEngine"
+            nature="org.eclipse.vjet.core.nature"
+            priority="0">
+      </completionEngine>
+   </extension>
+      <extension
+         point="org.eclipse.dltk.mod.core.selectionEngine">
+      <selectionEngine
+            class="org.eclipse.vjet.eclipse.internal.codeassist.select.VjoSelectionEngine"
+            nature="org.eclipse.vjet.core.nature"
+            priority="0">
+      </selectionEngine>
+   </extension>
+   <extension
+         point="org.eclipse.dltk.mod.core.sourceParsers">
+      <parserContribution
+            natureId="org.eclipse.vjet.core.nature">
+      <parser
+             class="org.eclipse.vjet.eclipse.internal.parser.VjoSourceParserFactory"
+             description="JavaScript Source Parser"
+             id="org.eclipse.dltk.mod.javascript.sourceParser"
+             name="JavaScript Source Parser"
+             priority="0" />
+      </parserContribution>
+   </extension>
+   
+   
+    <extension
+         point="org.eclipse.dltk.mod.core.callHierarchy">
+      <callHerarchiesFactory
+            class="org.eclipse.vjet.eclipse.internal.core.VjoCallHierarchyFactory"
+            nature="org.eclipse.vjet.core.nature"            		
+            priority="0">
+      </callHerarchiesFactory>
+   </extension>
+  <extension
+    point="org.eclipse.dltk.mod.core.buildParticipant">
+      <buildParticipant
+            class="org.eclipse.dltk.mod.core.builder.ParserBuildParticipantFactory"
+            id="org.eclipse.vjet.eclipse.buildParticipant.parser"
+            name="VJET parser"
+            nature="org.eclipse.vjet.core.nature">
+      </buildParticipant>
+	<buildParticipant
+	  class="org.eclipse.vjet.eclipse.core.parser.JavaScriptTodoParserType"
+	  id="org.eclipse.vjet.eclipse.buildParticipant.todo"
+	  name="VJET TODO task parser"
+	  nature="org.eclipse.vjet.core.nature">
+	  <requires
+	        id="org.eclipse.vjet.eclipse.buildParticipant.parser">
+	  </requires>
+	</buildParticipant>
+	
+  </extension>
+  <extension
+        id="org.eclipse.vjet.eclipse.core.validation.VJetValidationPreferenceInitilizer"
+        name="org.eclipse.vjet.eclipse.core.validation.VJetValidationPreferenceInitilizer"
+        point="org.eclipse.core.runtime.preferences">
+     <initializer
+           class="org.eclipse.vjet.eclipse.core.validation.VJetValidationPreferenceInitilizer">
+     </initializer>
+  </extension>
+  
+  <extension 
+	point="org.eclipse.core.resources.builders" 
+	id="org.eclipse.vjet.eclipse.core.builder"
+	name="%scriptBuilderName">
+	<builder>
+		<run class="org.eclipse.vjet.eclipse.core.builder.VjetScriptBuilder">
+		</run>
+	</builder>
+</extension>
+
+	    
+</plugin>

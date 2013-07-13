@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentContract id="DarwinCoreComponentsContent.ebayfooter" version="2.0"
+                 xmlns="http://www.ebay.com/2006/v4/content"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <ContentSpecRef defaultFamily="Text" id="EbayContentSpec"/>
+        <DynamicFamily name="EbayFooterContentModel" staticFamily="InlineContent">
+                <PH ids="announcementsLink VerisignLogoLink VerisignLogoNewLink" type="Link"/>              
+        </DynamicFamily>
+        <ContentTypes>
+                <ContentElement id="BasicHtmlContentElementType" staticFamily="InlineContent"/>
+                <ContentList contentType="#BasicHtmlContentElementType" id="FooterLinksType"/>
+        </ContentTypes>
+        <ContentInstance>
+                <ContentUnit contentType="#BasicHtmlContentElementType"
+                                 dynamicFamily="#EbayFooterContentModel" id="VerisignLogo"
+                                 nillable="false"/>
+                <ContentUnit contentType="#BasicHtmlContentElementType" id="AboutSSLCertLink"
+                                 nillable="false"/>
+                <ContentUnit id="EbayOfficialTimeText" nillable="false"/>
+                <ContentUnit id="CurrentYear" nillable="false"/>
+                <ContentUnit contentType="#BasicHtmlContentElementType"
+                                 dynamicFamily="#EbayFooterContentModel" id="SigninPageVeriSignLogo" 
+                                 nillable="false"/>
+                <ContentUnit contentType="#BasicHtmlContentElementType"
+                                 id="SigninPageAboutSSLCertLink" nillable="false"/>
+                <ContentUnit contentType="#BasicHtmlContentElementType"
+                                 dynamicFamily="#EbayFooterContentModel" id="SigninPageVeriSignAboutTitle" 
+                                 nillable="false"/>
+                <ContentUnit contentType="#BasicHtmlContentElementType"
+                                 dynamicFamily="#EbayFooterContentModel" id="SigninPageVeriSignAbout" 
+                                 nillable="false"/>
+        </ContentInstance>
+</ContentContract>

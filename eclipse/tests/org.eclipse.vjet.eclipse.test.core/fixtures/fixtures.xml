@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fixtures>
+
+	<!-- VALID EMBEDDED PROJECT  ARTIFACT -->			
+	<fixture id="com.ebay.tools.vjet2.workspace1">
+		<artifact artifactType="org.eclipse.vjet.testframework.artifact.project.workspace"
+						testBundleId="org.eclipse.vjet.eclipse.test.core"
+						projectName="TestProject"/>
+	</fixture>
+	<fixture id="com.ebay.tools.vjet2.workspace2">
+		<artifact artifactType="org.eclipse.vjet.testframework.artifact.project.workspace"
+						testBundleId="org.eclipse.vjet.eclipse.test.core"
+						projectName="VJETProject"/>
+	</fixture>		
+	<fixture id="com.ebay.tools.vjet2.workspace3">
+		<artifact artifactType="org.eclipse.vjet.testframework.artifact.project.workspace"
+						testBundleId="org.eclipse.vjet.eclipse.test.core"
+						projectName="VjoJavaLib"/>
+	</fixture>		
+
+
+
+</fixtures>
