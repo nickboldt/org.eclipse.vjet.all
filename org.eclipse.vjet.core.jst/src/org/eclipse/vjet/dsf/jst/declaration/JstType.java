@@ -2116,6 +2116,7 @@ public class JstType extends BaseJstNode implements IJstType {
 	}
 	
 	public void clearModifiers() {
+		m_singleton = false;
 		synchronized (this) {
 			m_modifiers = new JstModifiers();;
 		}
