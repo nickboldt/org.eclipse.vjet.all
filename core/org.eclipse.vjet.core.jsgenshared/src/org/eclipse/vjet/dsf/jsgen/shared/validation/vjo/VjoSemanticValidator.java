@@ -472,6 +472,9 @@ public abstract class VjoSemanticValidator implements
 			final IJstNode jstNode, final JstDeferredType deferredType,
 			final IJstType resolvedType) {
 		boolean satisfied = false;
+		if(deferredType.getCandidateTypes().size()==0){
+			return;
+		}
 		final StringBuilder candidates = new StringBuilder().append('{');
 		for(IJstType candidateType: deferredType.getCandidateTypes()){
 			if(satisifies(resolvedType, candidateType)){
