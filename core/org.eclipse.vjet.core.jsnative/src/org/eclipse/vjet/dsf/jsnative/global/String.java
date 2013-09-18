@@ -76,7 +76,7 @@ public interface String extends Object {
 	 * @param Strings to concatenate to this string.
 	 */
 	@JsSupport( {JsVersion.MOZILLA_ONE_DOT_TWO})
-	@Function String concat(String ...strings);
+	@Function String concat(Object ...strings);
 	
 	/**
 	 * Returns a copy of a string surrounded by TT HTML tags.
