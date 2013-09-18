@@ -71,6 +71,7 @@ public class VjoSemanticRuleRepo {
 	public final IVjoSemanticRule<BaseVjoSemanticRuleCtx> METHOD_WRONG_NUMBER_OF_ARGS = new MethodWrongNumberOfArgsRule();
 	
 	public final IVjoSemanticRule<BaseVjoSemanticRuleCtx> STATIC_METHOD_SHOULD_NOT_BE_ACCESSED_FROM_NONE_STATIC_SCOPE = new StaticMethodShouldNotBeAccessedFromNoneStaticScopeRule();
+	public final IVjoSemanticRule<BaseVjoSemanticRuleCtx> INFERRED_STATIC_METHOD_SHOULD_NOT_BE_ACCESSED_FROM_NONE_STATIC_SCOPE = new StaticMethodShouldNotBeAccessedFromNoneStaticScopeRule();
 	public final IVjoSemanticRule<BaseVjoSemanticRuleCtx> NONE_STATIC_METHOD_SHOULD_NOT_BE_ACCESSED_FROM_STATIC_SCOPE = new NoneStaticMethodShouldNotBeAccessedFromStaticScopeRule();
 	
 	public final IVjoSemanticRule<BaseVjoSemanticRuleCtx> DUPLICATE_METHOD = new DuplicateMethodRule();
@@ -238,6 +239,7 @@ public class VjoSemanticRuleRepo {
 		METHOD_ARGS_TYPE_SHOULD_NOT_BE_VOID.setGlobalPolicy(GLOBAL_WARNING_POLICY);
 		METHOD_WRONG_NUMBER_OF_ARGS.setGlobalPolicy(GLOBAL_WARNING_POLICY);
 		STATIC_METHOD_SHOULD_NOT_BE_ACCESSED_FROM_NONE_STATIC_SCOPE.setGlobalPolicy(GLOBAL_ERROR_POLICY);
+		INFERRED_STATIC_METHOD_SHOULD_NOT_BE_ACCESSED_FROM_NONE_STATIC_SCOPE.setGlobalPolicy(GLOBAL_WARNING_POLICY);
 		NONE_STATIC_METHOD_SHOULD_NOT_BE_ACCESSED_FROM_STATIC_SCOPE.setGlobalPolicy(GLOBAL_ERROR_POLICY);
 		DUPLICATE_METHOD.setGlobalPolicy(GLOBAL_WARNING_POLICY);
 		DUPLICATE_PROPERTY.setGlobalPolicy(GLOBAL_WARNING_POLICY);
@@ -458,6 +460,7 @@ public class VjoSemanticRuleRepo {
 		TYPE_CHECK.addRule(METHOD_SHOULD_BE_VISIBLE);
 		TYPE_CHECK.addRule(CONSTRUCTOR_SHOULD_BE_VISIBLE);
 		TYPE_CHECK.addRule(STATIC_METHOD_SHOULD_NOT_BE_ACCESSED_FROM_NONE_STATIC_SCOPE);
+		TYPE_CHECK.addRule(INFERRED_STATIC_METHOD_SHOULD_NOT_BE_ACCESSED_FROM_NONE_STATIC_SCOPE);
 		TYPE_CHECK.addRule(NONE_STATIC_METHOD_SHOULD_NOT_BE_ACCESSED_FROM_STATIC_SCOPE);
 		
 		VJO_SYNTAX.addRule(VJO_SYNTAX_CORRECTNESS);
@@ -578,6 +581,7 @@ public class VjoSemanticRuleRepo {
 		METHOD_ARGS_TYPE_SHOULD_NOT_BE_VOID.setErrMsg(bundle.getErrorMessage("METHOD_ARGS_TYPE_SHOULD_NOT_BE_VOID", verbose));
 		METHOD_WRONG_NUMBER_OF_ARGS.setErrMsg(bundle.getErrorMessage("METHOD_WRONG_NUMBER_OF_ARGS", verbose));
 		STATIC_METHOD_SHOULD_NOT_BE_ACCESSED_FROM_NONE_STATIC_SCOPE.setErrMsg(bundle.getErrorMessage("STATIC_METHOD_SHOULD_NOT_BE_ACCESSED_FROM_NONE_STATIC_SCOPE", verbose));
+		INFERRED_STATIC_METHOD_SHOULD_NOT_BE_ACCESSED_FROM_NONE_STATIC_SCOPE.setErrMsg(bundle.getErrorMessage("STATIC_METHOD_SHOULD_NOT_BE_ACCESSED_FROM_NONE_STATIC_SCOPE", verbose));
 		NONE_STATIC_METHOD_SHOULD_NOT_BE_ACCESSED_FROM_STATIC_SCOPE.setErrMsg(bundle.getErrorMessage("NONE_STATIC_METHOD_SHOULD_NOT_BE_ACCESSED_FROM_STATIC_SCOPE", verbose));
 //		ARRAY_CREATION_VAL_SHOULD_BE_DEFINED.setErrMsg(bundle.getErrorMessage("ARRAY_CREATION_VAL_SHOULD_BE_DEFINED", verbose));
 		ARRAY_CREATION_DIMENSION_TYPE_SHOULD_BE_INTEGER.setErrMsg(bundle.getErrorMessage("ARRAY_CREATION_DIMENSION_TYPE_SHOULD_BE_INTEGER", verbose));
@@ -1061,7 +1065,11 @@ public class VjoSemanticRuleRepo {
 		setUpRule(STATIC_METHOD_SHOULD_NOT_BE_ACCESSED_FROM_NONE_STATIC_SCOPE, 
 				MethodProbIds.UndefinedMethod, 
 				"Accessing_Static_Method_From_None_Static_Context", 
-				"Can't access static method from none-static context");
+				"Can't access static method from non-static context");
+		setUpRule(INFERRED_STATIC_METHOD_SHOULD_NOT_BE_ACCESSED_FROM_NONE_STATIC_SCOPE, 
+				MethodProbIds.UndefinedMethod, 
+				"Accessing_Static_Method_From_None_Static_Context", 
+				"Can't access static method from non-static context");
 		
 		setUpRule(NONE_STATIC_METHOD_SHOULD_NOT_BE_ACCESSED_FROM_STATIC_SCOPE, 
 				MethodProbIds.UndefinedMethod, 

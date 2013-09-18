@@ -206,14 +206,24 @@ public class VjoMtdInvocationExprValidator
 							}
 			
 						}
-						else {
+						else  {
 							//STATIC_METHOD_SHOULD_NOT_BE_ACCESSED_FROM_NONE_STATIC_SCOPE
-							if (qualifierType.getMethod(mtdName, true, true) != null) {					
-								satisfyRule(ctx, 
-									ruleRepo.STATIC_METHOD_SHOULD_NOT_BE_ACCESSED_FROM_NONE_STATIC_SCOPE,
-									new BaseVjoSemanticRuleCtx
-										(expr, ctx.getGroupId(), arguments));
-								return;
+							if(qualifierType instanceof IInferred){
+								if (qualifierType.getMethod(mtdName, true, true) != null) {					
+									satisfyRule(ctx, 
+										ruleRepo.INFERRED_STATIC_METHOD_SHOULD_NOT_BE_ACCESSED_FROM_NONE_STATIC_SCOPE,
+										new BaseVjoSemanticRuleCtx
+											(expr, ctx.getGroupId(), arguments));
+									return;
+								}
+							}else{
+								if (qualifierType.getMethod(mtdName, true, true) != null) {					
+									satisfyRule(ctx, 
+										ruleRepo.STATIC_METHOD_SHOULD_NOT_BE_ACCESSED_FROM_NONE_STATIC_SCOPE,
+										new BaseVjoSemanticRuleCtx
+											(expr, ctx.getGroupId(), arguments));
+									return;
+								}
 							}
 						}
 						
