@@ -634,7 +634,11 @@ public class TypeCheckUtil {
 			return true;
 		}
 
-		if((isObject(assignFrom) || isObjLiteral(assignFrom)) && TypeConversionPolicy.getInstance().allowObjectToTConversion()){
+		if(AssignableTypeRegistry.getInstance().isAssignable("ALL", assignTo.getName(), assignFrom.getName())){
+			return true;
+		}
+		
+		if((isObject(assignFrom) || isObjLiteral(assignFrom))){
 			return true;
 		}
 		
