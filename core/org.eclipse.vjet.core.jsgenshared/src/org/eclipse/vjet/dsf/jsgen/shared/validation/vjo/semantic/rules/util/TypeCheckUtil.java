@@ -638,10 +638,6 @@ public class TypeCheckUtil {
 			return true;
 		}
 		
-		if((isObject(assignFrom) || isObjLiteral(assignFrom))){
-			return true;
-		}
-		
 		final IJstType assignToTransformed = toJsNativeType(toType);
 		// TODO ObjLiteral -> transformed type is null?
 		final IJstType assignFromTransformed = toJsNativeType(fromType);
