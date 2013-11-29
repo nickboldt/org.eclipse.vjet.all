@@ -2752,8 +2752,6 @@ public class CodeassistUtils {
 							.getLHS().toLHSText();
 					dq.push(objLitName);
 					node = node.getParentNode();
-				}else{
-					node = null;
 				}
 			} else {
 				node = node.getParentNode();

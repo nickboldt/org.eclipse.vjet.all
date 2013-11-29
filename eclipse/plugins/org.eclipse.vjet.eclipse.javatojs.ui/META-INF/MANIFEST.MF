@@ -1,6 +1,9 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Java 2 JS Code Gen UI (Incubation)
+Bundle-Vendor: %providerName
+Bundle-Name: %pluginName
+Bundle-Localization: plugin
+Eclipse-BundleShape: jar
 Bundle-SymbolicName: org.eclipse.vjet.eclipse.javatojs.ui;singleton:=true
 Bundle-Version: 0.10.0.qualifier
 Bundle-Activator: org.eclipse.vjet.eclipse.javatojs.ui.Java2JsPlugin
@@ -23,4 +26,4 @@ Export-Package: org.eclipse.vjet.eclipse.javatojs.ui,
  org.eclipse.vjet.eclipse.javatojs.ui.markers,
  org.eclipse.vjet.eclipse.javatojs.ui.plugin,
  org.eclipse.vjet.eclipse.javatojs.ui.preferences
-Bundle-Vendor: eclipse.org
+

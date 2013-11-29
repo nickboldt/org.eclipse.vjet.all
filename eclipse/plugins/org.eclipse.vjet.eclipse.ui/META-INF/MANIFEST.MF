@@ -1,7 +1,9 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Vendor: %pluginProvider
+Bundle-Vendor: %providerName
 Bundle-Name: %pluginName
+Bundle-Localization: plugin
+Eclipse-BundleShape: jar
 Bundle-SymbolicName: org.eclipse.vjet.eclipse.ui;singleton:=true
 Bundle-Version: 0.10.0.qualifier
 Bundle-Activator: org.eclipse.vjet.eclipse.ui.VjetUIPlugin
@@ -32,7 +34,6 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.vjet.core.wrapper;visibility:=reexport,
  org.eclipse.dltk.mod.validators.ui
 Eclipse-LazyStart: true
-Bundle-Localization: plugin
 Bundle-ClassPath: .
 Export-Package: org.eclipse.vjet.eclipse.internal.ui.dialogs,
  org.eclipse.vjet.eclipse.internal.ui.editor,

@@ -20,6 +20,6 @@
    <artifactId>org.eclipse.vjet.eclipse.welcome</artifactId>
    <version>0.10.0-SNAPSHOT</version>
    <packaging>eclipse-plugin</packaging>
-   <name>VJET: Eclipse Headless Validation (Incubation)</name>
+   <name>VJET Plug-in - Welcome (Incubation)</name>
    
 </project>

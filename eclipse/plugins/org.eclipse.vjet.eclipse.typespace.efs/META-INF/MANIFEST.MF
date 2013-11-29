@@ -1,5 +1,9 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
+Bundle-Vendor: %providerName
+Bundle-Name: %pluginName
+Bundle-Localization: plugin
+Eclipse-BundleShape: jar
 Bundle-SymbolicName: org.eclipse.vjet.eclipse.typespace.efs;singleton:=true
 Bundle-Version: 0.10.0.qualifier
 Require-Bundle: org.eclipse.core.filesystem,
@@ -9,3 +13,4 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: org.eclipse.vjet.eclipse.typespace.efs.internal.Activator
 Export-Package: org.eclipse.vjet.eclipse.typespace.efs
+

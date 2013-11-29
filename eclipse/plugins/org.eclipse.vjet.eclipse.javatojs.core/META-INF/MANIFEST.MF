@@ -1,6 +1,9 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: VJET Java2Js Eclipse Core (Incubation)
+Bundle-Vendor: %providerName
+Bundle-Name: %pluginName
+Bundle-Localization: plugin
+Eclipse-BundleShape: jar
 Bundle-SymbolicName: org.eclipse.vjet.eclipse.javatojs.core;singleton:=true
 Bundle-Version: 0.10.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
@@ -14,4 +17,4 @@ Require-Bundle: org.eclipse.vjet.core.codegen.bootstrap,
 Export-Package: org.eclipse.vjet.eclipse.javatojs.core
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: org.eclipse.vjet.eclipse.javatojs.core.Activator
-Bundle-Vendor: eclipse.org
+

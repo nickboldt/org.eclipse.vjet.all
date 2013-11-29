@@ -11,7 +11,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<tycho-version>0.15.0</tycho-version>
+		<tycho-version>0.18.1</tycho-version>
 		<vjet-version>0.10.0.SNAPSHOT</vjet-version>
 		<signer-input-directory>/home/data/httpd/download-staging.priv/webtools</signer-input-directory>
 		<download-publish-path>/home/data/httpd/download.eclipse.org/vjet/updates-nightly</download-publish-path>

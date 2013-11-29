@@ -2,10 +2,11 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Vendor: %providerName
 Bundle-Name: %pluginName
+Bundle-Localization: plugin
+Eclipse-BundleShape: jar
 Bundle-SymbolicName: org.eclipse.vjet.eclipse.debug.ui;singleton:=true
 Bundle-Version: 0.10.0.qualifier
 Bundle-Activator: org.eclipse.vjet.eclipse.debug.ui.VjetDebugUIPlugin
-Bundle-Localization: plugin
 Require-Bundle: org.eclipse.vjet.eclipse.core,
  org.eclipse.vjet.eclipse.debug,
  org.eclipse.vjet.eclipse.launching,
