@@ -645,8 +645,8 @@ public interface HtmlElementStyle extends IWillBeScriptable {
 	void setTop(String top);
 
 	@Property
-	String getZIndex();
-
+	Object getZIndex();
+	
 	@Property
 	void setZIndex(Object zIndex);
 
