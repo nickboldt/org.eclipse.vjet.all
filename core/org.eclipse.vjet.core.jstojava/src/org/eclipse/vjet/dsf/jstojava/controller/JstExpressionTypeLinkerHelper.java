@@ -3247,12 +3247,13 @@ public class JstExpressionTypeLinkerHelper {
 
 				final JstArg param = params.get(paramIdx);
 				final JstArg inferParam = inferParams.get(paramIdx);
-				final List<IJstType> inferParamTypes = new ArrayList<IJstType>(
-						param.getTypes());
+				
 				if (clearTypes) {
 					inferParam.clearTypes();
 				}
-				inferParam.addTypes(inferParamTypes);
+				for(IJstType inferredParamType: param.getTypes()){
+					inferParam.addType(new JstInferredType(inferredParamType));
+				}
 			}
 		}
 	}
