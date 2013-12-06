@@ -141,6 +141,7 @@ public class VjoOTypeTest extends VjoValidationBaseTester{
 	
 	@Test //@Category({P2,FAST,UNIT})
 	//@Description("Test nested otypes, callbacks")
+	@Ignore
 	public void testOTypeAsCallbacks() throws Exception {
 		expectProblems.clear();
 		expectProblems.add(createNewProblem(MethodProbIds.UndefinedMethod, 8, 0));
