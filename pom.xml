@@ -12,6 +12,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<tycho-version>0.15.0</tycho-version>
+		<tycho-extras-version>${tycho-version}</tycho-extras-version>
 		<vjet-version>0.10.0.SNAPSHOT</vjet-version>
 		<signer-input-directory>/home/data/httpd/download-staging.priv/webtools</signer-input-directory>
 		<download-publish-path>/home/data/httpd/download.eclipse.org/vjet/updates-nightly</download-publish-path>
@@ -31,7 +32,7 @@
 		<module>dltk/core</module>
 		<module>core</module>
 		<module>eclipse</module>
-	       <module>vsf</module>
+		<module>vsf</module>
 		<module>releng</module>
 	</modules>
 
@@ -56,7 +57,7 @@
 			</snapshots>
 		</repository>
 	</repositories>
-	
+
 	<pluginRepositories>
 		<pluginRepository>
 			<id>repo.eclipse.org.cbi-releases</id>
@@ -119,6 +120,26 @@
 				</configuration>
 			</plugin>
 			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-p2-plugin</artifactId>
+				<version>${tycho-version}</version>
+			</plugin>
+			<plugin>
+				<groupId>org.eclipse.tycho.extras</groupId>
+				<artifactId>tycho-pack200a-plugin</artifactId>
+				<version>${tycho-extras-version}</version>
+			</plugin>
+			<plugin>
+				<groupId>org.eclipse.tycho.extras</groupId>
+				<artifactId>tycho-pack200b-plugin</artifactId>
+				<version>${tycho-extras-version}</version>
+			</plugin>
+			<plugin>
+				<groupId>org.eclipse.cbi.maven.plugins</groupId>
+				<artifactId>eclipse-jarsigner-plugin</artifactId>
+				<version>1.0.5</version>
+			</plugin>
+			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
 				<version>0.5.3.201107060350</version>
@@ -155,39 +176,39 @@
 							<encoding>${project.build.sourceEncoding}</encoding>
 							<header>license-ebay-2012.txt</header>
 							<validHeaders>
-									<validHeader>license-ebay-2005-2012.txt</validHeader>
-									<validHeader>license-avantsoft-2013.txt</validHeader>
-									<!-- rhino fork -->
-									<validHeader>license-mozilla-1.1-2012.txt</validHeader>
-									<!--  jsdt -->
-									<validHeader>license-ibm-2000-2007.txt</validHeader>
-									<validHeader>license-ibm-2000-2008.txt</validHeader>
-									<validHeader>license-ibm-2000-2009.txt</validHeader>
-									<validHeader>license-ibm-2000-2010.txt</validHeader>
-									<validHeader>license-ibm-2000-2011.txt</validHeader>
-									<validHeader>license-ibm-2000-2012.txt</validHeader>
-									<validHeader>license-ibm-2003-2012.txt</validHeader>
-									<validHeader>license-ibm-2004-2012.txt</validHeader>
-									<validHeader>license-ibm-2005-2008.txt</validHeader>
-									<validHeader>license-ibm-2005-2011.txt</validHeader>
-									<validHeader>license-ibm-2005-2012.txt</validHeader>
-									<validHeader>license-ibm-2006-2009.txt</validHeader>
-									<validHeader>license-ibm-2006-2012.txt</validHeader>
-									<validHeader>license-ibm-2007-2011.txt</validHeader>
-									<validHeader>license-ibm-2007-2012.txt</validHeader>
-									<validHeader>license-ibm-2011.txt</validHeader>
-									<validHeader>license-bea-2012.txt</validHeader>
-									
-									<!--  dltk -->
-									<validHeader>license-xored-2005-2012.txt</validHeader>
-									<validHeader>license-xored-2008-2012.txt</validHeader>
-									<validHeader>license-xored-2009-2012.txt</validHeader>
+								<validHeader>license-ebay-2005-2012.txt</validHeader>
+								<validHeader>license-avantsoft-2013.txt</validHeader>
+								<!-- rhino fork -->
+								<validHeader>license-mozilla-1.1-2012.txt</validHeader>
+								<!-- jsdt -->
+								<validHeader>license-ibm-2000-2007.txt</validHeader>
+								<validHeader>license-ibm-2000-2008.txt</validHeader>
+								<validHeader>license-ibm-2000-2009.txt</validHeader>
+								<validHeader>license-ibm-2000-2010.txt</validHeader>
+								<validHeader>license-ibm-2000-2011.txt</validHeader>
+								<validHeader>license-ibm-2000-2012.txt</validHeader>
+								<validHeader>license-ibm-2003-2012.txt</validHeader>
+								<validHeader>license-ibm-2004-2012.txt</validHeader>
+								<validHeader>license-ibm-2005-2008.txt</validHeader>
+								<validHeader>license-ibm-2005-2011.txt</validHeader>
+								<validHeader>license-ibm-2005-2012.txt</validHeader>
+								<validHeader>license-ibm-2006-2009.txt</validHeader>
+								<validHeader>license-ibm-2006-2012.txt</validHeader>
+								<validHeader>license-ibm-2007-2011.txt</validHeader>
+								<validHeader>license-ibm-2007-2012.txt</validHeader>
+								<validHeader>license-ibm-2011.txt</validHeader>
+								<validHeader>license-bea-2012.txt</validHeader>
+
+								<!-- dltk -->
+								<validHeader>license-xored-2005-2012.txt</validHeader>
+								<validHeader>license-xored-2008-2012.txt</validHeader>
+								<validHeader>license-xored-2009-2012.txt</validHeader>
 							</validHeaders>
 							<strictCheck>false</strictCheck>
 							<quiet>false</quiet>
 							<failIfMissing>true</failIfMissing>
-							<includes> 
-							<include>src/**/*.java</include>
+							<includes>
+								<include>src/**/*.java</include>
 							</includes>
 						</configuration>
 					</execution>
@@ -356,13 +377,13 @@
 		<profile>
 			<id>platform-kepler</id>
 			<activation>
-			    <activeByDefault>false</activeByDefault>
+				<activeByDefault>false</activeByDefault>
 				<property>
 					<name>platform.name</name>
 					<value>kepler</value>
 				</property>
 			</activation>
-			
+
 			<properties>
 				<eclipse-site>http://download.eclipse.org/releases/kepler/</eclipse-site>
 				<platform-version>[4.0,4.3)</platform-version>
@@ -370,7 +391,7 @@
 			</properties>
 		</profile>
 
-		<profile> 
+		<profile>
 			<id>platform-indigo</id>
 			<activation>
 				<activeByDefault>false</activeByDefault>
