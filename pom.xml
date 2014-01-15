@@ -587,7 +587,7 @@
 					<plugin>
 						<groupId>org.eclipse.tycho</groupId>
 						<artifactId>target-platform-configuration</artifactId>
-						<version>0.18.1</version>
+						<version>${tycho-version}</version>
 						<configuration>
 							<includePackedArtifacts>false</includePackedArtifacts>
 						</configuration>
@@ -595,7 +595,7 @@
 					<plugin>
 						<groupId>org.eclipse.tycho.extras</groupId>
 						<artifactId>tycho-pack200a-plugin</artifactId>
-						<version>0.18.1</version>
+						<version>${tycho-extras-version}</version>
 						<executions>
 							<execution>
 								<id>pack200-normalize</id>
@@ -623,7 +623,7 @@
 					<plugin>
 						<groupId>org.eclipse.tycho.extras</groupId>
 						<artifactId>tycho-pack200b-plugin</artifactId>
-						<version>0.18.1</version>
+						<version>${tycho-extras-version}</version>
 						<executions>
 							<execution>
 								<id>pack200-pack</id>
@@ -637,7 +637,7 @@
 					<plugin>
 						<groupId>org.eclipse.tycho</groupId>
 						<artifactId>tycho-p2-plugin</artifactId>
-						<version>0.18.1</version>
+						<version>${tycho-version}</version>
 						<executions>
 							<execution>
 								<id>p2-metadata</id>
