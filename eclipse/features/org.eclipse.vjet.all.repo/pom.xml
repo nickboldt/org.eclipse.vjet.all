@@ -18,20 +18,20 @@
 	<version>0.10.0-SNAPSHOT</version>
 	<packaging>eclipse-repository</packaging>
 	<name>VJET: All Feature (Incubation)</name>
-	
-   <properties>
-    <p2repo-zip-path>${project.build.directory}/org.eclipse.vjet.all.repo-${project.version}.zip</p2repo-zip-path>
-  </properties>
-	
+
+	<properties>
+		<p2repo-zip-path>${project.build.directory}/org.eclipse.vjet.all.repo-${project.version}.zip</p2repo-zip-path>
+	</properties>
+
 	<profiles>
 		<profile>
 			<id>build-server</id>
 			<build>
 				<plugins>
 					<plugin>
-						<groupId>org.eclipse.dash.maven</groupId>
-						<artifactId>eclipse-maven-signing-plugin</artifactId>
-						<version>1.0.0</version>
+						<groupId>org.eclipse.cbi.maven.plugins</groupId>
+						<artifactId>eclipse-jarsigner-plugin</artifactId>
+						<version>1.0.5</version>
 						<executions>
 							<execution>
 								<id>pack</id>
@@ -85,13 +85,11 @@
 								<configuration>
 									<tasks>
 										<delete includeemptydirs="false">
-											<fileset
-												dir="${download-publish-path}">
+											<fileset dir="${download-publish-path}">
 												<include name="**" />
 											</fileset>
 										</delete>
-										<copy includeemptydirs="false"
-											todir="${download-publish-path}">
+										<copy includeemptydirs="false" todir="${download-publish-path}">
 											<fileset dir="target/checksumFix">
 												<include name="**" />
 											</fileset>
@@ -104,5 +102,5 @@
 				</plugins>
 			</build>
 		</profile>
-		</profiles>
+	</profiles>
 </project>
