@@ -129,6 +129,8 @@ public class JstExpressionTypeLinkerHelper {
 	 * ********************************************************************
 	 */
 
+	private static final String FUNCTION = "Function";
+
 	/**
 	 * bind attributed type is tricky as attributed type could be nested in
 	 * function type, array type, generics type etc.
@@ -182,8 +184,12 @@ public class JstExpressionTypeLinkerHelper {
 		}
 		// by huzhou@ebay.com, enhancement for inferred type to go on bindings
 		else if (type instanceof JstInferredType) {
-			return look4ActualBinding(resolver,
-					((JstInferredType) type).getType(), groupInfo);
+			IJstType inferredType = ((JstInferredType) type).getType();
+			if(!inferredType.getName().equals(FUNCTION)){
+				return look4ActualBinding(resolver,
+						inferredType, groupInfo);
+			}
+			return null;
 		}
 		// by huzhou@ebay.com, enhancement for ftype binding
 		else if (type.isFType()) {
@@ -2237,10 +2243,10 @@ public class JstExpressionTypeLinkerHelper {
 				// are functions
 				else if ((argumentType instanceof JstFuncType
 						|| argumentType instanceof JstFunctionRefType
-						|| "Function".equals(argumentType.getName()) || argumentType
+						|| FUNCTION.equals(argumentType.getName()) || argumentType
 							.isFType())
 						&& (overloadParamType instanceof JstFuncType
-								|| overloadParamType instanceof JstFunctionRefType || "Function"
+								|| overloadParamType instanceof JstFunctionRefType || FUNCTION
 									.equals(overloadParamType.getName()))
 						|| overloadParamType.isFType()) {
 					continue;
@@ -3932,7 +3938,7 @@ public class JstExpressionTypeLinkerHelper {
 
 	public static IJstType getNativeFunctionJstType(
 			final JstExpressionBindingResolver resolver) {
-		return getNativeTypeFromTS(resolver, "Function");
+		return getNativeTypeFromTS(resolver, FUNCTION);
 	}
 
 	public static IJstType getNativeTypeFromTS(
