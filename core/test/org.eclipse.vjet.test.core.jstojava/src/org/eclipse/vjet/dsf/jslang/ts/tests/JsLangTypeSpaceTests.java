@@ -117,7 +117,7 @@ public class JsLangTypeSpaceTests {
 		Set<String> types = entities.keySet();
 		int groupSize = types.size();
 		System.out.println("number of types in typespace: " + groupSize);
-		assertEquals(1833, groupSize);
+		assertEquals(1834, groupSize);
 		
 		Set<IJstType> notResolved = new HashSet<IJstType>();
 		for(String typeN: types){
