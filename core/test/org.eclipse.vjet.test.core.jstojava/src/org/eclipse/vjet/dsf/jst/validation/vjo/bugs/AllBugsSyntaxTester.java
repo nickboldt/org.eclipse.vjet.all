@@ -53,7 +53,8 @@ import org.junit.runners.Suite.SuiteClasses;
     ValidationB6110Tester.class,
     ValidationB7929Tester.class,
     ValidationB8756Tester.class,
-    ValidationB7748Tester.class
+    ValidationB7748Tester.class,
+    ValidationB407123Tester.class
 //    ValidationB5005Tester.class,
 })
 
