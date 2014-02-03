@@ -1,6 +1,9 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: VJET VSF: Jsconverters (Incubation)
+Bundle-Vendor: %providerName
+Bundle-Name: %pluginName
+Bundle-Localization: plugin
+Eclipse-BundleShape: jar
 Bundle-SymbolicName: org.eclipse.vjet.vsf.jsruntime
 Bundle-Version: 0.10.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
@@ -21,4 +24,3 @@ Export-Package: org.eclipse.vjet.vsf.jsruntime,
  org.eclipse.vjet.vsf.jsruntime.jsconverters.registry,
  org.eclipse.vjet.vsf.jsruntime.jsref,
  org.eclipse.vjet.vsf.jsruntime.optimizer
-Bundle-Vendor: eclipse.org

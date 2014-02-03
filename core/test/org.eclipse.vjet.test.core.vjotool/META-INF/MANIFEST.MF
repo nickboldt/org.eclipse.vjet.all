@@ -1,6 +1,9 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Vjotool
+Bundle-Vendor: %providerName
+Bundle-Name: %pluginName
+Bundle-Localization: plugin
+Eclipse-BundleShape: jar
 Bundle-SymbolicName: org.eclipse.vjet.test.core.vjotool
 Bundle-Version: 0.10.0.qualifier
 Require-Bundle: org.eclipse.vjet.resource.jsnativetypes,

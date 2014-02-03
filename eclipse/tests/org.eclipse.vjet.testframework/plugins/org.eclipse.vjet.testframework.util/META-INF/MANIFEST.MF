@@ -1,10 +1,11 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Utilities for testing plugins (Incubation)
 Bundle-SymbolicName: org.eclipse.vjet.testframework.util;singleton:=true
 Bundle-Version: 0.10.0.qualifier
-Bundle-Vendor: Eclipse.org
+Bundle-Vendor: %providerName
+Bundle-Name: %pluginName
 Bundle-Localization: plugin
+Eclipse-BundleShape: jar
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.jface.text,
  org.eclipse.debug.ui,

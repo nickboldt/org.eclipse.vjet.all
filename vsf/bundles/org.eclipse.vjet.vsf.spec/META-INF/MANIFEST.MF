@@ -1,6 +1,9 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Spec (Incubation)
+Bundle-Vendor: %providerName
+Bundle-Name: %pluginName
+Bundle-Localization: plugin
+Eclipse-BundleShape: jar
 Bundle-SymbolicName: org.eclipse.vjet.vsf.spec
 Bundle-Version: 0.10.0.qualifier
 Require-Bundle: org.eclipse.core.runtime,
@@ -17,4 +20,3 @@ Export-Package: org.eclipse.vjet.dsf.spec.app,
  org.eclipse.vjet.dsf.spec.export,
  org.eclipse.vjet.dsf.spec.resource,
  org.eclipse.vjet.dsf.spec.view
-Bundle-Vendor: eclipse.org

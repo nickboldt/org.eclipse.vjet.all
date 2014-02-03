@@ -1,6 +1,9 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: VJET: VSF Resource Slot (Incubation)
+Bundle-Vendor: %providerName
+Bundle-Name: %pluginName
+Bundle-Localization: plugin
+Eclipse-BundleShape: jar
 Bundle-SymbolicName: org.eclipse.vjet.vsf.resource.slot
 Bundle-Version: 0.10.0.qualifier
 Require-Bundle: org.eclipse.vjet.vsf.resource.js
@@ -9,4 +12,3 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: org.eclipse.vjet.dsf.resource.slot,
  org.eclipse.vjet.dsf.resource.slot.plan,
  org.eclipse.vjet.dsf.resource.slot.simple
-Bundle-Vendor: eclipse.org

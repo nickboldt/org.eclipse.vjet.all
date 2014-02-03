@@ -1,6 +1,9 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: VJET VSF Aggreation Cache (Incubation)
+Bundle-Vendor: %providerName
+Bundle-Name: %pluginName
+Bundle-Localization: plugin
+Eclipse-BundleShape: jar
 Bundle-SymbolicName: org.eclipse.vjet.vsf.aggregator.cache
 Bundle-Version: 0.10.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
@@ -13,4 +16,3 @@ Require-Bundle: org.eclipse.vjet.vsf.spec,
  org.eclipse.vjet.vsf.resource.environment,
  org.eclipse.vjet.vsf.jsruntime,
  org.eclipse.vjet.core.vjodef
-Bundle-Vendor: eclipse.org

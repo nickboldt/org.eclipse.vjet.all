@@ -1,6 +1,9 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: VJET VSF: JsRef (Incubation)
+Bundle-Vendor: %providerName
+Bundle-Name: %pluginName
+Bundle-Localization: plugin
+Eclipse-BundleShape: jar
 Bundle-SymbolicName: org.eclipse.vjet.vsf.jsref
 Bundle-Version: 0.10.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
@@ -16,4 +19,3 @@ Export-Package: org.eclipse.vjet.vjo.bootstrap,
  org.eclipse.vjet.vsf.jsref.ctx,
  org.eclipse.vjet.vsf.jsref.d,
  org.eclipse.vjet.vsf.jsref.internals
-Bundle-Vendor: eclipse.org

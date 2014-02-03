@@ -1,6 +1,9 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: VJET VJO Kernel (Incubation)
+Bundle-Vendor: %providerName
+Bundle-Name: %pluginName
+Bundle-Localization: plugin
+Eclipse-BundleShape: jar
 Bundle-SymbolicName: org.eclipse.vjet.vsf.vjo.kernel
 Bundle-Version: 0.10.0.qualifier
 Require-Bundle: org.eclipse.vjet.core.util,
@@ -27,4 +30,3 @@ Export-Package: org.eclipse.vjet.vjo.util,
  org.eclipse.vjet.vsf.utils.reflection,
  org.eclipse.vjet.vsf.utils.xml,
  org.eclipse.vjet.vsf.window.utils
-Bundle-Vendor: eclipse.org

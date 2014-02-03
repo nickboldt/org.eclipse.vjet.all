@@ -1,6 +1,9 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: VJET VSF Aggregator (Incubation)
+Bundle-Vendor: %providerName
+Bundle-Name: %pluginName
+Bundle-Localization: plugin
+Eclipse-BundleShape: jar
 Bundle-SymbolicName: org.eclipse.vjet.vsf.aggregator
 Bundle-Version: 0.10.0.qualifier
 Require-Bundle: org.eclipse.vjet.vsf.jsref,
@@ -15,4 +18,3 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: org.eclipse.vjet.vsf.aggregator.js,
  org.eclipse.vjet.vsf.aggregator.js.error,
  org.eclipse.vjet.vsf.aggregator.view
-Bundle-Vendor: eclipse.org
